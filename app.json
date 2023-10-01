@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "reactnative-expo-firebase-boilerplate-v2",
-    "slug": "reactnative-expo-firebase-boilerplate-v2",
+    "name": "connect",
+    "slug": "connect",
+    "owner": "dpkmht",
     "privacy": "public",
     "platforms": [
       "ios",
@@ -18,13 +19,14 @@
     "updates": {
       "enabled": true,
       "fallbackToCacheTimeout": 10000,
+      "url": "https://u.expo.dev/f6ffa3f4-8805-43ca-a88e-a2297fbac759"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "reactnative.expo.firebase.boilerplate",
+      "bundleIdentifier": "connect.firebase",
       "buildNumber": "1.0.0",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Use the photo library to change your avatar."
@@ -32,7 +34,7 @@
       "userInterfaceStyle": "automatic"
     },
     "android": {
-      "package": "reactnative.expo.firebase.boilerplate",
+      "package": "connect.firebase",
       "versionCode": 1,
       "userInterfaceStyle": "automatic",
       "permissions": [
@@ -50,6 +52,14 @@
         "tsx"
       ]
     },
-    "description": ""
+    "description": "",
+    "extra": {
+      "eas": {
+        "projectId": "f6ffa3f4-8805-43ca-a88e-a2297fbac759"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
   }
 }

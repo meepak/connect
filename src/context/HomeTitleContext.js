@@ -1,6 +1,8 @@
-import React, { createContext } from 'react'
+import { createContext } from 'react'
 
-export const HomeTitleContext = createContext({
+const HomeTitleContext = createContext({
   title: 'default title',
   setTitle: () => {},
-});
+})
+
+export default HomeTitleContext

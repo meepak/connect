@@ -10,9 +10,9 @@ import Edit from '../../../scenes/edit'
 const Stack = createStackNavigator()
 const RootStack = createStackNavigator()
 
-export const ProfileNavigator = () => {
+const ProfileNavigator = () => {
   const { scheme } = useContext(ColorSchemeContext)
-  const navigationProps = scheme === 'dark' ? darkProps:lightProps
+  const navigationProps = scheme === 'dark' ? darkProps : lightProps
   return (
     <Stack.Navigator screenOptions={navigationProps}>
       <RootStack.Group>
@@ -20,17 +20,19 @@ export const ProfileNavigator = () => {
           name="Profile"
           component={Profile}
           options={({ navigation }) => ({
-            headerBackground: scheme === 'dark' ? null: () => <HeaderStyle />,
+            headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,
           })}
         />
         <Stack.Screen
           name="Edit"
           component={Edit}
           options={({ navigation }) => ({
-            headerBackground: scheme === 'dark' ? null: () => <HeaderStyle />,
+            headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,
           })}
         />
       </RootStack.Group>
     </Stack.Navigator>
   )
 }
+
+export default ProfileNavigator

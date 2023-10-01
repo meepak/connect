@@ -7,4 +7,4 @@ const fontSize = {
   small: 12,
 }
 
-export { fontSize }
+export default fontSize

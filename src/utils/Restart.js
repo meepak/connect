@@ -4,4 +4,4 @@ const Restart = () => {
   Updates.reloadAsync()
 }
 
-export { Restart }
+export default Restart
