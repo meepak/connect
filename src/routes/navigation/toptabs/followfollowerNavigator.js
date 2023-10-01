@@ -1,6 +1,6 @@
 import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import { screenOptions } from './navigationProps/navigationProps'
+import screenOptions from './navigationProps/navigationProps'
 
 import { FollowNavigator } from '../stacks/topTabStacks/FollowNavigator'
 import { FollowerNavigator } from '../stacks/topTabStacks/FollowerNavigator'
