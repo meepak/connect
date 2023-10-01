@@ -1,5 +1,16 @@
-import React from "react";
-import { Image, StyleSheet } from "react-native";
+import React from 'react'
+import { Image, StyleSheet } from 'react-native'
+
+const styles = StyleSheet.create({
+  logo: {
+    flex: 1,
+    height: 180,
+    width: 180,
+    alignSelf: 'center',
+    margin: 30,
+    borderRadius: 20,
+  },
+})
 
 export default function Logo() {
   return (
@@ -9,14 +20,3 @@ export default function Logo() {
     />
   )
 }
-
-const styles = StyleSheet.create({
-  logo: {
-    flex: 1,
-    height: 180,
-    width: 180,
-    alignSelf: "center",
-    margin: 30,
-    borderRadius: 20
-  },
-})

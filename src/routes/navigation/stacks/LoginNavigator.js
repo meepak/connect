@@ -9,25 +9,27 @@ import Registration from '../../../scenes/registration'
 
 const Stack = createStackNavigator()
 
-export const LoginNavigator = () => {
+const LoginNavigator = () => {
   const { scheme } = useContext(ColorSchemeContext)
-  const navigationProps = scheme === 'dark' ? darkProps:lightProps
+  const navigationProps = scheme === 'dark' ? darkProps : lightProps
   return (
     <Stack.Navigator screenOptions={navigationProps}>
       <Stack.Screen
         name="Login"
         component={Login}
         options={({ navigation }) => ({
-          headerBackground: scheme === 'dark' ? null: () => <HeaderStyle />,
+          headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,
         })}
       />
       <Stack.Screen
         name="Registration"
         component={Registration}
         options={({ navigation }) => ({
-          headerBackground: scheme === 'dark' ? null: () => <HeaderStyle />,
+          headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,
         })}
       />
     </Stack.Navigator>
   )
 }
+
+export default LoginNavigator

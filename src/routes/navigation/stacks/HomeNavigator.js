@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import { HomeTitleContext } from '../../../context/HomeTitleContext'
+import HomeTitleContext from '../../../context/HomeTitleContext'
 import { ColorSchemeContext } from '../../../context/ColorSchemeContext'
 import { lightProps, darkProps } from './navigationProps/navigationProps'
 import HeaderStyle from './headerComponents/HeaderStyle'
@@ -10,9 +10,9 @@ import Detail from '../../../scenes/detail'
 
 const Stack = createStackNavigator()
 
-export const HomeNavigator = () => {
+const HomeNavigator = () => {
   const { scheme } = useContext(ColorSchemeContext)
-  const navigationProps = scheme === 'dark' ? darkProps:lightProps
+  const navigationProps = scheme === 'dark' ? darkProps : lightProps
   const [title, setTitle] = useState('default title')
   return (
     <HomeTitleContext.Provider
@@ -28,20 +28,24 @@ export const HomeNavigator = () => {
               name="Home"
               component={Home}
               options={({ navigation }) => ({
-                headerBackground: scheme === 'dark' ? null: () => <HeaderStyle />,
+                headerBackground:
+                  scheme === 'dark' ? null : () => <HeaderStyle />,
               })}
             />
             <Stack.Screen
               name="Detail"
               component={Detail}
-              options={{ 
+              options={{
                 title: ctx.title,
-                headerBackground: scheme === 'dark' ? null: () => <HeaderStyle />,
+                headerBackground:
+                  scheme === 'dark' ? null : () => <HeaderStyle />,
               }}
             />
           </Stack.Navigator>
-      )}
+        )}
       </HomeTitleContext.Consumer>
     </HomeTitleContext.Provider>
   )
 }
+
+export default HomeNavigator

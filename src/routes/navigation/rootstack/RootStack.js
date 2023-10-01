@@ -1,14 +1,14 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Platform } from "react-native";
+import React, { useContext, useEffect } from 'react'
+import { Platform } from 'react-native'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
-import TabNavigator from "../tabs/Tabs";
-import { ModalStacks } from "../stacks/ModalStacks/ModalStacks";
 import * as Notifications from 'expo-notifications'
-import { firestore } from "../../../firebase/config";
-import { setDoc, doc } from 'firebase/firestore';
-import { UserDataContext } from "../../../context/UserDataContext";
-import * as Device from 'expo-device';
-import { expoProjectId } from "../../../config";
+import { setDoc, doc } from 'firebase/firestore'
+import * as Device from 'expo-device'
+import TabNavigator from '../tabs/Tabs'
+import ModalStacks from '../stacks/ModalStacks/ModalStacks'
+import { firestore } from '../../../firebase/config'
+import { UserDataContext } from '../../../context/UserDataContext'
+import { expoProjectId } from '../../../config'
 
 const Stack = createStackNavigator()
 
@@ -18,7 +18,7 @@ Notifications.setNotificationHandler({
     shouldPlaySound: true,
     shouldSetBadge: false,
   }),
-});
+})
 
 export default function RootStack() {
   const { userData } = useContext(UserDataContext)
@@ -26,58 +26,67 @@ export default function RootStack() {
 
   useEffect(() => {
     (async () => {
-      const isDevice = Device.isDevice
-      if(!isDevice) return
+      if (Platform.OS === 'android') {
+        await Notifications.setNotificationChannelAsync('default', {
+          name: 'default',
+          importance: Notifications.AndroidImportance.MAX,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: '#FF231F7C',
+        })
+      }
+      const { isDevice } = Device
+      if (!isDevice) return
       console.log('get push token')
       const { status: existingStatus } = await Notifications.getPermissionsAsync()
-      let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
+      let finalStatus = existingStatus
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync()
+        finalStatus = status
       }
-      if (finalStatus !== "granted") {
-        return;
+      if (finalStatus !== 'granted') {
+        return
       }
       const token = await Notifications.getExpoPushTokenAsync({
-        projectId: expoProjectId
-      });
-      const tokensRef = doc(firestore, 'tokens', userData.id);
+        projectId: expoProjectId,
+      })
+      const tokensRef = doc(firestore, 'tokens', userData.id)
       await setDoc(tokensRef, {
         token: token.data,
-        id: userData.id
+        id: userData.id,
       })
-    })();
+    })()
   }, [userData])
 
   useEffect(() => {
-    const subscription = Notifications.addNotificationReceivedListener(notification => {
+    const subscription = Notifications.addNotificationReceivedListener((notification) => {
+      console.log('Notification request content')
       console.log(notification.request.content)
-    });
-    return () => subscription.remove();
-  }, []);
+    })
+    return () => subscription.remove()
+  }, [])
 
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false
+        headerShown: false,
       }}
     >
       <Stack.Screen
-        name='HomeRoot'
+        name="HomeRoot"
         component={TabNavigator}
       />
       <Stack.Group
         screenOptions={{
           presentation: 'modal',
           headerShown: false,
-          gestureEnabled: true,
+          // gestureEnabled: true,
           cardOverlayEnabled: true,
           ...TransitionPresets.ModalPresentationIOS,
-          gestureEnabled: isIos
+          gestureEnabled: isIos,
         }}
       >
         <Stack.Screen
-          name='ModalStacks'
+          name="ModalStacks"
           component={ModalStacks}
         />
       </Stack.Group>

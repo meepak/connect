@@ -1,19 +1,51 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Text, View, StyleSheet, ScrollView } from 'react-native'
-import { Avatar } from '@rneui/themed';
-import Dialog from "react-native-dialog"
+import {
+  Text, View, StyleSheet, ScrollView,
+} from 'react-native'
+import { Avatar } from '@rneui/themed'
+import Dialog from 'react-native-dialog'
 import Spinner from 'react-native-loading-spinner-overlay'
+import { doc, deleteDoc } from 'firebase/firestore'
+import { useNavigation } from '@react-navigation/native'
+import { signOut, deleteUser } from 'firebase/auth'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/Button'
-import { Restart } from '../../utils/Restart'
-import { firestore } from '../../firebase/config'
-import { doc, deleteDoc } from 'firebase/firestore';
+import Restart from '../../utils/Restart'
+import { firestore, auth } from '../../firebase/config'
 import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import { UserDataContext } from '../../context/UserDataContext'
-import { useNavigation } from '@react-navigation/native'
 import { colors, fontSize } from '../../theme'
-import { signOut, deleteUser } from 'firebase/auth'
-import { auth } from '../../firebase/config'
+
+const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+    width: '100%',
+  },
+  title: {
+    fontSize: fontSize.xxxLarge,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  field: {
+    fontSize: fontSize.middle,
+    textAlign: 'center',
+  },
+  avatar: {
+    margin: 30,
+    alignSelf: 'center',
+  },
+  footerView: {
+    flex: 1,
+    alignItems: 'center',
+    marginBottom: 20,
+    marginTop: 20,
+  },
+  footerLink: {
+    color: colors.blueLight,
+    fontWeight: 'bold',
+    fontSize: fontSize.large,
+  },
+})
 
 export default function Profile() {
   const { userData, setUserData } = useContext(UserDataContext)
@@ -23,7 +55,7 @@ export default function Profile() {
   const { scheme } = useContext(ColorSchemeContext)
   const isDark = scheme === 'dark'
   const colorScheme = {
-    text: isDark? colors.white : colors.primaryText
+    text: isDark ? colors.white : colors.primaryText,
   }
 
   useEffect(() => {
@@ -31,18 +63,18 @@ export default function Profile() {
   }, [])
 
   const goDetail = () => {
-    navigation.navigate('Edit', { userData: userData })
+    navigation.navigate('Edit', { userData })
   }
 
   const onSignOutPress = () => {
     signOut(auth)
-    .then(() => {
-      setUserData('')
-      Restart()
-    })
-    .catch((error) => {
-      console.log(error.message);
-    });
+      .then(() => {
+        setUserData('')
+        Restart()
+      })
+      .catch((error) => {
+        console.log(error.message)
+      })
   }
 
   const showDialog = () => {
@@ -64,17 +96,17 @@ export default function Profile() {
       deleteUser(user).then(() => {
         setSpinner(false)
         signOut(auth)
-        .then(() => {
-          console.log('user deleted')
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
+          .then(() => {
+            console.log('user deleted')
+          })
+          .catch((error) => {
+            console.log(error.message)
+          })
       }).catch((error) => {
         setSpinner(false)
         console.log(error)
-      });
-    } catch(error) {
+      })
+    } catch (error) {
       console.log(error)
     }
   }
@@ -95,25 +127,25 @@ export default function Profile() {
         <Text style={[styles.field, { color: colorScheme.text }]}>Mail:</Text>
         <Text style={[styles.title, { color: colorScheme.text }]}>{userData.email}</Text>
         <Button
-          label='Edit'
+          label="Edit"
           color={colors.primary}
           onPress={goDetail}
         />
         <Button
-          label='Open Modal'
+          label="Open Modal"
           color={colors.tertiary}
           onPress={() => {
             navigation.navigate('ModalStacks', {
               screen: 'Post',
               params: {
                 data: userData,
-                from: 'Profile screen'
-              }
+                from: 'Profile screen',
+              },
             })
           }}
         />
         <Button
-          label='Account delete'
+          label="Account delete"
           color={colors.secondary}
           onPress={showDialog}
         />
@@ -137,34 +169,3 @@ export default function Profile() {
     </ScreenTemplate>
   )
 }
-
-const styles = StyleSheet.create({
-  main: {
-    flex: 1,
-    width: '100%',
-  },
-  title: {
-    fontSize: fontSize.xxxLarge,
-    marginBottom: 20,
-    textAlign: 'center'
-  },
-  field: {
-    fontSize: fontSize.middle,
-    textAlign: 'center',
-  },
-  avatar: {
-    margin: 30,
-    alignSelf: "center",
-  },
-  footerView: {
-    flex: 1,
-    alignItems: "center",
-    marginBottom: 20,
-    marginTop: 20
-  },
-  footerLink: {
-    color: colors.blueLight,
-    fontWeight: "bold",
-    fontSize: fontSize.large
-  },
-})

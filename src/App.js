@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
 import { Provider } from 'jotai'
 import 'utils/ignore'
+import { imageAssets } from 'theme/images'
+import { fontAssets } from 'theme/fonts'
 import { ColorSchemeContextProvider } from './context/ColorSchemeContext'
 import { UserDataContextProvider } from './context/UserDataContext'
 
 // assets
-import { imageAssets } from 'theme/images'
-import { fontAssets } from 'theme/fonts'
 import Router from './routes'
 
-const isHermes = () => !!global.HermesInternal;
+const isHermes = () => !!global.HermesInternal
 
 const App = () => {
   // state
