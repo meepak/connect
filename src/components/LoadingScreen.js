@@ -22,7 +22,8 @@ export default function LoadingScreen() {
     <View style={styles.container}>
       <LottieView
         ref={animation}
-        source={require('../../assets/lottie/98288-loading.json')}
+        // source={require('../../assets/lottie/98288-loading.json')} //TODO load via prop for different use cases
+        source={require('../../assets/lottie/loading-animation-hands.json')}
         style={styles.animation}
         autoPlay
       />

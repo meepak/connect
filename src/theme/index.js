@@ -3,4 +3,9 @@ import fontSize from './fontSize'
 import { fonts } from './fonts'
 import { images } from './images'
 
-export { colors, fonts, images, fontSize }
+export {
+  colors,
+  fonts,
+  images,
+  fontSize,
+}
