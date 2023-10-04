@@ -42,7 +42,7 @@ export default function Follow() {
             label="Open Modal"
             color={colors.tertiary}
             onPress={() => {
-              navigation.navigate('ModalStacks', {
+              navigation.navigate('ModalStack', {
                 screen: 'Post',
                 params: {
                   data: userData,
