@@ -1,9 +1,9 @@
 import React, { createContext, useState } from 'react'
 import PropTypes from 'prop-types'
 
-export const UserDataContext = createContext()
+const UserDataContext = createContext()
 
-export const UserDataContextProvider = (props) => {
+const UserDataContextProvider = (props) => {
   const [userData, setUserData] = useState('')
   const { children } = props
 
@@ -21,3 +21,5 @@ export const UserDataContextProvider = (props) => {
 UserDataContextProvider.protoTypes = {
   children: PropTypes.node.isRequired,
 }
+
+export { UserDataContext, UserDataContextProvider }

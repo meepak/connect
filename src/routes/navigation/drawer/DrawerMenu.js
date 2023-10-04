@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, SafeAreaView, Text } from 'react-native'
-
+import PropTypes from 'prop-types'
 import { DrawerActions } from '@react-navigation/native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { colors } from 'theme'
@@ -41,5 +41,9 @@ const DrawerMenu = (props) => (
     </View>
   </SafeAreaView>
 )
+
+DrawerMenu.propTypes = {
+  navigation: PropTypes.func.isRequired,
+}
 
 export default DrawerMenu

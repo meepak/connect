@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler'
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native'
 import Toast from 'react-native-toast-message'
 import { ColorSchemeContext } from '../../context/ColorSchemeContext'

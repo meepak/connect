@@ -22,7 +22,7 @@ Notifications.setNotificationHandler({
 
 export default function RootStack() {
   const { userData } = useContext(UserDataContext)
-  const isIos = Platform.OS === 'ios'
+  // const isIos = Platform.OS === 'ios'
 
   useEffect(() => {
     (async () => {

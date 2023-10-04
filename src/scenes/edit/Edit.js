@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Alert, Text, View, StyleSheet, Platform } from 'react-native'
+import {
+  Alert, Text, View, StyleSheet, Platform,
+} from 'react-native'
 import { doc, updateDoc } from 'firebase/firestore'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { Avatar } from '@rneui/themed'
