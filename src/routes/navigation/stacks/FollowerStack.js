@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import Follower from '../../../../scenes/follower'
+import Follower from '../../../scenes/follower'
 
 const Stack = createStackNavigator()
 
-export const FollowerNavigator = () => (
+const FollowerStack = () => (
   <Stack.Navigator
     screenOptions={({ route, navigation }) => ({
       headerShown: false,
@@ -17,3 +17,5 @@ export const FollowerNavigator = () => (
     />
   </Stack.Navigator>
 )
+
+export default FollowerStack

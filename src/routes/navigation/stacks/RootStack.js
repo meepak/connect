@@ -4,9 +4,9 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import * as Notifications from 'expo-notifications'
 import { setDoc, doc } from 'firebase/firestore'
 import * as Device from 'expo-device'
-import TabNavigator from '../tabs/Tabs'
-import ModalStacks from '../stacks/ModalStacks/ModalStacks'
-import { firestore } from '../../../firebase/config'
+import TabNavigator from '../tabsBottom/Tabs'
+import ModalStack from './ModalStack'
+import { firestore } from '../../../firebase'
 import { UserDataContext } from '../../../context/UserDataContext'
 import { expoProjectId } from '../../../config'
 
@@ -79,15 +79,14 @@ export default function RootStack() {
         screenOptions={{
           presentation: 'modal',
           headerShown: false,
-          // gestureEnabled: true,
+          gestureEnabled: true,
           cardOverlayEnabled: true,
           ...TransitionPresets.ModalPresentationIOS,
-          gestureEnabled: isIos,
         }}
       >
         <Stack.Screen
           name="ModalStacks"
-          component={ModalStacks}
+          component={ModalStack}
         />
       </Stack.Group>
     </Stack.Navigator>

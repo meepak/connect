@@ -4,34 +4,33 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { ColorSchemeContext } from '../../../context/ColorSchemeContext'
 import { UserDataContext } from '../../../context/UserDataContext'
 
-import { lightProps, darkProps } from './navigationProps/navigationProps'
-import HeaderStyle from './headerComponents/HeaderStyle'
+import { lightProps, darkProps } from '../../navigationProps'
+import HeaderStyle from '../../../components/HeaderStyle'
 import HeaderRightButton from '../../../components/HeaderRightButton'
 
-import FollowFollowerNavigator from '../toptabs/followfollowerNavigator'
+import Chat from '../../../scenes/chat'
 
 const Stack = createStackNavigator()
-const RootStack = createStackNavigator()
 
-const ConnectNavigator = () => {
+const ChatStack = () => {
   const { scheme } = useContext(ColorSchemeContext)
   const { userData } = useContext(UserDataContext)
   const navigationProps = scheme === 'dark' ? darkProps : lightProps
 
   return (
     <Stack.Navigator screenOptions={navigationProps}>
-      <RootStack.Group>
+      <Stack.Group>
         <Stack.Screen
-          name="Connect"
-          component={FollowFollowerNavigator}
+          name="Chat"
+          component={Chat}
           options={({ navigation }) => ({
             headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,
-            headerRight: () => <HeaderRightButton from="Connect" userData={userData} />,
+            // headerRight: () => <HeaderRightButton from="Connect" userData={userData} />,
           })}
         />
-      </RootStack.Group>
+      </Stack.Group>
     </Stack.Navigator>
   )
 }
 
-export default ConnectNavigator
+export default ChatStack

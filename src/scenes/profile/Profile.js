@@ -11,7 +11,7 @@ import { signOut, deleteUser } from 'firebase/auth'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/Button'
 import Restart from '../../utils/Restart'
-import { firestore, auth } from '../../firebase/config'
+import { firestore, auth } from '../../firebase'
 import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import { UserDataContext } from '../../context/UserDataContext'
 import { colors, fontSize } from '../../theme'
@@ -70,7 +70,7 @@ export default function Profile() {
     signOut(auth)
       .then(() => {
         setUserData('')
-        Restart()
+        Restart() // do not restart, just go back to pre login page
       })
       .catch((error) => {
         console.log(error.message)

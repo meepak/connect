@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import HomeTitleContext from '../../../../context/HomeTitleContext'
+import HomeTitleContext from '../../../context/HomeTitleContext'
 
-import Post from '../../../../scenes/post'
-import Print from '../../../../scenes/print'
+import Post from '../../../scenes/post'
+import Print from '../../../scenes/print'
 
 const Stack = createStackNavigator()
 
-const ModalStacks = () => {
-  const [title, setTitle] = useState('default title')
+const ModalStack = () => {
+  const [title, setTitle] = useState('Back')
 
   return (
     <HomeTitleContext.Provider
@@ -43,4 +43,4 @@ const ModalStacks = () => {
   )
 }
 
-export default ModalStacks
+export default ModalStack

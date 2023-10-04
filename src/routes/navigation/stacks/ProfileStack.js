@@ -1,21 +1,20 @@
 import React, { useContext } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { ColorSchemeContext } from '../../../context/ColorSchemeContext'
-import { lightProps, darkProps } from './navigationProps/navigationProps'
-import HeaderStyle from './headerComponents/HeaderStyle'
+import { lightProps, darkProps } from '../../navigationProps'
+import HeaderStyle from '../../../components/HeaderStyle'
 
 import Profile from '../../../scenes/profile'
 import Edit from '../../../scenes/edit'
 
 const Stack = createStackNavigator()
-const RootStack = createStackNavigator()
 
-const ProfileNavigator = () => {
+const ProfileStack = () => {
   const { scheme } = useContext(ColorSchemeContext)
   const navigationProps = scheme === 'dark' ? darkProps : lightProps
   return (
     <Stack.Navigator screenOptions={navigationProps}>
-      <RootStack.Group>
+      <Stack.Group>
         <Stack.Screen
           name="Profile"
           component={Profile}
@@ -30,9 +29,9 @@ const ProfileNavigator = () => {
             headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,
           })}
         />
-      </RootStack.Group>
+      </Stack.Group>
     </Stack.Navigator>
   )
 }
 
-export default ProfileNavigator
+export default ProfileStack

@@ -3,7 +3,7 @@ import { initializeApp } from 'firebase/app'
 import { initializeAuth } from 'firebase/auth'
 import { getReactNativePersistence } from 'firebase/auth/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-// firestore
+// firestore - real time database
 import { initializeFirestore } from 'firebase/firestore'
 // cloud storage
 import { getStorage } from 'firebase/storage'
@@ -14,9 +14,11 @@ const app = initializeApp(firebaseKey)
 const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage),
 })
+
 const firestore = initializeFirestore(app, {
   experimentalAutoDetectLongPolling: true,
 })
+
 const storage = getStorage(app)
 
 export { auth, firestore, storage }

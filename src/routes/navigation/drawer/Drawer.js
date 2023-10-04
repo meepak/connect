@@ -5,7 +5,7 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer'
 import DrawerMenu from './DrawerMenu'
-import TabNavigator from '../tabs'
+import TabNavigator from '../tabsBottom'
 
 const Drawer = createDrawerNavigator()
 
