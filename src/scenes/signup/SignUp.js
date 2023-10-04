@@ -11,7 +11,7 @@ import ScreenTemplate from '../../components/ScreenTemplate'
 import TextInputBox from '../../components/TextInputBox'
 import Button from '../../components/Button'
 import Logo from '../../components/Logo'
-import { firestore, auth } from '../../firebase/config'
+import { firestore, auth } from '../../firebase'
 import { colors, fontSize } from '../../theme'
 import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import { defaultAvatar, eulaLink } from '../../config'
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function Registration() {
+export default function SignUp() {
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -58,7 +58,7 @@ export default function Registration() {
   }
 
   useEffect(() => {
-    console.log('Registration screen')
+    console.log('Sign Up screen')
   }, [])
 
   const onFooterLinkPress = () => {

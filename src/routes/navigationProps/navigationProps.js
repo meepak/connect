@@ -1,8 +1,14 @@
 import { colors } from 'theme'
+import { Platform } from 'react-native'
 
 const headerTintColor = 'white'
 const fontSize = 18
 const headerMode = 'float'
+
+const labelSize = Platform.select({
+  ios: 14,
+  android: 12,
+})
 
 const lightProps = {
   headerTintColor,
@@ -22,4 +28,13 @@ const darkProps = {
   headerMode,
 }
 
-export { lightProps, darkProps }
+const screenOptions = {
+  tabBarLabelStyle: {
+    fontSize: labelSize,
+  },
+  tabBarActiveTintColor: colors.purple,
+  tabBarInactiveTintColor: colors.lightPurple,
+  tabBarShowLabel: true,
+}
+
+export { lightProps, darkProps, screenOptions }

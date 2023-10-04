@@ -1,28 +1,27 @@
 import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import screenOptions from './navigationProps/navigationProps'
+import screenOptions from '../../navigationProps'
 
-import { FollowNavigator } from '../stacks/topTabStacks/FollowNavigator'
-import { FollowerNavigator } from '../stacks/topTabStacks/FollowerNavigator'
+import { FollowStacks, FollowerStacks } from '../stacks'
 
 const Tab = createMaterialTopTabNavigator()
 
-const FollowFollowerNavigator = () => (
+const FollowFollowerTabs = () => (
   <Tab.Navigator
     initialRouteName="FollowTab"
     screenOptions={screenOptions}
   >
     <Tab.Screen
       name="FollowTab"
-      component={FollowNavigator}
+      component={FollowStacks}
       options={{ tabBarLabel: 'Follow' }}
     />
     <Tab.Screen
       name="FollowerTab"
-      component={FollowerNavigator}
+      component={FollowerStacks}
       options={{ tabBarLabel: 'Follower' }}
     />
   </Tab.Navigator>
 )
 
-export default FollowFollowerNavigator
+export default FollowFollowerTabs

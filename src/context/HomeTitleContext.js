@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 
 const HomeTitleContext = createContext({
-  title: 'default title',
+  title: 'Find Assistance: Discover, Connect, Thrive.',
   setTitle: () => {},
 })
 

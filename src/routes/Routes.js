@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAtom } from 'jotai'
-import Main from './navigation'
+import Navigation from './navigation'
 import Initial from '../scenes/initial/Initial'
 import { checkedAtom, loggedInAtom } from '../utils/atom'
 
@@ -16,7 +16,7 @@ const Routes = () => {
     return <Initial />
   }
 
-  return <Main />
+  return <Navigation />
 }
 
 export default Routes

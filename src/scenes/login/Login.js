@@ -7,7 +7,7 @@ import { doc, getDoc } from 'firebase/firestore'
 import Spinner from 'react-native-loading-spinner-overlay'
 import { useNavigation } from '@react-navigation/native'
 import { signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
-import { firestore, auth } from '../../firebase/config'
+import { firestore, auth } from '../../firebase'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/Button'
 import TextInputBox from '../../components/TextInputBox'
@@ -54,7 +54,7 @@ export default function Login() {
   }
 
   const onFooterLinkPress = () => {
-    navigation.navigate('Registration')
+    navigation.navigate('Sign Up')
   }
 
   const onSendVerificationLinkPress = async () => {

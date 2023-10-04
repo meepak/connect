@@ -2,15 +2,15 @@ import React, { useState, useContext } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import HomeTitleContext from '../../../context/HomeTitleContext'
 import { ColorSchemeContext } from '../../../context/ColorSchemeContext'
-import { lightProps, darkProps } from './navigationProps/navigationProps'
-import HeaderStyle from './headerComponents/HeaderStyle'
+import { lightProps, darkProps } from '../../navigationProps'
+import HeaderStyle from '../../../components/HeaderStyle'
 
 import Home from '../../../scenes/home'
 import Detail from '../../../scenes/detail'
 
 const Stack = createStackNavigator()
 
-const HomeNavigator = () => {
+const HomeStack = () => {
   const { scheme } = useContext(ColorSchemeContext)
   const navigationProps = scheme === 'dark' ? darkProps : lightProps
   const [title, setTitle] = useState('default title')
@@ -48,4 +48,4 @@ const HomeNavigator = () => {
   )
 }
 
-export default HomeNavigator
+export default HomeStack

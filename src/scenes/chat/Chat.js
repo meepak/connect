@@ -15,7 +15,7 @@ import {
   collection, addDoc, getDocs, query, orderBy, onSnapshot,
 } from 'firebase/firestore'
 import { GiftedChat } from 'react-native-gifted-chat'
-import { auth, firestore } from '../../firebase/config'
+import { auth, firestore } from '../../firebase'
 import { UserDataContext } from '../../context/UserDataContext'
 import ScreenTemplate from '../../components/ScreenTemplate'
 

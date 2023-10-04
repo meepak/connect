@@ -5,12 +5,12 @@ import Toast from 'react-native-toast-message'
 import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import { UserDataContext } from '../../context/UserDataContext'
 import { toastConfig } from '../../utils/ShowToast'
-import { auth } from '../../firebase/config'
+import { auth } from '../../firebase'
 
 import { LoginNavigator } from './stacks'
-import RootStack from './rootstack/RootStack'
+import RootStack from './stacks/RootStack'
 
-export default function App() {
+export default function Navigation() {
   const { scheme } = useContext(ColorSchemeContext)
   const { userData } = useContext(UserDataContext)
 

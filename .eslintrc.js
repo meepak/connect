@@ -32,6 +32,7 @@ module.exports = {
         devDependencies: true,
       },
     ],
+    'import/no-cycle': [2, { maxDepth: 1 }],
   },
   settings: {
     'import/resolver': {
