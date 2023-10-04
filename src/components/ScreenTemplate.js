@@ -33,7 +33,7 @@ const ScreenTemplate = (props) => {
 
   return (
     <SafeAreaView style={container}>
-      <StatusBar style="light" />
+      <StatusBar />
       { children }
     </SafeAreaView>
   )

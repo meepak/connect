@@ -23,7 +23,7 @@ const ConnectStack = () => {
         <Stack.Screen
           name="Connect"
           component={FollowFollowerTabs}
-          options={({ navigation }) => ({
+          options={(/* { navigation } */) => ({
             headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,
             headerRight: () => <HeaderRightButton from="Connect" userData={userData} />,
           })}

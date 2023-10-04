@@ -2,12 +2,12 @@ import React, { useState, createContext, useEffect } from 'react'
 import { useColorScheme } from 'react-native'
 import PropTypes from 'prop-types'
 
-export const ColorSchemeContext = createContext()
+const ColorSchemeContext = createContext()
 
-export const ColorSchemeContextProvider = (props) => {
+const ColorSchemeContextProvider = (props) => {
+  const { children } = props
   const colorScheme = useColorScheme()
   const [scheme, setScheme] = useState(colorScheme)
-  const { children } = props
 
   useEffect(() => {
     setScheme(colorScheme)
@@ -24,6 +24,8 @@ export const ColorSchemeContextProvider = (props) => {
   )
 }
 
-ColorSchemeContext.protoTypes = {
+ColorSchemeContextProvider.protoTypes = {
   children: PropTypes.node.isRequired,
 }
+
+export { ColorSchemeContext, ColorSchemeContextProvider }

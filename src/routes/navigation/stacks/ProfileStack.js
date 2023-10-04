@@ -18,14 +18,14 @@ const ProfileStack = () => {
         <Stack.Screen
           name="Profile"
           component={Profile}
-          options={({ navigation }) => ({
+          options={(/* { navigation } */) => ({
             headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,
           })}
         />
         <Stack.Screen
           name="Edit"
           component={Edit}
-          options={({ navigation }) => ({
+          options={(/* { navigation } */) => ({
             headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,
           })}
         />

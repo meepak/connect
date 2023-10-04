@@ -14,7 +14,7 @@ import TextInputBox from '../../components/TextInputBox'
 import Logo from '../../components/Logo'
 import { colors, fontSize } from '../../theme'
 import { ColorSchemeContext } from '../../context/ColorSchemeContext'
-import { UserDataContext } from '../../context/UserDataContext'
+// import { UserDataContext } from '../../context/UserDataContext'
 
 const styles = StyleSheet.create({
   main: {
@@ -47,7 +47,7 @@ export default function Login() {
   const [spinner, setSpinner] = useState(false)
   const navigation = useNavigation()
   const { scheme } = useContext(ColorSchemeContext)
-  const { userData } = useContext(UserDataContext)
+  // const { userData } = useContext(UserDataContext)
   const isDark = scheme === 'dark'
   const colorScheme = {
     text: isDark ? colors.white : colors.primaryText,
