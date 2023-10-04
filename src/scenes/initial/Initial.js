@@ -11,6 +11,7 @@ import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import { firestore, auth } from '../../firebase/config'
 import { colors, fontSize } from '../../theme'
+import LoadingScreen from '../../components/LoadingScreen'
 
 import { checkedAtom, loggedInAtom } from '../../utils/atom'
 
@@ -68,14 +69,15 @@ export default function Initial() {
   }, [])
 
   return (
-    <ScreenTemplate>
-      <View
-        style={[styles.container, { backgroundColor: colorScheme.container }]}
-      >
-        <Text style={[styles.title, { color: colorScheme.text }]}>
-          loading...
-        </Text>
-      </View>
-    </ScreenTemplate>
+    <LoadingScreen />
+    // <ScreenTemplate>
+    //   <View
+    //     style={[styles.container, { backgroundColor: colorScheme.container }]}
+    //   >
+    //     <Text style={[styles.title, { color: colorScheme.text }]}>
+    //       loading...
+    //     </Text>
+    //   </View>
+    // </ScreenTemplate>
   )
 }
