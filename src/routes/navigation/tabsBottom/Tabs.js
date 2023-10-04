@@ -5,12 +5,10 @@ import { colors } from 'theme'
 import PropTypes from 'prop-types'
 
 // stack navigators
-import {
-  HomeNavigator,
-  ProfileNavigator,
-  ConnectNavigator,
-  ChatNavigator,
-} from '../stacks'
+import HomeStack from '../stacks/HomeStack'
+import ProfileStack from '../stacks/ProfileStack'
+import ConnectStack from '../stacks/ConnectStack'
+import ChatStack from '../stacks/ChatStack'
 
 const Tab = createBottomTabNavigator()
 
@@ -43,7 +41,7 @@ const TabNavigator = () => (
   >
     <Tab.Screen
       name="HomeTab"
-      component={HomeNavigator}
+      component={HomeStack}
       options={{
         tabBarLabel: 'Home',
         tabBarIcon: (props) => <MyTabBarIcon {...props} icon="home" />,
@@ -51,7 +49,7 @@ const TabNavigator = () => (
     />
     <Tab.Screen
       name="ProfileTab"
-      component={ProfileNavigator}
+      component={ProfileStack}
       options={{
         tabBarLabel: 'Profile',
         tabBarIcon: (props) => <MyTabBarIcon {...props} icon="user" />,
@@ -59,7 +57,7 @@ const TabNavigator = () => (
     />
     <Tab.Screen
       name="ConnectTab"
-      component={ConnectNavigator}
+      component={ConnectStack}
       options={{
         tabBarLabel: 'Connect',
         tabBarIcon: (props) => <MyTabBarIcon {...props} icon="share-alt" />,
@@ -67,7 +65,7 @@ const TabNavigator = () => (
     />
     <Tab.Screen
       name="ChatTab"
-      component={ChatNavigator}
+      component={ChatStack}
       options={{
         tabBarLabel: 'Chat',
         tabBarIcon: (props) => <MyTabBarIcon {...props} icon="comments" />,

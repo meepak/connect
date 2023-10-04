@@ -17,7 +17,7 @@ export default function HeaderRightButton(props) {
   const navigation = useNavigation()
 
   const onButtonPress = () => {
-    navigation.navigate('ModalStacks', {
+    navigation.navigate('ModalStack', {
       screen: 'Post',
       params: {
         data: userData,

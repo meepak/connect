@@ -85,7 +85,7 @@ export default function RootStack() {
         }}
       >
         <Stack.Screen
-          name="ModalStacks"
+          name="ModalStack"
           component={ModalStack}
         />
       </Stack.Group>

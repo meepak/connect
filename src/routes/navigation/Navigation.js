@@ -7,7 +7,7 @@ import { UserDataContext } from '../../context/UserDataContext'
 import { toastConfig } from '../../utils/ShowToast'
 import { auth } from '../../firebase'
 
-import { LoginNavigator } from './stacks'
+import IntroStack from './stacks/IntroStack'
 import RootStack from './stacks/RootStack'
 
 export default function Navigation() {
@@ -19,7 +19,7 @@ export default function Navigation() {
       <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
         {userData && auth.currentUser && auth.currentUser.emailVerified
           ? <RootStack />
-          : <LoginNavigator />}
+          : <IntroStack />}
       </NavigationContainer>
       <Toast config={toastConfig} />
     </>

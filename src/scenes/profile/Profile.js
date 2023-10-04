@@ -135,7 +135,7 @@ export default function Profile() {
           label="Open Modal"
           color={colors.tertiary}
           onPress={() => {
-            navigation.navigate('ModalStacks', {
+            navigation.navigate('ModalStack', {
               screen: 'Post',
               params: {
                 data: userData,
