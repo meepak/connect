@@ -10,9 +10,9 @@ const firebaseKey = {
   measurementId: 'G-V7SL9H39XV',
 }
 
-const eulaLink = 'https://github.com/kiyohken2000/ReactNative-Expo-Firebase-Boilerplate-v2'
+const eulaLink = 'https://findassociate.com'
 
-const expoProjectId = '1:964755632942:web:534c882c9a91dc014f40bf'
+const expoProjectId = 'f6ffa3f4-8805-43ca-a88e-a2297fbac759'
 
 export
 {
