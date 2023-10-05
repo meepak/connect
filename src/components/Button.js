@@ -2,6 +2,7 @@ import React from 'react'
 import {
   StyleSheet, TouchableOpacity, Text, View,
 } from 'react-native'
+import PropTypes from 'prop-types'
 import { fontSize, colors } from '../theme'
 
 const styles = StyleSheet.create({
@@ -43,4 +44,15 @@ export default function Button(props) {
       <Text style={styles.buttonText}>{label}</Text>
     </TouchableOpacity>
   )
+}
+
+Button.propTypes = {
+  label: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
+  color: PropTypes.string.isRequired,
+  disable: PropTypes.bool,
+}
+
+Button.defaultProps = {
+  disable: false,
 }

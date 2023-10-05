@@ -7,15 +7,15 @@ import { ColorSchemeContext } from '../context/ColorSchemeContext'
 
 const styles = StyleSheet.create({
   input: {
-    height: 48,
+    height: 60,
     borderRadius: 5,
     overflow: 'hidden',
-    backgroundColor: 'white',
     marginTop: 10,
     marginBottom: 10,
     marginLeft: 30,
     marginRight: 30,
     paddingLeft: 16,
+    fontSize: 18,
   },
 })
 

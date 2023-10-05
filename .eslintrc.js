@@ -33,7 +33,6 @@ module.exports = {
       },
     ],
     'import/no-cycle': [2, { maxDepth: 1 }],
-    'allow': ['foo_', '_bar'],
   },
   settings: {
     'import/resolver': {
