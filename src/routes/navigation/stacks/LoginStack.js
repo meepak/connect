@@ -15,14 +15,14 @@ const LoginStack = () => {
   return (
     <Stack.Navigator screenOptions={navigationProps}>
       <Stack.Screen
-        name="Login"
+        name="Sign in"
         component={Login}
         options={(/* { navigation } */) => ({
           headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,
         })}
       />
       <Stack.Screen
-        name="Sign Up"
+        name="Sign up"
         component={SignUp}
         options={(/* { navigation } */) => ({
           headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,

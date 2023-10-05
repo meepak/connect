@@ -4,16 +4,14 @@
     "slug": "connect",
     "owner": "dpkmht",
     "privacy": "public",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo-sm.png",
     "splash": {
-      "image": "./assets/images/splash-new.png",
-      "resizeMode": "contain",
+      // "image": "./assets/images/splash-new.png",
+      "image": "./assets/images/splash-new-dark.png",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -21,9 +19,7 @@
       "fallbackToCacheTimeout": 10000,
       "url": "https://u.expo.dev/f6ffa3f4-8805-43ca-a88e-a2297fbac759"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "connect.firebase",
@@ -37,20 +33,11 @@
       "package": "connect.firebase",
       "versionCode": 1,
       "userInterfaceStyle": "automatic",
-      "permissions": [
-        "VIBRATE",
-        "CAMERA"
-      ]
+      "permissions": ["VIBRATE", "CAMERA"]
     },
     "packagerOpts": {
       "config": "metro.config.js",
-      "sourceExts": [
-        "js",
-        "jsx",
-        "svg",
-        "ts",
-        "tsx"
-      ]
+      "sourceExts": ["js", "jsx", "svg", "ts", "tsx"]
     },
     "description": "",
     "extra": {
