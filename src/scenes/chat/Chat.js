@@ -1,18 +1,12 @@
 import React, {
   useCallback, useState, useContext, useLayoutEffect,
 } from 'react'
-import {
-  View, Text, StyleSheet, TouchableOpacity,
-} from 'react-native'
-import {
-  useNavigation,
-  useRoute,
-  useFocusEffect,
-} from '@react-navigation/native'
+import { View } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import { Avatar } from 'react-native-elements'
 // import { signOut } from 'firebase/auth'
 import {
-  collection, addDoc, getDocs, query, orderBy, onSnapshot,
+  collection, addDoc, query, orderBy, onSnapshot,
 } from 'firebase/firestore'
 import { GiftedChat } from 'react-native-gifted-chat'
 import { auth, firestore } from '../../firebase'

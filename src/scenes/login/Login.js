@@ -96,7 +96,7 @@ export default function Login() {
     <ScreenTemplate>
       <KeyboardAwareScrollView
         style={styles.main}
-        keyboardShouldPersistTaps="always"
+        keyboardShouldPersistTaps="never"
       >
         <Logo />
 

@@ -1,43 +1,10 @@
-import React, { useEffect, useContext, useState } from 'react'
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import ScreenTemplate from '../../components/ScreenTemplate'
+import React, { useEffect, useState } from 'react'
+import {
+  StyleSheet, ScrollView,
+} from 'react-native'
 import axios from 'axios'
-import RenderItem from './RenderItem';
-
-export default function Print() {
-  const [data, setData] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false)
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  const fetchData = async() => {
-    try {
-      setIsLoading(true)
-      const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts')
-      setData(data)
-    } catch(e) {
-      console.log('error', e)
-      setIsError(true)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  return (
-    <ScreenTemplate isLoading={isLoading} isError={isError}>
-      <ScrollView style={styles.main}>
-        {data.map((item, i) => {
-          return (
-            <RenderItem item={item} key={i} index={i} />
-          )
-        })}
-      </ScrollView>
-    </ScreenTemplate>
-  )
-}
+import ScreenTemplate from '../../components/ScreenTemplate'
+import RenderItem from './RenderItem'
 
 const styles = StyleSheet.create({
   container: {
@@ -50,3 +17,36 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 })
+
+export default function Print() {
+  const [data, setData] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
+
+  const fetchData = async () => {
+    try {
+      setIsLoading(true)
+      const { responseData } = await axios.get('https://jsonplaceholder.typicode.com/posts')
+      setData(responseData)
+    } catch (e) {
+      console.log('error', e)
+      setIsError(true)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  return (
+    <ScreenTemplate isLoading={isLoading} isError={isError}>
+      <ScrollView style={styles.main}>
+        {data.map((item, i) => (
+          <RenderItem item={item} key={item.id} index={i} />
+        ))}
+      </ScrollView>
+    </ScreenTemplate>
+  )
+}

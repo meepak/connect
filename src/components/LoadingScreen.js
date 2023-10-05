@@ -31,8 +31,8 @@ export default function LoadingScreen() {
     <View style={[styles.container, isDark ? styles.darkBg : styles.lightBg]}>
       <LottieView
         ref={animation}
-        // source={require('../../assets/lottie/98288-loading.json')} //TODO load via prop for different use cases
-        source={require('../../assets/lottie/loading-animation-hands.json')}
+        // source={require('../../assets/lottie/loading-animation-hands.json')}
+        source={require('../../assets/lottie/98288-loading.json')} // TODO load via prop for different use cases
         style={[styles.animation, isDark ? styles.darkBg : styles.lightBg]}
         autoPlay
       />
