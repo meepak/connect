@@ -18,8 +18,4 @@ const UserDataContextProvider = (props) => {
   )
 }
 
-UserDataContextProvider.protoTypes = {
-  children: PropTypes.node.isRequired,
-}
-
 export { UserDataContext, UserDataContextProvider }

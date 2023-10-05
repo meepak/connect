@@ -182,7 +182,7 @@ export default function Edit() {
     <ScreenTemplate>
       <KeyboardAwareScrollView
         style={styles.main}
-        keyboardShouldPersistTaps="always"
+        keyboardShouldPersistTaps="never"
       >
         <View style={styles.avatar}>
           <Avatar

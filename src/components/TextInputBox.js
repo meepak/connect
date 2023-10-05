@@ -1,6 +1,8 @@
 import React, { useContext } from 'react'
-import { TextInput, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
+import { TextInput } from 'react-native-paper'
 import { colors } from 'theme'
+import PropTypes from 'prop-types'
 import { ColorSchemeContext } from '../context/ColorSchemeContext'
 
 const styles = StyleSheet.create({
@@ -39,15 +41,33 @@ const TextInputBox = (props) => {
       style={[styles.input, { backgroundColor: colorScheme.input, color: colorScheme.text }]}
       placeholderTextColor={colors.grayLight}
       secureTextEntry={secureTextEntry}
-      placeholder={placeholder}
+      label={placeholder}
       onChangeText={onChangeText}
       onEndEditing={onEndEditing}
       value={value}
       underlineColorAndroid="transparent"
       autoCapitalize={autoCapitalize}
       keyboardType={keyboardType}
+      mode="flat"
     />
   )
+}
+
+TextInputBox.propTypes = {
+  secureTextEntry: PropTypes.bool,
+  placeholder: PropTypes.string.isRequired,
+  onChangeText: PropTypes.func.isRequired,
+  onEndEditing: PropTypes.func,
+  value: PropTypes.string.isRequired,
+  autoCapitalize: PropTypes.string,
+  keyboardType: PropTypes.string,
+}
+
+TextInputBox.defaultProps = {
+  secureTextEntry: false,
+  onEndEditing: null,
+  autoCapitalize: 'none',
+  keyboardType: 'default',
 }
 
 export default TextInputBox

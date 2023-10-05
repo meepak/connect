@@ -98,7 +98,7 @@ export default function SignUp() {
     <ScreenTemplate>
       <KeyboardAwareScrollView
         style={styles.main}
-        keyboardShouldPersistTaps="always"
+        keyboardShouldPersistTaps="never"
       >
         <Logo />
         <TextInputBox

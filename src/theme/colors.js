@@ -12,7 +12,7 @@ const colors = {
   secondary: '#dc143c',
   tertiary: '#228b22',
   white: '#ffffff',
-  darkInput: '#303030',
+  darkInput: '#ffffff',
   primaryText: '#2e2e2d',
   lightyellow: '#ffffe0',
   black: '#000000',
