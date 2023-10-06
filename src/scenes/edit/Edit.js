@@ -200,6 +200,8 @@ export default function Edit() {
           onChangeText={(text) => setFullName(text)}
           value={fullName}
           autoCapitalize="none"
+          label="Full Name"
+          icon="user"
         />
         <Text style={[styles.field, { color: colorScheme.text }]}>Mail:</Text>
         <Text style={[styles.title, { color: colorScheme.text }]}>
@@ -212,6 +214,8 @@ export default function Edit() {
           value={phone}
           autoCapitalize="none"
           keyboardType="phone-pad"
+          label="Phone"
+          icon="phone"
         />
         <Button
           label="Update"
@@ -229,6 +233,8 @@ export default function Edit() {
             onChangeText={(text) => setCurrentPassword(text)}
             value={currentPassword}
             autoCapitalize="none"
+            label="Current Password"
+            icon="lock"
           />
           <TextInputBox
             secureTextEntry
@@ -236,6 +242,8 @@ export default function Edit() {
             onChangeText={(text) => setPassword(text)}
             value={password}
             autoCapitalize="none"
+            label="New Password"
+            icon="lock"
           />
           <TextInputBox
             secureTextEntry
@@ -243,6 +251,8 @@ export default function Edit() {
             onChangeText={(text) => setConfirmPassword(text)}
             value={confirmPassword}
             autoCapitalize="none"
+            label="Confirm Password"
+            icon="lock"
           />
           <Button
             label="Change Password"
