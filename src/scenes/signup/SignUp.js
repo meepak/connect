@@ -15,6 +15,7 @@ import { firestore, auth } from '../../firebase'
 import { colors, fontSize } from '../../theme'
 import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import { defaultAvatar, eulaLink } from '../../config'
+import isValidEmail from '../../utils/validation'
 
 const styles = StyleSheet.create({
   main: {
@@ -46,9 +47,13 @@ const styles = StyleSheet.create({
 
 export default function SignUp() {
   const [fullName, setFullName] = useState('')
+  const [nameError, setNameError] = useState('')
   const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState('')
   const [password, setPassword] = useState('')
+  const [passwordError, setPasswordError] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [confirmPasswordError, setConfirmPasswordError] = useState('')
   const [spinner, setSpinner] = useState(false)
   const navigation = useNavigation()
   const { scheme } = useContext(ColorSchemeContext)
@@ -62,7 +67,7 @@ export default function SignUp() {
   }, [])
 
   const onFooterLinkPress = () => {
-    navigation.navigate('Login')
+    navigation.navigate('Sign in')
   }
 
   const onRegisterPress = async () => {
@@ -91,7 +96,7 @@ export default function SignUp() {
       Alert.alert('Error', e.message)
     }
     setSpinner(false)
-    navigation.navigate('Login')
+    navigation.navigate('Sign in')
   }
 
   return (
@@ -102,31 +107,50 @@ export default function SignUp() {
       >
         <Logo />
         <TextInputBox
-          placeholder="Your Name"
+          label="Full Name"
           onChangeText={(text) => setFullName(text)}
           value={fullName}
           autoCapitalize="none"
+          icon="user"
+          errorMessage={nameError}
         />
         <TextInputBox
-          placeholder="E-mail"
+          label="E-mail"
           onChangeText={(text) => setEmail(text)}
           value={email}
           autoCapitalize="none"
           keyboardType="email-address"
+          icon="envelope"
+          errorMessage={emailError}
+          onEndEditing={() => {
+            console.log('blurred email')
+            let error = ''
+            if (email !== '') {
+              error = isValidEmail(email) ? '' : 'Invalid E-mail'
+            }
+            setEmailError(error)
+          }}
         />
         <TextInputBox
           secureTextEntry
-          placeholder="Password"
+          label="Password"
           onChangeText={(text) => setPassword(text)}
           value={password}
           autoCapitalize="none"
+          icon="lock"
+          errorMessage={passwordError}
         />
         <TextInputBox
           secureTextEntry
-          placeholder="Confirm Password"
+          label="Confirm Password"
           onChangeText={(text) => setConfirmPassword(text)}
           value={confirmPassword}
           autoCapitalize="none"
+          icon="lock"
+          errorMessage={confirmPasswordError}
+          onEndEditing={() => {
+            setConfirmPasswordError(password !== confirmPassword ? 'Password didnot match.' : '')
+          }}
         />
         <Button
           label="Agree and Create account"
@@ -136,7 +160,7 @@ export default function SignUp() {
         <View style={styles.footerView}>
           <Text style={[styles.footerText, { color: colorScheme.text }]}>Already got an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Log in</Text></Text>
         </View>
-        <Text style={[styles.link, { color: colorScheme.text }]} onPress={() => { Linking.openURL(eulaLink) }}>Require agree <Text style={styles.eulaLink}>EULA</Text></Text>
+        <Text style={[styles.link, { color: colorScheme.text }]} onPress={() => { Linking.openURL(eulaLink) }}>By signing up, you agree to our <Text style={styles.eulaLink}>Terms & Conditions.</Text></Text>
       </KeyboardAwareScrollView>
       <Spinner
         visible={spinner}
