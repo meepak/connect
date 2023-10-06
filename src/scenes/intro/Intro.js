@@ -237,14 +237,11 @@ const Intro = () => {
         data={slides}
         renderItem={(param) => {
           const { item } = param
-          console.log(item)
           const modifiedItem = {
             ...item, // Copy all properties from the original item
             backgroundColor: colorScheme.background, // Override backgroundColor
             textColor: colorScheme.text, // Override textColor
           }
-          console.log(modifiedItem)
-
           return RenderItem(modifiedItem)
         }}
         showSkipButton={false}
@@ -258,7 +255,7 @@ const Intro = () => {
         dotStyle={styles.dotStyle}
         activeDotStyle={styles.activeDotStyle}
         dotClickEnabled
-        ref={(ref) => slider = ref}
+        ref={(ref) => { slider = ref }}
       />
 
       <View style={styles.buttonContainer}>
