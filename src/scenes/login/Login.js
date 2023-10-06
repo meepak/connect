@@ -1,4 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, {
+  useState, useContext, useEffect, // useRef,
+} from 'react'
 import {
   Alert, Text, View, StyleSheet, LogBox,
 } from 'react-native'
@@ -14,6 +16,7 @@ import TextInputBox from '../../components/TextInputBox'
 import Logo from '../../components/Logo'
 import { colors, fontSize } from '../../theme'
 import { ColorSchemeContext } from '../../context/ColorSchemeContext'
+import isValidEmail from '../../utils/validation'
 // import { UserDataContext } from '../../context/UserDataContext'
 
 const styles = StyleSheet.create({
@@ -43,8 +46,11 @@ LogBox.ignoreLogs(['Setting a timer'])
 
 export default function Login() {
   const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState('')
   const [password, setPassword] = useState('')
+  const [passwordError, setPasswordError] = useState('')
   const [spinner, setSpinner] = useState(false)
+  // const emailTextInput = useRef()
   const navigation = useNavigation()
   const { scheme } = useContext(ColorSchemeContext)
   // const { userData } = useContext(UserDataContext)
@@ -54,7 +60,7 @@ export default function Login() {
   }
 
   const onFooterLinkPress = () => {
-    navigation.navigate('Sign Up')
+    navigation.navigate('Sign up')
   }
 
   const onSendVerificationLinkPress = async () => {
@@ -68,6 +74,30 @@ export default function Login() {
 
   const onLoginPress = async () => {
     try {
+      // emailTextInput.current.focus()
+      // validation starts
+      if (email === '') {
+        setEmailError('Please enter your email')
+        return
+      }
+
+      if (emailError !== '') {
+        console.log(email)
+        if (isValidEmail(email)) {
+          console.log('email is valid')
+          setEmailError('')
+        } else {
+          console.log('email is IN valid')
+          return
+        }
+      }
+      if (password === '') {
+        setPasswordError('Please enter your password')
+        return
+      }
+      setPasswordError('')
+      // valiation ends
+
       setSpinner(true)
       const response = await signInWithEmailAndPassword(auth, email, password)
       const { user } = response
@@ -83,12 +113,21 @@ export default function Login() {
       */
       setSpinner(false)
       if (!firestoreDocument.exists) {
-        Alert.alert('Error', 'User does not exist anymore.')
+        setEmailError('Error', 'User does not exist anymore.')
         return
       }
     } catch (error) {
+      console.log(error.message)
       setSpinner(false)
-      Alert.alert('Error', error.message)
+      // Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests).
+
+      if (error.message.includes('too-many-requests')) {
+        setEmailError('Too man authentication failure') // error.message
+        setPasswordError('Please try again later or reset your password.')
+      } else {
+        setEmailError('Please recheck your email') // error.message
+        setPasswordError('Please recheck your password')
+      }
     }
   }
 
@@ -96,7 +135,7 @@ export default function Login() {
     <ScreenTemplate>
       <KeyboardAwareScrollView
         style={styles.main}
-        keyboardShouldPersistTaps="never"
+        keyboardShouldPersistTaps="always"
       >
         <Logo />
 
@@ -108,18 +147,40 @@ export default function Login() {
             </View>
           ) : <></>}
         <TextInputBox
-          placeholder="E-mail"
+          // ref={emailTextInput}
+          icon="envelope"
+          autoFocus
+          // placeholder="E-mail"
+          label="E-mail"
           onChangeText={(text) => setEmail(text)}
           autoCapitalize="none"
           value={email}
           keyboardType="email-address"
+          errorMessage={emailError}
+          onEndEditing={() => {
+            console.log('blurred email')
+            let error = ''
+            if (email !== '') {
+              error = isValidEmail(email) ? '' : 'Invalid E-mail'
+            }
+            setEmailError(error)
+          }}
         />
         <TextInputBox
+          icon="lock"
           secureTextEntry
-          placeholder="Password"
+          // placeholder="Password "
+          label="Password"
           onChangeText={(text) => setPassword(text)}
           value={password}
           autoCapitalize="none"
+          errorMessage={passwordError}
+          onEndEditing={() => {
+            console.log('blurred password')
+            if (password !== '') {
+              setPasswordError('')
+            }
+          }}
         />
         <Button
           label="Log in"
@@ -128,7 +189,27 @@ export default function Login() {
         />
         <View style={styles.footerView}>
           <Text style={[styles.footerText, { color: colorScheme.text }]}>Don&apos;t have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
+          <Text style={[{ color: colorScheme.text }]}>OR</Text>
         </View>
+
+        <Button
+          label="Sign in with LinkedIn"
+          color={colors.primary}
+          onPress={() => {}}
+        />
+
+        <Button
+          label="Sign in with Google"
+          color={colors.primary}
+          onPress={() => {}}
+        />
+
+        <Button
+          label="Sign in with Facebook"
+          color={colors.primary}
+          onPress={() => {}}
+        />
+
       </KeyboardAwareScrollView>
       <Spinner
         visible={spinner}

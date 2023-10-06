@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native'
 import AppIntroSlider from 'react-native-app-intro-slider'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import { fontSize, colors } from '../../theme'
+import Logo from '../../components/Logo'
 
 const styles = StyleSheet.create({
   container: {
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: 'white',
     textAlign: 'center',
-    marginTop: 50,
+    marginTop: 60,
     fontWeight: 'bold',
   },
   dotStyle: {
@@ -112,6 +113,22 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontSize: fontSize.large,
     fontWeight: 'bold',
+  },
+
+  logoContainer: {
+    position: 'absolute',
+    top: 30, // Adjust the position as needed
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 9999,
+  },
+
+  logo: {
+    flex: 1,
+    alignSelf: 'center',
+    padding: 10,
+    top: 20,
   },
 })
 
@@ -179,6 +196,11 @@ const Intro = () => {
 
   return (
     <ScreenTemplate>
+
+      <View style={styles.logoContainer}>
+        <Logo overrideStyle={styles.logo} />
+      </View>
+
       <AppIntroSlider
         data={slides}
         renderItem={RenderItem}

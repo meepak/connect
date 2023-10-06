@@ -1,22 +1,38 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Image, StyleSheet } from 'react-native'
+import PropTypes from 'prop-types'
+import { ColorSchemeContext } from '../context/ColorSchemeContext'
 
 const styles = StyleSheet.create({
   logo: {
     flex: 1,
-    height: 180,
-    width: 180,
-    alignSelf: 'center',
-    margin: 30,
-    borderRadius: 20,
+    alignSelf: 'flex-start',
+    marginLeft: 30,
+    marginTop: 10,
+    marginBottom: 20,
   },
 })
 
-export default function Logo() {
+export default function Logo({ overrideStyle }) {
+  const { scheme } = useContext(ColorSchemeContext)
+  const newStyle = overrideStyle ?? styles.logo
+  console.log(newStyle)
   return (
     <Image
-      style={styles.logo}
-      source={require('../../assets/icon.png')}
+      style={newStyle} // Merge default styles with the provided style prop
+      source={
+        scheme === 'dark'
+          ? require('../../assets/images/fa_white.png')
+          : require('../../assets/images/fa_black.png')
+      }
     />
   )
 }
+
+// Logo.propTypes = {
+//   overrideStyle: PropTypes.objectOf,
+// }
+
+// Logo.defaultProps = {
+//   overrideStyle: null,
+// }

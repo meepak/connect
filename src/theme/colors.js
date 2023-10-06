@@ -16,6 +16,8 @@ const colors = {
   primaryText: '#2e2e2d',
   lightyellow: '#ffffe0',
   black: '#000000',
+
+  solidWhite: 'rgba(255,255,255,1)',
 }
 
 export default colors
