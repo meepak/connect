@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useContext } from 'react'
 import {
   StyleSheet,
   View,
@@ -6,12 +6,13 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
 import AppIntroSlider from 'react-native-app-intro-slider'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import { fontSize, colors } from '../../theme'
 import Logo from '../../components/Logo'
+import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 
 const styles = StyleSheet.create({
   container: {
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonSignIn: {
-    color: colors.white,
+    color: colors.primary,
     fontSize: fontSize.large,
   },
   buttonLogin: {
@@ -139,6 +140,7 @@ const slides = [
     text: 'Discovery is the first step to innovation and success. Embrace the journey of finding new opportunities.',
     image: require('../../../assets/images/discover.png'),
     backgroundColor: colors.black,
+    textColor: colors.white,
   },
   {
     key: 's2',
@@ -146,6 +148,7 @@ const slides = [
     text: 'In the world of business, finding the right associate can be the key to unlocking your full potential.',
     image: require('../../../assets/images/connection.png'),
     backgroundColor: colors.black,
+    textColor: colors.white,
   },
   {
     key: 's3',
@@ -157,10 +160,11 @@ const slides = [
     //         'https://raw.githubusercontent.com/AboutReact/sampleresource/master/intro_discount.png',
     // },
     backgroundColor: colors.black,
+    textColor: colors.white,
   },
 ]
 
-const RenderItem = ({ item }) => (
+const RenderItem = (item) => (
   <View
     style={{
       flex: 1,
@@ -170,18 +174,46 @@ const RenderItem = ({ item }) => (
       paddingBottom: 100,
     }}
   >
-    <Text style={styles.introTitleStyle}>{item.title}</Text>
+    <Text style={[styles.introTitleStyle, { color: item.textColor }]}>{item.title}</Text>
     <Image style={styles.introImageStyle} source={item.image} />
-    <Text style={styles.introTextStyle}>{item.text}</Text>
+    <Text style={[styles.introTextStyle, { color: item.textColor }]}>{item.text}</Text>
   </View>
 )
 
-RenderItem.propTypes = {
-  item: PropTypes.arrayOf.isRequired, // TODO break array for further validation
-}
-
 const Intro = () => {
   const navigation = useNavigation()
+  const { scheme } = useContext(ColorSchemeContext)
+  const isDark = scheme === 'dark'
+  const colorScheme = {
+    background: isDark ? colors.black : colors.white,
+    text: isDark ? colors.white : colors.black,
+  }
+
+  let slider = null
+
+  let i = 0
+  let timeout
+  const tick = () => {
+    if (slider) {
+      slider.goToSlide(i) // this.slider is ref of <AppIntroSlider....
+      i += 1
+      if (i === slides.length) {
+        i = 0
+      }
+    }
+  }
+
+  useEffect(() => { // componentDidMount
+    timeout = setInterval(() => {
+      tick()
+    }, 2000)
+  }, [])
+
+  useEffect(() => () => { // componentWillUnmount
+    clearInterval(timeout)
+  },
+  [])
+
   const onDone = () => {
     navigation.navigate('LoginStack', {
       screen: 'Sign up',
@@ -203,7 +235,18 @@ const Intro = () => {
 
       <AppIntroSlider
         data={slides}
-        renderItem={RenderItem}
+        renderItem={(param) => {
+          const { item } = param
+          console.log(item)
+          const modifiedItem = {
+            ...item, // Copy all properties from the original item
+            backgroundColor: colorScheme.background, // Override backgroundColor
+            textColor: colorScheme.text, // Override textColor
+          }
+          console.log(modifiedItem)
+
+          return RenderItem(modifiedItem)
+        }}
         showSkipButton={false}
         showNextButton={false}
         showDoneButton={false}
@@ -215,6 +258,7 @@ const Intro = () => {
         dotStyle={styles.dotStyle}
         activeDotStyle={styles.activeDotStyle}
         dotClickEnabled
+        ref={(ref) => slider = ref}
       />
 
       <View style={styles.buttonContainer}>
