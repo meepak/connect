@@ -27,7 +27,7 @@ IconButton.propTypes = {
   color: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
   size: PropTypes.number.isRequired,
-  containerStyle: PropTypes.arrayOf.isRequired,
+  // containerStyle: ViewPropTypes.isRequired,
 }
 
 export default IconButton

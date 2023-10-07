@@ -18,7 +18,6 @@ import Spinner from 'react-native-loading-spinner-overlay'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/Button'
 import TextInputBox from '../../components/TextInputBox'
-import Checkbox from '../../components/Checkbox'
 import { firestore, storage, auth } from '../../firebase'
 import { colors, fontSize } from '../../theme'
 import { UserDataContext } from '../../context/UserDataContext'
@@ -55,13 +54,12 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function Edit() {
+export default function Introduce() {
   const { userData } = useContext(UserDataContext)
   const { scheme } = useContext(ColorSchemeContext)
   const navigation = useNavigation()
   const [fullName, setFullName] = useState(userData.fullName)
   const [phone, setFhone] = useState(userData.phone ?? '')
-  const [isIntroduced, setIsIntroduced] = useState(userData.isIntroduced)
   const [progress, setProgress] = useState('')
   const [avatar, setAvatar] = useState(userData.avatar)
   const [currentPassword, setCurrentPassword] = useState('')
@@ -137,47 +135,16 @@ export default function Edit() {
     try {
       const data = {
         id: userData.id,
-        email: userData.email,
-        fullName,
-        avatar,
-        phone,
-        isIntroduced,
+        isIntroduced: !userData.isIntroduced,
       }
       const usersRef = doc(firestore, 'users', userData.id)
       await updateDoc(usersRef, data)
-      navigation.goBack()
+      //   navigation.navigate('HomeStack', {
+      //     screen: 'Home',
+      //   })
+      console.log(userData)
     } catch (e) {
       Alert.alert('Error', e.message)
-    }
-  }
-
-  const onUpdatePassword = async () => {
-    if (password !== confirmPassword) {
-      Alert.alert('Error', "Passwords don't match.")
-      return
-    }
-    try {
-      setSpinner(true)
-      const user = auth.currentUser
-      const credential = EmailAuthProvider.credential(
-        user.email,
-        currentPassword,
-      )
-      await reauthenticateWithCredential(user, credential)
-      await updatePassword(user, password)
-      showToast({
-        title: 'Password changed',
-        body: 'Your password has changed.',
-        isDark,
-      })
-      setCurrentPassword('')
-      setPassword('')
-      setConfirmPassword('')
-    } catch (e) {
-      console.log(e)
-      Alert.alert('Error', e.message)
-    } finally {
-      setSpinner(false)
     }
   }
 
@@ -220,58 +187,12 @@ export default function Edit() {
           label="Phone"
           icon="phone"
         />
-        <Checkbox
-          label="Has user been introduced?"
-          checked={isIntroduced}
-          onCheckChanged={(checked) => {
-            setIsIntroduced(checked)
-          }}
-          textColor={colorScheme.text}
-        />
         <Button
           label="Update"
           color={colors.primary}
           onPress={profileUpdate}
           disable={!fullName}
         />
-        <View style={styles.changePasswordContainer}>
-          <Text style={[styles.field, { color: colorScheme.text }]}>
-            Change Password:
-          </Text>
-          <TextInputBox
-            secureTextEntry
-            placeholder="Current Password"
-            onChangeText={(text) => setCurrentPassword(text)}
-            value={currentPassword}
-            autoCapitalize="none"
-            label="Current Password"
-            icon="lock"
-          />
-          <TextInputBox
-            secureTextEntry
-            placeholder="New Password"
-            onChangeText={(text) => setPassword(text)}
-            value={password}
-            autoCapitalize="none"
-            label="New Password"
-            icon="lock"
-          />
-          <TextInputBox
-            secureTextEntry
-            placeholder="Confirm New Password"
-            onChangeText={(text) => setConfirmPassword(text)}
-            value={confirmPassword}
-            autoCapitalize="none"
-            label="Confirm Password"
-            icon="lock"
-          />
-          <Button
-            label="Change Password"
-            color={colors.pink}
-            onPress={onUpdatePassword}
-            disable={!currentPassword || !password || !confirmPassword}
-          />
-        </View>
       </KeyboardAwareScrollView>
       <Spinner
         visible={spinner}

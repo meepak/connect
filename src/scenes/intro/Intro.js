@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {
   StyleSheet,
   View,
@@ -183,6 +183,7 @@ const RenderItem = (item) => (
 const Intro = () => {
   const navigation = useNavigation()
   const { scheme } = useContext(ColorSchemeContext)
+  const [isBeingTouhed, setIsBeingTouched] = useState(false)
   const isDark = scheme === 'dark'
   const colorScheme = {
     background: isDark ? colors.black : colors.white,
@@ -195,6 +196,7 @@ const Intro = () => {
   let timeout
   const tick = () => {
     if (slider) {
+      // console.log(`Go to Page ${i}`)
       slider.goToSlide(i) // this.slider is ref of <AppIntroSlider....
       i += 1
       if (i === slides.length) {
@@ -204,10 +206,12 @@ const Intro = () => {
   }
 
   useEffect(() => { // componentDidMount
-    timeout = setInterval(() => {
-      tick()
-    }, 2000)
-  }, [])
+    if (!isBeingTouhed) {
+      timeout = setInterval(() => {
+        tick()
+      }, 3000)
+    }
+  }, [isBeingTouhed])
 
   useEffect(() => () => { // componentWillUnmount
     clearInterval(timeout)
@@ -227,7 +231,16 @@ const Intro = () => {
   }
 
   return (
-    <ScreenTemplate>
+    <ScreenTemplate
+      onTouchStart={() => {
+        // console.log('Touch Started')
+        setIsBeingTouched(true)
+      }}
+      onTouchEnd={() => {
+        // console.log('Touch Ended')
+        setIsBeingTouched(false)
+      }}
+    >
 
       <View style={styles.logoContainer}>
         <Logo overrideStyle={styles.logo} />

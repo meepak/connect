@@ -3,13 +3,14 @@ import {
   StyleSheet, TouchableOpacity, Text, View,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import { fontSize, colors } from '../theme'
+import { layout, fontSize, colors } from '../theme'
 
 const styles = StyleSheet.create({
   button: {
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 20,
+    marginLeft: layout.marginLeft,
+    marginRight: layout.marginRight,
+    marginTop: layout.marginTop,
+    marginBottom: layout.marginBottom,
     height: 48,
     borderRadius: 5,
     alignItems: 'center',
