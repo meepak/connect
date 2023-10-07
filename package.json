@@ -37,7 +37,7 @@
     "ignore-warnings": "^0.2.1",
     "jotai": "^1.7.8",
     "lottie-react-native": "5.1.6",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "patch-package": "^6.4.7",
     "prop-types": "^15.8.1",
     "react": "18.2.0",
