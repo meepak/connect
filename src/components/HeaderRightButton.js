@@ -2,8 +2,8 @@ import React from 'react'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { useNavigation } from '@react-navigation/native'
-import PropTypes from 'prop-types'
 import { colors } from '../theme'
+import PropTypes from 'prop-types'
 
 const styles = StyleSheet.create({
   container: {
@@ -41,7 +41,7 @@ export default function HeaderRightButton(props) {
   )
 }
 
-HeaderRightButton.propTypes = {
-  from: PropTypes.string.isRequired,
-  userData: PropTypes.arrayOf.isRequired,
-}
+// HeaderRightButton.propTypes = {
+//   from: PropTypes.string.isRequired,
+//   userData: PropTypes.func.isRequired,
+// }

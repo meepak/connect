@@ -1,20 +1,20 @@
 import React, { useContext, useState } from 'react'
 import { StyleSheet } from 'react-native'
 import { TextInput, HelperText } from 'react-native-paper'
-import { colors } from 'theme'
 import PropTypes from 'prop-types'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { ColorSchemeContext } from '../context/ColorSchemeContext'
+import { layout, fontSize, colors } from '../theme'
 
 const styles = StyleSheet.create({
   input: {
+    marginLeft: layout.marginLeft,
+    marginRight: layout.marginRight,
+    marginTop: layout.marginTop,
+    marginBottom: layout.marginBottom,
     height: 62,
     borderRadius: 5,
     overflow: 'hidden',
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 30,
-    marginRight: 30,
     fontSize: 18,
   },
   helperText: {

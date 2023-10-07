@@ -9,17 +9,24 @@ import { auth } from '../../firebase'
 
 import IntroStack from './stacks/IntroStack'
 import RootStack from './stacks/RootStack'
+import IntroduceStack from './stacks/IntroduceStack'
 
 export default function Navigation() {
   const { scheme } = useContext(ColorSchemeContext)
   const { userData } = useContext(UserDataContext)
 
+  const getMainComponent = () => {
+    console.log(`user data from Navigation.js ${JSON.stringify(userData)}`)
+    if (userData && auth.currentUser && auth.currentUser.emailVerified) {
+      return userData.isIntroduced ? <RootStack /> : <IntroduceStack />
+    }
+    return <IntroStack />
+  }
+
   return (
     <>
       <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-        {userData && auth.currentUser && auth.currentUser.emailVerified
-          ? <RootStack />
-          : <IntroStack />}
+        {getMainComponent()}
       </NavigationContainer>
       <Toast config={toastConfig} />
     </>

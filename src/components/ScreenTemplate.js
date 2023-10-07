@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 })
 
 const ScreenTemplate = (props) => {
-  const { isLoading, isError, children } = props
+  const { isLoading, isError, children, onTouchStart, onTouchEnd } = props
   const { scheme } = useContext(ColorSchemeContext)
   const isDark = scheme === 'dark'
   const container = isDark ? styles.darkContainer : styles.container
@@ -32,7 +32,7 @@ const ScreenTemplate = (props) => {
   }
 
   return (
-    <SafeAreaView style={container}>
+    <SafeAreaView style={container} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       <StatusBar />
       { children }
     </SafeAreaView>
@@ -43,11 +43,15 @@ ScreenTemplate.propTypes = {
   isLoading: PropTypes.bool,
   isError: PropTypes.bool,
   children: PropTypes.node.isRequired,
+  onTouchStart: PropTypes.func,
+  onTouchEnd: PropTypes.func,
 }
 
 ScreenTemplate.defaultProps = {
   isLoading: false,
   isError: false,
+  onTouchStart: null,
+  onTouchEnd: null,
 }
 
 export default ScreenTemplate
