@@ -14,7 +14,7 @@ import Logo from '../../components/Logo'
 import { firestore, auth } from '../../firebase'
 import { colors, fontSize } from '../../theme'
 import { ColorSchemeContext } from '../../context/ColorSchemeContext'
-import { defaultAvatar, eulaLink } from '../../config'
+import { eulaLink } from '../../config'
 import isValidEmail from '../../utils/validation'
 
 const styles = StyleSheet.create({
@@ -87,7 +87,7 @@ export default function SignUp() {
         id: user.uid,
         email,
         fullName,
-        avatar: defaultAvatar,
+        // avatar: null, // do not assign default avatar,
       }
       const usersRef = doc(firestore, 'users', user.uid)
       await setDoc(usersRef, data)

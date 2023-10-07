@@ -1,13 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {
-  Alert, Text, View, StyleSheet, Platform,
+  Alert, Text, View, StyleSheet,
 } from 'react-native'
 import { doc, updateDoc } from 'firebase/firestore'
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
-import { Avatar } from '@rneui/themed'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import * as ImagePicker from 'expo-image-picker'
-import * as ImageManipulator from 'expo-image-manipulator'
 import { useNavigation } from '@react-navigation/native'
 import {
   updatePassword,
@@ -19,11 +15,12 @@ import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/Button'
 import TextInputBox from '../../components/TextInputBox'
 import Checkbox from '../../components/Checkbox'
-import { firestore, storage, auth } from '../../firebase'
+import { firestore, auth } from '../../firebase'
 import { colors, fontSize } from '../../theme'
 import { UserDataContext } from '../../context/UserDataContext'
 import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import { showToast } from '../../utils/ShowToast'
+import Avatar from '../../components/Avatar'
 
 const styles = StyleSheet.create({
   progress: {
@@ -62,7 +59,6 @@ export default function Edit() {
   const [fullName, setFullName] = useState(userData.fullName)
   const [phone, setFhone] = useState(userData.phone ?? '')
   const [isIntroduced, setIsIntroduced] = useState(userData.isIntroduced)
-  const [progress, setProgress] = useState('')
   const [avatar, setAvatar] = useState(userData.avatar)
   const [currentPassword, setCurrentPassword] = useState('')
   const [password, setPassword] = useState('')
@@ -78,68 +74,13 @@ export default function Edit() {
     console.log('Edit screen')
   }, [])
 
-  const ImageChoiceAndUpload = async () => {
-    try {
-      if (Platform.OS === 'ios') {
-        const {
-          status,
-        } = await ImagePicker.requestMediaLibraryPermissionsAsync()
-        if (status !== 'granted') {
-          Alert.alert('Error', 'Permission is required for use.')
-          return
-        }
-      }
-      const result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: false,
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsMultipleSelection: false,
-      })
-      if (!result.canceled) {
-        const actions = []
-        actions.push({ resize: { width: 300 } })
-        const manipulatorResult = await ImageManipulator.manipulateAsync(
-          result.assets[0].uri,
-          actions,
-          {
-            compress: 0.4,
-          },
-        )
-        const localUri = await fetch(manipulatorResult.uri)
-        const localBlob = await localUri.blob()
-        const filename = userData.id + new Date().getTime()
-        const storageRef = ref(storage, `avatar/${userData.id}/${filename}`)
-        const uploadTask = uploadBytesResumable(storageRef, localBlob)
-        uploadTask.on(
-          'state_changed',
-          (snapshot) => {
-            const progressVar = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            setProgress(`${parseInt(progressVar, 10)}%`)
-          },
-          (error) => {
-            console.log(error)
-            Alert.alert('Error', 'Upload failed.')
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              setProgress('')
-              setAvatar(downloadURL)
-            })
-          },
-        )
-      }
-    } catch (e) {
-      console.log('error', e.message)
-      Alert.alert('Error', 'The size may be too much.')
-    }
-  }
-
   const profileUpdate = async () => {
     try {
       const data = {
         id: userData.id,
         email: userData.email,
         fullName,
-        avatar,
+        avatar: avatar ?? null,
         phone,
         isIntroduced,
       }
@@ -190,13 +131,9 @@ export default function Edit() {
         <View style={styles.avatar}>
           <Avatar
             size="xlarge"
-            rounded
-            title="NI"
-            onPress={ImageChoiceAndUpload}
-            source={{ uri: avatar }}
+            onEdited={(item) => setAvatar(item)}
           />
         </View>
-        <Text style={colorScheme.progress}>{progress}</Text>
         <Text style={[styles.field, { color: colorScheme.text }]}>Name:</Text>
         <TextInputBox
           placeholder={fullName}

@@ -1,28 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {
-  Alert, Text, View, StyleSheet, Platform,
+  Alert, Text, View, StyleSheet,
 } from 'react-native'
 import { doc, updateDoc } from 'firebase/firestore'
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
-import { Avatar } from '@rneui/themed'
+// import { Avatar } from '@rneui/themed'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import * as ImagePicker from 'expo-image-picker'
-import * as ImageManipulator from 'expo-image-manipulator'
-import { useNavigation } from '@react-navigation/native'
-import {
-  updatePassword,
-  EmailAuthProvider,
-  reauthenticateWithCredential,
-} from 'firebase/auth'
 import Spinner from 'react-native-loading-spinner-overlay'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/Button'
 import TextInputBox from '../../components/TextInputBox'
-import { firestore, storage, auth } from '../../firebase'
-import { colors, fontSize } from '../../theme'
+import { firestore } from '../../firebase'
+import { layout, colors, fontSize } from '../../theme'
 import { UserDataContext } from '../../context/UserDataContext'
 import { ColorSchemeContext } from '../../context/ColorSchemeContext'
-import { showToast } from '../../utils/ShowToast'
+import Avatar from '../../components/Avatar'
 
 const styles = StyleSheet.create({
   progress: {
@@ -45,26 +36,32 @@ const styles = StyleSheet.create({
     fontSize: fontSize.middle,
     textAlign: 'center',
   },
+  greeting: {
+    marginLeft: layout.marginLeft,
+    marginRight: layout.marginRight,
+    marginBottom: layout.marginBottom,
+    paddingTop: 20,
+    fontSize: fontSize.xxxLarge,
+    fontWeight: 'bold',
+  },
+  greetingMessage: {
+    marginLeft: layout.marginLeft,
+    marginRight: layout.marginRight,
+    marginBottom: layout.marginBottom,
+    fontSize: fontSize.xxLarge,
+  },
   avatar: {
     margin: 30,
     alignSelf: 'center',
-  },
-  changePasswordContainer: {
-    paddingVertical: 30,
   },
 })
 
 export default function Introduce() {
   const { userData } = useContext(UserDataContext)
   const { scheme } = useContext(ColorSchemeContext)
-  const navigation = useNavigation()
   const [fullName, setFullName] = useState(userData.fullName)
   const [phone, setFhone] = useState(userData.phone ?? '')
-  const [progress, setProgress] = useState('')
   const [avatar, setAvatar] = useState(userData.avatar)
-  const [currentPassword, setCurrentPassword] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
   const [spinner, setSpinner] = useState(false)
   const isDark = scheme === 'dark'
   const colorScheme = {
@@ -76,76 +73,26 @@ export default function Introduce() {
     console.log('Edit screen')
   }, [])
 
-  const ImageChoiceAndUpload = async () => {
-    try {
-      if (Platform.OS === 'ios') {
-        const {
-          status,
-        } = await ImagePicker.requestMediaLibraryPermissionsAsync()
-        if (status !== 'granted') {
-          Alert.alert('Error', 'Permission is required for use.')
-          return
-        }
-      }
-      const result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: false,
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsMultipleSelection: false,
-      })
-      if (!result.canceled) {
-        const actions = []
-        actions.push({ resize: { width: 300 } })
-        const manipulatorResult = await ImageManipulator.manipulateAsync(
-          result.assets[0].uri,
-          actions,
-          {
-            compress: 0.4,
-          },
-        )
-        const localUri = await fetch(manipulatorResult.uri)
-        const localBlob = await localUri.blob()
-        const filename = userData.id + new Date().getTime()
-        const storageRef = ref(storage, `avatar/${userData.id}/${filename}`)
-        const uploadTask = uploadBytesResumable(storageRef, localBlob)
-        uploadTask.on(
-          'state_changed',
-          (snapshot) => {
-            const progressVar = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            setProgress(`${parseInt(progressVar, 10)}%`)
-          },
-          (error) => {
-            console.log(error)
-            Alert.alert('Error', 'Upload failed.')
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              setProgress('')
-              setAvatar(downloadURL)
-            })
-          },
-        )
-      }
-    } catch (e) {
-      console.log('error', e.message)
-      Alert.alert('Error', 'The size may be too much.')
-    }
-  }
-
   const profileUpdate = async () => {
+    setSpinner(true)
+
     try {
       const data = {
         id: userData.id,
+        fullName,
+        avatar: avatar ?? null,
+        phone,
         isIntroduced: !userData.isIntroduced,
       }
       const usersRef = doc(firestore, 'users', userData.id)
       await updateDoc(usersRef, data)
-      //   navigation.navigate('HomeStack', {
-      //     screen: 'Home',
-      //   })
       console.log(userData)
     } catch (e) {
+      // TODO: navigate to error screen, log errors for later debugging
       Alert.alert('Error', e.message)
     }
+
+    setSpinner(false)
   }
 
   return (
@@ -154,16 +101,16 @@ export default function Introduce() {
         style={styles.main}
         keyboardShouldPersistTaps="never"
       >
+        <Text style={[styles.greeting, { color: colorScheme.text }]}>Welcome {userData.fullName},</Text>
+        <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>Lets get started by creating your profile.</Text>
+
         <View style={styles.avatar}>
           <Avatar
             size="xlarge"
-            rounded
-            title="NI"
-            onPress={ImageChoiceAndUpload}
-            source={{ uri: avatar }}
+            onEdited={(item) => setAvatar(item)}
           />
         </View>
-        <Text style={colorScheme.progress}>{progress}</Text>
+
         <Text style={[styles.field, { color: colorScheme.text }]}>Name:</Text>
         <TextInputBox
           placeholder={fullName}
