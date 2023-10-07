@@ -18,7 +18,9 @@ const styles = StyleSheet.create({
 })
 
 const ScreenTemplate = (props) => {
-  const { isLoading, isError, children, onTouchStart, onTouchEnd } = props
+  const {
+    isLoading, isError, children, onTouchStart, onTouchEnd,
+  } = props
   const { scheme } = useContext(ColorSchemeContext)
   const isDark = scheme === 'dark'
   const container = isDark ? styles.darkContainer : styles.container

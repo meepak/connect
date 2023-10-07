@@ -243,7 +243,7 @@ const Intro = () => {
     >
 
       <View style={styles.logoContainer}>
-        <Logo overrideStyle={styles.logo} />
+        <Logo style={styles.logo} />
       </View>
 
       <AppIntroSlider

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Image, StyleSheet } from 'react-native'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import { ColorSchemeContext } from '../context/ColorSchemeContext'
 
 const styles = StyleSheet.create({
@@ -13,10 +13,10 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function Logo({ overrideStyle }) {
+export default function Logo({ style }) {
   const { scheme } = useContext(ColorSchemeContext)
-  const newStyle = overrideStyle ?? styles.logo
-  console.log(newStyle)
+  const newStyle = style ?? styles.logo
+  // console.log(newStyle)
   return (
     <Image
       style={newStyle} // Merge default styles with the provided style prop
@@ -30,9 +30,9 @@ export default function Logo({ overrideStyle }) {
 }
 
 // Logo.propTypes = {
-//   overrideStyle: PropTypes.objectOf,
+//   style: PropTypes.objectOf,
 // }
 
 // Logo.defaultProps = {
-//   overrideStyle: null,
+//   style: null,
 // }
