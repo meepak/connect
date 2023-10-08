@@ -1,6 +1,8 @@
 import React, { useRef } from 'react'
 import { StyleSheet, Dimensions, View } from 'react-native'
 import LottieView from 'lottie-react-native'
+import { useColorScheme } from 'react-native'
+import {colors} from '../theme'
 
 const { height, width } = Dimensions.get('window')
 const styles = StyleSheet.create({
@@ -17,9 +19,12 @@ const styles = StyleSheet.create({
 
 export default function LoadingScreen() {
   const animation = useRef(null)
+  const scheme = useColorScheme()
+
+  const bgColor = scheme === 'dark' ? colors.black : colors.white
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: bgColor }]}>
       <LottieView
         ref={animation}
         // source={require('../../assets/lottie/loading-animation-hands.json')}
