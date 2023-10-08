@@ -16,9 +16,10 @@ export default function Navigation() {
   const scheme = useColorScheme()
 
   const getMainComponent = () => {
-    console.log(`user data from Navigation.js ${JSON.stringify(userData)}`)
-    if (userData && auth.currentUser && auth.currentUser.emailVerified) {
-      return userData.isIntroduced ? <RootStack /> : <IntroduceStack />
+    if (userData) {
+      if (auth.currentUser && auth.currentUser.emailVerified) {
+        return userData.isIntroduced ? <RootStack /> : <IntroduceStack />
+      }
     }
     return <IntroStack />
   }
