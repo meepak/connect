@@ -10,7 +10,7 @@ import SignUp from '../../../scenes/signup'
 const Stack = createStackNavigator()
 
 const LoginStack = () => {
-  const  scheme  = useColorScheme()
+  const scheme = useColorScheme()
   const navigationProps = scheme === 'dark' ? darkProps : lightProps
   return (
     <Stack.Navigator screenOptions={navigationProps}>

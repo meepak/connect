@@ -11,8 +11,7 @@
     "splash": {
       // "image": "./assets/images/splash-new.png",
       "image": "./assets/images/splash-new-dark.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover"
     },
     "updates": {
       "enabled": true,

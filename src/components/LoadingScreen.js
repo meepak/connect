@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react'
+import React, { useRef } from 'react'
 import { StyleSheet, Dimensions, View } from 'react-native'
 import LottieView from 'lottie-react-native'
 
