@@ -34,7 +34,6 @@ export default function HeaderRightButton(props) {
     >
       <FontIcon
         name="bars"
-        color={colors.lightPurple}
         size={24}
       />
     </TouchableOpacity>

@@ -18,7 +18,7 @@ const IntroduceStack = () => {
         name="Introduce"
         component={Introduce}
         options={(/* { navigation } */) => ({
-          headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,
+          headerBackground: () => <HeaderStyle />,
           headerTitle: () => ( // App Logo
             <Logo style={{ width: 200, alignSelf: 'center' }} />
           ),

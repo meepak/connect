@@ -63,24 +63,24 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const str = 'Hello, Connect!!'
-    const kilobyteSize = getKilobyteSize({ str })
-    console.log({ str, kilobyteSize })
+    // const str = 'Hello, Connect!!'
+    // const kilobyteSize = getKilobyteSize({ str })
+    // console.log({ str, kilobyteSize })
   }, [])
 
   useEffect(() => {
-    const obj = {
-      name: 'name1',
-      age: 15,
-    }
-    const kilobyteSize = getKilobyteSize({ str: obj })
-    console.log({ obj, kilobyteSize })
+    // const obj = {
+    //   name: 'name1',
+    //   age: 15,
+    // }
+    // const kilobyteSize = getKilobyteSize({ str: obj })
+    // console.log({ obj, kilobyteSize })
   }, [])
 
   useEffect(() => {
-    const array = ['name1', 'name2', 'name3']
-    const kilobyteSize = getKilobyteSize({ str: array })
-    console.log({ array, kilobyteSize })
+    // const array = ['name1', 'name2', 'name3']
+    // const kilobyteSize = getKilobyteSize({ str: array })
+    // console.log({ array, kilobyteSize })
   }, [])
 
   useLayoutEffect(() => {

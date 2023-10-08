@@ -24,7 +24,7 @@ const ChatStack = () => {
           name="Chat"
           component={Chat}
           options={(/* { navigation } */) => ({
-            headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,
+            headerBackground: () => <HeaderStyle />,
             // headerRight: () => <HeaderRightButton from="Connect" userData={userData} />,
           })}
         />

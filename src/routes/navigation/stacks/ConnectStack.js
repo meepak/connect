@@ -24,7 +24,7 @@ const ConnectStack = () => {
           name="Connect"
           component={FollowFollowerTabs}
           options={(/* { navigation } */) => ({
-            headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,
+            headerBackground: () => <HeaderStyle />,
             headerRight: () => <HeaderRightButton from="Connect" userData={userData} />,
           })}
         />

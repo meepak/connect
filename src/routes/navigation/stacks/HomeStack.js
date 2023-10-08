@@ -28,8 +28,7 @@ const HomeStack = () => {
               name="Home"
               component={Home}
               options={(/* { navigation } */) => ({
-                headerBackground:
-                  scheme === 'dark' ? null : () => <HeaderStyle />,
+                headerBackground: () => <HeaderStyle />,
               })}
             />
             <Stack.Screen

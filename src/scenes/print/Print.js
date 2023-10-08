@@ -29,15 +29,17 @@ export default function Print() {
       const { responseData } = await axios.get('https://jsonplaceholder.typicode.com/posts')
       setData(responseData)
     } catch (e) {
-      console.log('error', e)
+      console.log('message error', e)
       setIsError(true)
     } finally {
+      console.log(`response data -- ${JSON.stringify(data)}`)
       setIsLoading(false)
     }
   }
 
   useEffect(() => {
     fetchData()
+    console.log(data)
   }, [])
 
   return (

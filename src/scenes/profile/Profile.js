@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react'
 import {
   Text, View, StyleSheet, ScrollView, useColorScheme
 } from 'react-native'
-import { Avatar } from '@rneui/themed'
 import Dialog from 'react-native-dialog'
 import Spinner from 'react-native-loading-spinner-overlay'
 import { doc, deleteDoc } from 'firebase/firestore'
@@ -14,6 +13,7 @@ import Restart from '../../utils/Restart'
 import { firestore, auth } from '../../firebase'
 import { UserDataContext } from '../../context/UserDataContext'
 import { colors, fontSize } from '../../theme'
+import Avatar from '../../components/Avatar'
 
 const styles = StyleSheet.create({
   main: {
@@ -116,9 +116,6 @@ export default function Profile() {
         <View style={styles.avatar}>
           <Avatar
             size="xlarge"
-            rounded
-            title="NI"
-            source={{ uri: userData.avatar }}
           />
         </View>
         <Text style={[styles.field, { color: colorScheme.text }]}>Name:</Text>
