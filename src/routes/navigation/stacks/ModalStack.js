@@ -36,13 +36,17 @@ const ModalStack = () => {
                 title: ctx.title,
                 headerBackTitle: '',
                 headerBackground: () => <HeaderStyle />,
-                // headerBackground: isDark ? colors.black : colors.white,
                 headerTintColor: isDark ? colors.white : colors.white,
               }}
             />
             <Stack.Screen
               name="Print"
               component={Print}
+              options={{
+                // title: ctx.title,
+                headerBackground: () => <HeaderStyle />,
+                headerTintColor: isDark ? colors.white : colors.white,
+              }}
             />
           </Stack.Navigator>
         )}
