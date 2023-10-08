@@ -45,13 +45,13 @@ const App = () => {
   // rendering
   if (!didLoad) return <View />
   return (
-    // <PaperProvider theme={paperTheme}>
-      <Provider>
-        <UserDataContextProvider>
+    <Provider>
+      <UserDataContextProvider>
+        <PaperProvider theme={paperTheme}>
           <Router />
-        </UserDataContextProvider>
-      </Provider>
-    // </PaperProvider>
+        </PaperProvider>
+      </UserDataContextProvider>
+    </Provider>
   )
 }
 
