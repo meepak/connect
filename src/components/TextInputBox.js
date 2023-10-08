@@ -47,8 +47,9 @@ const TextInputBox = (props) => {
 
   const isDark = scheme === 'dark'
   const colorScheme = {
-    bg: isDark ? colors.black : colors.white,
+    bg: isDark ? colors.black : colors.solidWhite,
     text: isDark ? colors.solidWhite : colors.primaryText,
+    line: isDark ? colors.solidWhite : colors.black,
   }
 
   return (
@@ -93,11 +94,11 @@ const TextInputBox = (props) => {
         keyboardType={keyboardType}
         mode="flat"
         activeUnderlineColor={colors.primary}
-        underlineColor={colors.solidWhite}
-        underlineColorAndroid={colors.solidWhite}
+        underlineColor={colorScheme.line}
+        underlineColorAndroid={colorScheme.line}
         textColor={colorScheme.text}
         backgroundColor={colorScheme.bg}
-        placeholderTextColor={colorScheme.solidWhite}
+        placeholderTextColor={colorScheme.line}
         error={errorMessage !== ''}
       />
       <HelperText

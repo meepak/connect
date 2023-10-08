@@ -18,18 +18,18 @@ const styles = StyleSheet.create({
 
 export default function RenderItem(props) {
   const { item } = props
-  const scheme = useColorScheme()
-  const isDark = scheme === 'dark'
-  const colorScheme = {
-    text: isDark ? colors.white : colors.primaryText,
-  }
+  // const scheme = useColorScheme()
+  // const isDark = scheme === 'dark'
+  // const colorScheme = {
+  //   text: isDark ? colors.white : colors.primaryText,
+  // }
 
   return (
     <View
       style={styles.container}
     >
-      <Text style={[styles.title, { color: colorScheme.text }]}>{item.title}</Text>
-      <Text style={[styles.body, { color: colorScheme.text }]}>{item.body}</Text>
+      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.body}>{item.body}</Text>
     </View>
   )
 }

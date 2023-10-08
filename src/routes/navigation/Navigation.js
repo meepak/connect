@@ -25,7 +25,7 @@ export default function Navigation() {
   const darkBg = { colors: { background: '#000' } }
   const lightBg = { colors: { background: '#FFF' } }
   const themeBg = scheme === 'dark' ? darkBg : lightBg
-  console.log(themeBg)
+  // console.log(themeBg)
 
   return (
     <>

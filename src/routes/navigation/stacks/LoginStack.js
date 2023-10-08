@@ -18,14 +18,14 @@ const LoginStack = () => {
         name="Sign in"
         component={Login}
         options={(/* { navigation } */) => ({
-          headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,
+          headerBackground: () => <HeaderStyle />,
         })}
       />
       <Stack.Screen
         name="Sign up"
         component={SignUp}
         options={(/* { navigation } */) => ({
-          headerBackground: scheme === 'dark' ? null : () => <HeaderStyle />,
+          headerBackground: () => <HeaderStyle />,
         })}
       />
     </Stack.Navigator>

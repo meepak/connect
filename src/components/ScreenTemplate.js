@@ -10,30 +10,31 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  darkContainer: {
-    flex: 1,
-    backgroundColor: colors.black,
-  },
+  // darkContainer: {
+  //   flex: 1,
+  //   backgroundColor: colors.black,
+  // },
 })
 
 const ScreenTemplate = (props) => {
   const {
     isLoading, isError, children, onTouchStart, onTouchEnd,
   } = props
-  const scheme = useColorScheme()
-  const isDark = scheme === 'dark'
-  const container = isDark ? styles.darkContainer : styles.container
+  // const scheme = useColorScheme()
+  // const isDark = scheme === 'dark'
+  // const container = isDark ? styles.container : styles.container
+
+  if (isError) {
+    console.log('Screen Template received IsError')
+    return <ErrorScreen />
+  }
 
   if (isLoading) {
     return <LoadingScreen />
   }
 
-  if (isError) {
-    return <ErrorScreen />
-  }
-
   return (
-    <SafeAreaView style={container} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+    <SafeAreaView style={styles.container} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       <StatusBar />
       { children }
     </SafeAreaView>
