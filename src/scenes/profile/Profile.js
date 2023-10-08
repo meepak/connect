@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import {
-  Text, View, StyleSheet, ScrollView,
+  Text, View, StyleSheet, ScrollView, useColorScheme
 } from 'react-native'
 import { Avatar } from '@rneui/themed'
 import Dialog from 'react-native-dialog'
@@ -12,7 +12,6 @@ import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/Button'
 import Restart from '../../utils/Restart'
 import { firestore, auth } from '../../firebase'
-import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import { UserDataContext } from '../../context/UserDataContext'
 import { colors, fontSize } from '../../theme'
 
@@ -52,7 +51,7 @@ export default function Profile() {
   const navigation = useNavigation()
   const [visible, setVisible] = useState(false)
   const [spinner, setSpinner] = useState(false)
-  const { scheme } = useContext(ColorSchemeContext)
+  const scheme = useColorScheme()
   const isDark = scheme === 'dark'
   const colorScheme = {
     text: isDark ? colors.white : colors.primaryText,

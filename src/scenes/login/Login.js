@@ -2,7 +2,7 @@ import React, {
   useState, useContext, useEffect, // useRef,
 } from 'react'
 import {
-  Alert, Text, View, StyleSheet, LogBox,
+  Alert, Text, View, StyleSheet, LogBox, useColorScheme
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { doc, getDoc } from 'firebase/firestore'
@@ -15,7 +15,6 @@ import Button from '../../components/Button'
 import TextInputBox from '../../components/TextInputBox'
 import Logo from '../../components/Logo'
 import { colors, fontSize } from '../../theme'
-import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import isValidEmail from '../../utils/validation'
 // import { UserDataContext } from '../../context/UserDataContext'
 
@@ -52,7 +51,7 @@ export default function Login() {
   const [spinner, setSpinner] = useState(false)
   // const emailTextInput = useRef()
   const navigation = useNavigation()
-  const { scheme } = useContext(ColorSchemeContext)
+  const { scheme } = useColorScheme()
   // const { userData } = useContext(UserDataContext)
   const isDark = scheme === 'dark'
   const colorScheme = {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {
-  Alert, Text, View, StyleSheet,
+  Alert, Text, View, StyleSheet, useColorScheme
 } from 'react-native'
 import { doc, updateDoc } from 'firebase/firestore'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -18,7 +18,6 @@ import Checkbox from '../../components/Checkbox'
 import { firestore, auth } from '../../firebase'
 import { colors, fontSize } from '../../theme'
 import { UserDataContext } from '../../context/UserDataContext'
-import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import { showToast } from '../../utils/ShowToast'
 import Avatar from '../../components/Avatar'
 
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
 
 export default function Edit() {
   const { userData } = useContext(UserDataContext)
-  const { scheme } = useContext(ColorSchemeContext)
+  const scheme = useColorScheme()
   const navigation = useNavigation()
   const [fullName, setFullName] = useState(userData.fullName)
   const [phone, setFhone] = useState(userData.phone ?? '')

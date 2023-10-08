@@ -1,8 +1,7 @@
 import React, { useContext } from 'react'
-import { Text, StyleSheet, View } from 'react-native'
+import { Text, StyleSheet, View, useColorScheme } from 'react-native'
 import PropTypes from 'prop-types'
 import { colors, fontSize } from '../../theme'
-import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +18,7 @@ const styles = StyleSheet.create({
 
 export default function RenderItem(props) {
   const { item } = props
-  const { scheme } = useContext(ColorSchemeContext)
+  const scheme = useColorScheme()
   const isDark = scheme === 'dark'
   const colorScheme = {
     text: isDark ? colors.white : colors.primaryText,

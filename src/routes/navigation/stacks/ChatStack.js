@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
+import { useColorScheme } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import { ColorSchemeContext } from '../../../context/ColorSchemeContext'
 // import { UserDataContext } from '../../../context/UserDataContext'
 
 import { lightProps, darkProps } from '../../navigationProps'
@@ -13,7 +13,7 @@ import Chat from '../../../scenes/chat'
 const Stack = createStackNavigator()
 
 const ChatStack = () => {
-  const { scheme } = useContext(ColorSchemeContext)
+  const scheme = useColorScheme()
   // const { userData } = useContext(UserDataContext)
   const navigationProps = scheme === 'dark' ? darkProps : lightProps
 

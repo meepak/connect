@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {
-  Alert, Text, View, StyleSheet,
+  Alert, Text, View, StyleSheet, useColorScheme
 } from 'react-native'
 import { doc, updateDoc } from 'firebase/firestore'
 // import { Avatar } from '@rneui/themed'
@@ -14,7 +14,6 @@ import RadioButtonGroup from '../../components/RadioButtonGroup'
 import { firestore } from '../../firebase'
 import { layout, colors, fontSize } from '../../theme'
 import { UserDataContext } from '../../context/UserDataContext'
-import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import Avatar from '../../components/Avatar'
 import CheckboxGroup from '../../components/CheckboxGroup'
 
@@ -221,7 +220,7 @@ const ScreenBusinessLocation = ({
   )
 }
 
-const ScreenAboutPartnerParticipation = (colorScheme) => {
+const ScreenAboutPartnerParticipation = ({colorScheme}) => {
   const [shouldSignNda, setShouldSignNda] = useState(false)
   const [requireBackgroundCheck, setRequireBackgroundCheck] = useState(false)
   const [partnerAvailability, setPartnerAvailability] = useState(false)
@@ -358,7 +357,7 @@ const ScreenAboutPartnerParticipation = (colorScheme) => {
   )
 }
 
-const ScreenAboutPartner = (colorScheme) => {
+const ScreenAboutPartner = ({colorScheme}) => {
   const [shouldSignNda, setShouldSignNda] = useState(false)
   const [requireBackgroundCheck, setRequireBackgroundCheck] = useState(false)
   const [partnerAvailability, setPartnerAvailability] = useState(false)
@@ -498,7 +497,7 @@ const ScreenAboutPartner = (colorScheme) => {
 
 export default function Introduce() {
   const { userData } = useContext(UserDataContext)
-  const { scheme } = useContext(ColorSchemeContext)
+  const scheme = useColorScheme()
   const [avatar, setAvatar] = useState(userData.avatar)
   const [whoAmI, setWhoAmI] = useState()
   const [fullName, setFullName] = useState(userData.fullName)
@@ -582,7 +581,10 @@ export default function Introduce() {
               />
             </>
           )
-          : <ScreenAboutPartner colorScheme={colorScheme} />}
+          : <></>}
+        {whoAmI === 'associate'
+          ? <ScreenAboutPartner colorScheme={colorScheme} />
+          : <></>}
 
         <Button
             label="Update"

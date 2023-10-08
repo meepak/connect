@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
-import { Image, StyleSheet } from 'react-native'
+import React from 'react'
+import { Image, StyleSheet, useColorScheme } from 'react-native'
 // import PropTypes from 'prop-types'
-import { ColorSchemeContext } from '../context/ColorSchemeContext'
 
 const styles = StyleSheet.create({
   logo: {
@@ -14,7 +13,7 @@ const styles = StyleSheet.create({
 })
 
 export default function Logo({ style }) {
-  const { scheme } = useContext(ColorSchemeContext)
+  const scheme = useColorScheme()
   const newStyle = style ?? styles.logo
   // console.log(newStyle)
   return (

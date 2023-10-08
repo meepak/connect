@@ -1,9 +1,8 @@
 import React, { useContext } from 'react'
-import { StyleSheet, SafeAreaView } from 'react-native'
+import { StyleSheet, SafeAreaView, useColorScheme } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import PropTypes from 'prop-types'
 import { colors } from '../theme'
-import { ColorSchemeContext } from '../context/ColorSchemeContext'
 import LoadingScreen from './LoadingScreen'
 import ErrorScreen from './ErrorScreen'
 
@@ -21,7 +20,7 @@ const ScreenTemplate = (props) => {
   const {
     isLoading, isError, children, onTouchStart, onTouchEnd,
   } = props
-  const { scheme } = useContext(ColorSchemeContext)
+  const scheme = useColorScheme()
   const isDark = scheme === 'dark'
   const container = isDark ? styles.darkContainer : styles.container
 
