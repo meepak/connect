@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   row: {
-    marginLeft: layout.marginLeft,
-    marginRight: layout.marginRight,
+    marginLeft: layout.marginLeft + 15,
+    marginRight: layout.marginRight + 15,
     marginTop: layout.marginTop,
     marginBottom: layout.marginBottom,
     flexDirection: 'row',
@@ -27,26 +27,24 @@ const styles = StyleSheet.create({
 
 export default function Checkbox(props) {
   const {
-    label, checked, disable, onCheckChanged, textColor,
+    label, checked, disabled, onChecked, textColor,
   } = props
   const [isChecked, setIsChecked] = useState(checked)
 
   const handleCheckChange = () => {
     const newCheckedState = !isChecked
     setIsChecked(newCheckedState)
-    if (onCheckChanged) {
-      onCheckChanged(newCheckedState)
+    if (onChecked) {
+      onChecked(newCheckedState)
     }
   }
 
   return (
-    <TouchableRipple onPress={handleCheckChange}>
+    <TouchableRipple onPress={handleCheckChange} disabled={disabled}>
       <View style={styles.row}>
         <Paragraph style={{ color: textColor }}>{label}</Paragraph>
         <View pointerEvents="none">
-          {disable
-            ? <SystemCheckBox status={isChecked ? 'checked' : 'unchecked'} disabled />
-            : <SystemCheckBox status={isChecked ? 'checked' : 'unchecked'} />}
+          <SystemCheckBox status={isChecked ? 'checked' : 'unchecked'} disabled={disabled} />
         </View>
       </View>
     </TouchableRipple>
@@ -56,12 +54,12 @@ export default function Checkbox(props) {
 Checkbox.propTypes = {
   label: PropTypes.string.isRequired,
   checked: PropTypes.bool,
-  onCheckChanged: PropTypes.func.isRequired,
+  onChecked: PropTypes.func.isRequired,
   textColor: PropTypes.string.isRequired,
-  disable: PropTypes.bool,
+  disabled: PropTypes.bool,
 }
 
 Checkbox.defaultProps = {
   checked: false,
-  disable: false,
+  disabled: false,
 }

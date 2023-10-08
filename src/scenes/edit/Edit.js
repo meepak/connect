@@ -160,7 +160,7 @@ export default function Edit() {
         <Checkbox
           label="Has user been introduced?"
           checked={isIntroduced}
-          onCheckChanged={(checked) => {
+          onChecked={(checked) => {
             setIsIntroduced(checked)
           }}
           textColor={colorScheme.text}
