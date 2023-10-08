@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import {
-  Text, View, StyleSheet, ScrollView, useColorScheme
+  Text, View, StyleSheet, ScrollView, useColorScheme,
 } from 'react-native'
 import Dialog from 'react-native-dialog'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -69,10 +69,10 @@ export default function Profile() {
     signOut(auth)
       .then(() => {
         setUserData('')
-        Restart() // do not restart, just go back to pre login page
+        // Restart() // do not restart, just go back to pre login page
       })
       .catch((error) => {
-        console.log(error.message)
+        console.log(`on sign out press - ${error.message}`)
       })
   }
 

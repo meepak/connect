@@ -44,13 +44,11 @@ export default function Initial() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log('onAuthStateChanged')
       if (user) {
         if (!user.emailVerified) {
-          Alert.alert('Error', 'Email verification required.')
+          Alert.alert('Error', 'Email verification required.') // To Do handle more gracefully
         }
         const usersRef = doc(firestore, 'users', user.uid)
-        console.log('entering on snapshot')
         onSnapshot(usersRef, (querySnapshot) => {
           const userData = querySnapshot.data()
           setUserData(userData)
