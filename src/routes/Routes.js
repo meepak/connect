@@ -8,6 +8,7 @@ const Routes = () => {
   const [checked] = useAtom(checkedAtom)
   const [loggedIn] = useAtom(loggedInAtom)
 
+  console.log('route loaded')
   // TODO: switch router by loggedIn state
   console.log('[##] loggedIn', loggedIn)
 
