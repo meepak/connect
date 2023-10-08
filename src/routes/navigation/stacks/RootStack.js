@@ -69,6 +69,7 @@ export default function RootStack() {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
+        cardOverlayEnabled: false,
       }}
     >
       <Stack.Screen
@@ -80,7 +81,7 @@ export default function RootStack() {
           presentation: 'modal',
           headerShown: false,
           gestureEnabled: true,
-          cardOverlayEnabled: true,
+          cardOverlayEnabled: false,
           ...TransitionPresets.ModalPresentationIOS,
         }}
       >
