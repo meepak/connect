@@ -2,7 +2,7 @@ import React, {
   useEffect, useState, useContext, useLayoutEffect,
 } from 'react'
 import {
-  Alert, Text, View, ScrollView, StyleSheet,
+  Alert, Text, View, ScrollView, StyleSheet, useColorScheme
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { doc, onSnapshot } from 'firebase/firestore'
@@ -12,7 +12,6 @@ import Button from '../../components/Button'
 import { firestore } from '../../firebase'
 import { colors, fontSize } from '../../theme'
 import { UserDataContext } from '../../context/UserDataContext'
-import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import sendNotification from '../../utils/SendNotification'
 import getKilobyteSize from '../../utils/functions'
 
@@ -52,7 +51,7 @@ export default function Home() {
   const navigation = useNavigation()
   const [token, setToken] = useState('')
   const { userData } = useContext(UserDataContext)
-  const { scheme } = useContext(ColorSchemeContext)
+  const scheme = useColorScheme()
   const isDark = scheme === 'dark'
   const colorScheme = {
     content: isDark ? styles.darkContent : styles.lightContent,

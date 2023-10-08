@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, useColorScheme } from 'react-native'
 import { TextInput, HelperText } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
-import { ColorSchemeContext } from '../context/ColorSchemeContext'
 import { layout, fontSize, colors } from '../theme'
 
 const styles = StyleSheet.create({
@@ -43,7 +42,7 @@ const TextInputBox = (props) => {
     icon,
   } = props
 
-  const { scheme } = useContext(ColorSchemeContext)
+  const scheme = useColorScheme()
   const [secureText, setSecureText] = useState(secureTextEntry)
 
   const isDark = scheme === 'dark'

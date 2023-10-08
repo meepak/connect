@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import {
-  Alert, Text, StyleSheet, View, Linking,
+  Alert, Text, StyleSheet, View, Linking, useColorScheme
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { setDoc, doc } from 'firebase/firestore'
@@ -13,7 +13,6 @@ import Button from '../../components/Button'
 import Logo from '../../components/Logo'
 import { firestore, auth } from '../../firebase'
 import { colors, fontSize } from '../../theme'
-import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import { eulaLink } from '../../config'
 import isValidEmail from '../../utils/validation'
 
@@ -56,7 +55,7 @@ export default function SignUp() {
   const [confirmPasswordError, setConfirmPasswordError] = useState('')
   const [spinner, setSpinner] = useState(false)
   const navigation = useNavigation()
-  const { scheme } = useContext(ColorSchemeContext)
+  const { scheme } = useColorScheme()
   const isDark = scheme === 'dark'
   const colorScheme = {
     text: isDark ? colors.white : colors.primaryText,

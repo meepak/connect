@@ -5,6 +5,7 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  useColorScheme
 } from 'react-native'
 // import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
@@ -12,7 +13,6 @@ import AppIntroSlider from 'react-native-app-intro-slider'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import { fontSize, colors } from '../../theme'
 import Logo from '../../components/Logo'
-import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 
 const styles = StyleSheet.create({
   container: {
@@ -182,7 +182,7 @@ const RenderItem = (item) => (
 
 const Intro = () => {
   const navigation = useNavigation()
-  const { scheme } = useContext(ColorSchemeContext)
+  const scheme = useColorScheme()
   const [isBeingTouhed, setIsBeingTouched] = useState(false)
   const isDark = scheme === 'dark'
   const colorScheme = {

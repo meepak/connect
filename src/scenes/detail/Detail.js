@@ -4,6 +4,7 @@ import {
   View,
   ScrollView,
   StyleSheet,
+  useColorScheme
 } from 'react-native'
 import {
   useNavigation,
@@ -14,7 +15,6 @@ import { colors, fontSize } from 'theme'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/Button'
 import HomeTitleContext from '../../context/HomeTitleContext'
-import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 
 const styles = StyleSheet.create({
   lightContent: {
@@ -58,7 +58,7 @@ export default function Detail() {
   const route = useRoute()
   const { from, userData, title } = route.params
   const { setTitle } = useContext(HomeTitleContext)
-  const { scheme } = useContext(ColorSchemeContext)
+  const scheme = useColorScheme()
   const isDark = scheme === 'dark'
   const colorScheme = {
     content: isDark ? styles.darkContent : styles.lightContent,

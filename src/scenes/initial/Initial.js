@@ -10,7 +10,6 @@ import { decode, encode } from 'base-64'
 import { onAuthStateChanged } from 'firebase/auth'
 import { useAtom } from 'jotai'
 import { UserDataContext } from '../../context/UserDataContext'
-// import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 // import ScreenTemplate from '../../components/ScreenTemplate'
 import { firestore, auth } from '../../firebase'
 // import { colors, fontSize } from '../../theme'
@@ -42,12 +41,6 @@ export default function Initial() {
   const [, setChecked] = useAtom(checkedAtom)
   const [, setLoggedIn] = useAtom(loggedInAtom)
   const { setUserData } = useContext(UserDataContext)
-  // const { scheme } = useContext(ColorSchemeContext)
-  // const isDark = scheme === 'dark'
-  // const colorScheme = {
-  //   container: isDark ? colors.dark : colors.white,
-  //   text: isDark ? colors.white : colors.primaryText,
-  // }
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {

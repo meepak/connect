@@ -1,14 +1,13 @@
-import React, { useEffect, useContext, useState } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Text, View, StyleSheet, useColorScheme } from 'react-native'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import { colors, fontSize } from '../../theme'
-import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import Button from '../../components/Button'
 import { showToast } from '../../utils/ShowToast'
 import ShowSnackbar from '../../components/ShowSnackbar'
 
 export default function Follower() {
-  const { scheme } = useContext(ColorSchemeContext)
+  const { scheme } = useColorScheme()
   const [visible, setVisible] = useState(false)
   const isDark = scheme === 'dark'
   const colorScheme = {

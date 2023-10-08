@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, useColorScheme } from 'react-native'
 import { useRoute, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { colors, fontSize } from 'theme'
 import moment from 'moment'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/Button'
-import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import HomeTitleContext from '../../context/HomeTitleContext'
 import storage from '../../utils/Storage'
 
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
 export default function Post() {
   const route = useRoute()
   const { data, from } = route.params
-  const { scheme } = useContext(ColorSchemeContext)
+  const scheme = useColorScheme()
   const [date, setDate] = useState('')
   const { setTitle } = useContext(HomeTitleContext)
   const navigation = useNavigation()

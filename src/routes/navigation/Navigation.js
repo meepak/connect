@@ -1,8 +1,7 @@
 import 'react-native-gesture-handler'
 import React, { useContext } from 'react'
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native'
+import { NavigationContainer } from '@react-navigation/native'
 import Toast from 'react-native-toast-message'
-import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import { UserDataContext } from '../../context/UserDataContext'
 import { toastConfig } from '../../utils/ShowToast'
 import { auth } from '../../firebase'
@@ -12,7 +11,6 @@ import RootStack from './stacks/RootStack'
 import IntroduceStack from './stacks/IntroduceStack'
 
 export default function Navigation() {
-  const { scheme } = useContext(ColorSchemeContext)
   const { userData } = useContext(UserDataContext)
 
   const getMainComponent = () => {
@@ -25,7 +23,7 @@ export default function Navigation() {
 
   return (
     <>
-      <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <NavigationContainer>
         {getMainComponent()}
       </NavigationContainer>
       <Toast config={toastConfig} />

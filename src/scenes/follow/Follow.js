@@ -1,10 +1,9 @@
 import React, { useEffect, useContext } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, useColorScheme } from 'react-native'
 import { colors, fontSize } from 'theme'
 import { useNavigation } from '@react-navigation/native'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/Button'
-import { ColorSchemeContext } from '../../context/ColorSchemeContext'
 import { UserDataContext } from '../../context/UserDataContext'
 
 const styles = StyleSheet.create({
@@ -23,7 +22,7 @@ const styles = StyleSheet.create({
 export default function Follow() {
   const navigation = useNavigation()
   const { userData } = useContext(UserDataContext)
-  const { scheme } = useContext(ColorSchemeContext)
+  const scheme = useColorScheme()
   const isDark = scheme === 'dark'
   const colorScheme = {
     text: isDark ? colors.white : colors.primaryText,
