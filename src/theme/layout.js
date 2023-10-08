@@ -1,6 +1,6 @@
 const layout = {
-  marginLeft: 30,
-  marginRight: 30,
+  marginLeft: 20,
+  marginRight: 20,
   marginTop: 10,
   marginBottom: 10,
 }
