@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   },
 })
 
+// TODO -- This is called form all over the places, handle the background color for this in better way
 const LoadingScreen = () => {
   const animation = useRef(null)
   // const scheme = useColorScheme()
