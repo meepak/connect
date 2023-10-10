@@ -2,11 +2,11 @@ import React, { useState, useEffect, useContext } from 'react'
 import {
   StyleSheet,
   View,
-  Text,
   Image,
   TouchableOpacity,
-  useColorScheme
+  // useColorScheme
 } from 'react-native'
+import { Text } from 'react-native-paper'
 // import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
 import AppIntroSlider from 'react-native-app-intro-slider'
@@ -17,7 +17,7 @@ import Logo from '../../components/Logo'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     alignItems: 'center',
     padding: 10,
     justifyContent: 'center',
@@ -25,28 +25,28 @@ const styles = StyleSheet.create({
   titleStyle: {
     padding: 10,
     textAlign: 'center',
-    fontSize: 22,
+    fontSize: fontSize.xLarge,
     fontWeight: 'bold',
   },
   paragraphStyle: {
     padding: 20,
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: fontSize.small,
   },
   introImageStyle: {
     width: 300,
     height: 300,
   },
   introTextStyle: {
-    fontSize: 18,
-    color: 'white',
+    fontSize: fontSize.middle,
+    // color: 'white',
     textAlign: 'center',
     marginBottom: 25,
     padding: 30,
   },
   introTitleStyle: {
-    fontSize: 32,
-    color: 'white',
+    fontSize: fontSize.xxxLarge,
+    // color: 'white',
     textAlign: 'center',
     marginTop: 60,
     fontWeight: 'bold',
@@ -139,16 +139,16 @@ const slides = [
     title: 'DISCOVER',
     text: 'Discovery is the first step to innovation and success. Embrace the journey of finding new opportunities.',
     image: require('../../../assets/images/discover.png'),
-    backgroundColor: colors.black,
-    textColor: colors.white,
+    // backgroundColor: colors.black,
+    // textColor: colors.white,
   },
   {
     key: 's2',
     title: 'CONNECT',
     text: 'In the world of business, finding the right associate can be the key to unlocking your full potential.',
     image: require('../../../assets/images/connection.png'),
-    backgroundColor: colors.black,
-    textColor: colors.white,
+    // backgroundColor: colors.black,
+    // textColor: colors.white,
   },
   {
     key: 's3',
@@ -159,8 +159,8 @@ const slides = [
     //   uri:
     //         'https://raw.githubusercontent.com/AboutReact/sampleresource/master/intro_discount.png',
     // },
-    backgroundColor: colors.black,
-    textColor: colors.white,
+    // backgroundColor: colors.black,
+    // textColor: colors.white,
   },
 ]
 
@@ -168,27 +168,27 @@ const RenderItem = (item) => (
   <View
     style={{
       flex: 1,
-      backgroundColor: item.backgroundColor,
+      // backgroundColor: item.backgroundColor,
       alignItems: 'center',
       justifyContent: 'space-around',
       paddingBottom: 100,
     }}
   >
-    <Text style={[styles.introTitleStyle, { color: item.textColor }]}>{item.title}</Text>
+    <Text style={[styles.introTitleStyle]}>{item.title}</Text>
     <Image style={styles.introImageStyle} source={item.image} />
-    <Text style={[styles.introTextStyle, { color: item.textColor }]}>{item.text}</Text>
+    <Text style={[styles.introTextStyle]}>{item.text}</Text>
   </View>
 )
 
 const Intro = () => {
   const navigation = useNavigation()
-  const scheme = useColorScheme()
+  // const scheme = useColorScheme()
   const [isBeingTouhed, setIsBeingTouched] = useState(false)
-  const isDark = scheme === 'dark'
-  const colorScheme = {
-    background: isDark ? colors.black : colors.white,
-    text: isDark ? colors.white : colors.black,
-  }
+  // const isDark = scheme === 'dark'
+  // const colorScheme = {
+  //   background: isDark ? colors.black : colors.white,
+  //   text: isDark ? colors.white : colors.black,
+  // }
 
   let slider = null
 
@@ -252,8 +252,8 @@ const Intro = () => {
           const { item } = param
           const modifiedItem = {
             ...item, // Copy all properties from the original item
-            backgroundColor: colorScheme.background, // Override backgroundColor
-            textColor: colorScheme.text, // Override textColor
+            // backgroundColor: colorScheme.background, // Override backgroundColor
+            // textColor: colorScheme.text, // Override textColor
           }
           return RenderItem(modifiedItem)
         }}

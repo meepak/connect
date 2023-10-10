@@ -2,8 +2,9 @@ import React, {
   useEffect, useState, useContext, useLayoutEffect,
 } from 'react'
 import {
-  Alert, Text, View, ScrollView, StyleSheet, useColorScheme
+  Alert, View, ScrollView, StyleSheet, // useColorScheme
 } from 'react-native'
+import { Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { doc, onSnapshot } from 'firebase/firestore'
 import IconButton from '../../components/IconButton'
@@ -13,19 +14,10 @@ import { firestore } from '../../firebase'
 import { colors, fontSize } from '../../theme'
 import { UserDataContext } from '../../context/UserDataContext'
 import sendNotification from '../../utils/SendNotification'
-import getKilobyteSize from '../../utils/functions'
+// import getKilobyteSize from '../../utils/functions'
 
 const styles = StyleSheet.create({
-  lightContent: {
-    backgroundColor: colors.lightyellow,
-    padding: 20,
-    borderRadius: 5,
-    marginTop: 30,
-    marginLeft: 30,
-    marginRight: 30,
-  },
-  darkContent: {
-    backgroundColor: colors.gray,
+  content: {
     padding: 20,
     borderRadius: 5,
     marginTop: 30,
@@ -51,37 +43,37 @@ export default function Home() {
   const navigation = useNavigation()
   const [token, setToken] = useState('')
   const { userData } = useContext(UserDataContext)
-  const scheme = useColorScheme()
-  const isDark = scheme === 'dark'
-  const colorScheme = {
-    content: isDark ? styles.darkContent : styles.lightContent,
-    text: isDark ? colors.white : colors.primaryText,
-  }
+  // const scheme = useColorScheme()
+  // const isDark = scheme === 'dark'
+  // const colorScheme = {
+  //   content: isDark ? styles.darkContent : styles.lightContent,
+  //   text: isDark ? colors.white : colors.primaryText,
+  // }
 
   const headerButtonPress = () => {
     Alert.alert('Tapped header button')
   }
 
-  useEffect(() => {
-    // const str = 'Hello, Connect!!'
-    // const kilobyteSize = getKilobyteSize({ str })
-    // console.log({ str, kilobyteSize })
-  }, [])
+  // useEffect(() => {
+  //   // const str = 'Hello, Connect!!'
+  //   // const kilobyteSize = getKilobyteSize({ str })
+  //   // console.log({ str, kilobyteSize })
+  // }, [])
 
-  useEffect(() => {
-    // const obj = {
-    //   name: 'name1',
-    //   age: 15,
-    // }
-    // const kilobyteSize = getKilobyteSize({ str: obj })
-    // console.log({ obj, kilobyteSize })
-  }, [])
+  // useEffect(() => {
+  //   // const obj = {
+  //   //   name: 'name1',
+  //   //   age: 15,
+  //   // }
+  //   // const kilobyteSize = getKilobyteSize({ str: obj })
+  //   // console.log({ obj, kilobyteSize })
+  // }, [])
 
-  useEffect(() => {
-    // const array = ['name1', 'name2', 'name3']
-    // const kilobyteSize = getKilobyteSize({ str: array })
-    // console.log({ array, kilobyteSize })
-  }, [])
+  // useEffect(() => {
+  //   // const array = ['name1', 'name2', 'name3']
+  //   // const kilobyteSize = getKilobyteSize({ str: array })
+  //   // console.log({ array, kilobyteSize })
+  // }, [])
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -123,14 +115,14 @@ export default function Home() {
   return (
     <ScreenTemplate>
       <ScrollView style={styles.main}>
-        <View style={colorScheme.content}>
-          <Text style={[styles.field, { color: colorScheme.text }]}>Mail:</Text>
-          <Text style={[styles.title, { color: colorScheme.text }]}>{userData.email}</Text>
+        <View style={styles.content}>
+          <Text style={styles.field}>Mail:</Text>
+          <Text style={styles.title}>{userData.email}</Text>
           {token
             ? (
               <>
-                <Text style={[styles.field, { color: colorScheme.text }]}>Expo push token:</Text>
-                <Text style={[styles.title, { color: colorScheme.text }]}>{token.token}</Text>
+                <Text style={styles.field}>Expo push token:</Text>
+                <Text style={styles.title}>{token.token}</Text>
               </>
             ) : null}
         </View>

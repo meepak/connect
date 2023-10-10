@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react'
-import { Text, View, StyleSheet, useColorScheme } from 'react-native'
+import { View, StyleSheet, useColorScheme } from 'react-native'
+import { Text } from 'react-native-paper'
 import { colors, fontSize } from 'theme'
 import { useNavigation } from '@react-navigation/native'
 import ScreenTemplate from '../../components/ScreenTemplate'
@@ -22,11 +23,11 @@ const styles = StyleSheet.create({
 export default function Follow() {
   const navigation = useNavigation()
   const { userData } = useContext(UserDataContext)
-  const scheme = useColorScheme()
-  const isDark = scheme === 'dark'
-  const colorScheme = {
-    text: isDark ? colors.white : colors.primaryText,
-  }
+  // const scheme = useColorScheme()
+  // const isDark = scheme === 'dark'
+  // const colorScheme = {
+  //   text: isDark ? colors.white : colors.primaryText,
+  // }
 
   useEffect(() => {
     console.log('Follow screen')
@@ -36,7 +37,7 @@ export default function Follow() {
     <ScreenTemplate>
       <View style={[styles.container]}>
         <View style={{ width: '100%' }}>
-          <Text style={[styles.field, { color: colorScheme.text }]}>Follow Screen</Text>
+          <Text style={styles.field}>Follow Screen</Text>
           <Button
             label="Open Modal"
             color={colors.tertiary}

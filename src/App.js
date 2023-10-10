@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { View, useColorScheme } from 'react-native'
-import {
-  MD3DarkTheme,
-  MD3LightTheme,
-  PaperProvider,
-} from 'react-native-paper'
 import { Provider } from 'jotai'
 import 'utils/ignore'
 import { imageAssets } from 'theme/images'
 import { fontAssets } from 'theme/fonts'
-import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 import { UserDataContextProvider } from './context/UserDataContext'
+import LoadingScreen from './components/LoadingScreen'
 
 // assets
 import Router from './routes'
@@ -34,22 +28,14 @@ const App = () => {
     handleLoadAssets()
   }, [])
 
-  // theming
-  const colorScheme = useColorScheme()
-  const { theme } = useMaterial3Theme()
-
-  const paperTheme = colorScheme === 'dark'
-    ? { ...MD3DarkTheme, colors: theme.dark }
-    : { ...MD3LightTheme, colors: theme.light }
-
   // rendering
-  if (!didLoad) return <View />
+  // if (!didLoad) return <LoadingScreen />
   return (
     <Provider>
       <UserDataContextProvider>
-        <PaperProvider theme={paperTheme}>
-          <Router />
-        </PaperProvider>
+        {didLoad
+          ? <Router />
+          : <LoadingScreen />}
       </UserDataContextProvider>
     </Provider>
   )

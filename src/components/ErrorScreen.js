@@ -1,7 +1,8 @@
 import React, { useRef, useContext } from 'react'
 import {
-  StyleSheet, Dimensions, View, Text
+  StyleSheet, Dimensions, View
 } from 'react-native'
+import { Text } from 'react-native-paper'
 import LottieView from 'lottie-react-native'
 import { fontSize, colors } from '../theme'
 

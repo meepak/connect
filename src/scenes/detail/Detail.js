@@ -1,11 +1,13 @@
 import React, { useEffect, useContext } from 'react'
 import {
-  Text,
-  View,
   ScrollView,
   StyleSheet,
   useColorScheme
 } from 'react-native'
+import {
+  Text,
+  View,
+} from 'react-native-paper'
 import {
   useNavigation,
   useRoute,
@@ -17,22 +19,29 @@ import Button from '../../components/Button'
 import HomeTitleContext from '../../context/HomeTitleContext'
 
 const styles = StyleSheet.create({
-  lightContent: {
-    backgroundColor: colors.lightyellow,
+  content: {
     padding: 20,
     borderRadius: 5,
     marginTop: 30,
     marginLeft: 30,
     marginRight: 30,
   },
-  darkContent: {
-    backgroundColor: colors.gray,
-    padding: 20,
-    borderRadius: 5,
-    marginTop: 30,
-    marginLeft: 30,
-    marginRight: 30,
-  },
+  // lightContent: {
+  //   // backgroundColor: colors.lightyellow,
+  //   padding: 20,
+  //   borderRadius: 5,
+  //   marginTop: 30,
+  //   marginLeft: 30,
+  //   marginRight: 30,
+  // },
+  // darkContent: {
+  //   // backgroundColor: colors.gray,
+  //   padding: 20,
+  //   borderRadius: 5,
+  //   marginTop: 30,
+  //   marginLeft: 30,
+  //   marginRight: 30,
+  // },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -43,12 +52,12 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   title: {
-    fontSize: fontSize.xxxLarge,
+    // fontSize: fontSize.xxxLarge,
     marginBottom: 20,
     textAlign: 'center',
   },
   field: {
-    fontSize: fontSize.middle,
+    // fontSize: fontSize.middle,
     textAlign: 'center',
   },
 })
@@ -58,12 +67,12 @@ export default function Detail() {
   const route = useRoute()
   const { from, userData, title } = route.params
   const { setTitle } = useContext(HomeTitleContext)
-  const scheme = useColorScheme()
-  const isDark = scheme === 'dark'
-  const colorScheme = {
-    content: isDark ? styles.darkContent : styles.lightContent,
-    text: isDark ? colors.white : colors.primaryText,
-  }
+  // const scheme = useColorScheme()
+  // const isDark = scheme === 'dark'
+  // const colorScheme = {
+  //   content: isDark ? styles.darkContent : styles.lightContent,
+  //   text: isDark ? colors.white : colors.primaryText,
+  // }
 
   useFocusEffect(() => {
     setTitle(title)
@@ -76,17 +85,17 @@ export default function Detail() {
   return (
     <ScreenTemplate>
       <ScrollView style={styles.main}>
-        <View style={colorScheme.content}>
-          <Text style={[styles.field, { color: colorScheme.text }]}>
+        <View style={styles.content}>
+          <Text style={styles.field}>
             {userData.id}
           </Text>
-          <Text style={[styles.field, { color: colorScheme.text }]}>
+          <Text style={styles.field}>
             {userData.fullName}
           </Text>
-          <Text style={[styles.field, { color: colorScheme.text }]}>
+          <Text style={styles.field}>
             {userData.email}
           </Text>
-          <Text style={[styles.field, { color: colorScheme.text }]}>
+          <Text style={styles.field}>
             {userData.avatar}
           </Text>
         </View>

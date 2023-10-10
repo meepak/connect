@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, useColorScheme } from 'react-native'
 import { TextInput, HelperText } from 'react-native-paper'
 import PropTypes from 'prop-types'
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     marginLeft: layout.marginLeft,
     marginRight: layout.marginRight,
     marginTop: layout.marginTop,
-    marginBottom: layout.marginBottom,
+    marginBottom: layout.marginBottom - 15,
     height: 62,
     borderRadius: 5,
     overflow: 'hidden',
@@ -42,20 +42,20 @@ const TextInputBox = (props) => {
     icon,
   } = props
 
-  const scheme = useColorScheme()
+  // const scheme = useColorScheme()
   const [secureText, setSecureText] = useState(secureTextEntry)
 
-  const isDark = scheme === 'dark'
-  const colorScheme = {
-    bg: isDark ? colors.black : colors.solidWhite,
-    text: isDark ? colors.solidWhite : colors.primaryText,
-    line: isDark ? colors.solidWhite : colors.black,
-  }
+  // const isDark = scheme === 'dark'
+  // const colorScheme = {
+  //   bg: isDark ? colors.black : colors.solidWhite,
+  //   text: isDark ? colors.solidWhite : colors.primaryText,
+  //   line: isDark ? colors.solidWhite : colors.black,
+  // }
 
   return (
     <>
       <TextInput
-        style={[styles.input, { backgroundColor: colorScheme.bg, color: colorScheme.text }]}
+        style={[styles.input]}
         secureTextEntry={secureText}
         left={icon !== ''
           ? (
@@ -93,12 +93,12 @@ const TextInputBox = (props) => {
         autoCapitalize={autoCapitalize}
         keyboardType={keyboardType}
         mode="flat"
-        activeUnderlineColor={colors.primary}
-        underlineColor={colorScheme.line}
-        underlineColorAndroid={colorScheme.line}
-        textColor={colorScheme.text}
-        backgroundColor={colorScheme.bg}
-        placeholderTextColor={colorScheme.line}
+        // activeUnderlineColor={colors.primary}
+        // underlineColor={colorScheme.line}
+        // underlineColorAndroid={colorScheme.line}
+        // textColor={colorScheme.text}
+        // backgroundColor={colorScheme.bg}
+        // placeholderTextColor={colorScheme.line}
         error={errorMessage !== ''}
       />
       <HelperText

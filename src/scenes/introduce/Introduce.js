@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {
-  Alert, Text, View, StyleSheet, useColorScheme
+  Alert, View, StyleSheet, useColorScheme,
 } from 'react-native'
+import { SegmentedButtons, Text } from 'react-native-paper'
 import { doc, updateDoc } from 'firebase/firestore'
 // import { Avatar } from '@rneui/themed'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Spinner from 'react-native-loading-spinner-overlay'
-import { SegmentedButtons } from 'react-native-paper'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/Button'
 import TextInputBox from '../../components/TextInputBox'
@@ -74,7 +74,7 @@ const ScreenWhoAmI = ({
       />
     </View>
 
-    <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>
+    <Text style={styles.greetingMessage}>
       What describes you best?
     </Text>
 
@@ -93,7 +93,7 @@ const ScreenWhoAmI = ({
           checked: whoAmI === 'associate',
         },
       ]}
-      textColor={colorScheme.text} // TODO: Move textColor within component (decide from there)
+      // textColor={colorScheme.text} // TODO: Move textColor within component (decide from there)
       onChecked={(value) => {
         onWhoAmIChanged(value)
       }}
@@ -118,7 +118,7 @@ const ScreenSelectIndustry = ({
   maxSelect = 3, colorScheme, onChecked, checked,
 }) => (
   <View>
-    <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>
+    <Text style={styles.greetingMessage}>
       {maxSelect > 1 ? `Select up to ${maxSelect} related industries.` : 'Select your industry.'}
     </Text>
     <CheckboxGroup
@@ -129,7 +129,7 @@ const ScreenSelectIndustry = ({
         checked: checked && checked.isArray() ? checked.includes(industry) : false,
       }))}
       maxSelect={maxSelect}
-      textColor={colorScheme.text}
+      // textColor={colorScheme.text}
       onChecked={onChecked || (() => {})}
     />
   </View>
@@ -145,11 +145,11 @@ const businessStages = [
 ]
 
 const ScreenSelectBusinessStage = ({
-  businessStage, onBusinessStageChanged, colorScheme,
+  businessStage, onBusinessStageChanged,
 }) => (
   <View>
 
-    <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>
+    <Text style={styles.greetingMessage}>
       What stage is your business in?
     </Text>
 
@@ -160,7 +160,7 @@ const ScreenSelectBusinessStage = ({
         value: stage,
         checked: businessStage === stage,
       }))}
-      textColor={colorScheme.text} // TODO: Move textColor within component (decide from there)
+      // textColor={colorScheme.text} // TODO: Move textColor within component (decide from there)
       onChecked={(value) => {
         onBusinessStageChanged(value)
       }}
@@ -170,13 +170,13 @@ const ScreenSelectBusinessStage = ({
 
 // TODO -- geolocation autocomplete
 const ScreenBusinessLocation = ({
-  businessLocation, businessOperationMode, onBusinessLocationChanged, onBusinessOperationModeChanged, colorScheme,
+  businessLocation, businessOperationMode, onBusinessLocationChanged, onBusinessOperationModeChanged,
 }) => {
   const [location, setLocation] = useState(businessLocation)
   const [operationMode, setOperationMode] = useState(businessOperationMode)
   return (
     <View>
-      <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>
+      <Text style={styles.greetingMessage}>
         Where is your business located?
       </Text>
 
@@ -191,13 +191,13 @@ const ScreenBusinessLocation = ({
         label="Business Location"
         icon="user"
       />
-      <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>
+      <Text style={styles.greetingMessage}>
         What is the mode of operation of your business?
       </Text>
       <SegmentedButtons
         style={styles.segmentedButtons}
-        theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        textColor={colorScheme.text}
+        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
+        // textColor={colorScheme.text}
         value={operationMode}
         onValueChange={(text) => {
           setOperationMode(text)
@@ -220,19 +220,19 @@ const ScreenBusinessLocation = ({
   )
 }
 
-const ScreenAboutPartnerParticipation = ({colorScheme}) => {
+const ScreenAboutPartnerParticipation = () => {
   const [shouldSignNda, setShouldSignNda] = useState(false)
   const [requireBackgroundCheck, setRequireBackgroundCheck] = useState(false)
   const [partnerAvailability, setPartnerAvailability] = useState(false)
   return (
     <View>
-      <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>
+      <Text style={styles.greetingMessage}>
         Will your partner require to sign NDA?
       </Text>
       <SegmentedButtons
         style={styles.segmentedButtons}
-        theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        textColor={colorScheme.text}
+        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
+        // textColor={colorScheme.text}
         value={shouldSignNda}
         onValueChange={(text) => {
           setShouldSignNda(text)
@@ -249,13 +249,13 @@ const ScreenAboutPartnerParticipation = ({colorScheme}) => {
         ]}
       />
 
-      <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>
+      <Text style={styles.greetingMessage}>
         Will you be requesting ID Verification and background check?
       </Text>
       <SegmentedButtons
         style={styles.segmentedButtons}
-        theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        textColor={colorScheme.text}
+        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
+        // textColor={colorScheme.text}
         value={requireBackgroundCheck}
         onValueChange={(text) => {
           setRequireBackgroundCheck(text)
@@ -272,13 +272,13 @@ const ScreenAboutPartnerParticipation = ({colorScheme}) => {
         ]}
       />
 
-      <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>
+      <Text style={styles.greetingMessage}>
         When do you want the partner to join your business?
       </Text>
       <SegmentedButtons
         style={styles.segmentedButtons}
-        theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        textColor={colorScheme.text}
+        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
+        // textColor={colorScheme.text}
         value={partnerAvailability}
         onValueChange={(text) => {
           setPartnerAvailability(text)
@@ -299,13 +299,13 @@ const ScreenAboutPartnerParticipation = ({colorScheme}) => {
         ]}
       />
 
-      <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>
+      <Text style={styles.greetingMessage}>
         What is your communication preference?
       </Text>
       <SegmentedButtons
         style={styles.segmentedButtons}
-        theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        textColor={colorScheme.text}
+        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
+        // textColor={colorScheme.text}
         value={partnerAvailability}
         onValueChange={(text) => {
           setPartnerAvailability(text)
@@ -326,13 +326,13 @@ const ScreenAboutPartnerParticipation = ({colorScheme}) => {
         ]}
       />
 
-      <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>
+      <Text style={styles.greetingMessage}>
         What is your location preference?
       </Text>
       <SegmentedButtons
         style={styles.segmentedButtons}
-        theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        textColor={colorScheme.text}
+        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
+        // textColor={colorScheme.text}
         value={partnerAvailability}
         onValueChange={(text) => {
           setPartnerAvailability(text)
@@ -357,20 +357,20 @@ const ScreenAboutPartnerParticipation = ({colorScheme}) => {
   )
 }
 
-const ScreenAboutPartner = ({colorScheme}) => {
+const ScreenAboutPartner = () => {
   const [shouldSignNda, setShouldSignNda] = useState(false)
   const [requireBackgroundCheck, setRequireBackgroundCheck] = useState(false)
   const [partnerAvailability, setPartnerAvailability] = useState(false)
   return (
     <View>
 
-      <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>
+      <Text style={styles.greetingMessage}>
         What is your availablity?
       </Text>
       <SegmentedButtons
         style={styles.segmentedButtons}
-        theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        textColor={colorScheme.text}
+        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
+        // textColor={colorScheme.text}
         value={partnerAvailability}
         onValueChange={(text) => {
           setPartnerAvailability(text)
@@ -391,13 +391,13 @@ const ScreenAboutPartner = ({colorScheme}) => {
         ]}
       />
 
-      <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>
+      <Text style={styles.greetingMessage}>
         What is your communication preference?
       </Text>
       <SegmentedButtons
         style={styles.segmentedButtons}
-        theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        textColor={colorScheme.text}
+        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
+        // textColor={colorScheme.text}
         value={partnerAvailability}
         onValueChange={(text) => {
           setPartnerAvailability(text)
@@ -418,13 +418,13 @@ const ScreenAboutPartner = ({colorScheme}) => {
         ]}
       />
 
-      <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>
+      <Text style={styles.greetingMessage}>
         What is your location preference?
       </Text>
       <SegmentedButtons
         style={styles.segmentedButtons}
-        theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        textColor={colorScheme.text}
+        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
+        // textColor={colorScheme.text}
         value={partnerAvailability}
         onValueChange={(text) => {
           setPartnerAvailability(text)
@@ -445,13 +445,13 @@ const ScreenAboutPartner = ({colorScheme}) => {
         ]}
       />
 
-      <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>
+      <Text style={styles.greetingMessage}>
         Will your partner require to sign NDA?
       </Text>
       <SegmentedButtons
         style={styles.segmentedButtons}
-        theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        textColor={colorScheme.text}
+        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
+        // textColor={colorScheme.text}
         value={shouldSignNda}
         onValueChange={(text) => {
           setShouldSignNda(text)
@@ -468,13 +468,13 @@ const ScreenAboutPartner = ({colorScheme}) => {
         ]}
       />
 
-      <Text style={[styles.greetingMessage, { color: colorScheme.text }]}>
+      <Text style={styles.greetingMessage}>
         Will you be requesting ID Verification and background check?
       </Text>
       <SegmentedButtons
         style={styles.segmentedButtons}
-        theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        textColor={colorScheme.text}
+        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
+        // textColor={colorScheme.text}
         value={requireBackgroundCheck}
         onValueChange={(text) => {
           setRequireBackgroundCheck(text)
@@ -541,14 +541,14 @@ export default function Introduce() {
         style={styles.main}
         keyboardShouldPersistTaps="never"
       >
-        <Text style={[styles.greeting, { color: colorScheme.text }]}>Welcome {userData.fullName},</Text>
-        <Text style={[styles.greetingMessage, { color: colorScheme.text, fontStyle: 'italic' }]}>Lets get started with minimum information needed to find you a match.</Text>
+        <Text style={styles.greeting}>Welcome {userData.fullName},</Text>
+        <Text style={[styles.greetingMessage, { fontStyle: 'italic' }]}>Lets get started with minimum information needed to find you a match.</Text>
 
         <ScreenWhoAmI
           whoAmI={whoAmI}
           onAvatarChanged={(item) => setAvatar(item)}
           onWhoAmIChanged={(item) => setWhoAmI(item)}
-          colorScheme={colorScheme}
+          // colorScheme={colorScheme}
         />
 
         {whoAmI === 'founder'
@@ -556,7 +556,7 @@ export default function Introduce() {
             <>
               <ScreenSelectIndustry
                 maxSelect={3}
-                colorScheme={colorScheme}
+                // colorScheme={colorScheme}
                 onChecked={(values) => {
                   console.log(values)
                 }}
@@ -565,7 +565,7 @@ export default function Introduce() {
               <ScreenSelectBusinessStage
                 businessStage=""
                 onBusinessStageChanged={(item) => { console.log(item) }}
-                colorScheme={colorScheme}
+                // colorScheme={colorScheme}
               />
 
               <ScreenBusinessLocation
@@ -573,7 +573,7 @@ export default function Introduce() {
                 onBusinessLocationChanged={(item) => { console.log(item) }}
                 businessOperationMode=""
                 onBusinessOperationModeChanged={(item) => { console.log(item) }}
-                colorScheme={colorScheme}
+                // colorScheme={colorScheme}
               />
 
               <ScreenAboutPartnerParticipation

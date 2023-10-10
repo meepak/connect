@@ -1,7 +1,10 @@
 import React, { useContext, useState } from 'react'
 import {
-  Alert, Text, View, StyleSheet, Platform,
+  Alert, View, StyleSheet, Platform,
 } from 'react-native'
+import {
+  Text,
+} from 'react-native-paper'
 import { Avatar as SystemAvatar } from '@rneui/themed'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import * as ImagePicker from 'expo-image-picker'

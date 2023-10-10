@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Text, View, StyleSheet, useColorScheme } from 'react-native'
+import { View, StyleSheet, useColorScheme } from 'react-native'
+import { Text } from 'react-native-paper'
 import { useRoute, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { colors, fontSize } from 'theme'
 import moment from 'moment'
@@ -9,12 +10,12 @@ import HomeTitleContext from '../../context/HomeTitleContext'
 import storage from '../../utils/Storage'
 
 const styles = StyleSheet.create({
-  lightContent: {
-    backgroundColor: '#e6e6fa',
-  },
-  darkContent: {
-    backgroundColor: '#696969',
-  },
+  // lightContent: {
+  //   backgroundColor: '#e6e6fa',
+  // },
+  // darkContent: {
+  //   backgroundColor: '#696969',
+  // },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -90,12 +91,12 @@ export default function Post() {
   return (
     <ScreenTemplate>
       <View style={[styles.container, colorScheme.content]}>
-        <Text style={[styles.field, { color: colorScheme.text }]}>Post Screen</Text>
-        <Text style={[styles.title, { color: colorScheme.text }]}>{data.email}</Text>
-        <Text style={[styles.field, { color: colorScheme.text }]}>from</Text>
-        <Text style={[styles.title, { color: colorScheme.text }]}>{from}</Text>
-        <Text style={[styles.field, { color: colorScheme.text }]}>Latest save date</Text>
-        <Text style={[styles.title, { color: colorScheme.text }]}>{date.date}</Text>
+        <Text style={styles.field}>Post Screen</Text>
+        <Text style={styles.title}>{data.email}</Text>
+        <Text style={styles.field}>from</Text>
+        <Text style={styles.title}>{from}</Text>
+        <Text style={styles.field}>Latest save date</Text>
+        <Text style={styles.title}>{date.date}</Text>
         <View style={{ width: '100%' }}>
           <Button
             label="Save Date"

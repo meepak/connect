@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {
-  Alert, Text, View, StyleSheet, useColorScheme
+  Alert, View, StyleSheet, useColorScheme
 } from 'react-native'
+import {
+  Text,
+} from 'react-native-paper'
 import { doc, updateDoc } from 'firebase/firestore'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation } from '@react-navigation/native'
@@ -25,10 +28,10 @@ const styles = StyleSheet.create({
   progress: {
     alignSelf: 'center',
   },
-  darkprogress: {
-    alignSelf: 'center',
-    color: colors.white,
-  },
+  // darkprogress: {
+  //   alignSelf: 'center',
+  //   color: colors.white,
+  // },
   main: {
     flex: 1,
     width: '100%',
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
 
 export default function Edit() {
   const { userData } = useContext(UserDataContext)
-  const scheme = useColorScheme()
+  // const scheme = useColorScheme()
   const navigation = useNavigation()
   const [fullName, setFullName] = useState(userData.fullName)
   const [phone, setFhone] = useState(userData.phone ?? '')
@@ -63,11 +66,11 @@ export default function Edit() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [spinner, setSpinner] = useState(false)
-  const isDark = scheme === 'dark'
-  const colorScheme = {
-    text: isDark ? colors.white : colors.primaryText,
-    progress: isDark ? styles.darkprogress : styles.progress,
-  }
+  // const isDark = scheme === 'dark'
+  // const colorScheme = {
+  //   text: isDark ? colors.white : colors.primaryText,
+  //   progress: isDark ? styles.darkprogress : styles.progress,
+  // }
 
   useEffect(() => {
     console.log('Edit screen')
@@ -75,6 +78,7 @@ export default function Edit() {
 
   const profileUpdate = async () => {
     try {
+      setSpinner(true)
       const data = {
         id: userData.id,
         email: userData.email,
@@ -86,7 +90,9 @@ export default function Edit() {
       const usersRef = doc(firestore, 'users', userData.id)
       await updateDoc(usersRef, data)
       navigation.goBack()
+      setSpinner(false)
     } catch (e) {
+      setSpinner(false)
       Alert.alert('Error', e.message)
     }
   }
@@ -108,7 +114,7 @@ export default function Edit() {
       showToast({
         title: 'Password changed',
         body: 'Your password has changed.',
-        isDark,
+        // isDark,
       })
       setCurrentPassword('')
       setPassword('')
@@ -133,7 +139,7 @@ export default function Edit() {
             onEdited={(item) => setAvatar(item)}
           />
         </View>
-        <Text style={[styles.field, { color: colorScheme.text }]}>Name:</Text>
+        <Text style={styles.field}>Name:</Text>
         <TextInputBox
           placeholder={fullName}
           onChangeText={(text) => setFullName(text)}
@@ -142,11 +148,11 @@ export default function Edit() {
           label="Full Name"
           icon="user"
         />
-        <Text style={[styles.field, { color: colorScheme.text }]}>Mail:</Text>
-        <Text style={[styles.title, { color: colorScheme.text }]}>
+        <Text style={styles.field}>Mail:</Text>
+        <Text style={styles.title}>
           {userData.email}
         </Text>
-        <Text style={[styles.field, { color: colorScheme.text }]}>Mobile Number:</Text>
+        <Text style={styles.field}>Mobile Number:</Text>
         <TextInputBox
           placeholder={phone}
           onChangeText={(text) => setFhone(text)}
@@ -162,7 +168,7 @@ export default function Edit() {
           onChecked={(checked) => {
             setIsIntroduced(checked)
           }}
-          textColor={colorScheme.text}
+          // textColor={colorScheme.text}
         />
         <Button
           label="Update"
@@ -171,7 +177,7 @@ export default function Edit() {
           disable={!fullName}
         />
         <View style={styles.changePasswordContainer}>
-          <Text style={[styles.field, { color: colorScheme.text }]}>
+          <Text style={styles.field}>
             Change Password:
           </Text>
           <TextInputBox

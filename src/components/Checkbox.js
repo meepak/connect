@@ -7,7 +7,7 @@ import {
   TouchableRipple,
 } from 'react-native-paper'
 
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import { layout, fontSize, colors } from '../theme'
 
 const styles = StyleSheet.create({
@@ -42,7 +42,9 @@ export default function Checkbox(props) {
   return (
     <TouchableRipple onPress={handleCheckChange} disabled={disabled}>
       <View style={styles.row}>
-        <Paragraph style={{ color: textColor }}>{label}</Paragraph>
+        <Paragraph>
+          {label}
+        </Paragraph>
         <View pointerEvents="none">
           <SystemCheckBox status={isChecked ? 'checked' : 'unchecked'} disabled={disabled} />
         </View>
@@ -51,15 +53,15 @@ export default function Checkbox(props) {
   )
 }
 
-Checkbox.propTypes = {
-  label: PropTypes.string.isRequired,
-  checked: PropTypes.bool,
-  onChecked: PropTypes.func.isRequired,
-  textColor: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
-}
+// Checkbox.propTypes = {
+//   label: PropTypes.string.isRequired,
+//   checked: PropTypes.bool,
+//   onChecked: PropTypes.func.isRequired,
+//   textColor: PropTypes.string.isRequired,
+//   disabled: PropTypes.bool,
+// }
 
-Checkbox.defaultProps = {
-  checked: false,
-  disabled: false,
-}
+// Checkbox.defaultProps = {
+//   checked: false,
+//   disabled: false,
+// }
