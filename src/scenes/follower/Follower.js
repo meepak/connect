@@ -1,18 +1,31 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View, StyleSheet, useColorScheme } from 'react-native'
+import { View, StyleSheet, useColorScheme } from 'react-native'
+import { Text } from 'react-native-paper'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import { colors, fontSize } from '../../theme'
 import Button from '../../components/Button'
 import { showToast } from '../../utils/ShowToast'
 import ShowSnackbar from '../../components/ShowSnackbar'
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  field: {
+    fontSize: fontSize.middle,
+    textAlign: 'center',
+  },
+})
+
 export default function Follower() {
-  const { scheme } = useColorScheme()
+  // const { scheme } = useColorScheme()
   const [visible, setVisible] = useState(false)
-  const isDark = scheme === 'dark'
-  const colorScheme = {
-    text: isDark ? colors.white : colors.primaryText,
-  }
+  // const isDark = scheme === 'dark'
+  // const colorScheme = {
+  //   text: isDark ? colors.white : colors.primaryText,
+  // }
 
   useEffect(() => {
     console.log('Follower screen')
@@ -24,7 +37,7 @@ export default function Follower() {
     showToast({
       title: 'Hello',
       body: 'This is some something 👋',
-      isDark,
+      // isDark,
     })
   }
 
@@ -37,7 +50,7 @@ export default function Follower() {
       <ScreenTemplate>
         <View style={styles.container}>
           <View style={{ width: '100%' }}>
-            <Text style={[styles.field, { color: colorScheme.text }]}>Follower Screen</Text>
+            <Text style={styles.field}>Follower Screen</Text>
             <Button
               label="Show Toast"
               color={colors.lightPurple}
@@ -60,15 +73,3 @@ export default function Follower() {
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  field: {
-    fontSize: fontSize.middle,
-    textAlign: 'center',
-  },
-})

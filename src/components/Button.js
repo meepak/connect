@@ -1,7 +1,8 @@
 import React from 'react'
 import {
-  StyleSheet, TouchableOpacity, Text, View,
+  StyleSheet, TouchableOpacity, View,
 } from 'react-native'
+import { Text } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import { layout, fontSize, colors } from '../theme'
 

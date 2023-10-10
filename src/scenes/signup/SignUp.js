@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
 import {
-  Alert, Text, StyleSheet, View, Linking, useColorScheme
+  Alert, StyleSheet, View, Linking, useColorScheme,
 } from 'react-native'
+import { Text } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { setDoc, doc } from 'firebase/firestore'
 import Spinner from 'react-native-loading-spinner-overlay'

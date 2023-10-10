@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
-import { useColorScheme } from 'react-native'
+import React from 'react'
+// import { useColorScheme } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { lightProps, darkProps } from '../../navigationProps'
+// import { lightProps, darkProps } from '../../navigationProps'
 import HeaderStyle from '../../../components/HeaderStyle'
 
 import Login from '../../../scenes/login'
@@ -10,22 +10,22 @@ import SignUp from '../../../scenes/signup'
 const Stack = createStackNavigator()
 
 const LoginStack = () => {
-  const scheme = useColorScheme()
-  const navigationProps = scheme === 'dark' ? darkProps : lightProps
+  // const scheme = useColorScheme()
+  // const navigationProps = scheme === 'dark' ? darkProps : lightProps
   return (
-    <Stack.Navigator screenOptions={navigationProps}>
+    <Stack.Navigator>
       <Stack.Screen
         name="Sign in"
         component={Login}
         options={(/* { navigation } */) => ({
-          headerBackground: () => <HeaderStyle />,
+          // headerBackground: () => <HeaderStyle />,
         })}
       />
       <Stack.Screen
         name="Sign up"
         component={SignUp}
         options={(/* { navigation } */) => ({
-          headerBackground: () => <HeaderStyle />,
+          // headerBackground: () => <HeaderStyle />,
         })}
       />
     </Stack.Navigator>

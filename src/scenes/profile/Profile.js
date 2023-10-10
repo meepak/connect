@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import {
-  Text, View, StyleSheet, ScrollView, useColorScheme,
+  Text, View, StyleSheet, ScrollView,// useColorScheme,
 } from 'react-native'
 import Dialog from 'react-native-dialog'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 import { signOut, deleteUser } from 'firebase/auth'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/Button'
-import Restart from '../../utils/Restart'
+// import Restart from '../../utils/Restart'
 import { firestore, auth } from '../../firebase'
 import { UserDataContext } from '../../context/UserDataContext'
 import { colors, fontSize } from '../../theme'
@@ -51,11 +51,11 @@ export default function Profile() {
   const navigation = useNavigation()
   const [visible, setVisible] = useState(false)
   const [spinner, setSpinner] = useState(false)
-  const scheme = useColorScheme()
-  const isDark = scheme === 'dark'
-  const colorScheme = {
-    text: isDark ? colors.white : colors.primaryText,
-  }
+  // const scheme = useColorScheme()
+  // const isDark = scheme === 'dark'
+  // const colorScheme = {
+  //   text: isDark ? colors.white : colors.primaryText,
+  // }
 
   useEffect(() => {
     console.log('Profile screen')
@@ -118,10 +118,10 @@ export default function Profile() {
             size="xlarge"
           />
         </View>
-        <Text style={[styles.field, { color: colorScheme.text }]}>Name:</Text>
-        <Text style={[styles.title, { color: colorScheme.text }]}>{userData.fullName}</Text>
-        <Text style={[styles.field, { color: colorScheme.text }]}>Mail:</Text>
-        <Text style={[styles.title, { color: colorScheme.text }]}>{userData.email}</Text>
+        <Text style={styles.field}>Name:</Text>
+        <Text style={styles.title}>{userData.fullName}</Text>
+        <Text style={styles.field}>Mail:</Text>
+        <Text style={styles.title}>{userData.email}</Text>
         <Button
           label="Edit"
           color={colors.primary}

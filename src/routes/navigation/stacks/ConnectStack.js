@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import { UserDataContext } from '../../../context/UserDataContext'
 
-import { lightProps, darkProps } from '../../navigationProps'
+// import { lightProps, darkProps } from '../../navigationProps'
 import HeaderStyle from '../../../components/HeaderStyle'
 import HeaderRightButton from '../../../components/HeaderRightButton'
 
@@ -13,12 +13,12 @@ import { FollowFollowerTabs } from '../tabsTop'
 const Stack = createStackNavigator()
 
 const ConnectStack = () => {
-  const scheme = useColorScheme()
+  // const scheme = useColorScheme()
   const { userData } = useContext(UserDataContext)
-  const navigationProps = scheme === 'dark' ? darkProps : lightProps
+  // const navigationProps = scheme === 'dark' ? darkProps : lightProps
 
   return (
-    <Stack.Navigator screenOptions={navigationProps}>
+    <Stack.Navigator>
       <Stack.Group>
         <Stack.Screen
           name="Connect"

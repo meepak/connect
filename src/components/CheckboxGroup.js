@@ -34,7 +34,7 @@ export default function CheckboxGroup(props) {
             }
           }}
           disabled={checkedValues.length >= maxSelect && !checkedValues.includes(item.value)}
-          textColor={textColor}
+          // textColor={textColor}
         />
       ))}
     </View>
