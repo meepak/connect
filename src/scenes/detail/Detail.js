@@ -2,11 +2,9 @@ import React, { useEffect, useContext } from 'react'
 import {
   ScrollView,
   StyleSheet,
-  useColorScheme
 } from 'react-native'
 import {
-  Text,
-  View,
+  Surface, Text,
 } from 'react-native-paper'
 import {
   useNavigation,
@@ -26,22 +24,6 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
   },
-  // lightContent: {
-  //   // backgroundColor: colors.lightyellow,
-  //   padding: 20,
-  //   borderRadius: 5,
-  //   marginTop: 30,
-  //   marginLeft: 30,
-  //   marginRight: 30,
-  // },
-  // darkContent: {
-  //   // backgroundColor: colors.gray,
-  //   padding: 20,
-  //   borderRadius: 5,
-  //   marginTop: 30,
-  //   marginLeft: 30,
-  //   marginRight: 30,
-  // },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -52,12 +34,12 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   title: {
-    // fontSize: fontSize.xxxLarge,
+    fontSize: fontSize.xxxLarge,
     marginBottom: 20,
     textAlign: 'center',
   },
   field: {
-    // fontSize: fontSize.middle,
+    fontSize: fontSize.middle,
     textAlign: 'center',
   },
 })
@@ -67,12 +49,6 @@ export default function Detail() {
   const route = useRoute()
   const { from, userData, title } = route.params
   const { setTitle } = useContext(HomeTitleContext)
-  // const scheme = useColorScheme()
-  // const isDark = scheme === 'dark'
-  // const colorScheme = {
-  //   content: isDark ? styles.darkContent : styles.lightContent,
-  //   text: isDark ? colors.white : colors.primaryText,
-  // }
 
   useFocusEffect(() => {
     setTitle(title)
@@ -85,7 +61,7 @@ export default function Detail() {
   return (
     <ScreenTemplate>
       <ScrollView style={styles.main}>
-        <View style={styles.content}>
+        <Surface style={styles.content}>
           <Text style={styles.field}>
             {userData.id}
           </Text>
@@ -98,7 +74,7 @@ export default function Detail() {
           <Text style={styles.field}>
             {userData.avatar}
           </Text>
-        </View>
+        </Surface>
         <Button
           label={`Back to ${from}`}
           color={colors.primary}

@@ -2,9 +2,9 @@ import React, {
   useEffect, useState, useContext, useLayoutEffect,
 } from 'react'
 import {
-  Alert, View, ScrollView, StyleSheet, // useColorScheme
+  Alert, ScrollView, StyleSheet,
 } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Surface, Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { doc, onSnapshot } from 'firebase/firestore'
 import IconButton from '../../components/IconButton'
@@ -43,12 +43,6 @@ export default function Home() {
   const navigation = useNavigation()
   const [token, setToken] = useState('')
   const { userData } = useContext(UserDataContext)
-  // const scheme = useColorScheme()
-  // const isDark = scheme === 'dark'
-  // const colorScheme = {
-  //   content: isDark ? styles.darkContent : styles.lightContent,
-  //   text: isDark ? colors.white : colors.primaryText,
-  // }
 
   const headerButtonPress = () => {
     Alert.alert('Tapped header button')
@@ -115,7 +109,7 @@ export default function Home() {
   return (
     <ScreenTemplate>
       <ScrollView style={styles.main}>
-        <View style={styles.content}>
+        <Surface style={styles.content}>
           <Text style={styles.field}>Mail:</Text>
           <Text style={styles.title}>{userData.email}</Text>
           {token
@@ -125,7 +119,7 @@ export default function Home() {
                 <Text style={styles.title}>{token.token}</Text>
               </>
             ) : null}
-        </View>
+        </Surface>
         <Button
           label="Go to Detail"
           color={colors.primary}

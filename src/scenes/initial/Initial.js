@@ -1,34 +1,16 @@
 import React, { useEffect, useContext } from 'react'
 import {
   Alert,
-  // Text,
-  // View,
-  // StyleSheet,
 } from 'react-native'
 import { doc, onSnapshot } from 'firebase/firestore'
 import { decode, encode } from 'base-64'
 import { onAuthStateChanged } from 'firebase/auth'
 import { useAtom } from 'jotai'
 import { UserDataContext } from '../../context/UserDataContext'
-// import ScreenTemplate from '../../components/ScreenTemplate'
 import { firestore, auth } from '../../firebase'
-// import { colors, fontSize } from '../../theme'
 import LoadingScreen from '../../components/LoadingScreen'
 
 import { checkedAtom, loggedInAtom } from '../../utils/atom'
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   title: {
-//     fontSize: fontSize.xxxLarge,
-//     marginBottom: 20,
-//     textAlign: 'center',
-//   },
-// })
 
 if (!global.btoa) {
   global.btoa = encode
@@ -64,14 +46,5 @@ export default function Initial() {
 
   return (
     <LoadingScreen />
-    // <ScreenTemplate>
-    //   <View
-    //     style={[styles.container, { backgroundColor: colorScheme.container }]}
-    //   >
-    //     <Text style={[styles.title, { color: colorScheme.text }]}>
-    //       loading...
-    //     </Text>
-    //   </View>
-    // </ScreenTemplate>
   )
 }

@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-
 import {
   Checkbox as SystemCheckBox,
   Paragraph,
   TouchableRipple,
 } from 'react-native-paper'
-
-// import PropTypes from 'prop-types'
-import { layout, fontSize, colors } from '../theme'
+import PropTypes from 'prop-types'
+import { layout } from '../theme'
 
 const styles = StyleSheet.create({
   container: {
@@ -27,7 +25,7 @@ const styles = StyleSheet.create({
 
 export default function Checkbox(props) {
   const {
-    label, checked, disabled, onChecked, textColor,
+    label, checked, disabled, onChecked,
   } = props
   const [isChecked, setIsChecked] = useState(checked)
 
@@ -53,15 +51,14 @@ export default function Checkbox(props) {
   )
 }
 
-// Checkbox.propTypes = {
-//   label: PropTypes.string.isRequired,
-//   checked: PropTypes.bool,
-//   onChecked: PropTypes.func.isRequired,
-//   textColor: PropTypes.string.isRequired,
-//   disabled: PropTypes.bool,
-// }
+Checkbox.propTypes = {
+  label: PropTypes.string.isRequired,
+  checked: PropTypes.bool,
+  onChecked: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+}
 
-// Checkbox.defaultProps = {
-//   checked: false,
-//   disabled: false,
-// }
+Checkbox.defaultProps = {
+  checked: false,
+  disabled: false,
+}

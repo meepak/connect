@@ -1,49 +1,45 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { View, StyleSheet, useColorScheme } from 'react-native'
-import { Text } from 'react-native-paper'
+import { View, StyleSheet } from 'react-native'
+import { Text, Surface, Button } from 'react-native-paper'
 import { useRoute, useFocusEffect, useNavigation } from '@react-navigation/native'
-import { colors, fontSize } from 'theme'
+import { colors, fontSize, layout } from 'theme'
 import moment from 'moment'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import Button from '../../components/Button'
 import HomeTitleContext from '../../context/HomeTitleContext'
 import storage from '../../utils/Storage'
 
 const styles = StyleSheet.create({
-  // lightContent: {
-  //   backgroundColor: '#e6e6fa',
-  // },
-  // darkContent: {
-  //   backgroundColor: '#696969',
-  // },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    margin: layout.marginLeft,
   },
   title: {
-    fontSize: fontSize.xxxLarge,
-    marginBottom: 20,
+    fontSize: fontSize.xLarge,
+    marginBottom: layout.margin,
     textAlign: 'center',
   },
   field: {
     fontSize: fontSize.middle,
     textAlign: 'center',
   },
+  button: {
+    marginBottom: layout.marginBottom,
+    borderRadius: 15,
+    width: 250,
+  },
+  buttonLabel: {
+    fontSize: fontSize.xLarge,
+  },
 })
 
 export default function Post() {
   const route = useRoute()
   const { data, from } = route.params
-  const scheme = useColorScheme()
   const [date, setDate] = useState('')
   const { setTitle } = useContext(HomeTitleContext)
   const navigation = useNavigation()
-  const isDark = scheme === 'dark'
-  const colorScheme = {
-    content: isDark ? styles.darkContent : styles.lightContent,
-    text: isDark ? colors.white : colors.primaryText,
-  }
 
   const loadStorage = async () => {
     try {
@@ -90,30 +86,40 @@ export default function Post() {
 
   return (
     <ScreenTemplate>
-      <View style={[styles.container, colorScheme.content]}>
+      <Surface style={styles.container}>
         <Text style={styles.field}>Post Screen</Text>
         <Text style={styles.title}>{data.email}</Text>
         <Text style={styles.field}>from</Text>
         <Text style={styles.title}>{from}</Text>
         <Text style={styles.field}>Latest save date</Text>
         <Text style={styles.title}>{date.date}</Text>
-        <View style={{ width: '100%' }}>
-          <Button
-            label="Save Date"
-            color={colors.primary}
-            onPress={() => onSavePress()}
-          />
-          <Button
-            label="Remove Date"
-            color={colors.secondary}
-            onPress={() => onRemovePress()}
-          />
-          <Button
-            label="Go to Print"
-            color={colors.tertiary}
-            onPress={() => navigation.navigate('Print')}
-          />
-        </View>
+      </Surface>
+      <View style={styles.container}>
+        <Button
+          buttonColor={colors.primary}
+          onPress={() => onSavePress()}
+          mode="contained"
+          marginBottom={layout.marginBottom}
+          labelStyle={styles.buttonLabel}
+          style={styles.button}
+        >Save Date
+        </Button>
+        <Button
+          buttonColor={colors.secondary}
+          onPress={() => onRemovePress()}
+          mode="contained"
+          labelStyle={styles.buttonLabel}
+          style={styles.button}
+        >Remove Date
+        </Button>
+        <Button
+          buttonColor={colors.tertiary}
+          onPress={() => navigation.navigate('Print')}
+          mode="contained"
+          labelStyle={styles.buttonLabel}
+          style={styles.button}
+        >Go to Print
+        </Button>
       </View>
     </ScreenTemplate>
   )

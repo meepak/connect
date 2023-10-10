@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import HomeTitleContext from '../../../context/HomeTitleContext'
 // import { lightProps, darkProps } from '../../navigationProps'
-// import HeaderStyle from '../../../components/HeaderStyle'
+import HeaderStyle from '../../../components/HeaderStyle'
 
 import Home from '../../../scenes/home'
 import Detail from '../../../scenes/detail'
@@ -28,7 +28,7 @@ const HomeStack = () => {
               name="Home"
               component={Home}
               options={(/* { navigation } */) => ({
-                // headerBackground: () => <HeaderStyle />,
+                headerBackground: () => <HeaderStyle />,
               })}
             />
             <Stack.Screen
@@ -36,8 +36,7 @@ const HomeStack = () => {
               component={Detail}
               options={{
                 title: ctx.title,
-                // headerBackground:
-                //   scheme === 'dark' ? null : () => <HeaderStyle />,
+                headerBackground: () => <HeaderStyle />,
               }}
             />
           </Stack.Navigator>

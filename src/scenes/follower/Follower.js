@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, useColorScheme } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { Text } from 'react-native-paper'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import { colors, fontSize } from '../../theme'
@@ -20,12 +20,7 @@ const styles = StyleSheet.create({
 })
 
 export default function Follower() {
-  // const { scheme } = useColorScheme()
   const [visible, setVisible] = useState(false)
-  // const isDark = scheme === 'dark'
-  // const colorScheme = {
-  //   text: isDark ? colors.white : colors.primaryText,
-  // }
 
   useEffect(() => {
     console.log('Follower screen')
@@ -37,7 +32,6 @@ export default function Follower() {
     showToast({
       title: 'Hello',
       body: 'This is some something 👋',
-      // isDark,
     })
   }
 

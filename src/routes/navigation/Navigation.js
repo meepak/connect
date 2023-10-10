@@ -1,14 +1,15 @@
 import 'react-native-gesture-handler'
 import React, { useContext } from 'react'
-// import {
-//   MD3DarkTheme,
-//   MD3LightTheme,
-//   PaperProvider,
-// } from 'react-native-paper'
-// import { useColorScheme } from 'react-native'
+import {
+  MD3DarkTheme,
+  MD3LightTheme,
+  PaperProvider,
+  adaptNavigationTheme,
+} from 'react-native-paper'
+import { useColorScheme } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import Toast from 'react-native-toast-message'
-// import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
+import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 import { UserDataContext } from '../../context/UserDataContext'
 import { toastConfig } from '../../utils/ShowToast'
 import { auth } from '../../firebase'
@@ -19,7 +20,8 @@ import IntroduceStack from './stacks/IntroduceStack'
 
 export default function Navigation() {
   const { userData } = useContext(UserDataContext)
-  // const colorScheme = useColorScheme()
+  const colorScheme = useColorScheme()
+  const isDark = colorScheme === 'dark'
 
   const getMainComponent = () => {
     if (userData) {
@@ -31,20 +33,22 @@ export default function Navigation() {
   }
 
   // theming
-  // const { theme } = useMaterial3Theme()
+  const { theme } = useMaterial3Theme()
 
-  // const paperTheme = colorScheme === 'dark' ? MD3DarkTheme : MD3LightTheme
-    // ? { ...MD3DarkTheme, colors: theme.dark }
-    // : { ...MD3LightTheme, colors: theme.light }
+  const paperTheme = isDark ? MD3DarkTheme : MD3LightTheme
+
+  const { adaptedTheme } = adaptNavigationTheme(isDark ? { reactNavigationLight: paperTheme } : { reactNavigationDark: paperTheme })
+
+  const finalTheme = { ...adaptedTheme, colors: isDark ? theme.dark : theme.light }
 
   return (
     <>
-      {/* <PaperProvider theme={paperTheme}> */}
-      <NavigationContainer>
-        {getMainComponent()}
-      </NavigationContainer>
-      <Toast config={toastConfig} />
-      {/* </PaperProvider> */}
+      <PaperProvider theme={finalTheme}>
+        <NavigationContainer theme={finalTheme}>
+          {getMainComponent()}
+        </NavigationContainer>
+        <Toast config={toastConfig} />
+      </PaperProvider>
     </>
   )
 }

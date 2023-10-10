@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import {
   Alert, View, StyleSheet, useColorScheme,
 } from 'react-native'
-import { SegmentedButtons, Text } from 'react-native-paper'
+import { Surface, SegmentedButtons, Text } from 'react-native-paper'
 import { doc, updateDoc } from 'firebase/firestore'
 // import { Avatar } from '@rneui/themed'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize.xLarge,
   },
   avatar: {
-    margin: 30,
+    margin: layout.marginLeft,
     alignSelf: 'center',
   },
   segmentedButtons: {
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 const ScreenWhoAmI = ({
   whoAmI, onWhoAmIChanged, onAvatarChanged, colorScheme,
 }) => (
-  <View>
+  <Surface style={styles.avatar}>
     <View style={styles.avatar}>
       <Avatar
         size="xlarge"
@@ -98,7 +98,7 @@ const ScreenWhoAmI = ({
         onWhoAmIChanged(value)
       }}
     />
-  </View>
+  </Surface>
 )
 
 const industries = [

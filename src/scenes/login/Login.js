@@ -1,8 +1,8 @@
 import React, {
-  useState, useContext, useEffect, // useRef,
+  useState, useEffect, // useRef,
 } from 'react'
 import {
-  Alert, View, StyleSheet, LogBox, useColorScheme
+  Alert, View, StyleSheet, LogBox,
 } from 'react-native'
 import { Text } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -50,14 +50,7 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [spinner, setSpinner] = useState(false)
-  // const emailTextInput = useRef()
   const navigation = useNavigation()
-  const { scheme } = useColorScheme()
-  // const { userData } = useContext(UserDataContext)
-  const isDark = scheme === 'dark'
-  const colorScheme = {
-    text: isDark ? colors.white : colors.primaryText,
-  }
 
   const onFooterLinkPress = () => {
     navigation.navigate('Sign up')
@@ -142,7 +135,7 @@ export default function Login() {
         {auth.currentUser && !auth.currentUser.emailVerified
           ? (
             <View style={styles.footerView}>
-              <Text style={[styles.footerText, { color: colorScheme.text }]}>Email Address is not verified.</Text>
+              <Text style={styles.footerText}>Email Address is not verified.</Text>
               <Text onPress={onSendVerificationLinkPress} style={styles.footerLink}>Send Verification Email</Text>
             </View>
           ) : <></>}
@@ -188,8 +181,8 @@ export default function Login() {
           onPress={() => onLoginPress()}
         />
         <View style={styles.footerView}>
-          <Text style={[styles.footerText, { color: colorScheme.text }]}>Don&apos;t have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
-          <Text style={[{ color: colorScheme.text }]}>OR</Text>
+          <Text style={styles.footerText}>Don&apos;t have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
+          <Text>OR</Text>
         </View>
 
         <Button

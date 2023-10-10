@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Alert, StyleSheet, View, Linking, useColorScheme,
 } from 'react-native'
@@ -47,16 +47,18 @@ const styles = StyleSheet.create({
 
 export default function SignUp() {
   const [fullName, setFullName] = useState('')
-  const [nameError, setNameError] = useState('')
+  const [nameError] = useState('') // setNameError
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState('')
   const [password, setPassword] = useState('')
-  const [passwordError, setPasswordError] = useState('')
+  const [passwordError] = useState('') // setPasswordError
   const [confirmPassword, setConfirmPassword] = useState('')
   const [confirmPasswordError, setConfirmPasswordError] = useState('')
   const [spinner, setSpinner] = useState(false)
   const navigation = useNavigation()
   const { scheme } = useColorScheme()
+
+  // TODO -- read from theme color instead of colors, and remove colors array
   const isDark = scheme === 'dark'
   const colorScheme = {
     text: isDark ? colors.white : colors.primaryText,

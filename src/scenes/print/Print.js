@@ -5,6 +5,7 @@ import {
 import axios from 'axios'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import RenderItem from './RenderItem'
+import { layout } from '../../theme'
 
 const styles = StyleSheet.create({
   container: {
@@ -15,6 +16,7 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     width: '100%',
+    margin: layout.marginLeft,
   },
 })
 

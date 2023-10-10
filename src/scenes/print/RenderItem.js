@@ -1,10 +1,10 @@
 import React from 'react'
 import {
-  StyleSheet, View, useColorScheme,
+  StyleSheet, View,
 } from 'react-native'
 import { Text } from 'react-native-paper'
-// import PropTypes from 'prop-types'
-import { colors, fontSize } from '../../theme'
+import PropTypes from 'prop-types'
+import { fontSize } from '../../theme'
 
 const styles = StyleSheet.create({
   container: {
@@ -32,6 +32,9 @@ export default function RenderItem(props) {
   )
 }
 
-// RenderItem.propTypes = {
-//   item: PropTypes.arrayOf.isRequired,
-// }
+RenderItem.propTypes = {
+  item: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+  })).isRequired,
+}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {
-  Alert, View, StyleSheet, useColorScheme
+  Alert, View, StyleSheet,
 } from 'react-native'
 import {
   Text,
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
 
 export default function Edit() {
   const { userData } = useContext(UserDataContext)
-  // const scheme = useColorScheme()
   const navigation = useNavigation()
   const [fullName, setFullName] = useState(userData.fullName)
   const [phone, setFhone] = useState(userData.phone ?? '')
@@ -66,11 +65,6 @@ export default function Edit() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [spinner, setSpinner] = useState(false)
-  // const isDark = scheme === 'dark'
-  // const colorScheme = {
-  //   text: isDark ? colors.white : colors.primaryText,
-  //   progress: isDark ? styles.darkprogress : styles.progress,
-  // }
 
   useEffect(() => {
     console.log('Edit screen')
