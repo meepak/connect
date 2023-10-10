@@ -1,8 +1,11 @@
 import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import FontIcon from 'react-native-vector-icons/FontAwesome5'
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+
+// import FontIcon from 'react-native-vector-icons/FontAwesome5'
 // import { colors } from 'theme'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 // import { useColorScheme } from 'react-native'
 // import { colors } from '../../../theme'
 // stack navigators
@@ -11,11 +14,11 @@ import ProfileStack from '../stacks/ProfileStack'
 import ConnectStack from '../stacks/ConnectStack'
 import ChatStack from '../stacks/ChatStack'
 
-const Tab = createBottomTabNavigator()
+const Tab = createMaterialBottomTabNavigator()
 
-const MyTabBarIcon = ({ icon, color, size }) => (
-  <FontIcon name={icon} /*color={color}*/ size={size} />
-)
+// const MyTabBarIcon = ({ icon, color, size }) => (
+//   <FontIcon name={icon} size={size} />
+// )
 
 const TabNavigator = () => {
   // const scheme = useColorScheme()
@@ -23,6 +26,7 @@ const TabNavigator = () => {
 
   // const bgColor = isDark ? '#000' : '#FFF'
   // const borderColor = isDark ? '#FFF' : '#000'
+  const size = 26
 
   return (
     <Tab.Navigator
@@ -50,7 +54,7 @@ const TabNavigator = () => {
         component={HomeStack}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: (props) => <MyTabBarIcon {...props} icon="home" />,
+          tabBarIcon: (color) => <Icon name="home" color={color} size={size} />,
         }}
       />
       <Tab.Screen
@@ -58,7 +62,7 @@ const TabNavigator = () => {
         component={ProfileStack}
         options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: (props) => <MyTabBarIcon {...props} icon="user" />,
+          tabBarIcon: (color) => <Icon name="account-details" color={color} size={size} />,
         }}
       />
       <Tab.Screen
@@ -66,7 +70,7 @@ const TabNavigator = () => {
         component={ConnectStack}
         options={{
           tabBarLabel: 'Connect',
-          tabBarIcon: (props) => <MyTabBarIcon {...props} icon="share-alt" />,
+          tabBarIcon: (color) => <Icon name="share-variant" color={color} size={size} />,
         }}
       />
       <Tab.Screen
@@ -74,17 +78,17 @@ const TabNavigator = () => {
         component={ChatStack}
         options={{
           tabBarLabel: 'Chat',
-          tabBarIcon: (props) => <MyTabBarIcon {...props} icon="comments" />,
+          tabBarIcon: (color) => <Icon name="chat" color={color} size={size} />,
         }}
       />
     </Tab.Navigator>
   )
 }
 
-MyTabBarIcon.propTypes = {
-  icon: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-  size: PropTypes.number.isRequired,
-}
+// MyTabBarIcon.propTypes = {
+//   icon: PropTypes.string.isRequired,
+//   color: PropTypes.string.isRequired,
+//   size: PropTypes.number.isRequired,
+// }
 
 export default TabNavigator

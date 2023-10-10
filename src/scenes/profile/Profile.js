@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
 import {
-  Text, View, StyleSheet, ScrollView,// useColorScheme,
+  View, StyleSheet, ScrollView,
 } from 'react-native'
+import { Text } from 'react-native-paper'
 import Dialog from 'react-native-dialog'
 import Spinner from 'react-native-loading-spinner-overlay'
 import { doc, deleteDoc } from 'firebase/firestore'

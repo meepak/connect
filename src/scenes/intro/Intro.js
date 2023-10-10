@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   StyleSheet,
   View,
   Image,
   TouchableOpacity,
-  // useColorScheme
 } from 'react-native'
 import { Text } from 'react-native-paper'
 // import PropTypes from 'prop-types'
@@ -17,7 +16,6 @@ import Logo from '../../components/Logo'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
     alignItems: 'center',
     padding: 10,
     justifyContent: 'center',
@@ -39,14 +37,12 @@ const styles = StyleSheet.create({
   },
   introTextStyle: {
     fontSize: fontSize.middle,
-    // color: 'white',
     textAlign: 'center',
     marginBottom: 25,
     padding: 30,
   },
   introTitleStyle: {
     fontSize: fontSize.xxxLarge,
-    // color: 'white',
     textAlign: 'center',
     marginTop: 60,
     fontWeight: 'bold',
@@ -182,13 +178,7 @@ const RenderItem = (item) => (
 
 const Intro = () => {
   const navigation = useNavigation()
-  // const scheme = useColorScheme()
   const [isBeingTouhed, setIsBeingTouched] = useState(false)
-  // const isDark = scheme === 'dark'
-  // const colorScheme = {
-  //   background: isDark ? colors.black : colors.white,
-  //   text: isDark ? colors.white : colors.black,
-  // }
 
   let slider = null
 
@@ -197,7 +187,7 @@ const Intro = () => {
   const tick = () => {
     if (slider) {
       // console.log(`Go to Page ${i}`)
-      slider.goToSlide(i) // this.slider is ref of <AppIntroSlider....
+      slider.goToSlide(i)
       i += 1
       if (i === slides.length) {
         i = 0
@@ -251,9 +241,7 @@ const Intro = () => {
         renderItem={(param) => {
           const { item } = param
           const modifiedItem = {
-            ...item, // Copy all properties from the original item
-            // backgroundColor: colorScheme.background, // Override backgroundColor
-            // textColor: colorScheme.text, // Override textColor
+            ...item,
           }
           return RenderItem(modifiedItem)
         }}
@@ -273,7 +261,6 @@ const Intro = () => {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.buttonSignUpTouchable} onPress={onDone}>
-          {/* <Button style={styles.buttonSignUp} title="Sign Up" onPress={onDone} /> */}
           <Text style={styles.buttonSignUp}>Sign Up</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonSignInTouchable} onPress={onSkip}>

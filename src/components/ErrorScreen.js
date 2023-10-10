@@ -1,10 +1,10 @@
-import React, { useRef, useContext } from 'react'
+import React, { useRef } from 'react'
 import {
-  StyleSheet, Dimensions, View
+  StyleSheet, Dimensions, View,
 } from 'react-native'
 import { Text } from 'react-native-paper'
 import LottieView from 'lottie-react-native'
-import { fontSize, colors } from '../theme'
+import { fontSize } from '../theme'
 
 const { height, width } = Dimensions.get('window')
 const styles = StyleSheet.create({
