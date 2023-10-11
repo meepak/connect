@@ -118,7 +118,7 @@ TextInputBox.propTypes = {
   secureTextEntry: PropTypes.bool,
   placeholder: PropTypes.string,
   label: PropTypes.string.isRequired,
-  onChangeText: PropTypes.func.isRequired,
+  onChangeText: PropTypes.func,
   onEndEditing: PropTypes.func,
   // onBlur: PropTypes.func,
   value: PropTypes.string.isRequired,
@@ -132,6 +132,7 @@ TextInputBox.propTypes = {
 TextInputBox.defaultProps = {
   secureTextEntry: false,
   onEndEditing: null,
+  onChangeText: null,
   // onBlur: null,
   autoCapitalize: 'none',
   keyboardType: 'default',
