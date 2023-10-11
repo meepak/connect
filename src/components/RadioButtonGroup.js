@@ -10,15 +10,15 @@ import { layout, fontSize, colors } from '../theme'
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 8,
-    marginTop: layout.marginTop,
+    // paddingVertical: 8,
+    // marginTop: layout.marginTop,
   },
   row: {
     marginLeft: layout.marginLeft,
     marginRight: layout.marginRight,
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingBottom: 1,
   },
 })
 
@@ -35,7 +35,7 @@ const items = [
 */
 export default function RadioButtonGroup(props) {
   const {
-    items, onChecked, textColor,
+    items, onChecked, reverse,
   } = props
 
   const checkedItem = items.find((item) => item.checked && item.checked === true)
@@ -47,10 +47,11 @@ export default function RadioButtonGroup(props) {
     onChecked(newValue)
   }
 
+  const flexStyle = reverse ? { flexDirection: 'row-reverse', alignSelf: 'flex-start' } : { flexDirection: 'row' }
   return (
     <RadioButton.Group style={styles.container} onValueChange={(newValue) => handleCheckChange(newValue)} value={value}>
       {items.map((item) => (
-        <RadioButton.Item key={item.id} style={styles.row} /*labelStyle={{ color: textColor }}*/ label={item.text} value={item.value} />
+        <RadioButton.Item key={item.id} style={[styles.row, flexStyle]} label={item.text} value={item.value} />
       ))}
     </RadioButton.Group>
   )

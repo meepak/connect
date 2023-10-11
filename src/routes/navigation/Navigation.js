@@ -16,7 +16,7 @@ import { auth } from '../../firebase'
 
 import IntroStack from './stacks/IntroStack'
 import RootStack from './stacks/RootStack'
-import IntroduceStack from './stacks/IntroduceStack'
+import OnboardingStack from './stacks/OnboardingStack'
 
 export default function Navigation() {
   const { userData } = useContext(UserDataContext)
@@ -26,7 +26,7 @@ export default function Navigation() {
   const getMainComponent = () => {
     if (userData) {
       if (auth.currentUser && auth.currentUser.emailVerified) {
-        return userData.isIntroduced ? <RootStack /> : <IntroduceStack />
+        return userData.isOnboarded ? <RootStack /> : <OnboardingStack />
       }
     }
     return <IntroStack />

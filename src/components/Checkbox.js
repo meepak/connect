@@ -15,9 +15,8 @@ const styles = StyleSheet.create({
   row: {
     marginLeft: layout.marginLeft + 15,
     marginRight: layout.marginRight + 15,
-    marginTop: layout.marginTop,
-    marginBottom: layout.marginBottom,
-    flexDirection: 'row',
+    marginTop: layout.marginTop - 10,
+    marginBottom: layout.marginBottom - 5,
     alignItems: 'center',
     justifyContent: 'space-between',
   },
@@ -25,7 +24,7 @@ const styles = StyleSheet.create({
 
 export default function Checkbox(props) {
   const {
-    label, checked, disabled, onChecked,
+    label, checked, disabled, onChecked, reverse,
   } = props
   const [isChecked, setIsChecked] = useState(checked)
 
@@ -37,9 +36,10 @@ export default function Checkbox(props) {
     }
   }
 
+  const flexStyle = reverse ? { flexDirection: 'row-reverse', alignSelf: 'flex-start' } : { flexDirection: 'row' }
   return (
     <TouchableRipple onPress={handleCheckChange} disabled={disabled}>
-      <View style={styles.row}>
+      <View style={[styles.row, flexStyle]}>
         <Paragraph>
           {label}
         </Paragraph>
@@ -56,9 +56,11 @@ Checkbox.propTypes = {
   checked: PropTypes.bool,
   onChecked: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  reverse: PropTypes.bool,
 }
 
 Checkbox.defaultProps = {
   checked: false,
   disabled: false,
+  reverse: false,
 }
