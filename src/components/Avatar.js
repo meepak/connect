@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     color: colors.primary,
     fontWeight: 'bold',
-    fontSize: 32,
   },
 })
 
@@ -87,6 +86,7 @@ const getIconSize = (size) => {
 // TODO implement onError, return error within onEdited
 const Avatar = ({ size, onEdited }) => {
   const validSize = valiatedSize(size)
+  const iconSize = getIconSize(validSize)
   const { userData } = useContext(UserDataContext)
   const [progress, setProgress] = useState('')
   const [avatar, setAvatar] = useState(userData.avatar ?? null)
@@ -152,7 +152,7 @@ const Avatar = ({ size, onEdited }) => {
       {progress
         ? (
           <View style={styles.progressView}>
-            <Text style={styles.progressText}>{progress}</Text>
+            <Text style={[styles.progressText, { fontSize: iconSize }]}>{progress}</Text>
           </View>
         )
         : <></>}
@@ -171,7 +171,7 @@ const Avatar = ({ size, onEdited }) => {
         {onEdited
           ? (
             <SystemAvatar.Accessory
-              size={getIconSize(validSize)}
+              size={iconSize}
               onPress={() => (
                 ImageChoiceAndUpload()
               )}

@@ -1,224 +1,28 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {
-  Alert, View, StyleSheet, useColorScheme,
+  Alert, View, useColorScheme,
 } from 'react-native'
-import { Surface, SegmentedButtons, Text } from 'react-native-paper'
+import {
+  Surface, SegmentedButtons, Text, Divider,
+} from 'react-native-paper'
 import { doc, updateDoc } from 'firebase/firestore'
 // import { Avatar } from '@rneui/themed'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Spinner from 'react-native-loading-spinner-overlay'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/Button'
-import TextInputBox from '../../components/TextInputBox'
-import RadioButtonGroup from '../../components/RadioButtonGroup'
 import { firestore } from '../../firebase'
-import { layout, colors, fontSize } from '../../theme'
+import { colors } from '../../theme'
 import { UserDataContext } from '../../context/UserDataContext'
-import Avatar from '../../components/Avatar'
-import CheckboxGroup from '../../components/CheckboxGroup'
 
-const styles = StyleSheet.create({
-  progress: {
-    alignSelf: 'center',
-  },
-  darkprogress: {
-    alignSelf: 'center',
-    color: colors.white,
-  },
-  main: {
-    flex: 1,
-    width: '100%',
-  },
-  title: {
-    fontSize: fontSize.xxxLarge,
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  field: {
-    fontSize: fontSize.middle,
-    textAlign: 'center',
-  },
-  greeting: {
-    marginLeft: layout.marginLeft,
-    marginRight: layout.marginRight,
-    marginBottom: layout.marginBottom,
-    paddingTop: 20,
-    fontSize: fontSize.xxxLarge,
-    fontWeight: 'bold',
-  },
-  greetingMessage: {
-    marginLeft: layout.marginLeft,
-    marginRight: layout.marginRight,
-    marginBottom: layout.marginBottom,
-    fontSize: fontSize.xLarge,
-  },
-  avatar: {
-    margin: layout.marginLeft,
-    alignSelf: 'center',
-  },
-  segmentedButtons: {
-    marginLeft: layout.marginLeft,
-    marginRight: layout.marginRight,
-    marginBottom: layout.marginBottom,
-  },
-})
+import Header from './header'
+import WhoAmI from './whoami'
+import SelectIndustries from './industries'
+import SelectBusinessStage from './businessstage'
+import SelectOperationMode from './operationmode'
+import SelectLocation from './location'
 
-const ScreenWhoAmI = ({
-  whoAmI, onWhoAmIChanged, onAvatarChanged, colorScheme,
-}) => (
-  <Surface style={styles.avatar}>
-    <View style={styles.avatar}>
-      <Avatar
-        size="xlarge"
-        onEdited={(item) => onAvatarChanged(item)}
-      />
-    </View>
-
-    <Text style={styles.greetingMessage}>
-      What describes you best?
-    </Text>
-
-    <RadioButtonGroup
-      items={[
-        {
-          id: 1,
-          text: 'I am a founder, looking for associates',
-          value: 'founder',
-          checked: whoAmI === 'founder',
-        },
-        {
-          id: 2,
-          text: 'I want to be an associate of a business',
-          value: 'associate',
-          checked: whoAmI === 'associate',
-        },
-      ]}
-      // textColor={colorScheme.text} // TODO: Move textColor within component (decide from there)
-      onChecked={(value) => {
-        onWhoAmIChanged(value)
-      }}
-    />
-  </Surface>
-)
-
-const industries = [
-  'Agriculture and Agribusiness',
-  'Manufacturing',
-  'Energy and Utilities',
-  'Information Technology (IT) and Software',
-  'Healthcare and Pharmaceuticals',
-  'Financial Services and Banking',
-  'Transportation and Logistics',
-  'Retail and Consumer Goods',
-  'Real Estate and Construction',
-  'Education and Training',
-]
-
-const ScreenSelectIndustry = ({
-  maxSelect = 3, colorScheme, onChecked, checked,
-}) => (
-  <View>
-    <Text style={styles.greetingMessage}>
-      {maxSelect > 1 ? `Select up to ${maxSelect} related industries.` : 'Select your industry.'}
-    </Text>
-    <CheckboxGroup
-      items={industries.map((industry, index) => ({
-        id: index + 1,
-        text: industry,
-        value: industry,
-        checked: checked && checked.isArray() ? checked.includes(industry) : false,
-      }))}
-      maxSelect={maxSelect}
-      // textColor={colorScheme.text}
-      onChecked={onChecked || (() => {})}
-    />
-  </View>
-)
-
-const businessStages = [
-  'Idea',
-  'Startup',
-  'Growth',
-  'Established',
-  'Scaling',
-  'Exit',
-]
-
-const ScreenSelectBusinessStage = ({
-  businessStage, onBusinessStageChanged,
-}) => (
-  <View>
-
-    <Text style={styles.greetingMessage}>
-      What stage is your business in?
-    </Text>
-
-    <RadioButtonGroup
-      items={businessStages.map((stage, index) => ({
-        id: index + 1,
-        text: stage,
-        value: stage,
-        checked: businessStage === stage,
-      }))}
-      // textColor={colorScheme.text} // TODO: Move textColor within component (decide from there)
-      onChecked={(value) => {
-        onBusinessStageChanged(value)
-      }}
-    />
-  </View>
-)
-
-// TODO -- geolocation autocomplete
-const ScreenBusinessLocation = ({
-  businessLocation, businessOperationMode, onBusinessLocationChanged, onBusinessOperationModeChanged,
-}) => {
-  const [location, setLocation] = useState(businessLocation)
-  const [operationMode, setOperationMode] = useState(businessOperationMode)
-  return (
-    <View>
-      <Text style={styles.greetingMessage}>
-        Where is your business located?
-      </Text>
-
-      <TextInputBox
-        placeholder="City, Country"
-        onChangeText={(text) => {
-          setLocation(text)
-          onBusinessLocationChanged(text)
-        }}
-        value={location}
-        autoCapitalize="none"
-        label="Business Location"
-        icon="user"
-      />
-      <Text style={styles.greetingMessage}>
-        What is the mode of operation of your business?
-      </Text>
-      <SegmentedButtons
-        style={styles.segmentedButtons}
-        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        // textColor={colorScheme.text}
-        value={operationMode}
-        onValueChange={(text) => {
-          setOperationMode(text)
-          onBusinessOperationModeChanged(text)
-        }}
-        buttons={[
-          {
-            value: 'online',
-            label: 'Online Only',
-          },
-          {
-            value: 'offline',
-            label: 'Offline only',
-          },
-          { value: 'both', label: 'Both' },
-        ]}
-      />
-
-    </View>
-  )
-}
+import styles from './styles'
 
 const ScreenAboutPartnerParticipation = () => {
   const [shouldSignNda, setShouldSignNda] = useState(false)
@@ -495,7 +299,7 @@ const ScreenAboutPartner = () => {
   )
 }
 
-export default function Introduce() {
+export default function Onboarding() {
   const { userData } = useContext(UserDataContext)
   const scheme = useColorScheme()
   const [avatar, setAvatar] = useState(userData.avatar)
@@ -522,7 +326,7 @@ export default function Introduce() {
         fullName,
         avatar: avatar ?? null,
         phone,
-        isIntroduced: !userData.isIntroduced,
+        isOnboarded: !userData.isOnboarded,
       }
       const usersRef = doc(firestore, 'users', userData.id)
       await updateDoc(usersRef, data)
@@ -541,39 +345,41 @@ export default function Introduce() {
         style={styles.main}
         keyboardShouldPersistTaps="never"
       >
-        <Text style={styles.greeting}>Welcome {userData.fullName},</Text>
-        <Text style={[styles.greetingMessage, { fontStyle: 'italic' }]}>Lets get started with minimum information needed to find you a match.</Text>
 
-        <ScreenWhoAmI
-          whoAmI={whoAmI}
+        <Header
+          fullName={userData.fullName}
           onAvatarChanged={(item) => setAvatar(item)}
+        />
+
+        <WhoAmI
+          whoAmI={whoAmI}
           onWhoAmIChanged={(item) => setWhoAmI(item)}
-          // colorScheme={colorScheme}
         />
 
         {whoAmI === 'founder'
           ? (
             <>
-              <ScreenSelectIndustry
+              <SelectIndustries
                 maxSelect={3}
-                // colorScheme={colorScheme}
                 onChecked={(values) => {
                   console.log(values)
                 }}
               />
 
-              <ScreenSelectBusinessStage
+              <SelectBusinessStage
                 businessStage=""
                 onBusinessStageChanged={(item) => { console.log(item) }}
-                // colorScheme={colorScheme}
               />
 
-              <ScreenBusinessLocation
-                businessLocation=""
-                onBusinessLocationChanged={(item) => { console.log(item) }}
+              <SelectOperationMode
                 businessOperationMode=""
                 onBusinessOperationModeChanged={(item) => { console.log(item) }}
                 // colorScheme={colorScheme}
+              />
+
+              <SelectLocation
+                businessLocation=""
+                onBusinessLocationChanged={(item) => { console.log(item) }}
               />
 
               <ScreenAboutPartnerParticipation

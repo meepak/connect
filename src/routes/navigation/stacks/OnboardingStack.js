@@ -4,19 +4,20 @@ import { createStackNavigator } from '@react-navigation/stack'
 // import { lightProps, darkProps } from '../../navigationProps'
 import HeaderStyle from '../../../components/HeaderStyle'
 
-import Introduce from '../../../scenes/introduce'
+import Onboarding from '../../../scenes/onboarding'
 import Logo from '../../../components/Logo'
+import SelectLocation from '../../../scenes/location'
 
 const Stack = createStackNavigator()
 
-const IntroduceStack = () => {
+const OnboardingStack = () => {
   // const { scheme } = useColorScheme()
   // const navigationProps = scheme === 'dark' ? darkProps : lightProps
   return (
     <Stack.Navigator screenOptions={{ headerShown: true }}>
       <Stack.Screen
-        name="Introduce"
-        component={Introduce}
+        name="Onboarding"
+        component={Onboarding}
         options={(/* { navigation } */) => ({
           // headerBackground: () => <HeaderStyle />,
           headerTitle: () => ( // App Logo
@@ -24,8 +25,18 @@ const IntroduceStack = () => {
           ),
         })}
       />
+      <Stack.Screen
+        name="Select Location"
+        component={SelectLocation}
+        // options={(/* { navigation } */) => ({
+        //   // headerBackground: () => <HeaderStyle />,
+        //   headerTitle: () => ( // App Logo
+        //     <Logo style={{ width: 200, alignSelf: 'center' }} />
+        //   ),
+        // })}
+      />
     </Stack.Navigator>
   )
 }
 
-export default IntroduceStack
+export default OnboardingStack

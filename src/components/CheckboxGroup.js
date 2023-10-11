@@ -4,7 +4,7 @@ import Checkbox from './Checkbox'
 
 export default function CheckboxGroup(props) {
   const {
-    items, maxSelect, onChecked, textColor,
+    items, maxSelect, onChecked, reverse,
   } = props
 
   const [checkedValues, setCheckedValues] = useState([])
@@ -34,6 +34,7 @@ export default function CheckboxGroup(props) {
             }
           }}
           disabled={checkedValues.length >= maxSelect && !checkedValues.includes(item.value)}
+          reverse={reverse ?? true}
           // textColor={textColor}
         />
       ))}

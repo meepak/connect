@@ -59,7 +59,7 @@ export default function Edit() {
   const navigation = useNavigation()
   const [fullName, setFullName] = useState(userData.fullName)
   const [phone, setFhone] = useState(userData.phone ?? '')
-  const [isIntroduced, setIsIntroduced] = useState(userData.isIntroduced)
+  const [isOnboarded, setisOnboarded] = useState(userData.isOnboarded)
   const [avatar, setAvatar] = useState(userData.avatar)
   const [currentPassword, setCurrentPassword] = useState('')
   const [password, setPassword] = useState('')
@@ -79,7 +79,7 @@ export default function Edit() {
         fullName,
         avatar: avatar ?? null,
         phone,
-        isIntroduced,
+        isOnboarded,
       }
       const usersRef = doc(firestore, 'users', userData.id)
       await updateDoc(usersRef, data)
@@ -157,10 +157,10 @@ export default function Edit() {
           icon="phone"
         />
         <Checkbox
-          label="Has user been introduced?"
-          checked={isIntroduced}
+          label="Has user been onboarded?"
+          checked={isOnboarded}
           onChecked={(checked) => {
-            setIsIntroduced(checked)
+            setisOnboarded(checked)
           }}
           // textColor={colorScheme.text}
         />

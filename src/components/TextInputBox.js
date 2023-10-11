@@ -40,6 +40,7 @@ const TextInputBox = (props) => {
     keyboardType,
     errorMessage,
     icon,
+    onFocus,
   } = props
 
   // const scheme = useColorScheme()
@@ -100,6 +101,7 @@ const TextInputBox = (props) => {
         // backgroundColor={colorScheme.bg}
         // placeholderTextColor={colorScheme.line}
         error={errorMessage !== ''}
+        onFocus={onFocus}
       />
       <HelperText
         style={styles.helperText}
@@ -124,6 +126,7 @@ TextInputBox.propTypes = {
   keyboardType: PropTypes.string,
   errorMessage: PropTypes.string,
   icon: PropTypes.string,
+  onFocus: PropTypes.func,
 }
 
 TextInputBox.defaultProps = {
@@ -135,6 +138,7 @@ TextInputBox.defaultProps = {
   placeholder: '',
   errorMessage: '',
   icon: '',
+  onFocus: null,
 }
 
 export default TextInputBox
