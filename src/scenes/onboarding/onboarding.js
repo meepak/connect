@@ -5,6 +5,7 @@ import {
 import {
   Surface, SegmentedButtons, Text, Divider,
 } from 'react-native-paper'
+import { useRoute, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { doc, updateDoc } from 'firebase/firestore'
 // import { Avatar } from '@rneui/themed'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -301,6 +302,7 @@ const ScreenAboutPartner = () => {
 
 export default function Onboarding() {
   const { userData } = useContext(UserDataContext)
+  const route = useRoute()
   const scheme = useColorScheme()
   const [avatar, setAvatar] = useState(userData.avatar)
   const [whoAmI, setWhoAmI] = useState()
@@ -378,8 +380,7 @@ export default function Onboarding() {
               />
 
               <SelectLocation
-                businessLocation=""
-                onBusinessLocationChanged={(item) => { console.log(item) }}
+                onBusinessLocationChanged={(item) => { console.log(`selected business location - ${item}`) }}
               />
 
               <ScreenAboutPartnerParticipation
