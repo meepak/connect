@@ -18,157 +18,20 @@ import { firestore } from '../../firebase'
 import { colors } from '../../theme'
 import { UserDataContext } from '../../context/UserDataContext'
 
-import Header from './header'
-import WhoAmI from './whoami'
-import SelectIndustries from './industries'
-import SelectBusinessStage from './businessstage'
-import SelectOperationMode from './operationmode'
-import SelectLocation from './location'
-import SelectWorkArrangementPreference from './workarrangement'
-import SelectCommunicationPreference from './communication'
-import SelectPartnerTypes from './partnertypes'
-import SelectEducation from './education'
-import SelectOccupations from './occupation'
+import Header from './__header'
+import WhoAmI from './_whoami'
+import SelectIndustries from './_industries'
+import SelectBusinessStage from './_businessstage'
+import SelectOperationMode from './_operationmode'
+import SelectLocation from './_location'
+import SelectWorkArrangementPreference from './_workarrangement'
+import SelectCommunicationPreference from './_communication'
+import SelectPartnerTypes from './_partnertypes'
+import SelectEducation from './_education'
+import SelectOccupations from './_occupation'
+import SelectYesNo from './_yesno'
 
 import styles from './styles'
-
-const ScreenAboutPartner = () => {
-  const [shouldSignNda, setShouldSignNda] = useState(false)
-  const [requireBackgroundCheck, setRequireBackgroundCheck] = useState(false)
-  const [partnerAvailability, setPartnerAvailability] = useState(false)
-  return (
-    <View>
-
-      <Text style={styles.greetingMessage}>
-        What is your availablity?
-      </Text>
-      <SegmentedButtons
-        style={styles.segmentedButtons}
-        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        // textColor={colorScheme.text}
-        value={partnerAvailability}
-        onValueChange={(text) => {
-          setPartnerAvailability(text)
-        }}
-        buttons={[
-          {
-            value: 'asap',
-            label: 'ASAP',
-          },
-          {
-            value: '1 month',
-            label: 'Within 1 mth',
-          },
-          {
-            value: '1 Month+',
-            label: '1 Month+',
-          },
-        ]}
-      />
-
-      <Text style={styles.greetingMessage}>
-        What is your communication preference?
-      </Text>
-      <SegmentedButtons
-        style={styles.segmentedButtons}
-        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        // textColor={colorScheme.text}
-        value={partnerAvailability}
-        onValueChange={(text) => {
-          setPartnerAvailability(text)
-        }}
-        buttons={[
-          {
-            value: 'online/phone',
-            label: 'Online/Phone',
-          },
-          {
-            value: 'in-person',
-            label: 'In Person',
-          },
-          {
-            value: 'flexible',
-            label: 'Flexible',
-          },
-        ]}
-      />
-
-      <Text style={styles.greetingMessage}>
-        What is your location preference?
-      </Text>
-      <SegmentedButtons
-        style={styles.segmentedButtons}
-        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        // textColor={colorScheme.text}
-        value={partnerAvailability}
-        onValueChange={(text) => {
-          setPartnerAvailability(text)
-        }}
-        buttons={[
-          {
-            value: 'onsite',
-            label: 'Onsite',
-          },
-          {
-            value: 'remote',
-            label: 'Remote',
-          },
-          {
-            value: 'flexible',
-            label: 'Flexible',
-          },
-        ]}
-      />
-
-      <Text style={styles.greetingMessage}>
-        Will your partner require to sign NDA?
-      </Text>
-      <SegmentedButtons
-        style={styles.segmentedButtons}
-        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        // textColor={colorScheme.text}
-        value={shouldSignNda}
-        onValueChange={(text) => {
-          setShouldSignNda(text)
-        }}
-        buttons={[
-          {
-            value: 'yes',
-            label: 'Yes',
-          },
-          {
-            value: 'no',
-            label: 'No',
-          },
-        ]}
-      />
-
-      <Text style={styles.greetingMessage}>
-        Will you be requesting ID Verification and background check?
-      </Text>
-      <SegmentedButtons
-        style={styles.segmentedButtons}
-        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        // textColor={colorScheme.text}
-        value={requireBackgroundCheck}
-        onValueChange={(text) => {
-          setRequireBackgroundCheck(text)
-        }}
-        buttons={[
-          {
-            value: 'yes',
-            label: 'Yes',
-          },
-          {
-            value: 'no',
-            label: 'No',
-          },
-        ]}
-      />
-
-    </View>
-  )
-}
 
 export default function Onboarding() {
   const { userData } = useContext(UserDataContext)
@@ -240,7 +103,6 @@ export default function Onboarding() {
               />
 
               <SelectBusinessStage
-                businessStage=""
                 onBusinessStageChanged={(item) => { console.log(item) }}
               />
 
@@ -264,25 +126,102 @@ export default function Onboarding() {
                 onPartnerTypesChanged={(item) => { console.log(item) }}
               />
 
+              <SelectOccupations
+                onOccupationsSelected={(items) => { console.log(`selected occupation - ${JSON.stringify(items)}`) }}
+              />
+
               <SelectEducation
                 onEducationChanged={(item) => { console.log(item) }}
               />
 
-              <SelectOccupations
-                onOccupationsSelected={(items) => { console.log(`selected occupation - ${JSON.stringify(items)}`) }}
+              <SelectYesNo
+                OnYesNoSelected={(item) => { console.log(item) }}
+                question="Will you ask to sign NDA?"
+              />
+
+              <SelectYesNo
+                OnYesNoSelected={(item) => { console.log(item) }}
+                question="Will you ask for references & background check?"
+              />
+
+              <SelectYesNo
+                OnYesNoSelected={(item) => { console.log(item) }}
+                question="If requested, will you provide references & consent to background check?"
               />
 
             </>
           )
           : <></>}
         {whoAmI === 'associate'
-          ? <ScreenAboutPartner colorScheme={colorScheme} />
+          ? (
+            <>
+              <SelectIndustries
+                maxSelect={5}
+                question="Select up to 5 industries you are interested in."
+                onChecked={(values) => {
+                  console.log(values)
+                }}
+              />
+
+              <SelectBusinessStage
+                allSelect
+                question="What stage of business are you most interested in?"
+                onBusinessStageChanged={(item) => { console.log(item) }}
+              />
+
+              <SelectOperationMode
+                question="Do you prefer business that operates online and/or offline?"
+                onBusinessOperationModeChanged={(item) => { console.log(item) }}
+              />
+
+              <SelectPartnerTypes
+                question="What kind of role are you looking to take on?"
+                onPartnerTypesChanged={(item) => { console.log(item) }}
+              />
+
+              <SelectWorkArrangementPreference
+                onBusinessOperationModeChanged={(item) => { console.log(item) }}
+              />
+
+              <SelectLocation
+                question="Do you have specific preference on business location? If so, select city/country."
+                onBusinessLocationChanged={(item) => { console.log(`selected business location - ${item}`) }}
+              />
+
+              <SelectOccupations
+                question="Select your occupational skills background."
+                maxSelect={20}
+                onOccupationsSelected={(items) => { console.log(`selected occupation - ${JSON.stringify(items)}`) }}
+              />
+
+              <SelectEducation
+                question="What is your highest educational qualification?"
+                onEducationChanged={(item) => { console.log(item) }}
+              />
+
+              <SelectYesNo
+                OnYesNoSelected={(item) => { console.log(item) }}
+                question="Will you ask for references & background check?"
+              />
+
+              <SelectYesNo
+                OnYesNoSelected={(item) => { console.log(item) }}
+                question="If requested, will you sign NDA?"
+              />
+
+              <SelectYesNo
+                OnYesNoSelected={(item) => { console.log(item) }}
+                question="If requested, will you provide references & consent to background check?"
+              />
+
+            </>
+          )
           : <></>}
 
         <Button
-            label="Update"
-            color={colors.primary}
-            onPress={profileUpdate}
+          label="Let's Go!"
+          color={colors.primary}
+          onPress={profileUpdate}
         />
         {/* <Button
           label="Simulate Error"

@@ -34,18 +34,24 @@ const styles = StyleSheet.create({
     marginRight: layout.marginRight,
     marginBottom: layout.marginBottom,
     fontSize: fontSize.large,
-    fontStyle: 'italic',
+    // fontStyle: 'italic',
   },
   segmentedButtons: {
     marginLeft: layout.marginLeft,
     marginRight: layout.marginRight,
     marginBottom: layout.marginBottom,
   },
-  greetingMessage: {
+  question: {
     marginLeft: layout.marginLeft,
     marginRight: layout.marginRight,
     marginBottom: layout.marginBottom,
-    fontSize: fontSize.xLarge,
+    fontSize: fontSize.large,
+  },
+  answer: {
+    //borderBottomWidth: 1,
+    marginLeft: layout.marginLeft,
+    marginRight: layout.marginRight,
+    textAlign: 'center',
   },
 
 })

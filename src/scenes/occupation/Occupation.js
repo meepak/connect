@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import {
   Platform,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   SafeAreaView,
 } from 'react-native'
+import { Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import Autocomplete from 'react-native-autocomplete-input'
 
@@ -16,6 +16,9 @@ import { layout, fontSize, colors } from '../../theme'
 const styles = StyleSheet.create({
   saveView: {
     flex: 1,
+  },
+  label: {
+    margin: layout.marginLeft,
   },
   container: {
     position: 'relative',
@@ -30,9 +33,9 @@ const styles = StyleSheet.create({
 
     // Make space for the default top bar
     ...Platform.select({
-      android: {
-        marginTop: 25,
-      },
+      // android: {
+      //   marginTop: 25,
+      // },
       default: {
         marginTop: 0,
       },
@@ -114,6 +117,9 @@ const Occupation = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.saveView}>
+      <Text style={styles.label}>
+        Please select occupation
+      </Text>
       <View style={styles.container}>
         <View style={styles.autocompleteContainer}>
           <Autocomplete

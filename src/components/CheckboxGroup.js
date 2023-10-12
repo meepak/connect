@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
 import Checkbox from './Checkbox'
 
 export default function CheckboxGroup(props) {
@@ -35,7 +35,6 @@ export default function CheckboxGroup(props) {
           }}
           disabled={checkedValues.length >= maxSelect && !checkedValues.includes(item.value)}
           reverse={reverse ?? true}
-          // textColor={textColor}
         />
       ))}
     </View>

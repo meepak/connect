@@ -9,7 +9,7 @@ import { colors } from '../../theme'
 import styles from './styles'
 
 const SelectOccupations = ({
-  onOccupationsSelected,
+  onOccupationsSelected, question, maxSelect,
 }) => {
   const [Occupations, setOccupations] = useState([])
   const navigation = useNavigation()
@@ -24,8 +24,8 @@ const SelectOccupations = ({
 
   return (
     <Surface style={styles.card}>
-      <Text style={styles.greetingMessage}>
-        Add up to 5 occupational background for your partner?
+      <Text style={styles.question}>
+        { question || (`${maxSelect ? `Add up to ${maxSelect}` : 'Select'} occupational backgrounds for your partner?`)}
       </Text>
       <Divider style={styles.divider} />
 
@@ -36,7 +36,7 @@ const SelectOccupations = ({
       ))}
 
       <Button
-        disable={Occupations.length >= 5}
+        disable={maxSelect ? Occupations.length >= maxSelect : false}
         label="Add"
         color={colors.tertiary}
         onPress={() => {
