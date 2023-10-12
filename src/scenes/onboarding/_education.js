@@ -7,7 +7,8 @@ import RadioButtonGroup from '../../components/RadioButtonGroup'
 import styles from './styles'
 
 const educationLevels = [
-  'Don\'t care',
+  'None',
+  'High School',
   'Certificate',
   'Diploma',
   'Associate\'s degree',
@@ -17,12 +18,12 @@ const educationLevels = [
 ]
 
 const SelectEducation = ({
-  onEducationChanged,
+  onEducationChanged, question,
 }) => (
   <Surface style={styles.card}>
 
-    <Text style={styles.greetingMessage}>
-      What is the minimum education level you seek in a partner?
+    <Text style={styles.question}>
+      { question || 'What is the minimum education level you seek in a partner?' }
     </Text>
 
     <Divider style={styles.divider} />

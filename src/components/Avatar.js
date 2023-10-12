@@ -165,7 +165,7 @@ const Avatar = ({ size, onEdited }) => {
         source={avatar ? { uri: avatar } : null}
         icon={onEdited ? { name: 'pencil' } : null}
         onPress={() => (
-          ImageChoiceAndUpload()
+          onEdited ? ImageChoiceAndUpload() : () => {}
         )}
       >
         {onEdited

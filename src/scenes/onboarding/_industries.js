@@ -19,11 +19,11 @@ const industries = [
 ]
 
 const SelectIndustries = ({
-  maxSelect = 3, onChecked, checked,
+  maxSelect = 3, onChecked, checked, question,
 }) => (
   <Surface style={styles.card}>
-    <Text style={styles.greetingMessage}>
-      {maxSelect > 1 ? `Select up to ${maxSelect} related industries.` : 'Select your industry.'}
+    <Text style={styles.question}>
+      {question || `Select up to ${maxSelect} related industries.`}
     </Text>
     <Divider style={styles.divider} />
     <CheckboxGroup

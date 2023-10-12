@@ -11,7 +11,7 @@ const WhoAmI = ({
 }) => (
   <Surface style={styles.card}>
 
-    <Text style={styles.greetingMessage}>
+    <Text style={styles.question}>
       What describes you best?
     </Text>
     <Divider style={styles.divider} />

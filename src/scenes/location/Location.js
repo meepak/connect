@@ -2,6 +2,7 @@ import React from 'react'
 import {
   StyleSheet,
 } from 'react-native'
+import { Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import { layout } from '../../theme'
@@ -9,6 +10,9 @@ import { layout } from '../../theme'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  label: {
+    margin: layout.marginLeft,
   },
   textInputContainer: {
     flexDirection: 'row',
@@ -65,18 +69,21 @@ const SelectLocation = ({ route }) => {
   }
 
   return (
-    <GooglePlacesAutocomplete
-      styles={styles}
-      placeholder="Enter city and country"
+    <>
+      <Text style={styles.label}>Please select location.</Text>
+      <GooglePlacesAutocomplete
+        styles={styles}
+        placeholder="Enter location"
       // fetchDetails for details param on onPress
-      onPress={(data) => {
-        handleSelect(data.description)
-      }}
-      query={{
-        key: 'AIzaSyDSfNDyxe_X5EpgkcdJw4zYovB-P5FtBTw',
-        language: 'en',
-      }}
-    />
+        onPress={(data) => {
+          handleSelect(data.description)
+        }}
+        query={{
+          key: 'AIzaSyDSfNDyxe_X5EpgkcdJw4zYovB-P5FtBTw',
+          language: 'en',
+        }}
+      />
+    </>
   )
 }
 

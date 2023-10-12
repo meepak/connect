@@ -11,7 +11,7 @@ const SelectCommunicationPreference = ({
   onCommunicationPreferenceChanged,
 }) => (
   <Surface style={styles.card}>
-    <Text style={styles.greetingMessage}>
+    <Text style={styles.question}>
       How do you prefer to communicate?
     </Text>
     <Divider style={styles.divider} />

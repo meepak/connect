@@ -17,7 +17,7 @@ const OnboardingStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: true }}>
       <Stack.Screen
-        name="Onboarding"
+        name="Back"
         component={Onboarding}
         options={(/* { navigation } */) => ({
           // headerBackground: () => <HeaderStyle />,
@@ -29,22 +29,22 @@ const OnboardingStack = () => {
       <Stack.Screen
         name="Select Location"
         component={SelectLocation}
-        // options={(/* { navigation } */) => ({
-        //   // headerBackground: () => <HeaderStyle />,
-        //   headerTitle: () => ( // App Logo
-        //     <Logo style={{ width: 200, alignSelf: 'center' }} />
-        //   ),
-        // })}
+        options={(/* { navigation } */) => ({
+          // headerBackground: () => <HeaderStyle />,
+          headerTitle: () => ( // App Logo
+            <Logo style={{ width: 200, alignSelf: 'center' }} />
+          ),
+        })}
       />
       <Stack.Screen
         name="Select Occupation"
         component={Occupation}
-        // options={(/* { navigation } */) => ({
-        //   // headerBackground: () => <HeaderStyle />,
-        //   headerTitle: () => ( // App Logo
-        //     <Logo style={{ width: 200, alignSelf: 'center' }} />
-        //   ),
-        // })}
+        options={(/* { navigation } */) => ({
+          // headerBackground: () => <HeaderStyle />,
+          headerTitle: () => ( // App Logo
+            <Logo style={{ width: 200, alignSelf: 'center' }} />
+          ),
+        })}
       />
     </Stack.Navigator>
   )

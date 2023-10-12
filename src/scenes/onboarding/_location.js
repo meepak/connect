@@ -3,34 +3,34 @@ import {
   Surface, Text, Divider,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
-import TextInputBox from '../../components/TextInputBox'
+import Button from '../../components/Button'
+import { colors } from '../../theme'
 
 import styles from './styles'
 
 // TODO -- geolocation autocomplete
 const SelectLocation = ({
-  onBusinessLocationChanged,
+  onBusinessLocationChanged, question
 }) => {
   const [selectedAddress, setSelectedAddress] = useState('')
   const navigation = useNavigation()
 
   return (
     <Surface style={styles.card}>
-      <Text style={styles.greetingMessage}>
-        Where is your business located?&nbsp;
+      <Text style={styles.question}>
+        {question || 'Where is your business located?'}
       </Text>
       <Divider style={styles.divider} />
-      <TextInputBox // Todo replace with button
-        placeholder="City, Country"
-        onChangeText={(text) => {
-        //   setLocation(text)
-          // onBusinessLocationChanged(text)
-          console.log(`was text changed to ?? ${text}`)
-        }}
-        value={selectedAddress}
-        autoCapitalize="none"
-        label="Business Location"
-        onFocus={() => {
+
+
+      <Text style={styles.answer}>
+        {selectedAddress}
+      </Text>
+
+      <Button
+        label="Select"
+        color={colors.tertiary}
+        onPress={() => {
           navigation.navigate('Select Location', {
             onReturn: (item) => {
               setSelectedAddress(item)

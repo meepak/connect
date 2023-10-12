@@ -22,7 +22,7 @@ const ScreenHeader = ({
         <Text style={styles.headerTextName}>{fullName}</Text>
       </View>
     </View>
-    <Text style={[styles.greetingNote]}>Lets get started with some information needed to find you a match.</Text>
+    <Text style={[styles.greetingNote]}>Please introduce yourself.</Text>
   </>
 )
 

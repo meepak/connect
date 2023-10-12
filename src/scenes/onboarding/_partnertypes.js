@@ -8,11 +8,11 @@ import styles from './styles'
 const operationModes = ['Investor', 'Active partner', 'Advisory partner']
 
 const SelectPartnerTypes = ({
-  onPartnerTypesChanged,
+  onPartnerTypesChanged, question
 }) => (
   <Surface style={styles.card}>
-    <Text style={styles.greetingMessage}>
-      What type of partner(s) are you looking for?
+    <Text style={styles.question}>
+      {question || 'What type of partner(s) are you looking for?'}
     </Text>
 
     <Divider style={styles.divider} />

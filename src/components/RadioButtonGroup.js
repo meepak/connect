@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
   container: {
     // paddingVertical: 8,
     // marginTop: layout.marginTop,
+    
   },
   row: {
     marginLeft: layout.marginLeft,
@@ -20,6 +21,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingBottom: 1,
   },
+  labelStyle: {
+    // fontSize: fontSize.middle,
+  }
 })
 
 /*
@@ -51,7 +55,7 @@ export default function RadioButtonGroup(props) {
   return (
     <RadioButton.Group style={styles.container} onValueChange={(newValue) => handleCheckChange(newValue)} value={value}>
       {items.map((item) => (
-        <RadioButton.Item mode="android" key={item.id} style={[styles.row, flexStyle]} label={item.text} value={item.value} />
+        <RadioButton.Item mode="android" key={item.id} style={[styles.row, flexStyle]} labelStyle={styles.labelStyle} label={item.text} value={item.value} />
       ))}
     </RadioButton.Group>
   )
