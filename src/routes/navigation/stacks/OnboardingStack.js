@@ -11,10 +11,10 @@ import Occupation from '../../../scenes/occupation'
 
 const Stack = createStackNavigator()
 
-const OnboardingStack = () => {
+const OnboardingStack = () =>
   // const { scheme } = useColorScheme()
   // const navigationProps = scheme === 'dark' ? darkProps : lightProps
-  return (
+  (
     <Stack.Navigator screenOptions={{ headerShown: true }}>
       <Stack.Screen
         name="Back"
@@ -48,6 +48,5 @@ const OnboardingStack = () => {
       />
     </Stack.Navigator>
   )
-}
 
 export default OnboardingStack

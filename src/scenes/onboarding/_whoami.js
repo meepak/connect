@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Surface,Text, Divider
+  Surface, Text, Divider,
 } from 'react-native-paper'
 import RadioButtonGroup from '../../components/RadioButtonGroup'
 

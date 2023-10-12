@@ -10,7 +10,7 @@ import styles from './styles'
 
 // TODO -- geolocation autocomplete
 const SelectLocation = ({
-  onBusinessLocationChanged, question
+  onBusinessLocationChanged, question,
 }) => {
   const [selectedAddress, setSelectedAddress] = useState('')
   const navigation = useNavigation()
@@ -21,7 +21,6 @@ const SelectLocation = ({
         {question || 'Where is your business located?'}
       </Text>
       <Divider style={styles.divider} />
-
 
       <Text style={styles.answer}>
         {selectedAddress}

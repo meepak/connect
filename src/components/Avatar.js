@@ -175,7 +175,7 @@ const Avatar = ({ size, onEdited }) => {
                 ImageChoiceAndUpload()
               )}
 
-      //containerStyle={{ bottom: 10, right: 7 }}
+      // containerStyle={{ bottom: 10, right: 7 }}
             />
           )
           : <></>}

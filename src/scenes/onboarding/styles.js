@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize.large,
   },
   answer: {
-    //borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     marginLeft: layout.marginLeft,
     marginRight: layout.marginRight,
     textAlign: 'center',

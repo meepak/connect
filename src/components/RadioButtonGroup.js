@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   container: {
     // paddingVertical: 8,
     // marginTop: layout.marginTop,
-    
+
   },
   row: {
     marginLeft: layout.marginLeft,
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   labelStyle: {
     // fontSize: fontSize.middle,
-  }
+  },
 })
 
 /*
