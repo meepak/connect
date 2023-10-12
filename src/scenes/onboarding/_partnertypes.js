@@ -8,7 +8,7 @@ import styles from './styles'
 const operationModes = ['Investor', 'Active partner', 'Advisory partner']
 
 const SelectPartnerTypes = ({
-  onPartnerTypesChanged, question
+  onPartnerTypesChanged, question,
 }) => (
   <Surface style={styles.card}>
     <Text style={styles.question}>

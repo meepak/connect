@@ -19,14 +19,14 @@ const toastConfig = {
     Overwrite 'success' type,
     by modifying the existing `BaseToast` component
   */
-  success: (props) => {
+  success: (props) =>
     // const { isDark } = props.props
     // const styles = {
     //   backgroundColor: isDark ? colors.darkInput : colors.white,
     //   text1Color: isDark ? colors.white : colors.black,
     //   text2Color: isDark ? colors.lightyellow : colors.darkPurple,
     // }
-    return (
+    (
       <BaseToast
         {...props}
         style={{ borderLeftColor: colors.primary }}
@@ -45,8 +45,7 @@ const toastConfig = {
           // color: styles.text2Color,
         }}
       />
-    )
-  },
+    ),
   /*
     Overwrite 'error' type,
     by modifying the existing `ErrorToast` component
@@ -70,7 +69,7 @@ const toastConfig = {
     They will be passed when calling the `show` method (see below)
   */
   tomatoToast: ({ text1, props }) => (
-    <View style={{ height: 60, width: '100%' /*, backgroundColor: 'tomato' */}}>
+    <View style={{ height: 60, width: '100%' /* , backgroundColor: 'tomato' */ }}>
       <Text>{text1}</Text>
       <Text>{props.uuid}</Text>
     </View>

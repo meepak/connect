@@ -9,10 +9,10 @@ import Edit from '../../../scenes/edit'
 
 const Stack = createStackNavigator()
 
-const ProfileStack = () => {
+const ProfileStack = () =>
   // const scheme = useColorScheme()
   // const navigationProps = scheme === 'dark' ? darkProps : lightProps
-  return (
+  (
     <Stack.Navigator>
       <Stack.Group>
         <Stack.Screen
@@ -32,6 +32,5 @@ const ProfileStack = () => {
       </Stack.Group>
     </Stack.Navigator>
   )
-}
 
 export default ProfileStack
