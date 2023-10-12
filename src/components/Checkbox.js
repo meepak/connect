@@ -6,7 +6,7 @@ import {
   TouchableRipple,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import { layout } from '../theme'
+import { layout, colors } from '../theme'
 
 const styles = StyleSheet.create({
   container: {
@@ -44,7 +44,7 @@ export default function Checkbox(props) {
           {label}
         </Paragraph>
         <View pointerEvents="none">
-          <SystemCheckBox status={isChecked ? 'checked' : 'unchecked'} disabled={disabled} />
+          <SystemCheckBox.Android status={isChecked ? 'checked' : 'unchecked'} disabled={disabled} uncheckedColor={colors.gray} />
         </View>
       </View>
     </TouchableRipple>

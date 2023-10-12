@@ -5,14 +5,14 @@ import {
 import CheckboxGroup from '../../components/CheckboxGroup'
 import styles from './styles'
 
-const operationModes = ['Online', 'Offline']
+const operationModes = ['Investor', 'Active partner', 'Advisory partner']
 
-const SelectOperationMode = ({
-  onBusinessOperationModeChanged,
+const SelectPartnerTypes = ({
+  onPartnerTypesChanged,
 }) => (
   <Surface style={styles.card}>
     <Text style={styles.greetingMessage}>
-      What is the mode of operation of your business?
+      What type of partner(s) are you looking for?
     </Text>
 
     <Divider style={styles.divider} />
@@ -27,7 +27,7 @@ const SelectOperationMode = ({
       }))}
       // textColor={colorScheme.text} // TODO: Move textColor within component (decide from there)
       onChecked={(value) => {
-        if (onBusinessOperationModeChanged) onBusinessOperationModeChanged(value)
+        if (onPartnerTypesChanged) onPartnerTypesChanged(value)
         console.log(value)
       }}
       maxSelect={operationModes.length}
@@ -35,4 +35,4 @@ const SelectOperationMode = ({
   </Surface>
 )
 
-export default SelectOperationMode
+export default SelectPartnerTypes

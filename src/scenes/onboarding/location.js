@@ -17,10 +17,10 @@ const SelectLocation = ({
   return (
     <Surface style={styles.card}>
       <Text style={styles.greetingMessage}>
-        Where is your business located?
+        Where is your business located?&nbsp;
       </Text>
       <Divider style={styles.divider} />
-      <TextInputBox
+      <TextInputBox // Todo replace with button
         placeholder="City, Country"
         onChangeText={(text) => {
         //   setLocation(text)
