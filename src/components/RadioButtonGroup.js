@@ -51,7 +51,7 @@ export default function RadioButtonGroup(props) {
   return (
     <RadioButton.Group style={styles.container} onValueChange={(newValue) => handleCheckChange(newValue)} value={value}>
       {items.map((item) => (
-        <RadioButton.Item key={item.id} style={[styles.row, flexStyle]} label={item.text} value={item.value} />
+        <RadioButton.Item mode="android" key={item.id} style={[styles.row, flexStyle]} label={item.text} value={item.value} />
       ))}
     </RadioButton.Group>
   )

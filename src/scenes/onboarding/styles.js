@@ -8,6 +8,8 @@ const styles = StyleSheet.create({
     margin: layout.marginLeft,
     padding: layout.marginLeft,
     alignSelf: 'center',
+    justifyContent: 'center',
+    width: '90%',
   },
   divider: {
     marginBottom: layout.marginBottom,

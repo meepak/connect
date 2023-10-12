@@ -5,34 +5,33 @@ import {
 import CheckboxGroup from '../../components/CheckboxGroup'
 import styles from './styles'
 
-const operationModes = ['Online', 'Offline']
+const workArrangementPreferences = ['Remote', 'On-site']
 
-const SelectOperationMode = ({
-  onBusinessOperationModeChanged,
+const SelectWorkArrangementPreference = ({
+  onWorkArrangementPreferenceChanged,
 }) => (
   <Surface style={styles.card}>
     <Text style={styles.greetingMessage}>
-      What is the mode of operation of your business?
+      How do you prefer to work?
     </Text>
 
     <Divider style={styles.divider} />
 
     <CheckboxGroup
       reverse
-      items={operationModes.map((item, index) => ({
+      items={workArrangementPreferences.map((item, index) => ({
         id: index + 1,
         text: item,
         value: item,
         checked: '',
       }))}
-      // textColor={colorScheme.text} // TODO: Move textColor within component (decide from there)
       onChecked={(value) => {
-        if (onBusinessOperationModeChanged) onBusinessOperationModeChanged(value)
+        if (onWorkArrangementPreferenceChanged) onWorkArrangementPreferenceChanged(value)
         console.log(value)
       }}
-      maxSelect={operationModes.length}
+      maxSelect={workArrangementPreferences.length}
     />
   </Surface>
 )
 
-export default SelectOperationMode
+export default SelectWorkArrangementPreference

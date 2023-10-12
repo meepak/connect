@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, {
+  useState, useEffect, useContext, useRef,
+} from 'react'
 import {
   Alert, View, useColorScheme,
 } from 'react-native'
@@ -22,145 +24,13 @@ import SelectIndustries from './industries'
 import SelectBusinessStage from './businessstage'
 import SelectOperationMode from './operationmode'
 import SelectLocation from './location'
+import SelectWorkArrangementPreference from './workarrangement'
+import SelectCommunicationPreference from './communication'
+import SelectPartnerTypes from './partnertypes'
+import SelectEducation from './education'
+import SelectOccupations from './occupation'
 
 import styles from './styles'
-
-const ScreenAboutPartnerParticipation = () => {
-  const [shouldSignNda, setShouldSignNda] = useState(false)
-  const [requireBackgroundCheck, setRequireBackgroundCheck] = useState(false)
-  const [partnerAvailability, setPartnerAvailability] = useState(false)
-  return (
-    <View>
-      <Text style={styles.greetingMessage}>
-        Will your partner require to sign NDA?
-      </Text>
-      <SegmentedButtons
-        style={styles.segmentedButtons}
-        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        // textColor={colorScheme.text}
-        value={shouldSignNda}
-        onValueChange={(text) => {
-          setShouldSignNda(text)
-        }}
-        buttons={[
-          {
-            value: 'yes',
-            label: 'Yes',
-          },
-          {
-            value: 'no',
-            label: 'No',
-          },
-        ]}
-      />
-
-      <Text style={styles.greetingMessage}>
-        Will you be requesting ID Verification and background check?
-      </Text>
-      <SegmentedButtons
-        style={styles.segmentedButtons}
-        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        // textColor={colorScheme.text}
-        value={requireBackgroundCheck}
-        onValueChange={(text) => {
-          setRequireBackgroundCheck(text)
-        }}
-        buttons={[
-          {
-            value: 'yes',
-            label: 'Yes',
-          },
-          {
-            value: 'no',
-            label: 'No',
-          },
-        ]}
-      />
-
-      <Text style={styles.greetingMessage}>
-        When do you want the partner to join your business?
-      </Text>
-      <SegmentedButtons
-        style={styles.segmentedButtons}
-        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        // textColor={colorScheme.text}
-        value={partnerAvailability}
-        onValueChange={(text) => {
-          setPartnerAvailability(text)
-        }}
-        buttons={[
-          {
-            value: 'asap',
-            label: 'ASAP',
-          },
-          {
-            value: '1 month',
-            label: 'Within 1 mth',
-          },
-          {
-            value: '1 Month+',
-            label: '1 Month+',
-          },
-        ]}
-      />
-
-      <Text style={styles.greetingMessage}>
-        What is your communication preference?
-      </Text>
-      <SegmentedButtons
-        style={styles.segmentedButtons}
-        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        // textColor={colorScheme.text}
-        value={partnerAvailability}
-        onValueChange={(text) => {
-          setPartnerAvailability(text)
-        }}
-        buttons={[
-          {
-            value: 'online/phone',
-            label: 'Online/Phone',
-          },
-          {
-            value: 'in-person',
-            label: 'In Person',
-          },
-          {
-            value: 'flexible',
-            label: 'Flexible',
-          },
-        ]}
-      />
-
-      <Text style={styles.greetingMessage}>
-        What is your location preference?
-      </Text>
-      <SegmentedButtons
-        style={styles.segmentedButtons}
-        // theme={{ colors: { primary: colorScheme.text, primaryContainer: 'red', secondaryContainer: colors.primary } }}
-        // textColor={colorScheme.text}
-        value={partnerAvailability}
-        onValueChange={(text) => {
-          setPartnerAvailability(text)
-        }}
-        buttons={[
-          {
-            value: 'onsite',
-            label: 'Onsite',
-          },
-          {
-            value: 'remote',
-            label: 'Remote',
-          },
-          {
-            value: 'flexible',
-            label: 'Flexible',
-          },
-        ]}
-      />
-
-    </View>
-  )
-}
 
 const ScreenAboutPartner = () => {
   const [shouldSignNda, setShouldSignNda] = useState(false)
@@ -309,6 +179,7 @@ export default function Onboarding() {
   const [fullName, setFullName] = useState(userData.fullName)
   const [phone, setFhone] = useState(userData.phone ?? '')
   const [spinner, setSpinner] = useState(false)
+  const block1 = useRef(null)
   const isDark = scheme === 'dark'
   const colorScheme = {
     text: isDark ? colors.white : colors.primaryText,
@@ -374,18 +245,33 @@ export default function Onboarding() {
               />
 
               <SelectOperationMode
-                businessOperationMode=""
                 onBusinessOperationModeChanged={(item) => { console.log(item) }}
-                // colorScheme={colorScheme}
               />
 
               <SelectLocation
                 onBusinessLocationChanged={(item) => { console.log(`selected business location - ${item}`) }}
               />
 
-              <ScreenAboutPartnerParticipation
-                colorScheme={colorScheme}
+              <SelectWorkArrangementPreference
+                onBusinessOperationModeChanged={(item) => { console.log(item) }}
               />
+
+              <SelectCommunicationPreference
+                onCommunicationPreferenceChanged={(item) => { console.log(item) }}
+              />
+
+              <SelectPartnerTypes
+                onPartnerTypesChanged={(item) => { console.log(item) }}
+              />
+
+              <SelectEducation
+                onEducationChanged={(item) => { console.log(item) }}
+              />
+
+              <SelectOccupations
+                onOccupationsSelected={(items) => { console.log(`selected occupation - ${JSON.stringify(items)}`) }}
+              />
+
             </>
           )
           : <></>}
@@ -397,8 +283,14 @@ export default function Onboarding() {
             label="Update"
             color={colors.primary}
             onPress={profileUpdate}
-            disable={!fullName}
         />
+        {/* <Button
+          label="Simulate Error"
+          color={colors.secondary}
+          onPress={() => {
+            block1.current.scrollIntoView({ behavior: 'smooth' })
+          }}
+        /> // tried with forward ref, didn't work, retry again */}
       </KeyboardAwareScrollView>
       <Spinner
         visible={spinner}

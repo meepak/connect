@@ -34,7 +34,6 @@ const SelectIndustries = ({
         checked: checked && checked.isArray() ? checked.includes(industry) : false,
       }))}
       maxSelect={maxSelect}
-      // textColor={colorScheme.text}
       onChecked={onChecked || (() => {})}
       reverse
     />

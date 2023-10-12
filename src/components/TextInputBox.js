@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, useColorScheme } from 'react-native'
 import { TextInput, HelperText } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import FontIcon from 'react-native-vector-icons/FontAwesome5'
+import FontIcon from 'react-native-vector-icons/FontAwesome5' //TODO replace with material icon
 import { layout, fontSize, colors } from '../theme'
 
 const styles = StyleSheet.create({
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
 
 const TextInputBox = (props) => {
   const {
+    editable,
     secureTextEntry,
     label,
     placeholder,
@@ -56,6 +57,7 @@ const TextInputBox = (props) => {
   return (
     <>
       <TextInput
+        editable={editable}
         style={[styles.input]}
         secureTextEntry={secureText}
         left={icon !== ''
@@ -115,6 +117,7 @@ const TextInputBox = (props) => {
 }
 
 TextInputBox.propTypes = {
+  editable:  PropTypes.bool,
   secureTextEntry: PropTypes.bool,
   placeholder: PropTypes.string,
   label: PropTypes.string.isRequired,
@@ -130,6 +133,7 @@ TextInputBox.propTypes = {
 }
 
 TextInputBox.defaultProps = {
+  editable: true,
   secureTextEntry: false,
   onEndEditing: null,
   onChangeText: null,
