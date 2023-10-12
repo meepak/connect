@@ -6,8 +6,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 // import FontIcon from 'react-native-vector-icons/FontAwesome5'
 // import { colors } from 'theme'
 // import PropTypes from 'prop-types'
-// import { useColorScheme } from 'react-native'
-// import { colors } from '../../../theme'
+import { useColorScheme } from 'react-native'
+import { colors } from '../../../theme'
 // stack navigators
 import HomeStack from '../stacks/HomeStack'
 import ProfileStack from '../stacks/ProfileStack'
@@ -21,11 +21,11 @@ const Tab = createMaterialBottomTabNavigator()
 // )
 
 const TabNavigator = () => {
-  // const scheme = useColorScheme()
-  // const isDark = scheme === 'dark'
+  const scheme = useColorScheme()
+  const isDark = scheme === 'dark'
 
   // const bgColor = isDark ? '#000' : '#FFF'
-  // const borderColor = isDark ? '#FFF' : '#000'
+  const contrastColor = isDark ? colors.white : colors.black
   const size = 26
 
   return (
@@ -40,10 +40,10 @@ const TabNavigator = () => {
         tabBarHideOnKeyboard: true,
         // tabBarActiveTintColor: colors.primary,
         // tabBarInactiveTintColor: colors.gray,
-        // tabBarActiveBackgroundColor: bgColor,
+        // tabBarActiveBackgroundColor: colors.secondary,
         // tabBarInactiveBackgroundColor: bgColor,
         // tabBarStyle: {
-        //   borderTopColor: borderColor,
+        //   borderTopColor: contrastColor,
         // },
       })}
       initialRouteName="HomeTab"
@@ -54,7 +54,7 @@ const TabNavigator = () => {
         component={HomeStack}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: (color) => <Icon name="home" color={color} size={size} />,
+          tabBarIcon: () => <Icon name="home" color={contrastColor} size={size} />,
         }}
       />
       <Tab.Screen
@@ -62,7 +62,7 @@ const TabNavigator = () => {
         component={ProfileStack}
         options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: (color) => <Icon name="account-details" color={color} size={size} />,
+          tabBarIcon: () => <Icon name="account-details" color={contrastColor} size={size} />,
         }}
       />
       <Tab.Screen
@@ -70,7 +70,7 @@ const TabNavigator = () => {
         component={ConnectStack}
         options={{
           tabBarLabel: 'Connect',
-          tabBarIcon: (color) => <Icon name="share-variant" color={color} size={size} />,
+          tabBarIcon: () => <Icon name="share-variant" color={contrastColor} size={size} />,
         }}
       />
       <Tab.Screen
@@ -78,7 +78,7 @@ const TabNavigator = () => {
         component={ChatStack}
         options={{
           tabBarLabel: 'Chat',
-          tabBarIcon: (color) => <Icon name="chat" color={color} size={size} />,
+          tabBarIcon: () => <Icon name="chat" color={contrastColor} size={size} />,
         }}
       />
     </Tab.Navigator>
