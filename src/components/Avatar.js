@@ -160,10 +160,9 @@ const Avatar = ({ size, onEdited }) => {
       <SystemAvatar
         size={validSize}
         rounded
-        title={extractInitials(userData.fullName)}
+        title={avatar ? null : extractInitials(userData.fullName)}
         containerStyle={{ backgroundColor: mapNameToColor(userData.fullName) }}
         source={avatar ? { uri: avatar } : null}
-        icon={onEdited ? { name: 'pencil' } : null}
         onPress={() => (
           onEdited ? ImageChoiceAndUpload() : () => {}
         )}
@@ -175,6 +174,8 @@ const Avatar = ({ size, onEdited }) => {
               onPress={() => (
                 ImageChoiceAndUpload()
               )}
+
+      //containerStyle={{ bottom: 10, right: 7 }}
             />
           )
           : <></>}
