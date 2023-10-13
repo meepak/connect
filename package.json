@@ -61,7 +61,8 @@
   "overrides": {
     "@rneui/themed": {
       "@rneui/base": "4.0.0-rc.8"
-    }
+    },
+    "semver": "^7.5.3"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
