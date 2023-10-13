@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
+import PropTypes from 'prop-types'
 import Checkbox from './Checkbox'
 
 export default function CheckboxGroup(props) {
@@ -39,4 +40,19 @@ export default function CheckboxGroup(props) {
       ))}
     </View>
   )
+}
+
+CheckboxGroup.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired,
+  maxSelect: PropTypes.number.isRequired,
+  onChecked: PropTypes.func.isRequired,
+  reverse: PropTypes.bool,
+}
+
+CheckboxGroup.defaultProps = {
+  reverse: false,
 }
