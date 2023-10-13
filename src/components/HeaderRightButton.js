@@ -3,6 +3,7 @@ import { TouchableOpacity, StyleSheet } from 'react-native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
+import { UserDataContext } from '../context/UserDataContext'
 
 const styles = StyleSheet.create({
   container: {
@@ -13,7 +14,8 @@ const styles = StyleSheet.create({
 })
 
 export default function HeaderRightButton(props) {
-  const { from, userData } = props
+  const { from } = props
+  const userData = UserDataContext()
   const navigation = useNavigation()
 
   const onButtonPress = () => {
@@ -39,7 +41,6 @@ export default function HeaderRightButton(props) {
   )
 }
 
-// HeaderRightButton.propTypes = {
-//   from: PropTypes.string.isRequired,
-//   userData: PropTypes.func.isRequired,
-// }
+HeaderRightButton.propTypes = {
+  from: PropTypes.string.isRequired,
+}
