@@ -1,10 +1,11 @@
-import Storage from 'react-native-storage'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+// TODO CREATE YOUR OWN WRAPPER, THE PACKAGE HAS SECURITY VULNERABILITY
+// import Storage from 'react-native-storage'
+// import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const storage = new Storage({
-  storageBackend: AsyncStorage,
-  defaultExpires: null,
-  enableCache: true,
-})
+// const storage = new Storage({
+//   storageBackend: AsyncStorage,
+//   defaultExpires: null,
+//   enableCache: true,
+// })
 
-export default storage
+// export default storage
