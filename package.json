@@ -58,11 +58,8 @@
     "react-native-toast-message": "^2.1.5",
     "react-native-vector-icons": "^9.2.0"
   },
-  "overrides": {
-    "@rneui/themed": {
-      "@rneui/base": "4.0.0-rc.8"
-    },
-    "semver": "^7.5.3"
+  "resolutions": {
+    "semver": "~7.5.3"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
