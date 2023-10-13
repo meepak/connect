@@ -2,12 +2,13 @@ import React from 'react'
 import {
   Surface, Text, Divider,
 } from 'react-native-paper'
+import PropTypes from 'prop-types'
 import RadioButtonGroup from '../../components/RadioButtonGroup'
 
 import styles from './styles'
 
 const WhoAmI = ({
-  whoAmI, onWhoAmIChanged,
+  onWhoAmIChanged,
 }) => (
   <Surface style={styles.card}>
 
@@ -22,13 +23,13 @@ const WhoAmI = ({
           id: 1,
           text: 'I am a founder, looking for associates',
           value: 'founder',
-          checked: whoAmI === 'founder',
+          checked: false,
         },
         {
           id: 2,
           text: 'I want to be an associate of a business',
           value: 'associate',
-          checked: whoAmI === 'associate',
+          checked: false,
         },
       ]}
       // textColor={colorScheme.text} // TODO: Move textColor within component (decide from there)
@@ -38,5 +39,9 @@ const WhoAmI = ({
     />
   </Surface>
 )
+
+WhoAmI.propTypes = {
+  onWhoAmIChanged: PropTypes.func.isRequired,
+}
 
 export default WhoAmI

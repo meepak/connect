@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Surface, Text, Divider,
 } from 'react-native-paper'
+import PropTypes from 'prop-types'
 import CheckboxGroup from '../../components/CheckboxGroup'
 import styles from './styles'
 
@@ -34,5 +35,14 @@ const SelectPartnerTypes = ({
     />
   </Surface>
 )
+
+SelectPartnerTypes.propTypes = {
+  question: PropTypes.string,
+  onPartnerTypesChanged: PropTypes.func.isRequired,
+}
+
+SelectPartnerTypes.defaultProps = {
+  question: null,
+}
 
 export default SelectPartnerTypes

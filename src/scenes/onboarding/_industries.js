@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Surface, Text, Divider,
 } from 'react-native-paper'
+import PropTypes from 'prop-types'
 import CheckboxGroup from '../../components/CheckboxGroup'
 import styles from './styles'
 
@@ -19,7 +20,7 @@ const industries = [
 ]
 
 const SelectIndustries = ({
-  maxSelect = 3, onChecked, checked, question,
+  maxSelect, onChecked, question,
 }) => (
   <Surface style={styles.card}>
     <Text style={styles.question}>
@@ -31,7 +32,7 @@ const SelectIndustries = ({
         id: index + 1,
         text: industry,
         value: industry,
-        checked: checked && checked.isArray() ? checked.includes(industry) : false,
+        checked: '',
       }))}
       maxSelect={maxSelect}
       onChecked={onChecked || (() => {})}
@@ -39,5 +40,15 @@ const SelectIndustries = ({
     />
   </Surface>
 )
+
+SelectIndustries.propTypes = {
+  question: PropTypes.string,
+  maxSelect: PropTypes.number.isRequired,
+  onChecked: PropTypes.func.isRequired,
+}
+
+SelectIndustries.defaultProps = {
+  question: null,
+}
 
 export default SelectIndustries

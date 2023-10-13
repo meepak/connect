@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { StyleSheet, useColorScheme } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { TextInput, HelperText } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import FontIcon from 'react-native-vector-icons/FontAwesome5' // TODO replace with material icon
-import { layout, fontSize, colors } from '../theme'
+import { layout, colors } from '../theme'
 
 const styles = StyleSheet.create({
   input: {
