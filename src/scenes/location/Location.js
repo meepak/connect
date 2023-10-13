@@ -5,6 +5,7 @@ import {
 import { Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+import PropTypes from 'prop-types'
 import { layout } from '../../theme'
 
 const styles = StyleSheet.create({
@@ -85,6 +86,14 @@ const SelectLocation = ({ route }) => {
       />
     </>
   )
+}
+
+SelectLocation.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      onReturn: PropTypes.func.isRequired,
+    }).isRequired,
+  }).isRequired,
 }
 
 export default SelectLocation

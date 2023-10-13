@@ -1,13 +1,9 @@
 import React, {
-  useState, useEffect, useContext, useRef,
+  useState, useEffect, useContext, // useRef,
 } from 'react'
 import {
-  Alert, View, useColorScheme,
+  Alert,
 } from 'react-native'
-import {
-  Surface, SegmentedButtons, Text, Divider,
-} from 'react-native-paper'
-import { useRoute, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { doc, updateDoc } from 'firebase/firestore'
 // import { Avatar } from '@rneui/themed'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -35,19 +31,19 @@ import styles from './styles'
 
 export default function Onboarding() {
   const { userData } = useContext(UserDataContext)
-  const route = useRoute()
-  const scheme = useColorScheme()
+  // const route = useRoute()
+  // const scheme = useColorScheme()
   const [avatar, setAvatar] = useState(userData.avatar)
   const [whoAmI, setWhoAmI] = useState()
-  const [fullName, setFullName] = useState(userData.fullName)
-  const [phone, setFhone] = useState(userData.phone ?? '')
+  const [fullName] = useState(userData.fullName)
+  const [phone] = useState(userData.phone ?? '')
   const [spinner, setSpinner] = useState(false)
-  const block1 = useRef(null)
-  const isDark = scheme === 'dark'
-  const colorScheme = {
-    text: isDark ? colors.white : colors.primaryText,
-    progress: isDark ? styles.darkprogress : styles.progress,
-  }
+  // const block1 = useRef(null)
+  // const isDark = scheme === 'dark'
+  // const colorScheme = {
+  //   text: isDark ? colors.white : colors.primaryText,
+  //   progress: isDark ? styles.darkprogress : styles.progress,
+  // }
 
   useEffect(() => {
     console.log('Edit screen')
@@ -88,7 +84,6 @@ export default function Onboarding() {
         />
 
         <WhoAmI
-          whoAmI={whoAmI}
           onWhoAmIChanged={(item) => setWhoAmI(item)}
         />
 
@@ -127,6 +122,7 @@ export default function Onboarding() {
               />
 
               <SelectOccupations
+                question="Do you have any preferences on occupational skills background of your partner?"
                 onOccupationsSelected={(items) => { console.log(`selected occupation - ${JSON.stringify(items)}`) }}
               />
 
@@ -190,7 +186,7 @@ export default function Onboarding() {
 
               <SelectOccupations
                 question="Select your occupational skills background."
-                maxSelect={20}
+                maxSelect={5}
                 onOccupationsSelected={(items) => { console.log(`selected occupation - ${JSON.stringify(items)}`) }}
               />
 

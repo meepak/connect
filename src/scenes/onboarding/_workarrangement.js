@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {
   Surface, Text, Divider, SegmentedButtons,
 } from 'react-native-paper'
+import PropTypes from 'prop-types'
 import styles from './styles'
 
 const SelectWorkArrangementPreference = ({
@@ -41,6 +42,10 @@ const SelectWorkArrangementPreference = ({
       />
     </Surface>
   )
+}
+
+SelectWorkArrangementPreference.propTypes = {
+  onWorkArrangementPreferenceChanged: PropTypes.func.isRequired,
 }
 
 export default SelectWorkArrangementPreference

@@ -9,26 +9,23 @@ import SignUp from '../../../scenes/signup'
 
 const Stack = createStackNavigator()
 
-const LoginStack = () =>
-  // const scheme = useColorScheme()
-  // const navigationProps = scheme === 'dark' ? darkProps : lightProps
-  (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Sign in"
-        component={Login}
-        options={(/* { navigation } */) => ({
-          headerBackground: () => <HeaderStyle />,
-        })}
-      />
-      <Stack.Screen
-        name="Sign up"
-        component={SignUp}
-        options={(/* { navigation } */) => ({
-          headerBackground: () => <HeaderStyle />,
-        })}
-      />
-    </Stack.Navigator>
-  )
+const LoginStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="Sign in"
+      component={Login}
+      options={(/* { navigation } */) => ({
+        headerBackground: () => <HeaderStyle />,
+      })}
+    />
+    <Stack.Screen
+      name="Sign up"
+      component={SignUp}
+      options={(/* { navigation } */) => ({
+        headerBackground: () => <HeaderStyle />,
+      })}
+    />
+  </Stack.Navigator>
+)
 
 export default LoginStack

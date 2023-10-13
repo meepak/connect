@@ -9,7 +9,7 @@ import {
 import { Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import Autocomplete from 'react-native-autocomplete-input'
-
+import PropTypes from 'prop-types'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { layout, fontSize, colors } from '../../theme'
 
@@ -144,6 +144,14 @@ const Occupation = ({ route }) => {
       </View>
     </SafeAreaView>
   )
+}
+
+Occupation.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      onReturn: PropTypes.func.isRequired,
+    }).isRequired,
+  }).isRequired,
 }
 
 export default Occupation

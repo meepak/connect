@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {
   Surface, Text, Divider, SegmentedButtons,
 } from 'react-native-paper'
+import PropTypes from 'prop-types'
 import styles from './styles'
 
 const SelectOperationMode = ({
@@ -42,6 +43,15 @@ const SelectOperationMode = ({
 
     </Surface>
   )
+}
+
+SelectOperationMode.propTypes = {
+  question: PropTypes.string,
+  onBusinessOperationModeChanged: PropTypes.func.isRequired,
+}
+
+SelectOperationMode.defaultProps = {
+  question: null,
 }
 
 export default SelectOperationMode

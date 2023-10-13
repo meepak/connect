@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Surface, Text, Divider,
 } from 'react-native-paper'
+import PropTypes from 'prop-types'
 import CheckboxGroup from '../../components/CheckboxGroup'
 import styles from './styles'
 
@@ -24,12 +25,16 @@ const SelectCommunicationPreference = ({
       }))}
       maxSelect={CommunicationPreferences.length}
       onChecked={(value) => {
-        if (onCommunicationPreferenceChanged) onCommunicationPreferenceChanged(value)
+        onCommunicationPreferenceChanged(value)
         console.log(value)
       }}
       reverse
     />
   </Surface>
 )
+
+SelectCommunicationPreference.propTypes = {
+  onCommunicationPreferenceChanged: PropTypes.func.isRequired,
+}
 
 export default SelectCommunicationPreference

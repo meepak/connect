@@ -9,6 +9,7 @@ import { Text } from 'react-native-paper'
 // import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
 import AppIntroSlider from 'react-native-app-intro-slider'
+import PropTypes from 'prop-types'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import { fontSize, colors } from '../../theme'
 import Logo from '../../components/Logo'
@@ -160,7 +161,7 @@ const slides = [
   },
 ]
 
-const RenderItem = (item) => (
+const RenderItem = ({ title, image, text }) => (
   <View
     style={{
       flex: 1,
@@ -170,11 +171,17 @@ const RenderItem = (item) => (
       paddingBottom: 100,
     }}
   >
-    <Text style={[styles.introTitleStyle]}>{item.title}</Text>
-    <Image style={styles.introImageStyle} source={item.image} />
-    <Text style={[styles.introTextStyle]}>{item.text}</Text>
+    <Text style={[styles.introTitleStyle]}>{title}</Text>
+    <Image style={styles.introImageStyle} source={image} />
+    <Text style={[styles.introTextStyle]}>{text}</Text>
   </View>
 )
+
+RenderItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+}
 
 const Intro = () => {
   const navigation = useNavigation()

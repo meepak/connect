@@ -5,6 +5,7 @@ import {
 import {
   Text,
 } from 'react-native-paper'
+import PropTypes from 'prop-types'
 import Avatar from '../../components/Avatar'
 import styles from './styles'
 
@@ -25,5 +26,8 @@ const ScreenHeader = ({
     <Text style={[styles.greetingNote]}>Please introduce yourself.</Text>
   </>
 )
-
+ScreenHeader.propTypes = {
+  fullName: PropTypes.string.isRequired,
+  onAvatarChanged: PropTypes.func.isRequired,
+}
 export default ScreenHeader

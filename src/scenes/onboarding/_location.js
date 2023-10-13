@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {
   Surface, Text, Divider,
 } from 'react-native-paper'
+import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
 import Button from '../../components/Button'
 import { colors } from '../../theme'
@@ -41,6 +42,15 @@ const SelectLocation = ({
 
     </Surface>
   )
+}
+
+SelectLocation.propTypes = {
+  question: PropTypes.string,
+  onBusinessLocationChanged: PropTypes.func.isRequired,
+}
+
+SelectLocation.defaultProps = {
+  question: null,
 }
 
 export default SelectLocation

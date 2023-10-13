@@ -3,6 +3,7 @@ import {
   Surface, Text, Divider, Chip,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
+import PropTypes from 'prop-types'
 import Button from '../../components/Button'
 import { colors } from '../../theme'
 
@@ -25,7 +26,7 @@ const SelectOccupations = ({
   return (
     <Surface style={styles.card}>
       <Text style={styles.question}>
-        { question || (`${maxSelect ? `Add up to ${maxSelect}` : 'Select'} occupational backgrounds for your partner?`)}
+        { question }
       </Text>
       <Divider style={styles.divider} />
 
@@ -51,6 +52,17 @@ const SelectOccupations = ({
       />
     </Surface>
   )
+}
+
+SelectOccupations.propTypes = {
+  question: PropTypes.string,
+  maxSelect: PropTypes.number,
+  onOccupationsSelected: PropTypes.func.isRequired,
+}
+
+SelectOccupations.defaultProps = {
+  question: null,
+  maxSelect: 5,
 }
 
 export default SelectOccupations

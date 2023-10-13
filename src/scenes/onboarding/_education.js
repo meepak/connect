@@ -2,8 +2,8 @@ import React from 'react'
 import {
   Surface, Text, Divider,
 } from 'react-native-paper'
+import PropTypes from 'prop-types'
 import RadioButtonGroup from '../../components/RadioButtonGroup'
-
 import styles from './styles'
 
 const educationLevels = [
@@ -42,5 +42,14 @@ const SelectEducation = ({
     />
   </Surface>
 )
+
+SelectEducation.propTypes = {
+  question: PropTypes.string,
+  onEducationChanged: PropTypes.func.isRequired,
+}
+
+SelectEducation.defaultProps = {
+  question: null,
+}
 
 export default SelectEducation

@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Surface, Text, Divider,
 } from 'react-native-paper'
+import PropTypes from 'prop-types'
 import RadioButtonGroup from '../../components/RadioButtonGroup'
 import CheckboxGroup from '../../components/CheckboxGroup'
 
@@ -61,5 +62,16 @@ const SelectBusinessStage = ({
     }
   </Surface>
 )
+
+SelectBusinessStage.propTypes = {
+  question: PropTypes.string,
+  allSelect: PropTypes.bool,
+  onBusinessStageChanged: PropTypes.func.isRequired,
+}
+
+SelectBusinessStage.defaultProps = {
+  question: null,
+  allSelect: false,
+}
 
 export default SelectBusinessStage
