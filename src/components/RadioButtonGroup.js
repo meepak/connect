@@ -6,7 +6,7 @@ import {
 } from 'react-native-paper'
 
 import PropTypes from 'prop-types'
-import { layout, fontSize, colors } from '../theme'
+import { layout } from '../theme'
 
 const styles = StyleSheet.create({
   container: {
@@ -61,8 +61,18 @@ export default function RadioButtonGroup(props) {
   )
 }
 
-// RadioButton.propTypes = {
-//   items: PropTypes.func.isRequired,
-//   onChecked: PropTypes.func.isRequired,
-//   textColor: PropTypes.string.isRequired,
-// }
+RadioButtonGroup.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      text: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  onChecked: PropTypes.func.isRequired,
+  reverse: PropTypes.bool,
+}
+
+RadioButtonGroup.defaultProps = {
+  reverse: false,
+}

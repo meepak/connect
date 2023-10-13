@@ -32,7 +32,7 @@ const SelectBusinessStage = ({
     ? (
       <CheckboxGroup
         items={businessStages.map((stage, index) => ({
-          id: stage + 1,
+          id: index + 1,
           text: stage,
           value: stage,
           checked: '',

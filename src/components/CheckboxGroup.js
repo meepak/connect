@@ -45,7 +45,7 @@ export default function CheckboxGroup(props) {
 CheckboxGroup.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
   })).isRequired,
   maxSelect: PropTypes.number.isRequired,
