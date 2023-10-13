@@ -10,7 +10,6 @@ import HomeTitleContext from '../../context/HomeTitleContext'
 // import storage from '../../utils/Storage'
 // TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -49,7 +48,7 @@ export default function Post() {
     try {
       const result = await AsyncStorage.getItem(key)
       const dt = JSON.parse(result)
-      console.log('loaded ' + dt.date)
+      console.log(`loaded ${dt.date}`)
       setDate(JSON.parse(result))
     } catch (e) {
       const result = { date: 'no data' }
@@ -65,7 +64,7 @@ export default function Post() {
     //     date: today,
     //   },
     // })
-    console.log('saved ' + today)
+    console.log(`saved ${today}`)
   }
 
   const removeStorage = () => {
