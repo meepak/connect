@@ -1,6 +1,8 @@
 import React from 'react'
-import { Image, StyleSheet, useColorScheme } from 'react-native'
-// import PropTypes from 'prop-types'
+import {
+  Image, StyleSheet, useColorScheme,
+} from 'react-native'
+import PropTypes from 'prop-types'
 
 const styles = StyleSheet.create({
   logo: {
@@ -28,10 +30,16 @@ export default function Logo({ style }) {
   )
 }
 
-// Logo.propTypes = {
-//   style: PropTypes.objectOf,
-// }
+Logo.propTypes = {
+  style: PropTypes.shape({
+    flex: PropTypes.number,
+    alignSelf: PropTypes.string,
+    marginLeft: PropTypes.number,
+    marginTop: PropTypes.number,
+    marginBottom: PropTypes.number,
+  }),
+}
 
-// Logo.defaultProps = {
-//   style: null,
-// }
+Logo.defaultProps = {
+  style: null,
+}
