@@ -4,9 +4,12 @@ import { Text, Surface, Button } from 'react-native-paper'
 import { useRoute, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { colors, fontSize, layout } from 'theme'
 import moment from 'moment'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import HomeTitleContext from '../../context/HomeTitleContext'
-import storage from '../../utils/Storage'
+// import storage from '../../utils/Storage'
+// TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE
+
 
 const styles = StyleSheet.create({
   container: {
@@ -40,11 +43,14 @@ export default function Post() {
   const [date, setDate] = useState('')
   const { setTitle } = useContext(HomeTitleContext)
   const navigation = useNavigation()
+  const key = 'date'
 
   const loadStorage = async () => {
     try {
-      const result = await storage.load({ key: 'date' })
-      setDate(result)
+      const result = await AsyncStorage.getItem(key)
+      const dt = JSON.parse(result)
+      console.log('loaded ' + dt.date)
+      setDate(JSON.parse(result))
     } catch (e) {
       const result = { date: 'no data' }
       setDate(result)
@@ -53,16 +59,17 @@ export default function Post() {
 
   const saveStorage = () => {
     const today = moment().toString()
-    storage.save({
-      key: 'date',
-      data: {
-        date: today,
-      },
-    })
+    // storage.save({
+    //   key: 'date',
+    //   data: {
+    //     date: today,
+    //   },
+    // })
+    console.log('saved ' + today)
   }
 
   const removeStorage = () => {
-    storage.remove({ key: 'date' })
+    // storage.remove({ key: 'date' })
   }
 
   const onSavePress = () => {
