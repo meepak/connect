@@ -3,9 +3,9 @@ import { AirbnbRating } from 'react-native-ratings'
 // import Slider from '@react-native-community/slider'
 import { colors } from '../theme'
 
-const ratingCompleted = (rating) => {
-  console.log(`Rating is: ${rating}`)
-}
+// const ratingCompleted = (rating) => {
+//   console.log(`Rating is: ${rating}`)
+// }
 
 export default function QuestionRating() {
   return (
