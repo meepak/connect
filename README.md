@@ -37,7 +37,7 @@ FOUNDER
   ---     Full Name                         SCORE
 (  DM )  Business stage, Industries
   ---    Location
-        Looking for [ ] [ ] [ ]                View Profile / star /right swipe 
+        Looking for [ ] [ ] [ ]                View Manage / star /right swipe 
 
 
 
@@ -58,7 +58,7 @@ Ability to view the detailed profile of each connection, including their contact
 Ability to send messages to connections.
 Drawer:
 
-Profile: Ability to update user's profile information.
+Manage: Ability to update user's profile information.
 Settings: Ability to manage user's settings, such as notifications and privacy.
 Help: Ability to access help and support information.
 Features:
