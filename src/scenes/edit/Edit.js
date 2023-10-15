@@ -15,14 +15,14 @@ import {
 } from 'firebase/auth'
 import Spinner from 'react-native-loading-spinner-overlay'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import Button from '../../components/Button'
-import TextInputBox from '../../components/TextInputBox'
-import Checkbox from '../../components/Checkbox'
+import Button from '../../components/core/Button'
+import TextInputBox from '../../components/core/TextInputBox'
+import Checkbox from '../../components/core/Checkbox'
 import { firestore, auth } from '../../firebase'
 import { fontSize } from '../../theme'
 import { UserDataContext } from '../../context/UserDataContext'
 import { showToast } from '../../utils/ShowToast'
-import Avatar from '../../components/Avatar'
+import AvatarOfAuthUser from '../../components/AvatarOfAuthUser'
 
 const styles = StyleSheet.create({
   progress: {
@@ -125,7 +125,7 @@ export default function Edit() {
         keyboardShouldPersistTaps="never"
       >
         <View style={styles.avatar}>
-          <Avatar
+          <AvatarOfAuthUser
             size="xlarge"
             onEdited={(item) => setAvatar(item)}
           />

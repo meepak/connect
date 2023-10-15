@@ -13,7 +13,7 @@ import {
 } from '@react-navigation/native'
 import { colors, fontSize } from 'theme'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import Button from '../../components/Button'
+import Button from '../../components/core/Button'
 import HomeTitleContext from '../../context/HomeTitleContext'
 
 const styles = StyleSheet.create({

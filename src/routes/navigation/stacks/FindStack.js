@@ -6,12 +6,12 @@ import HomeTitleContext from '../../../context/HomeTitleContext'
 import HeaderStyle from '../../../components/HeaderStyle'
 import Header from '../../../components/Header'
 
-import Home from '../../../scenes/home'
+import Find from '../../../scenes/find'
 import Detail from '../../../scenes/detail'
 
 const Stack = createStackNavigator()
 
-const HomeStack = () => {
+const FindStack = () => {
   // const scheme = useColorScheme()
   // const navigationProps = scheme === 'dark' ? darkProps : lightProps
   const [title, setTitle] = useState('default title')
@@ -26,8 +26,8 @@ const HomeStack = () => {
         {(ctx) => (
           <Stack.Navigator>
             <Stack.Screen
-              name="Home"
-              component={Home}
+              name="Find"
+              component={Find}
               options={(/* { navigation } */) => ({
                 headerBackground: () => <HeaderStyle />,
                 headerTitle: () => (
@@ -50,4 +50,4 @@ const HomeStack = () => {
   )
 }
 
-export default HomeStack
+export default FindStack

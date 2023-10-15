@@ -6,7 +6,7 @@ import {
   Text,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import Avatar from '../../components/Avatar'
+import AvatarOfAuthUser from '../../components/AvatarOfAuthUser'
 import styles from './styles'
 
 const ScreenHeader = ({
@@ -14,7 +14,7 @@ const ScreenHeader = ({
 }) => (
   <>
     <View style={styles.headerContainer}>
-      <Avatar
+      <AvatarOfAuthUser
         size="large"
         onEdited={(item) => onAvatarChanged(item)}
       />

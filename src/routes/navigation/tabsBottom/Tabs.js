@@ -4,7 +4,7 @@ import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navig
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useTheme } from 'react-native-paper'
 // stack navigators
-import HomeStack from '../stacks/HomeStack'
+import FindStack from '../stacks/FindStack'
 import ManageStack from '../stacks/ManageStack'
 // import ConnectStack from '../stacks/ConnectStack'
 import ChatStack from '../stacks/ChatStack'
@@ -38,7 +38,7 @@ const TabNavigator = () => {
     >
       <Tab.Screen
         name="HomeTab"
-        component={HomeStack}
+        component={FindStack}
         options={{
           tabBarLabel: 'Find',
           tabBarIcon: () => <Icon name="account-search" color={colors.onSurface} size={size} />,

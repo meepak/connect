@@ -5,11 +5,12 @@ import {
 import {
   Text, useTheme,
 } from 'react-native-paper'
-import { Avatar as SystemAvatar } from '@rneui/themed'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import * as ImagePicker from 'expo-image-picker'
 import * as ImageManipulator from 'expo-image-manipulator'
 import PropTypes from 'prop-types'
+import { Avatar as SystemAvatar } from '@rneui/themed'
+import Avatar from './core/Avatar'
 import { storage } from '../firebase'
 import { UserDataContext } from '../context/UserDataContext'
 
@@ -36,39 +37,6 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapNameToColor = (fullName) => {
-  // Calculate a hash value for the full name
-  let hash = 0
-  for (let i = 0; i < fullName.length; i += 1) {
-    hash += fullName.charCodeAt(i)
-  }
-
-  // Map the hash value to a number between 1 and 7
-  const mappedNumber = (Math.abs(hash) % 7)
-  const rainbow = ['#401B86', '#2546C9', '#2AD424', '#F0EC25', '#F07537', '#DB3A4C', '#9400D3']
-  return rainbow[mappedNumber]
-}
-
-function extractInitials(fullName) {
-  const words = fullName.split(' ')
-  let initials = ''
-
-  if (words.length === 1) {
-    // For 1 word, return first and last character
-    const name = words[0].toUpperCase()
-    if (name.length >= 2) {
-      initials = name.charAt(0) + name.charAt(name.length - 1)
-    } else {
-      initials = name.charAt(0)
-    }
-  } else if (words.length > 1) {
-    // For more than 1 word, return the initial of the first and last word
-    initials = words[0].charAt(0).toUpperCase() + words[words.length - 1].charAt(0).toUpperCase()
-  }
-
-  return initials
-}
-
 const valiatedSize = (size) => {
   const validSizes = ['xlarge', 'large', 'medium', 'small']
   return validSizes.includes(size) ? size : validSizes[3]
@@ -81,7 +49,7 @@ const getIconSize = (size) => {
 }
 
 // TODO implement onError, return error within onEdited
-const Avatar = ({ size, onEdited, onPress }) => {
+const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
   const { colors } = useTheme()
   const validSize = valiatedSize(size)
   const iconSize = getIconSize(validSize)
@@ -155,12 +123,12 @@ const Avatar = ({ size, onEdited, onPress }) => {
         )
         : <></>}
 
-      <SystemAvatar
-        size={validSize}
+      <Avatar
+        width={validSize}
+        height={validSize}
         rounded
-        title={avatar ? null : extractInitials(userData.fullName)}
-        containerStyle={{ backgroundColor: mapNameToColor(userData.fullName) }}
-        source={avatar ? { uri: avatar } : null}
+        title={userData.fullName ?? null}
+        url={avatar ?? null}
         onPress={() => {
           if (onEdited) {
             ImageChoiceAndUpload()
@@ -182,20 +150,20 @@ const Avatar = ({ size, onEdited, onPress }) => {
             />
           )
           : <></>}
-      </SystemAvatar>
+      </Avatar>
     </View>
   )
 }
 
-Avatar.propTypes = {
+AvatarOfAuthUser.propTypes = {
   size: PropTypes.string.isRequired,
   onEdited: PropTypes.func,
   onPress: PropTypes.func,
 }
 
-Avatar.defaultProps = {
+AvatarOfAuthUser.defaultProps = {
   onEdited: null,
   onPress: null,
 }
 
-export default Avatar
+export default AvatarOfAuthUser

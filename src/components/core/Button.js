@@ -4,7 +4,7 @@ import {
 } from 'react-native'
 import { Text } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import { layout, fontSize, colors } from '../theme'
+import { layout, fontSize, colors } from '../../theme'
 
 const styles = StyleSheet.create({
   button: {

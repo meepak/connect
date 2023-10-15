@@ -3,7 +3,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 // import HeaderStyle from '../../../components/HeaderStyle'
 import Onboarding from '../../../scenes/onboarding'
-import Logo from '../../../components/Logo'
+import Logo from '../../../components/core/Logo'
 import SelectLocation from '../../../scenes/location'
 import Occupation from '../../../scenes/occupation'
 

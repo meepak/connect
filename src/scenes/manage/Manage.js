@@ -2,19 +2,21 @@ import React, { useState, useContext, useEffect } from 'react'
 import {
   View, StyleSheet, ScrollView,
 } from 'react-native'
-import { Text } from 'react-native-paper'
+import { useNavigation } from '@react-navigation/native'
+import { Surface, Text } from 'react-native-paper'
 import Dialog from 'react-native-dialog'
 import Spinner from 'react-native-loading-spinner-overlay'
-import { doc, deleteDoc } from 'firebase/firestore'
-import { useNavigation } from '@react-navigation/native'
+import { doc, deleteDoc, onSnapshot } from 'firebase/firestore'
 import { signOut, deleteUser } from 'firebase/auth'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import Button from '../../components/Button'
+import Button from '../../components/core/Button'
 // import Restart from '../../utils/Restart'
 import { firestore, auth } from '../../firebase'
 import { UserDataContext } from '../../context/UserDataContext'
 import { colors, fontSize } from '../../theme'
-import Avatar from '../../components/Avatar'
+import AvatarOfAuthUser from '../../components/AvatarOfAuthUser'
+import sendNotification from '../../utils/SendNotification'
+import TestFontsize from '../../components/TestFontsize'
 
 const styles = StyleSheet.create({
   main: {
@@ -45,6 +47,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: fontSize.large,
   },
+  content: {
+    padding: 20,
+    borderRadius: 5,
+    marginTop: 30,
+    marginLeft: 30,
+    marginRight: 30,
+  },
 })
 
 export default function Manage() {
@@ -52,15 +61,34 @@ export default function Manage() {
   const navigation = useNavigation()
   const [visible, setVisible] = useState(false)
   const [spinner, setSpinner] = useState(false)
-  // const scheme = useColorScheme()
-  // const isDark = scheme === 'dark'
-  // const colorScheme = {
-  //   text: isDark ? colors.white : colors.primaryText,
-  // }
+  const [token, setToken] = useState('')
+
+  // useEffect(() => {
+  //   console.log('Manage screen')
+  // }, [])
 
   useEffect(() => {
-    console.log('Manage screen')
+    const tokensRef = doc(firestore, 'tokens', userData.id)
+    const tokenListner = onSnapshot(tokensRef, (querySnapshot) => {
+      if (querySnapshot.exists) {
+        const data = querySnapshot.data()
+        setToken(data)
+      } else {
+        console.log('No such document!')
+      }
+    })
+    return () => tokenListner()
   }, [])
+
+  const onNotificationPress = async () => {
+    const res = await sendNotification({
+      title: 'Hello',
+      body: 'This is some something 👋',
+      data: 'something data',
+      token: token.token,
+    })
+    console.log(res)
+  }
 
   const goDetail = () => {
     navigation.navigate('Edit', { userData })
@@ -115,7 +143,7 @@ export default function Manage() {
     <ScreenTemplate>
       <ScrollView style={styles.main}>
         <View style={styles.avatar}>
-          <Avatar
+          <AvatarOfAuthUser
             size="xlarge"
           />
         </View>
@@ -128,6 +156,20 @@ export default function Manage() {
           color={colors.primary}
           onPress={goDetail}
         />
+        <TestFontsize />
+        <Surface
+          style={styles.content}
+        >
+          <Text style={styles.field}>Mail:</Text>
+          <Text style={styles.title}>{userData.email}</Text>
+          {token
+            ? (
+              <>
+                <Text style={styles.field}>Expo push token:</Text>
+                <Text style={styles.title}>{token.token}</Text>
+              </>
+            ) : null}
+        </Surface>
         <Button
           label="Open Modal"
           color={colors.tertiary}
@@ -145,6 +187,12 @@ export default function Manage() {
           label="Account delete"
           color={colors.secondary}
           onPress={showDialog}
+        />
+        <Button
+          label="Send Notification"
+          color={colors.pink}
+          onPress={() => onNotificationPress()}
+          disable={!token}
         />
         <View style={styles.footerView}>
           <Text onPress={onSignOutPress} style={styles.footerLink}>Sign out</Text>

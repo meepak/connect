@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 import { TextInput, HelperText, useTheme } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import FontIcon from 'react-native-vector-icons/FontAwesome5' // TODO replace with material icon
-import { layout } from '../theme'
+import { layout } from '../../theme'
 
 const styles = StyleSheet.create({
   input: {

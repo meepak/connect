@@ -12,7 +12,7 @@ import AppIntroSlider from 'react-native-app-intro-slider'
 import PropTypes from 'prop-types'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import { fontSize, colors } from '../../theme'
-import Logo from '../../components/Logo'
+import Logo from '../../components/core/Logo'
 
 // TODO get colors from theme
 const styles = StyleSheet.create({

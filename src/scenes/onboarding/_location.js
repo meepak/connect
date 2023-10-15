@@ -4,7 +4,7 @@ import {
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
-import Button from '../../components/Button'
+import Button from '../../components/core/Button'
 import { colors } from '../../theme'
 
 import styles from './styles'

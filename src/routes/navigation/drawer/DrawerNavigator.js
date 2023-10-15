@@ -20,10 +20,10 @@ const DrawerNavigator = () => {
           backgroundColor: colors.elevation.level3,
         },
       }}
-      initialRouteName="Home"
+      initialRouteName="Find"
       drawerContent={DrawerMenu}
     >
-      <Drawer.Screen name="Home" component={RootStack} />
+      <Drawer.Screen name="Find" component={RootStack} />
     </Drawer.Navigator>
   )
 }
