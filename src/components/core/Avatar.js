@@ -1,5 +1,6 @@
 import React from 'react'
 import { Avatar as SystemAvatar } from '@rneui/themed'
+import PropTypes from 'prop-types'
 
 const mapNameToColor = (fullName) => {
   // Calculate a hash value for the full name
@@ -37,13 +38,13 @@ function extractInitials(fullName) {
 
 // TODO implement onError, return error within onEdited
 const Avatar = ({
-    rounded, width, height, style, fullName, url, onPress, children
+  rounded, width, height, style, fullName, url, onPress, children,
 }) => {
   if (url) {
     return (
       <SystemAvatar
         source={{ uri: url }}
-        avatarStyle={style ?? null}
+        avatarStyle={style}
         rounded={rounded ?? true}
         size={width}
         width={width}
@@ -72,6 +73,30 @@ const Avatar = ({
     )
   }
   return (<></>)
+}
+
+Avatar.propTypes = {
+  rounded: PropTypes.bool,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  fullName: PropTypes.string,
+  url: PropTypes.string,
+  onPress: PropTypes.func,
+  children: PropTypes.node,
+//   style: PropTypes.shape({
+//     margin: PropTypes.number,
+//     borderWidth: PropTypes.number,
+//     borderColor: PropTypes.string,
+//     borderStyle: PropTypes.string,
+//   }),
+}
+Avatar.defaultProps = {
+  rounded: true,
+  fullName: null,
+  url: null,
+  onPress: null,
+  children: null,
+//   style: null,
 }
 
 export default Avatar
