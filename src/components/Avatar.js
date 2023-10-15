@@ -84,7 +84,7 @@ const getIconSize = (size) => {
 }
 
 // TODO implement onError, return error within onEdited
-const Avatar = ({ size, onEdited }) => {
+const Avatar = ({ size, onEdited, onPress }) => {
   const validSize = valiatedSize(size)
   const iconSize = getIconSize(validSize)
   const { userData } = useContext(UserDataContext)
@@ -163,9 +163,14 @@ const Avatar = ({ size, onEdited }) => {
         title={avatar ? null : extractInitials(userData.fullName)}
         containerStyle={{ backgroundColor: mapNameToColor(userData.fullName) }}
         source={avatar ? { uri: avatar } : null}
-        onPress={() => (
-          onEdited ? ImageChoiceAndUpload() : () => {}
-        )}
+        onPress={() => {
+          if (onEdited) {
+            ImageChoiceAndUpload()
+          } else if (onPress) {
+            onPress()
+          }
+          // onEdited ? ImageChoiceAndUpload() : (onPress ? onPress() : () => {})
+        }}
       >
         {onEdited
           ? (
@@ -187,10 +192,12 @@ const Avatar = ({ size, onEdited }) => {
 Avatar.propTypes = {
   size: PropTypes.string.isRequired,
   onEdited: PropTypes.func,
+  onPress: PropTypes.func,
 }
 
 Avatar.defaultProps = {
   onEdited: null,
+  onPress: null,
 }
 
 export default Avatar

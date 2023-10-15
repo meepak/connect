@@ -110,7 +110,7 @@ export default function Onboarding() {
               />
 
               <SelectWorkArrangementPreference
-                onBusinessOperationModeChanged={(item) => { console.log(item) }}
+                onWorkArrangementPreferenceChanged={(item) => { console.log(item) }}
               />
 
               <SelectCommunicationPreference
@@ -176,7 +176,7 @@ export default function Onboarding() {
               />
 
               <SelectWorkArrangementPreference
-                onBusinessOperationModeChanged={(item) => { console.log(item) }}
+                onWorkArrangementPreferenceChanged={(item) => { console.log(item) }}
               />
 
               <SelectLocation

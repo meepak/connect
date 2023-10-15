@@ -1,3 +1,3 @@
-import Drawer from './Drawer'
+import DrawerNavigator from './DrawerNavigator'
 
-export default Drawer
+export default DrawerNavigator
