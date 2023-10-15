@@ -6,70 +6,12 @@ import {
   View,
   SafeAreaView,
 } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import Autocomplete from 'react-native-autocomplete-input'
 import PropTypes from 'prop-types'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { layout, fontSize, colors } from '../../theme'
-
-const styles = StyleSheet.create({
-  saveView: {
-    flex: 1,
-  },
-  label: {
-    margin: layout.marginLeft,
-  },
-  container: {
-    position: 'relative',
-    // backgroundColor: '#F5FCFF',
-    flex: 1,
-
-    // Android requires padding to avoid overlapping
-    // with content and autocomplete
-    paddingTop: layout.marginTop,
-    marginLeft: layout.marginLeft,
-    marginEnd: layout.marginRight,
-
-    // Make space for the default top bar
-    ...Platform.select({
-      // android: {
-      //   marginTop: 25,
-      // },
-      default: {
-        marginTop: 0,
-      },
-    }),
-  },
-  itemText: {
-    fontSize: fontSize.middle,
-    // margin: 2,
-    marginBottom: 10,
-    borderBlockColor: colors.darkInput,
-    borderBottomColor: colors.primary,
-    // backgroundColor: colors.blueLight,
-  },
-  // descriptionContainer: {
-  //   // `backgroundColor` needs to be set otherwise the
-  //   // autocomplete input will disappear on text input.
-  //   backgroundColor: '#F5FCFF',
-  //   marginTop: 8,
-  // },
-  infoText: {
-    textAlign: 'center',
-  },
-  autocompleteContainer: {
-    // Hack required to make the autocomplete
-    // work on Andrdoid
-    flex: 1,
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: 1,
-    // padding: 5,
-  },
-})
+import { layout, fontSize } from '../../theme'
 
 const loadOccupations = async () => {
   const occupationsJSON = await AsyncStorage.getItem('occupation')
@@ -78,7 +20,75 @@ const loadOccupations = async () => {
 }
 
 const Occupation = ({ route }) => {
+  const { colors } = useTheme()
   const navigation = useNavigation()
+
+  const styles = StyleSheet.create({
+    saveView: {
+      flex: 1,
+    },
+    label: {
+      margin: layout.marginLeft,
+    },
+    container: {
+      position: 'relative',
+      flex: 1,
+
+      // Android requires padding to avoid overlapping
+      // with content and autocomplete
+      paddingTop: layout.marginTop,
+      marginLeft: layout.marginLeft,
+      marginEnd: layout.marginRight,
+      backgroundColor: colors.surface,
+
+      // Make space for the default top bar
+      ...Platform.select({
+      // android: {
+      //   marginTop: 25,
+      // },
+        default: {
+          marginTop: 0,
+        },
+      }),
+    },
+    listContainer: {
+      backgroundColor: colors.surface,
+    },
+    itemText: {
+      fontSize: fontSize.middle,
+      // margin: 2,
+      paddingBottom: 5,
+      paddingLeft: 5,
+      paddingTop: 5,
+      backgroundColor: colors.surface,
+      color: colors.onSurface,
+    // backgroundColor: colors.blueLight,
+    },
+    // descriptionContainer: {
+    //   // `backgroundColor` needs to be set otherwise the
+    //   // autocomplete input will disappear on text input.
+    //   backgroundColor: '#F5FCFF',
+    //   marginTop: 8,
+    // },
+    infoText: {
+      textAlign: 'center',
+    },
+    autocompleteContainer: {
+    // Hack required to make the autocomplete
+    // work on Andrdoid
+      flex: 1,
+      left: 0,
+      position: 'absolute',
+      right: 0,
+      top: 0,
+      zIndex: 1,
+    // padding: 5,
+    },
+    textInput: {
+      backgroundColor: colors.primary,
+      // color: colors.onPrimary,
+    },
+  })
 
   const handleSelect = (selectedAddress) => {
     // console.log(`closing screen, ${selectedAddress} has been selected.`)
@@ -138,7 +148,11 @@ const Occupation = ({ route }) => {
                 </TouchableOpacity>
               ),
               onPress: { handleSelect },
+              backgroundColor: colors.surface,
+              color: colors.onSurface,
             }}
+            inputContainerStyle={styles.textInput}
+            listContainerStyle={styles.listContainer}
           />
         </View>
       </View>

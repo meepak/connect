@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import { colors, fontSize } from '../../theme'
+import { fontSize } from '../../theme'
 import Button from '../../components/Button'
 import { showToast } from '../../utils/ShowToast'
 import ShowSnackbar from '../../components/ShowSnackbar'
@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 })
 
 export default function Follower() {
+  const { colors } = useTheme()
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -47,12 +48,12 @@ export default function Follower() {
             <Text style={styles.field}>Follower Screen</Text>
             <Button
               label="Show Toast"
-              color={colors.lightPurple}
+              color={colors.primary}
               onPress={onShowToastPress}
             />
             <Button
               label="Show Snackbar"
-              color={colors.purple}
+              color={colors.secondary}
               onPress={onShowSnackbarPress}
             />
           </View>

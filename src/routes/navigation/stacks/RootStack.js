@@ -24,46 +24,47 @@ export default function RootStack() {
   const { userData } = useContext(UserDataContext)
   // const isIos = Platform.OS === 'ios'
 
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS === 'android') {
-        await Notifications.setNotificationChannelAsync('default', {
-          name: 'default',
-          importance: Notifications.AndroidImportance.MAX,
-          vibrationPattern: [0, 250, 250, 250],
-          lightColor: '#FF231F7C',
-        })
-      }
-      const { isDevice } = Device
-      if (!isDevice) return
-      console.log('get push token')
-      const { status: existingStatus } = await Notifications.getPermissionsAsync()
-      let finalStatus = existingStatus
-      if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync()
-        finalStatus = status
-      }
-      if (finalStatus !== 'granted') {
-        return
-      }
-      const token = await Notifications.getExpoPushTokenAsync({
-        projectId: expoProjectId,
-      })
-      const tokensRef = doc(firestore, 'tokens', userData.id)
-      await setDoc(tokensRef, {
-        token: token.data,
-        id: userData.id,
-      })
-    })()
-  }, [userData])
+  // TODO -- TAKE CARE OF NOTIFICATION WHEN IT COMES TO THAT
+  // useEffect(() => {
+  //   (async () => {
+  //     if (Platform.OS === 'android') {
+  //       await Notifications.setNotificationChannelAsync('default', {
+  //         name: 'default',
+  //         importance: Notifications.AndroidImportance.MAX,
+  //         vibrationPattern: [0, 250, 250, 250],
+  //         lightColor: '#FF231F7C',
+  //       })
+  //     }
+  //     const { isDevice } = Device
+  //     if (!isDevice) return
+  //     console.log('get push token')
+  //     const { status: existingStatus } = await Notifications.getPermissionsAsync()
+  //     let finalStatus = existingStatus
+  //     if (existingStatus !== 'granted') {
+  //       const { status } = await Notifications.requestPermissionsAsync()
+  //       finalStatus = status
+  //     }
+  //     if (finalStatus !== 'granted') {
+  //       return
+  //     }
+  //     const token = await Notifications.getExpoPushTokenAsync({
+  //       projectId: expoProjectId,
+  //     })
+  //     const tokensRef = doc(firestore, 'tokens', userData.id)
+  //     await setDoc(tokensRef, {
+  //       token: token.data,
+  //       id: userData.id,
+  //     })
+  //   })()
+  // }, [userData])
 
-  useEffect(() => {
-    const subscription = Notifications.addNotificationReceivedListener((notification) => {
-      console.log('Notification request content')
-      console.log(notification.request.content)
-    })
-    return () => subscription.remove()
-  }, [])
+  // useEffect(() => {
+  //   const subscription = Notifications.addNotificationReceivedListener((notification) => {
+  //     console.log('Notification request content')
+  //     console.log(notification.request.content)
+  //   })
+  //   return () => subscription.remove()
+  // }, [])
 
   return (
     <Stack.Navigator

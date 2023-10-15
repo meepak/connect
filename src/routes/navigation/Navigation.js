@@ -22,15 +22,6 @@ export default function Navigation() {
   const colorScheme = useColorScheme()
   const isDark = colorScheme === 'dark'
 
-  const getMainComponent = () => {
-    if (userData) {
-      if (auth.currentUser && auth.currentUser.emailVerified) {
-        return userData.isOnboarded ? <DrawerNavigator /> : <OnboardingStack />
-      }
-    }
-    return <IntroStack />
-  }
-
   // theming
   const { theme } = useMaterial3Theme()
 
@@ -39,6 +30,15 @@ export default function Navigation() {
   const { adaptedTheme } = adaptNavigationTheme(isDark ? { reactNavigationLight: paperTheme } : { reactNavigationDark: paperTheme })
 
   const finalTheme = { ...adaptedTheme, colors: isDark ? theme.dark : theme.light }
+
+  const getMainComponent = () => {
+    if (userData) {
+      if (auth.currentUser && auth.currentUser.emailVerified) {
+        return userData.isOnboarded ? <DrawerNavigator /> : <OnboardingStack />
+      }
+    }
+    return <IntroStack />
+  }
 
   return (
     <>

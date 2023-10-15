@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { StyleSheet } from 'react-native'
-import { TextInput, HelperText } from 'react-native-paper'
+import { TextInput, HelperText, useTheme } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import FontIcon from 'react-native-vector-icons/FontAwesome5' // TODO replace with material icon
-import { layout, colors } from '../theme'
+import { layout } from '../theme'
 
 const styles = StyleSheet.create({
   input: {
@@ -43,16 +43,9 @@ const TextInputBox = (props) => {
     icon,
     onFocus,
   } = props
+  const { colors } = useTheme()
 
-  // const scheme = useColorScheme()
   const [secureText, setSecureText] = useState(secureTextEntry)
-
-  // const isDark = scheme === 'dark'
-  // const colorScheme = {
-  //   bg: isDark ? colors.black : colors.solidWhite,
-  //   text: isDark ? colors.solidWhite : colors.primaryText,
-  //   line: isDark ? colors.solidWhite : colors.black,
-  // }
 
   return (
     <>
