@@ -14,6 +14,7 @@ import ScreenTemplate from '../../components/ScreenTemplate'
 import { fontSize, colors } from '../../theme'
 import Logo from '../../components/Logo'
 
+// TODO get colors from theme
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -136,16 +137,12 @@ const slides = [
     title: 'DISCOVER',
     text: 'Discovery is the first step to innovation and success. Embrace the journey of finding new opportunities.',
     image: require('../../../assets/images/discover.png'),
-    // backgroundColor: colors.black,
-    // textColor: colors.white,
   },
   {
     key: 's2',
     title: 'CONNECT',
     text: 'In the world of business, finding the right associate can be the key to unlocking your full potential.',
     image: require('../../../assets/images/connection.png'),
-    // backgroundColor: colors.black,
-    // textColor: colors.white,
   },
   {
     key: 's3',
@@ -156,8 +153,6 @@ const slides = [
     //   uri:
     //         'https://raw.githubusercontent.com/AboutReact/sampleresource/master/intro_discount.png',
     // },
-    // backgroundColor: colors.black,
-    // textColor: colors.white,
   },
 ]
 
@@ -165,7 +160,6 @@ const RenderItem = ({ title, image, text }) => (
   <View
     style={{
       flex: 1,
-      // backgroundColor: item.backgroundColor,
       alignItems: 'center',
       justifyContent: 'space-around',
       paddingBottom: 100,
@@ -193,7 +187,6 @@ const Intro = () => {
   let timeout
   const tick = () => {
     if (slider) {
-      // console.log(`Go to Page ${i}`)
       slider.goToSlide(i)
       i += 1
       if (i === slides.length) {

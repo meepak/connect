@@ -3,7 +3,7 @@ import {
   Alert, View, StyleSheet, Platform,
 } from 'react-native'
 import {
-  Text,
+  Text, useTheme,
 } from 'react-native-paper'
 import { Avatar as SystemAvatar } from '@rneui/themed'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
@@ -12,7 +12,6 @@ import * as ImageManipulator from 'expo-image-manipulator'
 import PropTypes from 'prop-types'
 import { storage } from '../firebase'
 import { UserDataContext } from '../context/UserDataContext'
-import { colors } from '../theme'
 
 const styles = StyleSheet.create({
   progressView: {
@@ -24,7 +23,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     zIndex: 1,
-    backgroundColor: 'rgba(0,0,0,0.7)',
   },
   progressText: {
     position: 'absolute',
@@ -34,7 +32,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     textAlign: 'center',
     textAlignVertical: 'center',
-    color: colors.primary,
     fontWeight: 'bold',
   },
 })
@@ -85,6 +82,7 @@ const getIconSize = (size) => {
 
 // TODO implement onError, return error within onEdited
 const Avatar = ({ size, onEdited, onPress }) => {
+  const { colors } = useTheme()
   const validSize = valiatedSize(size)
   const iconSize = getIconSize(validSize)
   const { userData } = useContext(UserDataContext)
@@ -151,8 +149,8 @@ const Avatar = ({ size, onEdited, onPress }) => {
     <View>
       {progress
         ? (
-          <View style={styles.progressView}>
-            <Text style={[styles.progressText, { fontSize: iconSize }]}>{progress}</Text>
+          <View style={[styles.progressView, {backgroundColor: colors.background}]}>
+            <Text style={[styles.progressText, { fontSize: iconSize, color: colors.primary }]}>{progress}</Text>
           </View>
         )
         : <></>}

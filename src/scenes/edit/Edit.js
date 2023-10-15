@@ -3,7 +3,7 @@ import {
   Alert, View, StyleSheet,
 } from 'react-native'
 import {
-  Text,
+  Text, useTheme,
 } from 'react-native-paper'
 import { doc, updateDoc } from 'firebase/firestore'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -19,7 +19,7 @@ import Button from '../../components/Button'
 import TextInputBox from '../../components/TextInputBox'
 import Checkbox from '../../components/Checkbox'
 import { firestore, auth } from '../../firebase'
-import { colors, fontSize } from '../../theme'
+import { fontSize } from '../../theme'
 import { UserDataContext } from '../../context/UserDataContext'
 import { showToast } from '../../utils/ShowToast'
 import Avatar from '../../components/Avatar'
@@ -28,10 +28,6 @@ const styles = StyleSheet.create({
   progress: {
     alignSelf: 'center',
   },
-  // darkprogress: {
-  //   alignSelf: 'center',
-  //   color: colors.white,
-  // },
   main: {
     flex: 1,
     width: '100%',
@@ -55,6 +51,7 @@ const styles = StyleSheet.create({
 })
 
 export default function Edit() {
+  const { colors } = useTheme()
   const { userData } = useContext(UserDataContext)
   const navigation = useNavigation()
   const [fullName, setFullName] = useState(userData.fullName)
@@ -162,7 +159,6 @@ export default function Edit() {
           onChecked={(checked) => {
             setisOnboarded(checked)
           }}
-          // textColor={colorScheme.text}
         />
         <Button
           label="Update"
@@ -203,7 +199,7 @@ export default function Edit() {
           />
           <Button
             label="Change Password"
-            color={colors.pink}
+            color={colors.tertiary}
             onPress={onUpdatePassword}
             disable={!currentPassword || !password || !confirmPassword}
           />
@@ -211,7 +207,7 @@ export default function Edit() {
       </KeyboardAwareScrollView>
       <Spinner
         visible={spinner}
-        textStyle={{ color: colors.white }}
+        textStyle={{ color: colors.onSurface }}
         overlayColor="rgba(0,0,0,0.5)"
       />
     </ScreenTemplate>

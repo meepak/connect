@@ -10,7 +10,7 @@ import {
 import { useNavigation } from '@react-navigation/native'
 import { doc, onSnapshot } from 'firebase/firestore'
 import Avatar from '../../components/Avatar'
-import { layout, fontSize, colors } from '../../theme'
+import { fontSize, colors } from '../../theme'
 
 // import IconButton from '../../components/IconButton'
 import ScreenTemplate from '../../components/ScreenTemplate'
@@ -18,7 +18,6 @@ import Button from '../../components/Button'
 import { firestore } from '../../firebase'
 import { UserDataContext } from '../../context/UserDataContext'
 import sendNotification from '../../utils/SendNotification'
-// import getKilobyteSize from '../../utils/functions'
 
 const styles = StyleSheet.create({
   content: {

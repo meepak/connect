@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Text } from 'react-native-paper'
-import { colors, fontSize } from 'theme'
+import { Text, useTheme } from 'react-native-paper'
+import { fontSize } from 'theme'
 import { useNavigation } from '@react-navigation/native'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/Button'
@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
 })
 
 export default function Follow() {
+  const { colors } = useTheme()
   const navigation = useNavigation()
   const { userData } = useContext(UserDataContext)
 

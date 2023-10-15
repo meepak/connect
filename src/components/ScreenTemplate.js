@@ -12,6 +12,8 @@ const styles = StyleSheet.create({
   },
 })
 
+// TODO onTouchStart, onTouchEnd, sometime throwing error when touched too fast,
+// onTouchEnd firing before onTouchStart or something like that
 const ScreenTemplate = (props) => {
   const {
     isLoading, isError, children, onTouchStart, onTouchEnd,
