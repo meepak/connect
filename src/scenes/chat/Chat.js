@@ -2,15 +2,13 @@
 import React, {
   useCallback, useState, useContext, useLayoutEffect,
 } from 'react'
-import { View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { Avatar } from 'react-native-elements'
 // import { signOut } from 'firebase/auth'
 import {
   collection, addDoc, query, orderBy, onSnapshot,
 } from 'firebase/firestore'
 import { GiftedChat } from 'react-native-gifted-chat'
-import { auth, firestore } from '../../firebase'
+import { firestore } from '../../firebase'
 import { UserDataContext } from '../../context/UserDataContext'
 import ScreenTemplate from '../../components/ScreenTemplate'
 
@@ -27,29 +25,6 @@ const Chat = () => {
   //     })
   //   }
   useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <View style={{ marginLeft: 20 }}>
-          <Avatar
-            rounded
-            source={{
-              uri: auth?.currentUser?.avatar,
-            }}
-          />
-        </View>
-      ),
-    //   headerRight: () => (
-    //     <TouchableOpacity
-    //       style={{
-    //         marginRight: 10,
-    //       }}
-    //       onPress={signOutNow}
-    //     >
-    //       <Text>logout</Text>
-    //     </TouchableOpacity>
-    //   ),
-    })
-
     const q = query(collection(firestore, 'chats'), orderBy('createdAt', 'desc'))
     const unsubscribe = onSnapshot(q, (snapshot) => setMessages(
       snapshot.docs.map((doc) => ({

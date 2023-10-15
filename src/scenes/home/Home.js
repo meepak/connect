@@ -1,15 +1,14 @@
 import React, {
-  useEffect, useState, useContext, useLayoutEffect, useCallback,
+  useEffect, useState, useContext, useCallback,
 } from 'react'
 import {
-  Alert, ScrollView, StyleSheet, View, RefreshControl,
+  ScrollView, StyleSheet, RefreshControl,
 } from 'react-native'
 import {
-  Surface, Text, IconButton, Button as RpBtn,
+  Surface, Text,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { doc, onSnapshot } from 'firebase/firestore'
-import Avatar from '../../components/Avatar'
 import { fontSize, colors } from '../../theme'
 
 // import IconButton from '../../components/IconButton'
@@ -40,31 +39,6 @@ const styles = StyleSheet.create({
     fontSize: fontSize.middle,
     textAlign: 'center',
   },
-
-  // regarding header, rename aptly
-  headerContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  button: {
-    // marginBottom: layout.marginBottom,
-    borderRadius: 6,
-    width: '75%',
-    height: 36,
-    alignItems: 'flex-start',
-    marginLeft: 10,
-    marginRight: 15,
-  },
-  buttonLabel: {
-    fontSize: fontSize.middle,
-  },
-  iconButton: {
-    // alignItems: 'flex-end',
-    // alignSelf: 'flex-end',
-  },
 })
 
 export default function Home() {
@@ -80,43 +54,13 @@ export default function Home() {
     }, 2000)
   }, [])
 
-  const headerButtonPress = () => {
-    Alert.alert('Tapped header button')
-  }
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: () => ( // App Logo
-        <View style={styles.headerContainer}>
-          <Avatar
-            size="small"
-            onPress={() => navigation.openDrawer()}
-          />
-          <RpBtn
-            buttonColor={colors.grayLight}
-            textColor={colors.white}
-            onPress={() => console.log('go to new window')}
-            mode="contained"
-            title="Search"
-                      // marginBottom={layout.marginBottom}
-                      // labelStyle={styles.buttonLabel}
-            style={styles.button}
-            icon="text-search"
-          >Search
-          </RpBtn>
-
-          <IconButton
-            icon="bell-outline"
-            color={colors.lightPurple}
-            size={24}
-            onPress={() => headerButtonPress()}
-            // containerStyle={{ paddingRight: 15 }}
-          />
-
-        </View>
-      ),
-    })
-  }, [navigation])
+  // useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     headerTitle: () => (
+  //       <Header />
+  //     ),
+  //   })
+  // }, [navigation])
 
   useEffect(() => {
     const tokensRef = doc(firestore, 'tokens', userData.id)

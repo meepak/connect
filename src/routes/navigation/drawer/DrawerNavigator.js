@@ -15,6 +15,7 @@ const DrawerNavigator = () => {
       screenOptions={{
         headerShown: false,
         cardOverlayEnabled: false,
+        gestureEnabled: true,
         drawerStyle: {
           backgroundColor: colors.elevation.level3,
         },
