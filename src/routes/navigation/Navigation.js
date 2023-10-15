@@ -13,9 +13,7 @@ import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 import { UserDataContext } from '../../context/UserDataContext'
 import { toastConfig } from '../../utils/ShowToast'
 import { auth } from '../../firebase'
-
 import IntroStack from './stacks/IntroStack'
-// import Drawer from './drawer'
 import OnboardingStack from './stacks/OnboardingStack'
 import DrawerNavigator from './drawer'
 
