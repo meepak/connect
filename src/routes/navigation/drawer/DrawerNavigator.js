@@ -6,7 +6,7 @@ import {
 } from '@react-navigation/drawer'
 import PropTypes from 'prop-types'
 import DrawerMenu from './DrawerMenu'
-import TabNavigator from '../tabsBottom'
+import RootNavigator from '../RootNavigator'
 
 const Drawer = createDrawerNavigator()
 
@@ -21,15 +21,21 @@ const DrawerMenuContainer = (props) => {
     </DrawerContentScrollView>
   )
 }
-
+// drawerContent={DrawerMenuContainer}>
 const DrawerNavigator = () => (
-  <Drawer.Navigator initialRouteName="Home" drawerContent={DrawerMenuContainer}>
-    <Drawer.Screen name="Home" component={TabNavigator} />
+  <Drawer.Navigator
+    screenOptions={{
+      headerShown: false,
+      cardOverlayEnabled: false,
+    }}
+    initialRouteName="Home"
+  >
+    <Drawer.Screen name="Home" component={RootNavigator} />
   </Drawer.Navigator>
 )
 
-DrawerMenuContainer.propTypes = {
-  state: PropTypes.arrayOf.isRequired,
-}
+// DrawerMenuContainer.propTypes = {
+//   state: PropTypes.arrayOf.isRequired,
+// }
 
 export default DrawerNavigator

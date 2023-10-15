@@ -1,17 +1,21 @@
 import React, {
-  useEffect, useState, useContext, useLayoutEffect,
+  useEffect, useState, useContext, useLayoutEffect, useCallback,
 } from 'react'
 import {
-  Alert, ScrollView, StyleSheet,
+  Alert, ScrollView, StyleSheet, View, RefreshControl,
 } from 'react-native'
-import { Surface, Text } from 'react-native-paper'
+import {
+  Surface, Text, IconButton, Button as RpBtn,
+} from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { doc, onSnapshot } from 'firebase/firestore'
-import IconButton from '../../components/IconButton'
+import Avatar from '../../components/Avatar'
+import { layout, fontSize, colors } from '../../theme'
+
+// import IconButton from '../../components/IconButton'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/Button'
 import { firestore } from '../../firebase'
-import { colors, fontSize } from '../../theme'
 import { UserDataContext } from '../../context/UserDataContext'
 import sendNotification from '../../utils/SendNotification'
 // import getKilobyteSize from '../../utils/functions'
@@ -37,48 +41,80 @@ const styles = StyleSheet.create({
     fontSize: fontSize.middle,
     textAlign: 'center',
   },
+
+  // regarding header, rename aptly
+  headerContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  button: {
+    // marginBottom: layout.marginBottom,
+    borderRadius: 6,
+    width: '75%',
+    height: 36,
+    alignItems: 'flex-start',
+    marginLeft: 10,
+    marginRight: 15,
+  },
+  buttonLabel: {
+    fontSize: fontSize.middle,
+  },
+  iconButton: {
+    // alignItems: 'flex-end',
+    // alignSelf: 'flex-end',
+  },
 })
 
 export default function Home() {
   const navigation = useNavigation()
   const [token, setToken] = useState('')
   const { userData } = useContext(UserDataContext)
+  const [refreshing, setRefreshing] = useState(false)
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true)
+    setTimeout(() => {
+      setRefreshing(false)
+    }, 2000)
+  }, [])
 
   const headerButtonPress = () => {
     Alert.alert('Tapped header button')
   }
 
-  // useEffect(() => {
-  //   // const str = 'Hello, Connect!!'
-  //   // const kilobyteSize = getKilobyteSize({ str })
-  //   // console.log({ str, kilobyteSize })
-  // }, [])
-
-  // useEffect(() => {
-  //   // const obj = {
-  //   //   name: 'name1',
-  //   //   age: 15,
-  //   // }
-  //   // const kilobyteSize = getKilobyteSize({ str: obj })
-  //   // console.log({ obj, kilobyteSize })
-  // }, [])
-
-  // useEffect(() => {
-  //   // const array = ['name1', 'name2', 'name3']
-  //   // const kilobyteSize = getKilobyteSize({ str: array })
-  //   // console.log({ array, kilobyteSize })
-  // }, [])
-
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
-        <IconButton
-          icon="align-right"
-          color={colors.lightPurple}
-          size={24}
-          onPress={() => headerButtonPress()}
-          containerStyle={{ paddingRight: 15 }}
-        />
+      headerTitle: () => ( // App Logo
+        <View style={styles.headerContainer}>
+          <Avatar
+            size="small"
+            onPress={() => navigation.openDrawer()}
+          />
+          <RpBtn
+            buttonColor={colors.grayLight}
+            textColor={colors.white}
+            onPress={() => console.log('go to new window')}
+            mode="contained"
+            title="Search"
+                      // marginBottom={layout.marginBottom}
+                      // labelStyle={styles.buttonLabel}
+            style={styles.button}
+            icon="text-search"
+          >Search
+          </RpBtn>
+
+          <IconButton
+            icon="bell-outline"
+            color={colors.lightPurple}
+            size={24}
+            onPress={() => headerButtonPress()}
+            // containerStyle={{ paddingRight: 15 }}
+          />
+
+        </View>
       ),
     })
   }, [navigation])
@@ -106,20 +142,32 @@ export default function Home() {
     console.log(res)
   }
 
+  const indexArray = new Array(10).fill('')
+
   return (
     <ScreenTemplate>
-      <ScrollView style={styles.main}>
-        <Surface style={styles.content}>
-          <Text style={styles.field}>Mail:</Text>
-          <Text style={styles.title}>{userData.email}</Text>
-          {token
-            ? (
-              <>
-                <Text style={styles.field}>Expo push token:</Text>
-                <Text style={styles.title}>{token.token}</Text>
-              </>
-            ) : null}
-        </Surface>
+      <ScrollView
+        style={styles.main}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        {indexArray.map((_, index) => (
+          <Surface
+            key={index + 1}
+            style={styles.content}
+          >
+            <Text style={styles.field}>Mail:</Text>
+            <Text style={styles.title}>{userData.email}</Text>
+            {token
+              ? (
+                <>
+                  <Text style={styles.field}>Expo push token:</Text>
+                  <Text style={styles.title}>{token.token}</Text>
+                </>
+              ) : null}
+          </Surface>
+        ))}
         <Button
           label="Go to Detail"
           color={colors.primary}

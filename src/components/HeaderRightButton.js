@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { useNavigation } from '@react-navigation/native'
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 
 export default function HeaderRightButton(props) {
   const { from } = props
-  const userData = UserDataContext()
+  const { userData } = useContext(UserDataContext)
   const navigation = useNavigation()
 
   const onButtonPress = () => {

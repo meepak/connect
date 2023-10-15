@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, SafeAreaView } from 'react-native'
+// import { SafeAreaView } from 'react-native-safe-area-context' // This suppose to work better when there is no header bar
 import { StatusBar } from 'expo-status-bar'
 import PropTypes from 'prop-types'
 import LoadingScreen from './LoadingScreen'
