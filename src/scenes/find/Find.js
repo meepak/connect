@@ -4,9 +4,7 @@ import React, {
 import {
   ScrollView, StyleSheet, RefreshControl,
 } from 'react-native'
-import {
-  Surface, Text,
-} from 'react-native-paper'
+import { Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { colors } from '../../theme'
 
@@ -20,6 +18,17 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     width: '100%',
+  },
+  Title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 5,
+    marginLeft: 20,
+  },
+  ResultCount: {
+    fontSize: 14,
+    margin: 10,
+    marginLeft: 20,
   },
 })
 
@@ -37,22 +46,43 @@ export default function Find() {
   }, [])
 
   const indexArray = new Array(10).fill('')
+  function generateRandomName() {
+    // Create a list of first names and last names.
+    const firstNames = ['Alice', 'Bob', 'Carol', 'Dave', 'Eve', 'Frank', 'George', 'Hannah', 'Isaac', 'Jack', 'Kate']
+    const lastNames = ['Smith', 'Jones', 'Williams', 'Brown', 'Johnson', 'Davis', 'Miller', 'Wilson', 'Taylor', 'Anderson', 'Thomas']
+
+    // Choose a random first name and last name from the lists.
+    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)]
+    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)]
+
+    // Return the full name.
+    return `${firstName} ${lastName}`
+  }
 
   return (
     <ScreenTemplate>
+      <Text style={styles.Title}>Matches based on your preferences.</Text>
+      <Text style={styles.ResultCount}>99 results.</Text>
       <ScrollView
         style={styles.main}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <UserListItem />
+        {/* name, industry, location, occupation, isPromoted, image, */}
         {indexArray.map((_, index) => (
-          <TestFontsize
-            // eslint-disable-next-line react/no-array-index-key
+          <UserListItem
+        // eslint-disable-next-line react/no-array-index-key
             key={index + 1}
-            user=""
+            name={generateRandomName()}
+            occupation="Full Stack Engineer - Frontend Focus"
+            industry="Jeeve Solutions Australia"
+            location="Australia (Remote)"
+            rate="A$100/hr-A$110/hr"
+            isPromoted
+            image={null}
           />
+
         ))}
         <Button
           label="Go to Detail"
