@@ -10,6 +10,7 @@ const HeaderStyle = () => {
       style={{
         flex: 1,
         backgroundColor: colors.elevation.level3,
+        color: colors.onBackground,
         // borderBottomWidth: 1,
         // borderBottomColor: '#ccc',
       }}

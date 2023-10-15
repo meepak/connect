@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   View, Text,
 } from 'react-native'
@@ -8,59 +8,72 @@ import {
   DrawerContentScrollView,
   // DrawerItemList,
 } from '@react-navigation/drawer'
-import { Drawer, useTheme } from 'react-native-paper'
-import FontIcon from 'react-native-vector-icons/FontAwesome5'
-
-const styles = {
-  root: {
-    flex: 1,
-    flexDirection: 'column',
-    paddingHorizontal: 10,
-  },
-  head: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  main: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-}
+import { Drawer, Divider, useTheme } from 'react-native-paper'
+import Avatar from '../../../components/Avatar'
+import { UserDataContext } from '../../../context/UserDataContext'
+import { fontSize } from '../../../theme'
 
 const DrawerMenu = (/* {navigation} */) => {
   const { colors } = useTheme()
-  // console.log(`colors ==${JSON.stringify(colors)}`)
+  const { userData } = useContext(UserDataContext)
+
+  const styles = {
+    root: {
+      flex: 1,
+      flexDirection: 'column',
+    },
+    head: {
+      marginTop: 30,
+      marginLeft: 10,
+      flexDirection: 'column',
+      paddingHorizontal: 10,
+    },
+    name: {
+      marginTop: 5,
+      fontWeight: 'bold',
+      fontSize: fontSize.xxxLarge,
+      color: colors.onBackground,
+      paddingHorizontal: 10,
+    },
+    link: {
+      marginTop: 5,
+      fontSize: fontSize.middle,
+      color: colors.onSurfaceVariant,
+      paddingHorizontal: 10,
+    },
+    divider: {
+      marginTop: 15,
+      color: colors.shadow,
+      height: 2,
+    },
+    main: {
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  }
+
   return (
     <DrawerContentScrollView
       alwaysBounceVertical={false}
       style={styles.root}
     >
 
+      <View style={styles.head}>
+        <Avatar size="large" />
+        <Text style={styles.name}>{userData.fullName}</Text>
+        <Text style={styles.link}>View Profile</Text>
+      </View>
+
+      <Divider style={styles.divider} />
+
       <Drawer.Section
         theme={{ colors }}
       >
         <Drawer.Item
           label="First Item"
-        >
-
-          <View style={styles.head}>
-            <FontIcon.Button
-              name="times"
-              size={20}
-              color={colors.gray}
-              backgroundColor="white"
-              // onPress={() => {
-              //   navigation.dispatch(DrawerActions.closeDrawer())
-              // }}
-            />
-          </View>
-          <View style={styles.main}>
-            <Text>Drawer Menu</Text>
-          </View>
-
-        </Drawer.Item>
+        />
         <Drawer.Item
           label="Second Item"
         />

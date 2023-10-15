@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import HomeTitleContext from '../../../context/HomeTitleContext'
 // import { lightProps, darkProps } from '../../navigationProps'
 import HeaderStyle from '../../../components/HeaderStyle'
+import Header from '../../../components/Header'
 
 import Home from '../../../scenes/home'
 import Detail from '../../../scenes/detail'
@@ -29,6 +30,9 @@ const HomeStack = () => {
               component={Home}
               options={(/* { navigation } */) => ({
                 headerBackground: () => <HeaderStyle />,
+                headerTitle: () => (
+                  <Header />
+                ),
               })}
             />
             <Stack.Screen

@@ -2,6 +2,7 @@ import React from 'react'
 // import { useColorScheme } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import HeaderStyle from '../../../components/HeaderStyle'
+import Header from '../../../components/Header'
 import Profile from '../../../scenes/profile'
 import Edit from '../../../scenes/edit'
 
@@ -15,6 +16,9 @@ const ProfileStack = () => (
         component={Profile}
         options={(/* { navigation } */) => ({
           headerBackground: () => <HeaderStyle />,
+          headerTitle: () => (
+            <Header />
+          ),
         })}
       />
       <Stack.Screen
