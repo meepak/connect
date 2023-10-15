@@ -4,11 +4,11 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import * as Notifications from 'expo-notifications'
 import { setDoc, doc } from 'firebase/firestore'
 import * as Device from 'expo-device'
-import TabNavigator from './tabsBottom/Tabs'
-import ModalStack from './stacks/ModalStack'
-import { firestore } from '../../firebase'
-import { UserDataContext } from '../../context/UserDataContext'
-import { expoProjectId } from '../../config'
+import TabNavigator from '../tabsBottom/Tabs'
+import ModalStack from './ModalStack'
+import { firestore } from '../../../firebase'
+import { UserDataContext } from '../../../context/UserDataContext'
+import { expoProjectId } from '../../../config'
 
 const Stack = createStackNavigator()
 
@@ -20,7 +20,7 @@ Notifications.setNotificationHandler({
   }),
 })
 
-export default function RootNavigator() {
+export default function RootStack() {
   const { userData } = useContext(UserDataContext)
   // const isIos = Platform.OS === 'ios'
 

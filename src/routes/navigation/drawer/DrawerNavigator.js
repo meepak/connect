@@ -6,7 +6,7 @@ import {
 } from '@react-navigation/drawer'
 import PropTypes from 'prop-types'
 import DrawerMenu from './DrawerMenu'
-import RootNavigator from '../RootNavigator'
+import RootStack from '../stacks/RootStack'
 
 const Drawer = createDrawerNavigator()
 
@@ -30,7 +30,7 @@ const DrawerNavigator = () => (
     }}
     initialRouteName="Home"
   >
-    <Drawer.Screen name="Home" component={RootNavigator} />
+    <Drawer.Screen name="Home" component={RootStack} />
   </Drawer.Navigator>
 )
 
