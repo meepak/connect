@@ -6,7 +6,7 @@ import {
   IconButton, Button, useTheme,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
-import Avatar from './Avatar'
+import AvatarOfAuthUser from './AvatarOfAuthUser'
 
 const styles = StyleSheet.create({
   // regarding header, rename aptly
@@ -44,7 +44,7 @@ export default function Header() {
   const { colors } = useTheme()
   return (
     <View style={styles.headerContainer}>
-      <Avatar
+      <AvatarOfAuthUser
         size="small"
         onPress={() => navigation.openDrawer()}
       />

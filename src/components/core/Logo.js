@@ -23,8 +23,8 @@ export default function Logo({ style }) {
       style={newStyle} // Merge default styles with the provided style prop
       source={
         scheme === 'dark'
-          ? require('../../assets/images/fa_white.png')
-          : require('../../assets/images/fa_black.png')
+          ? require('../../../assets/images/fa_white.png')
+          : require('../../../assets/images/fa_black.png')
       }
     />
   )

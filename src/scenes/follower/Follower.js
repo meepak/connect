@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import { fontSize } from '../../theme'
-import Button from '../../components/Button'
+import Button from '../../components/core/Button'
 import { showToast } from '../../utils/ShowToast'
 import ShowSnackbar from '../../components/ShowSnackbar'
 

@@ -9,7 +9,7 @@ import {
   // DrawerItemList,
 } from '@react-navigation/drawer'
 import { Drawer, Divider, useTheme } from 'react-native-paper'
-import Avatar from '../../../components/Avatar'
+import AvatarOfAuthUser from '../../../components/AvatarOfAuthUser'
 import { UserDataContext } from '../../../context/UserDataContext'
 import { fontSize } from '../../../theme'
 
@@ -64,9 +64,9 @@ const DrawerMenu = (/* {navigation} */) => {
     >
 
       <View style={styles.head}>
-        <Avatar size="large" />
+        <AvatarOfAuthUser size="large" />
         <Text style={styles.name}>{userData.fullName}</Text>
-        <Text style={styles.link}>View Manage</Text>
+        <Text style={styles.link}>Manage Profile</Text>
       </View>
 
       <Divider style={styles.divider} />

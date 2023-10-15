@@ -3,7 +3,7 @@ import {
   Surface, Text, Divider,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import CheckboxGroup from '../../components/CheckboxGroup'
+import CheckboxGroup from '../../components/core/CheckboxGroup'
 import styles from './styles'
 
 const CommunicationPreferences = ['Chat', 'Email', 'Phone call', 'Online meeting', 'In-person meeting']

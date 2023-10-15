@@ -4,7 +4,7 @@ import { Text, useTheme } from 'react-native-paper'
 import { fontSize } from 'theme'
 import { useNavigation } from '@react-navigation/native'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import Button from '../../components/Button'
+import Button from '../../components/core/Button'
 import { UserDataContext } from '../../context/UserDataContext'
 
 const styles = StyleSheet.create({
