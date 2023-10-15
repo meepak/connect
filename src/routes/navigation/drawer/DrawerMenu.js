@@ -49,21 +49,24 @@ const DrawerMenu = (/* {navigation} */) => {
     main: {
       flex: 1,
       flexDirection: 'column',
-      justifyContent: 'center',
       alignItems: 'center',
+    },
+    lastItem: {
+      flex: 1,
+      justifyContent: 'flex-end',
     },
   }
 
   return (
     <DrawerContentScrollView
       alwaysBounceVertical={false}
-      style={styles.root}
+      contentContainerStyle={styles.root}
     >
 
       <View style={styles.head}>
         <Avatar size="large" />
         <Text style={styles.name}>{userData.fullName}</Text>
-        <Text style={styles.link}>View Profile</Text>
+        <Text style={styles.link}>View Manage</Text>
       </View>
 
       <Divider style={styles.divider} />
@@ -79,12 +82,21 @@ const DrawerMenu = (/* {navigation} */) => {
         />
       </Drawer.Section>
 
+      <Drawer.Section
+        theme={{ colors }}
+        style={styles.lastItem}
+        showDivider={false}
+      >
+        <Drawer.Item
+          label="Sign Out"
+          onPress={() => {
+            // Handle sign-out logic here
+          }}
+        />
+      </Drawer.Section>
+
     </DrawerContentScrollView>
   )
 }
-
-// DrawerMenu.propTypes = {
-//   navigation: PropTypes.func.isRequired,
-// }
 
 export default DrawerMenu

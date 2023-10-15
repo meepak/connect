@@ -5,8 +5,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useTheme } from 'react-native-paper'
 // stack navigators
 import HomeStack from '../stacks/HomeStack'
-import ProfileStack from '../stacks/ProfileStack'
-import ConnectStack from '../stacks/ConnectStack'
+import ManageStack from '../stacks/ManageStack'
+// import ConnectStack from '../stacks/ConnectStack'
 import ChatStack from '../stacks/ChatStack'
 
 const Tab = createMaterialBottomTabNavigator()
@@ -40,32 +40,32 @@ const TabNavigator = () => {
         name="HomeTab"
         component={HomeStack}
         options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: () => <Icon name="home" color={colors.onSurface} size={size} />,
+          tabBarLabel: 'Find',
+          tabBarIcon: () => <Icon name="account-search" color={colors.onSurface} size={size} />,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="ProfileTab"
-        component={ProfileStack}
+        component={ManageStack}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'Manage',
           tabBarIcon: () => <Icon name="account-details" color={colors.onSurface} size={size} />,
         }}
-      />
+      /> */}
       <Tab.Screen
         name="ConnectTab"
-        component={ConnectStack}
+        component={ManageStack}
         options={{
-          tabBarLabel: 'Connect',
-          tabBarIcon: () => <Icon name="share-variant" color={colors.onSurface} size={size} />,
+          tabBarLabel: 'Manage',
+          tabBarIcon: () => <Icon name="account-group" color={colors.onSurface} size={size} />,
         }}
       />
       <Tab.Screen
         name="ChatTab"
         component={ChatStack}
         options={{
-          tabBarLabel: 'Chat',
-          tabBarIcon: () => <Icon name="chat" color={colors.onSurface} size={size} />,
+          tabBarLabel: 'Connect',
+          tabBarIcon: () => <Icon name="wechat" color={colors.onSurface} size={size} />,
         }}
       />
     </Tab.Navigator>

@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function Profile() {
+export default function Manage() {
   const { userData, setUserData } = useContext(UserDataContext)
   const navigation = useNavigation()
   const [visible, setVisible] = useState(false)
@@ -59,7 +59,7 @@ export default function Profile() {
   // }
 
   useEffect(() => {
-    console.log('Profile screen')
+    console.log('Manage screen')
   }, [])
 
   const goDetail = () => {
@@ -136,7 +136,7 @@ export default function Profile() {
               screen: 'Post',
               params: {
                 data: userData,
-                from: 'Profile screen',
+                from: 'Manage screen',
               },
             })
           }}

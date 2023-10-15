@@ -3,17 +3,17 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import HeaderStyle from '../../../components/HeaderStyle'
 import Header from '../../../components/Header'
-import Profile from '../../../scenes/profile'
+import Manage from '../../../scenes/manage'
 import Edit from '../../../scenes/edit'
 
 const Stack = createStackNavigator()
 
-const ProfileStack = () => (
+const ManageStack = () => (
   <Stack.Navigator>
     <Stack.Group>
       <Stack.Screen
-        name="Profile"
-        component={Profile}
+        name="Manage"
+        component={Manage}
         options={(/* { navigation } */) => ({
           headerBackground: () => <HeaderStyle />,
           headerTitle: () => (
@@ -32,4 +32,4 @@ const ProfileStack = () => (
   </Stack.Navigator>
 )
 
-export default ProfileStack
+export default ManageStack
