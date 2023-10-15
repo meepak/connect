@@ -3,7 +3,7 @@ import {
   View, Text,
 } from 'react-native'
 // import PropTypes from 'prop-types'
-import { DrawerActions } from '@react-navigation/native'
+// import { DrawerActions } from '@react-navigation/native'
 import {
   DrawerContentScrollView,
   // DrawerItemList,
@@ -29,7 +29,7 @@ const styles = {
   },
 }
 
-const DrawerMenu = ({ navigation }) => {
+const DrawerMenu = (/* {navigation} */) => {
   const { colors } = useTheme()
   // console.log(`colors ==${JSON.stringify(colors)}`)
   return (
@@ -51,9 +51,9 @@ const DrawerMenu = ({ navigation }) => {
               size={20}
               color={colors.gray}
               backgroundColor="white"
-              onPress={() => {
-                navigation.dispatch(DrawerActions.closeDrawer())
-              }}
+              // onPress={() => {
+              //   navigation.dispatch(DrawerActions.closeDrawer())
+              // }}
             />
           </View>
           <View style={styles.main}>

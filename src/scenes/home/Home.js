@@ -153,6 +153,7 @@ export default function Home() {
       >
         {indexArray.map((_, index) => (
           <Surface
+            // eslint-disable-next-line react/no-array-index-key
             key={index + 1}
             style={styles.content}
           >

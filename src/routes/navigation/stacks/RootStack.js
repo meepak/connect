@@ -1,14 +1,14 @@
-import React, { useContext, useEffect } from 'react'
-import { Platform } from 'react-native'
+import React from 'react' // , { useContext, useEffect }
+// import { Platform } from 'react-native'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import * as Notifications from 'expo-notifications'
-import { setDoc, doc } from 'firebase/firestore'
-import * as Device from 'expo-device'
+// import { setDoc, doc } from 'firebase/firestore'
+// import * as Device from 'expo-device'
 import TabNavigator from '../tabsBottom/Tabs'
 import ModalStack from './ModalStack'
-import { firestore } from '../../../firebase'
-import { UserDataContext } from '../../../context/UserDataContext'
-import { expoProjectId } from '../../../config'
+// import { firestore } from '../../../firebase'
+// import { UserDataContext } from '../../../context/UserDataContext'
+// import { expoProjectId } from '../../../config'
 
 const Stack = createStackNavigator()
 
@@ -21,7 +21,7 @@ Notifications.setNotificationHandler({
 })
 
 export default function RootStack() {
-  const { userData } = useContext(UserDataContext)
+  // const { userData } = useContext(UserDataContext)
   // const isIos = Platform.OS === 'ios'
 
   // TODO -- TAKE CARE OF NOTIFICATION WHEN IT COMES TO THAT

@@ -149,7 +149,7 @@ const Avatar = ({ size, onEdited, onPress }) => {
     <View>
       {progress
         ? (
-          <View style={[styles.progressView, {backgroundColor: colors.background}]}>
+          <View style={[styles.progressView, { backgroundColor: colors.background }]}>
             <Text style={[styles.progressText, { fontSize: iconSize, color: colors.primary }]}>{progress}</Text>
           </View>
         )
