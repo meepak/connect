@@ -38,7 +38,7 @@ function extractInitials(fullName) {
 
 // TODO implement onError, return error within onEdited
 const Avatar = ({
-  rounded, width, height, style, fullName, url, onPress, children,
+  rounded, size, width, height, style, fullName, url, onPress, children,
 }) => {
   if (url) {
     return (
@@ -46,7 +46,7 @@ const Avatar = ({
         source={{ uri: url }}
         avatarStyle={style}
         rounded={rounded ?? true}
-        size={width}
+        size={size ?? width}
         width={width}
         height={height}
         onPress={onPress ?? null}
@@ -77,18 +77,22 @@ const Avatar = ({
 
 Avatar.propTypes = {
   rounded: PropTypes.bool,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  width: PropTypes.number,
+  height: PropTypes.number,
   fullName: PropTypes.string,
   url: PropTypes.string,
   onPress: PropTypes.func,
   children: PropTypes.node,
-//   style: PropTypes.shape({
-//     margin: PropTypes.number,
-//     borderWidth: PropTypes.number,
-//     borderColor: PropTypes.string,
-//     borderStyle: PropTypes.string,
-//   }),
+  size: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  style: PropTypes.shape({
+    margin: PropTypes.number,
+    borderWidth: PropTypes.number,
+    borderColor: PropTypes.string,
+    borderStyle: PropTypes.string,
+  }),
 }
 Avatar.defaultProps = {
   rounded: true,
@@ -96,7 +100,10 @@ Avatar.defaultProps = {
   url: null,
   onPress: null,
   children: null,
-//   style: null,
+  size: null,
+  width: null,
+  height: null,
+  style: null,
 }
 
 export default Avatar

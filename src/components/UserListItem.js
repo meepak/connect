@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+// To be decided on the user object will pass through to here
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Text, Divider, TouchableRipple } from 'react-native-paper'
@@ -54,7 +56,7 @@ const UserListItem = ({
       rippleColor="rgba(0, 0, 0, .32)"
     >
       <View style={styles.container}>
-        <Avatar fullName={name} style={styles.Image} width={55} height={55} rounded={false} />
+        <Avatar fullName={name} url={image} style={styles.Image} width={55} height={55} rounded={false} />
         <View style={styles.Info}>
           <Text style={styles.Title}>{name}</Text>
           <Text style={styles.Company}>{industry}</Text>
