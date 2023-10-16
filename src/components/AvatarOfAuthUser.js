@@ -124,8 +124,7 @@ const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
         : <></>}
 
       <Avatar
-        width={validSize}
-        height={validSize}
+        size={validSize}
         rounded
         title={userData.fullName ?? null}
         url={avatar ?? null}

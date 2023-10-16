@@ -1,15 +1,8 @@
 import 'react-native-gesture-handler'
 import React, { useContext } from 'react'
-import {
-  MD3DarkTheme,
-  MD3LightTheme,
-  PaperProvider,
-  adaptNavigationTheme,
-} from 'react-native-paper'
-import { useColorScheme } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import { NavigationContainer } from '@react-navigation/native'
 import Toast from 'react-native-toast-message'
-import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 import { UserDataContext } from '../../context/UserDataContext'
 import { toastConfig } from '../../utils/ShowToast'
 import { auth } from '../../firebase'
@@ -19,18 +12,7 @@ import DrawerNavigator from './drawer'
 
 export default function Navigation() {
   const { userData } = useContext(UserDataContext)
-  const colorScheme = useColorScheme()
-  const isDark = colorScheme === 'dark'
-
-  // theming
-  const { theme } = useMaterial3Theme()
-
-  const paperTheme = isDark ? MD3DarkTheme : MD3LightTheme
-
-  const { adaptedTheme } = adaptNavigationTheme(isDark ? { reactNavigationLight: paperTheme } : { reactNavigationDark: paperTheme })
-
-  const finalTheme = { ...adaptedTheme, colors: isDark ? theme.dark : theme.light }
-
+  const theme = useTheme()
   const getMainComponent = () => {
     if (userData) {
       if (auth.currentUser && auth.currentUser.emailVerified) {
@@ -42,12 +24,10 @@ export default function Navigation() {
 
   return (
     <>
-      <PaperProvider theme={finalTheme}>
-        <NavigationContainer theme={finalTheme}>
-          {getMainComponent()}
-        </NavigationContainer>
-        <Toast config={toastConfig} />
-      </PaperProvider>
+      <NavigationContainer theme={theme}>
+        {getMainComponent()}
+      </NavigationContainer>
+      <Toast config={toastConfig} />
     </>
   )
 }

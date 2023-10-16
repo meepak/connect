@@ -12,7 +12,6 @@ import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/core/Button'
 import { UserDataContext } from '../../context/UserDataContext'
 import UserListItem from '../../components/UserListItem'
-import TestFontsize from '../../components/TestFontsize'
 
 const styles = StyleSheet.create({
   main: {

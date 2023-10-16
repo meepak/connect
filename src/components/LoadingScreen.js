@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { StyleSheet, Dimensions, View } from 'react-native'
-// import { useTheme } from 'react-native-paper'
+import { useTheme } from 'react-native-paper'
 import LottieView from 'lottie-react-native'
 
 const { height, width } = Dimensions.get('window')
@@ -18,11 +18,11 @@ const styles = StyleSheet.create({
 
 // TODO -- This is called form all over the places, handle the background color for this in better way
 const LoadingScreen = () => {
-  // const { colors } = useTheme()
   const animation = useRef(null)
+  const { colors } = useTheme()
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LottieView
         ref={animation}
         // source={require('../../assets/lottie/loading-animation-hands.json')}
