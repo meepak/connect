@@ -1,18 +1,15 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
-  Alert, View, StyleSheet, Platform,
+  View, StyleSheet,
 } from 'react-native'
 import {
   Text, useTheme,
 } from 'react-native-paper'
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
-import * as ImagePicker from 'expo-image-picker'
-import * as ImageManipulator from 'expo-image-manipulator'
 import PropTypes from 'prop-types'
 import { Avatar as SystemAvatar } from '@rneui/themed'
 import Avatar from './core/Avatar'
-import { storage } from '../firebase'
 import { UserDataContext } from '../context/UserDataContext'
+import ImageSelectAndUpload from '../utils/ImageSelectAndUpload'
 
 const styles = StyleSheet.create({
   progressView: {
@@ -37,81 +34,29 @@ const styles = StyleSheet.create({
   },
 })
 
-const valiatedSize = (size) => {
-  const validSizes = ['xlarge', 'large', 'medium', 'small']
-  return validSizes.includes(size) ? size : validSizes[3]
-}
 const getIconSize = (size) => {
   const sizeMap = {
     xlarge: 32, large: 22, medium: 12, small: 8,
   }
-  return sizeMap[size] ?? 8
+  if (typeof size === 'string') {
+    return sizeMap[size] ?? 8
+  }
+  return Math.round(size / 4)
 }
 
 // TODO implement onError, return error within onEdited
 const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
   const { colors } = useTheme()
-  const validSize = valiatedSize(size)
-  const iconSize = getIconSize(validSize)
+  const iconSize = getIconSize(size)
   const { userData } = useContext(UserDataContext)
   const [progress, setProgress] = useState('')
   const [avatar, setAvatar] = useState(userData.avatar ?? null)
 
-  const ImageChoiceAndUpload = async () => {
-    try {
-      if (Platform.OS === 'ios') {
-        const {
-          status,
-        } = await ImagePicker.requestMediaLibraryPermissionsAsync()
-        if (status !== 'granted') {
-          Alert.alert('Error', 'Permission is required for use.')
-          return
-        }
-      }
-      const result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: false,
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsMultipleSelection: false,
-      })
-      if (!result.canceled) {
-        const actions = []
-        actions.push({ resize: { width: 300 } })
-        const manipulatorResult = await ImageManipulator.manipulateAsync(
-          result.assets[0].uri,
-          actions,
-          {
-            compress: 0.4,
-          },
-        )
-        const localUri = await fetch(manipulatorResult.uri)
-        const localBlob = await localUri.blob()
-        const filename = userData.id + new Date().getTime()
-        const storageRef = ref(storage, `avatar/${userData.id}/${filename}`)
-        const uploadTask = uploadBytesResumable(storageRef, localBlob)
-        uploadTask.on(
-          'state_changed',
-          (snapshot) => {
-            const progressVar = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            setProgress(`${parseInt(progressVar, 10)}%`)
-          },
-          (error) => {
-            console.log(error)
-            Alert.alert('Error', 'Upload failed.')
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              setProgress('')
-              setAvatar(downloadURL)
-              onEdited(downloadURL)
-            })
-          },
-        )
-      }
-    } catch (e) {
-      console.log('error', e.message)
-      Alert.alert('Error', 'The size may be too much.')
+  useEffect(() => {
+    if (onEdited) {
+      onEdited(avatar)
     }
-  }
+  }, [avatar])
 
   return (
     <View>
@@ -124,13 +69,13 @@ const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
         : <></>}
 
       <Avatar
-        size={validSize}
+        size={size}
         rounded
         title={userData.fullName ?? null}
         url={avatar ?? null}
         onPress={() => {
           if (onEdited) {
-            ImageChoiceAndUpload()
+            ImageSelectAndUpload({ userId: userData.id, setProgress, onFinished: setAvatar })
           } else if (onPress) {
             onPress()
           }
@@ -140,12 +85,21 @@ const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
         {onEdited
           ? (
             <SystemAvatar.Accessory
+              containerStyle={{
+                backgroundColor: colors.onBackground,
+                borderRadius: 25,
+              }}
               size={iconSize}
+              iconProps={{
+                name: 'add-circle', // Use the plus sign icon name
+                size: iconSize,
+                color: colors.tertiaryContainer,
+                // bottom: 10,
+                // right: 7,
+              }}
               onPress={() => (
-                ImageChoiceAndUpload()
+                ImageSelectAndUpload({ userId: userData.id, setProgress, onFinished: setAvatar })
               )}
-
-      // containerStyle={{ bottom: 10, right: 7 }}
             />
           )
           : <></>}
@@ -155,7 +109,10 @@ const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
 }
 
 AvatarOfAuthUser.propTypes = {
-  size: PropTypes.string.isRequired,
+  size: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
   onEdited: PropTypes.func,
   onPress: PropTypes.func,
 }

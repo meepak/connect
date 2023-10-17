@@ -58,6 +58,21 @@ export default function Find() {
     return `${firstName} ${lastName}`
   }
 
+  const images = [
+    'https://images.pexels.com/photos/2218786/pexels-photo-2218786.jpeg?auto=compress&cs=tinysrgb&w=200&dpr=1',
+    'https://images.pexels.com/photos/2906635/pexels-photo-2906635.jpeg?auto=compress&cs=tinysrgb&w=200',
+    'https://images.pexels.com/photos/989200/pexels-photo-989200.jpeg?auto=compress&cs=tinysrgb&w=200',
+    'https://images.pexels.com/photos/1804514/pexels-photo-1804514.jpeg?auto=compress&cs=tinysrgb&w=200',
+    'https://images.pexels.com/photos/3797438/pexels-photo-3797438.jpeg?auto=compress&cs=tinysrgb&w=1600',
+  ]
+
+  const bannerImages = [
+    { uri: 'https://images.pexels.com/photos/818261/pexels-photo-818261.jpeg?auto=compress&cs=tinysrgb&w=400' },
+    { uri: 'https://images.freeimages.com/variants/k1wQB7egQotJ7Hr3ZBPP1S5c/f4a36f6589a0e50e702740b15352bc00e4bfaf6f58bd4db850e167794d05993d?fmt=webp&w=550' },
+    { uri: 'https://images.freeimages.com/variants/YSotMxjHEvoFiBGaZkkJv5K8/f4a36f6589a0e50e702740b15352bc00e4bfaf6f58bd4db850e167794d05993d?fmt=webp&w=500' },
+    { uri: 'https://images.freeimages.com/images/large-previews/e78/family-1421593.jpg?fmt=webp&w=550' },
+  ]
+
   return (
     <ScreenTemplate>
       <Text style={styles.Title}>Matches based on your preferences.</Text>
@@ -69,20 +84,37 @@ export default function Find() {
         }
       >
         {/* name, industry, location, occupation, isPromoted, image, */}
-        {indexArray.map((_, index) => (
-          <UserListItem
+        {indexArray.map((_, index) => {
+          const name = generateRandomName()
+          const image = index % 2 === 0 ? images[index / 2] : null
+          const banner = bannerImages[Math.floor(Math.random() * bannerImages.length) + 1]
+          return (
+            <UserListItem
         // eslint-disable-next-line react/no-array-index-key
-            key={index + 1}
-            name={generateRandomName()}
-            occupation="Full Stack Engineer - Frontend Focus"
-            industry="Jeeve Solutions Australia"
-            location="Australia (Remote)"
-            rate="A$100/hr-A$110/hr"
-            isPromoted
-            image={null}
-          />
+              key={index + 1}
+              name={name}
+              image={image}
+              occupation="Full Stack Engineer - Frontend Focus"
+              industry="Jeeve Solutions Australia"
+              location="Australia (Remote)"
+              rate="A$100/hr-A$110/hr"
+              isPromoted
+              onPress={() => {
+                console.log('going to profile')
+                navigation.navigate('ProfileStack', {
+                  screen: 'Profile',
+                  params: {
+                    userFullName: name,
+                    userAvatar: image,
+                    userBannerImage: banner,
+                    // from: 'Find screen',
+                  },
+                })
+              }}
+            />
 
-        ))}
+          )
+        })}
         <Button
           label="Go to Detail"
           color={colors.primary}

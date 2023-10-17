@@ -44,7 +44,8 @@ const Avatar = ({
     return (
       <SystemAvatar
         source={{ uri: url }}
-        avatarStyle={style}
+        // avatarStyle={style}
+        containerStyle={style}
         rounded={rounded ?? true}
         size={size ?? width}
         width={width}

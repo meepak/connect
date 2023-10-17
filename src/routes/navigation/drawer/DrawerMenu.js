@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import {
-  View, Text,
+  View, Text, TouchableOpacity,
 } from 'react-native'
 // import PropTypes from 'prop-types'
 // import { DrawerActions } from '@react-navigation/native'
@@ -9,6 +9,7 @@ import {
   // DrawerItemList,
 } from '@react-navigation/drawer'
 import { Drawer, Divider, useTheme } from 'react-native-paper'
+import { useNavigation } from '@react-navigation/native'
 import AvatarOfAuthUser from '../../../components/AvatarOfAuthUser'
 import { UserDataContext } from '../../../context/UserDataContext'
 import { fontSize } from '../../../theme'
@@ -16,6 +17,7 @@ import { fontSize } from '../../../theme'
 const DrawerMenu = (/* {navigation} */) => {
   const { colors } = useTheme()
   const { userData } = useContext(UserDataContext)
+  const navigation = useNavigation()
 
   const styles = {
     root: {
@@ -57,18 +59,43 @@ const DrawerMenu = (/* {navigation} */) => {
     },
   }
 
+  const openProfile = () => {
+    console.log('Lets go to profile')
+    navigation.navigate('ProfileStack', {
+      screen: 'Profile',
+      params: { // userId, userFullName, userAvatar, userBannerImage,
+        userId: userData.id,
+        userFullName: userData.fullName,
+        userAvatar: userData.avatar,
+        userBannerImage: {uri: userData.bannerImage}
+      },
+    })
+  }
+
   return (
     <DrawerContentScrollView
       alwaysBounceVertical={false}
       contentContainerStyle={styles.root}
     >
 
-      <View style={styles.head}>
-        <AvatarOfAuthUser size="large" />
-        <Text style={styles.name}>{userData.fullName}</Text>
-        <Text style={styles.link}>Manage Profile</Text>
+      <View
+        style={styles.head}
+      >
+        <AvatarOfAuthUser
+          size="large"
+          onPress={() => openProfile()}
+        />
+        <Text
+          style={styles.name}
+          onPress={() => openProfile()}
+        >{userData.fullName}
+        </Text>
+        <Text
+          style={styles.link}
+          onPress={() => openProfile()}
+        >Manage Profile
+        </Text>
       </View>
-
       <Divider style={styles.divider} />
 
       <Drawer.Section
@@ -91,6 +118,7 @@ const DrawerMenu = (/* {navigation} */) => {
           label="Sign Out"
           onPress={() => {
             // Handle sign-out logic here
+            console.log('lets not put signout at front screen')
           }}
         />
       </Drawer.Section>

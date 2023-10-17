@@ -6,8 +6,9 @@ import { Text, Divider, TouchableRipple } from 'react-native-paper'
 import Avatar from './core/Avatar'
 
 const UserListItem = ({
-  name, industry, location, occupation, isPromoted, image,
+  name, industry, location, occupation, isPromoted, image, onPress,
 }) => {
+
   const styles = StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -52,7 +53,10 @@ const UserListItem = ({
 
   return (
     <TouchableRipple
-      onPress={() => console.log('Pressed')}
+      onPress={() => {
+        // console.log('Pressed but onPress not yet handled.')
+        onPress()
+      }}
       rippleColor="rgba(0, 0, 0, .32)"
     >
       <View style={styles.container}>

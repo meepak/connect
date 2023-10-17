@@ -1,11 +1,14 @@
 import React from 'react' // , { useContext, useEffect }
 // import { Platform } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import * as Notifications from 'expo-notifications'
 // import { setDoc, doc } from 'firebase/firestore'
-// import * as Device from 'expo-device'
+// import * as Device from 'expo-device'import { StackNavigator } from 'react-navigation';
+
 import TabNavigator from '../tabsBottom/Tabs'
 import ModalStack from './ModalStack'
+import ProfileStack from './ProfileStack'
 // import { firestore } from '../../../firebase'
 // import { UserDataContext } from '../../../context/UserDataContext'
 // import { expoProjectId } from '../../../config'
@@ -21,6 +24,7 @@ Notifications.setNotificationHandler({
 })
 
 export default function RootStack() {
+  const { colors } = useTheme()
   // const { userData } = useContext(UserDataContext)
   // const isIos = Platform.OS === 'ios'
 
@@ -77,6 +81,24 @@ export default function RootStack() {
         name="HomeRoot"
         component={TabNavigator}
       />
+
+      <Stack.Group
+        screenOptions={{
+          presentation: 'card',
+          headerShown: false,
+          gestureEnabled: true,
+          cardOverlayEnabled: false,
+          ...TransitionPresets.SlideFromRightIOS,
+          headerTitle: '',
+          headerTintColor: colors.onBackground,
+        }}
+      >
+        <Stack.Screen
+          name="ProfileStack"
+          component={ProfileStack}
+        />
+      </Stack.Group>
+
       <Stack.Group
         screenOptions={{
           presentation: 'modal',

@@ -8,6 +8,7 @@ import Header from '../../../components/Header'
 
 import Find from '../../../scenes/find'
 import Detail from '../../../scenes/detail'
+import Profile from '../../../scenes/profile'
 
 const Stack = createStackNavigator()
 
@@ -35,6 +36,14 @@ const FindStack = () => {
                 ),
               })}
             />
+            {/* <Stack.Screen
+              name="Profile"
+              component={Profile}
+              options={{
+                title: ctx.title,
+                headerBackground: () => <HeaderStyle />,
+              }}
+            /> */}
             <Stack.Screen
               name="Detail"
               component={Detail}
