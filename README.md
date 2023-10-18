@@ -2,6 +2,10 @@ project: connect-411
 license: UNLICENSED
 author: Deepak Mahat
 
+Notes -- for associate, separate primary occupation & skills
+Currently works fulltime partime, will leave job or need side hustle.
+
+
 TODO
 
 1. General UI layout after onboarding
@@ -98,6 +102,15 @@ Work arrangement	5	5
 Mode of Operation	2	2
 Communication Preference	1	1
 References / NDA / Background Check	1	1
+
+Industry
+Type of Partner
+Business Stage
+Occupation skill
+Work arrangement
+Mode of Operation
+Communication Preference
+References / NDA / Background Check
 
 Star system alternative is way too much work for user during onboarding
 Let's just use hardcoded score for each question as above

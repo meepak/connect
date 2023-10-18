@@ -1,15 +1,14 @@
 import React, { useContext, useState } from 'react'
 import {
-  Alert, View, ImageBackground, StyleSheet, SafeAreaView, StatusBar,
+  Alert, View, ImageBackground, StyleSheet, SafeAreaView, StatusBar, ScrollView,
 } from 'react-native'
 import {
-  Text, IconButton, useTheme,
+  Text, IconButton, useTheme, Button, Surface,
 } from 'react-native-paper'
 import {
   useNavigation, useRoute,
 } from '@react-navigation/native'
-
-import Spinner from 'react-native-loading-spinner-overlay'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { doc, updateDoc } from 'firebase/firestore'
 import { firestore } from '../../firebase'
 
@@ -27,11 +26,11 @@ const Profile = () => {
   const {
     userId, userFullName, userAvatar, userBannerImage,
   } = route.params
-  const { userData } = useContext(UserDataContext)
+  const { userData, setUserData } = useContext(UserDataContext)
   const userDataId = userId || userData.id // temp
   const bannerImageHardCoded = { uri: 'https://images.pexels.com/photos/818261/pexels-photo-818261.jpeg?auto=compress&cs=tinysrgb&w=400' }
-  const [bannerImage, setBannerImage] = useState(userBannerImage.uri ? userBannerImage : bannerImageHardCoded)
-  const [bannerSpinner, setBannerSpinner] = useState(false)
+  const [bannerImage, setBannerImage] = useState(userBannerImage?.uri ? userBannerImage : bannerImageHardCoded)
+  const [bannerSpinner, setBannerSpinner] = useState(true)
 
   // TODO find more secure way to verify editMode, probably validate userId through auth token
   const editMode = userId !== undefined && userId !== null
@@ -49,7 +48,13 @@ const Profile = () => {
       //   isOnboarded,
       // }
       const usersRef = doc(firestore, 'users', userData.id)
-      await updateDoc(usersRef, data)
+      updateDoc(usersRef, data).then(() => {
+        setUserData([...userData, data])
+      }).catch((error) => {
+        Alert.alert('Error during profile update', error)
+      })
+
+      // update userdata context
     } catch (e) {
       setBannerSpinner(false)
       Alert.alert('Error', e.message)
@@ -62,11 +67,19 @@ const Profile = () => {
   }
 
   const onBanerEdited = (image) => {
-    console.log(`NEW BANNER PEOPLE :: ${image}`)
+    if (image === null || image === undefined) {
+      return
+    }
     setBannerImage({ uri: image })
     // save to db?
     profileUpdate({ bannerImage: image }).then(() => {
       setBannerSpinner(false)
+    })
+  }
+
+  const onAvatarEdited = (image) => {
+    profileUpdate({ avatar: image }).then(() => {
+      console.log('Avatar updated in db')
     })
   }
 
@@ -77,52 +90,130 @@ const Profile = () => {
       // position: 'relative', // Added for positioning the Avatar
     },
     banner: {
-      height: 150,
+      height: 160,
+      zIndex: 2,
     },
     bannerImage: {
       flex: 1,
       resizeMode: 'cover', // Use 'cover' for better image fitting
-      height: 150,
+      height: 160,
+      zIndex: 2,
+    },
+    userTypeLabelContainer: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      backgroundColor: colors.tertiaryContainer,
+      paddingTop: 3,
+      paddingBottom: 3,
+      paddingLeft: 20,
+      paddingRight: 10,
+      zIndex: 3,
+    },
+    userTypeLabel: {
+      color: colors.onTertiaryContainer,
+      fontSize: fonts.titleMedium.fontSize,
+      fontWeight: 'bold',
     },
     avatarContainer: {
-      position: 'absolute', // Position the Avatar absolutely
-      top: 100, // Place at the bottom
-      right: 20, // Place at the right
-      zIndex: 1, // Ensure the Avatar is above the ImageBackground
-      borderColor: colors.onBackground,
-      borderWidth: 4,
-      // borderStartColor: 'red',
-      // borderLeftColor: 'pink',
-      // borderBlockEndColor: 'white',
-      // borderBlockColor: 'green',
-      // borderBottomColor: 'blue',
-      // borderEndColor: 'violet',
+      position: 'absolute',
+      top: 60,
+      right: 10,
+      zIndex: 3,
+      borderColor: colors.background,
+      borderWidth: 6,
       borderRadius: 100,
       // backgroundColor: 'transparent',
       // borderRadius: '50 50 0 0',
     },
     backButton: {
-      position: 'absolute', // Position the Avatar absolutely
-      top: 5, // Place at the bottom
-      left: 5, // Place at the right
-      zIndex: 1, // Ensure the Avatar is above the ImageBackground
-      width: 25,
-      height: 25,
+      position: 'absolute',
+      top: 5,
+      left: 5,
+      zIndex: 3,
+      width: 30,
+      height: 30,
+      backgroundColor: colors.background,
+      borderRadius: 15,
     },
     editBannerImage: {
-      position: 'absolute', // Position the Avatar absolutely
-      bottom: 2, // Place at the bottom
-      left: 10, // Place at the right
-      zIndex: 1, // Ensure the Avatar is above the ImageBackground
-      backgroundColor: colors.tertiaryContainer,
+      position: 'absolute',
+      top: 5,
+      right: 10,
+      zIndex: 3,
+      backgroundColor: colors.background,
+      color: colors.onPrimary,
       borderRadius: 50,
-      width: 28,
-      height: 28,
+      width: 30,
+      height: 30,
+    },
+    bannerSpinner: {
+      position: 'absolute',
+      zIndex: 10,
+    },
+    scrollContent: {
+      zIndex: 1,
+    },
+    editUserIntro: {
+      position: 'absolute',
+      bottom: 5,
+      right: 10,
+      zIndex: 3,
+      backgroundColor: colors.background,
+      borderRadius: 50,
+      width: 27,
+      height: 27,
+    },
+    userIntro: {
+      marginLeft: 20,
+      marginRight: 20,
+      marginBottom: 20,
+      marginTop: 30,
     },
     userFullName: {
-      fontSize: fonts.headlineMedium.fontSize,
+      fontSize: fonts.headlineSmall.fontSize,
       fontWeight: 'bold',
+      textTransform: 'capitalize',
+    },
+    userOccupationTitle: {
+      fontSize: fonts.titleMedium.fontSize,
+      fontWeight: 'bold',
+      textTransform: 'capitalize',
+    },
+    userLocation: {
+      paddingTop: 20,
+      fontSize: fonts.titleMedium.fontSize,
+      textTransform: 'capitalize',
+    },
+    connectContainer: {
+      paddingTop: 20,
+      // backgroundColor: 'green',
+    },
+    connectButton: {
+      backgroundColor: colors.primaryContainer,
+    },
+    connectLabel: {
+      color: colors.onPrimaryContainer,
+      fontSize: fonts.titleLarge.fontSize,
+    },
+    userHighlightedList: {
+      paddingTop: 20,
       marginLeft: 30,
+      fontSize: fonts.titleMedium.fontSize,
+    },
+    userHighlightedListItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    userHighlightedListItemText: {
+      fontSize: fonts.titleMedium.fontSize,
+      color: colors.onBackground,
+    },
+    surfaceView: {
+      marginBottom: 20,
+      marginTop: 30,
+      paddingHorizontal: 30,
+      paddingVertical: 30,
     },
   })
 
@@ -132,8 +223,8 @@ const Profile = () => {
         <ImageBackground source={bannerImage} style={styles.bannerImage}>
           <View style={styles.avatarContainer}>
             {editMode
-              ? <AvatarOfAuthUser size={100} onEdited={(newAvatar) => console.log(newAvatar)} />
-              : <Avatar fullName={userFullName} url={userAvatar || null} width={100} height={100} rounded />}
+              ? <AvatarOfAuthUser size={120} onEdited={(newAvatar) => onAvatarEdited(newAvatar)} />
+              : <Avatar fullName={userFullName} url={userAvatar || null} width={120} height={120} rounded />}
           </View>
           {/* <View style={styles.BackButtonContainer}> */}
           <IconButton
@@ -146,10 +237,9 @@ const Profile = () => {
           {editMode
             ? (
               <IconButton
-                icon="image-edit-outline"
+                icon="square-edit-outline"
                 size={22}
                 iconColor={colors.onBackground}
-                underlayColor={colors.background}
                 style={styles.editBannerImage}
                 onPress={() => {
                   ImageSelectAndUpload({
@@ -159,18 +249,175 @@ const Profile = () => {
               />
             )
             : <></>}
-          <View style={{ position: 'absolute', zIndex: 10 }} visible={bannerSpinner}>
-            <Spinner
-              visible={bannerSpinner}
-              textStyle={{ color: colors.onSurface }}
-              overlayColor="rgba(0,0,0,0.5)"
-            />
+          <View style={styles.userTypeLabelContainer}>
+            <Text style={styles.userTypeLabel}>{editMode ? 'Searching for Associates' : 'Open for opportunity'}</Text>
           </View>
-          {/* </View> */}
         </ImageBackground>
       </View>
-      <Text style={styles.userFullName}>{userFullName}</Text>
-      {/* Rest of your content */}
+      <ScrollView style={styles.scrollContent}>
+        {/* USER INTRO */}
+        <View>
+          <View style={styles.userIntro}>
+            <Text style={styles.userFullName}>{userFullName} and some v V long name</Text>
+            <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+            {/* Location */}
+            <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+            {/* connect button */}
+            {!editMode
+              ? (
+                <View style={styles.connectContainer}>
+                  <Button
+                    icon="account-arrow-right-outline"
+                    onPress={() => { console.log('connect button') }}
+                    mode="elevated"
+                    labelStyle={styles.buttonLabel}
+                    style={styles.connectButton}
+                  >Request Connection
+                  </Button>
+                </View>
+              )
+              : <></>}
+            {/* Onboarding point list */}
+            <View style={styles.userHighlightedList}>
+              {
+            [
+              { key: 'Investor/Active Partner/Advisory Partner' },
+              { key: 'Interested in business at any stage' },
+              { key: 'Occupation skill' },
+              { key: 'Work arrangement' },
+              { key: 'Mode of Operation' },
+              { key: 'Communication Preference' },
+              { key: 'References / NDA / Background Check' },
+            ].map((item) => (
+              <View style={styles.userHighlightedListItem} key={item.key}>
+                <Icon style={styles.userHighlightedListItemText} name="check" />
+                <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
+              </View>
+            ))
+          }
+            </View>
+          </View>
+          {editMode
+            ? (
+              <IconButton
+                icon="square-edit-outline"
+                size={22}
+                iconColor={colors.onBackground}
+              // underlayColor={colors.background}
+                style={styles.editUserIntro}
+                onPress={() => {
+                  console.log('Edit User Intro')
+                }}
+              />
+            )
+            : <></>}
+        </View>
+        {/* Rest of your content */}
+        {/* USER INTRO */}
+        <Surface style={styles.surfaceView}>
+          <Text style={styles.userFullName}>Professional Experience</Text>
+          <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+          {/* Location */}
+          <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+          {/* Onboarding point list */}
+          <View style={styles.userHighlightedList}>
+            {
+            [
+              { key: 'Investor/Active Partner/Advisory Partner' },
+              { key: 'Interested in business at any stage' },
+              { key: 'Occupation skill' },
+              { key: 'Work arrangement' },
+              { key: 'Mode of Operation' },
+              { key: 'Communication Preference' },
+              { key: 'References / NDA / Background Check' },
+            ].map((item) => (
+              <View style={styles.userHighlightedListItem} key={item.key}>
+                <Icon style={styles.userHighlightedListItemText} name="check" />
+                <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
+              </View>
+            ))
+          }
+          </View>
+        </Surface>
+        {/* USER INTRO */}
+        <Surface style={styles.surfaceView}>
+          <Text style={styles.userFullName}>Educational Qualifications</Text>
+          <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+          {/* Location */}
+          <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+          {/* Onboarding point list */}
+          <View style={styles.userHighlightedList}>
+            {
+            [
+              { key: 'Investor/Active Partner/Advisory Partner' },
+              { key: 'Interested in business at any stage' },
+              { key: 'Occupation skill' },
+              { key: 'Work arrangement' },
+              { key: 'Mode of Operation' },
+              { key: 'Communication Preference' },
+              { key: 'References / NDA / Background Check' },
+            ].map((item) => (
+              <View style={styles.userHighlightedListItem} key={item.key}>
+                <Icon style={styles.userHighlightedListItemText} name="check" />
+                <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
+              </View>
+            ))
+          }
+          </View>
+        </Surface>
+        {/* USER INTRO */}
+        <Surface style={styles.surfaceView}>
+          <Text style={styles.userFullName}>Licenses & Certifications</Text>
+          <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+          {/* Location */}
+          <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+          {/* Onboarding point list */}
+          <View style={styles.userHighlightedList}>
+            {
+            [
+              { key: 'Investor/Active Partner/Advisory Partner' },
+              { key: 'Interested in business at any stage' },
+              { key: 'Occupation skill' },
+              { key: 'Work arrangement' },
+              { key: 'Mode of Operation' },
+              { key: 'Communication Preference' },
+              { key: 'References / NDA / Background Check' },
+            ].map((item) => (
+              <View style={styles.userHighlightedListItem} key={item.key}>
+                <Icon style={styles.userHighlightedListItemText} name="check" />
+                <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
+              </View>
+            ))
+          }
+          </View>
+        </Surface>
+        {/* USER INTRO */}
+        <Surface style={styles.surfaceView}>
+          <Text style={styles.userFullName}>Langauges</Text>
+          <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+          {/* Location */}
+          <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+          {/* Onboarding point list */}
+          <View style={styles.userHighlightedList}>
+            {
+            [
+              { key: 'Investor/Active Partner/Advisory Partner' },
+              { key: 'Interested in business at any stage' },
+              { key: 'Occupation skill' },
+              { key: 'Work arrangement' },
+              { key: 'Mode of Operation' },
+              { key: 'Communication Preference' },
+              { key: 'References / NDA / Background Check' },
+            ].map((item) => (
+              <View style={styles.userHighlightedListItem} key={item.key}>
+                <Icon style={styles.userHighlightedListItemText} name="check" />
+                <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
+              </View>
+            ))
+          }
+          </View>
+        </Surface>
+      </ScrollView>
     </SafeAreaView>
   )
 }

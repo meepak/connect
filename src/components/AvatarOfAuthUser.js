@@ -41,7 +41,7 @@ const getIconSize = (size) => {
   if (typeof size === 'string') {
     return sizeMap[size] ?? 8
   }
-  return Math.round(size / 4)
+  return Math.round(size / 4) + 4
 }
 
 // TODO implement onError, return error within onEdited
@@ -52,11 +52,14 @@ const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
   const [progress, setProgress] = useState('')
   const [avatar, setAvatar] = useState(userData.avatar ?? null)
 
-  useEffect(() => {
-    if (onEdited) {
-      onEdited(avatar)
+  const handleAvatarUpdated = (updatedAvatar) => {
+    if (updatedAvatar) {
+      setAvatar(updatedAvatar)
+      if (onEdited) {
+        onEdited(updatedAvatar)
+      }
     }
-  }, [avatar])
+  }
 
   return (
     <View>
@@ -75,7 +78,7 @@ const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
         url={avatar ?? null}
         onPress={() => {
           if (onEdited) {
-            ImageSelectAndUpload({ userId: userData.id, setProgress, onFinished: setAvatar })
+            ImageSelectAndUpload({ userId: userData.id, setProgress, onFinished: handleAvatarUpdated })
           } else if (onPress) {
             onPress()
           }
@@ -86,19 +89,19 @@ const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
           ? (
             <SystemAvatar.Accessory
               containerStyle={{
-                backgroundColor: colors.onBackground,
+                backgroundColor: colors.background,
                 borderRadius: 25,
               }}
               size={iconSize}
               iconProps={{
                 name: 'add-circle', // Use the plus sign icon name
                 size: iconSize,
-                color: colors.tertiaryContainer,
+                color: colors.onBackground,
                 // bottom: 10,
                 // right: 7,
               }}
               onPress={() => (
-                ImageSelectAndUpload({ userId: userData.id, setProgress, onFinished: setAvatar })
+                ImageSelectAndUpload({ userId: userData.id, setProgress, onFinished: handleAvatarUpdated })
               )}
             />
           )
