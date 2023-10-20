@@ -1,29 +1,31 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 import React, {
-  useCallback, useState, useContext, useLayoutEffect,
+  useState, useContext, useLayoutEffect, useCallback,
 } from 'react'
-import { useNavigation } from '@react-navigation/native'
-// import { signOut } from 'firebase/auth'
+import { GiftedChat, Day } from 'react-native-gifted-chat'
 import {
   collection, addDoc, query, orderBy, onSnapshot,
 } from 'firebase/firestore'
-import { GiftedChat } from 'react-native-gifted-chat'
-import { firestore } from '../../firebase'
+import { useNavigation } from '@react-navigation/native'
+import { Divider, useTheme } from 'react-native-paper'
+import emojiUtils from 'emoji-utils'
+import { Platform } from 'react-native'
+import {
+  renderInputToolbar, renderActions, renderComposer, renderSend,
+} from './InputToolbar'
 import { UserDataContext } from '../../context/UserDataContext'
-import ScreenTemplate from '../../components/ScreenTemplate'
+import { firestore } from '../../firebase'
+
+import SlackMessage from './SlackMessage'
 
 const Chat = () => {
-  const navigation = useNavigation()
-  const { userData } = useContext(UserDataContext)
+  const [cText, setcText] = useState('')
   const [messages, setMessages] = useState([])
-  //   const signOutNow = () => {
-  //     signOut(auth).then(() => {
-  //       // Sign-out successful.
-  //       navigation.replace('Login')
-  //     }).catch((error) => {
-  //       // An error happened.
-  //     })
-  //   }
+  const navigation = useNavigation()
+  const { colors, fonts } = useTheme() // Get colors and fonts from useTheme
+  const { userData } = useContext(UserDataContext)
+
   useLayoutEffect(() => {
     const q = query(collection(firestore, 'chats'), orderBy('createdAt', 'desc'))
     const unsubscribe = onSnapshot(q, (snapshot) => setMessages(
@@ -34,7 +36,6 @@ const Chat = () => {
         user: doc.data().user,
       })),
     ))
-
     return () => {
       unsubscribe()
     }
@@ -50,19 +51,56 @@ const Chat = () => {
     })
   }, [])
 
+  const renderMessage = (props) => {
+    const {
+      currentMessage: { text: currText },
+    } = props
+
+    let messageTextStyle
+
+    // Make "pure emoji" messages much bigger than plain text.
+    if (currText && emojiUtils.isPureEmojiString(currText)) {
+      messageTextStyle = {
+        fontSize: 28,
+        // Emoji get clipped if lineHeight isn't increased; make it consistent across platforms.
+        lineHeight: Platform.OS === 'android' ? 34 : 30,
+      }
+    }
+
+    return <SlackMessage {...props} messageTextStyle={messageTextStyle} colors={colors} fonts={fonts} /> // Pass colors and fonts as props
+  }
+
   return (
-    <ScreenTemplate>
-      <GiftedChat
-        messages={messages}
-        showAvatarForEveryMessage
-        onSend={(_messages) => onSend(_messages)}
-        user={{
-          _id: userData?.email,
-          name: userData?.fullName,
-          avatar: userData?.avatar,
-        }}
-      />
-    </ScreenTemplate>
+    <GiftedChat
+      keyboardShouldPersistTaps="never"
+      messages={messages}
+      text={cText}
+      onInputTextChanged={setcText}
+      onSend={onSend}
+      user={{
+        _id: userData.id,
+        name: userData.fullName,
+        avatar: userData.avatar,
+      }}
+      alignTop
+      alwaysShowSend
+      scrollToBottom
+      bottomOffset={42}
+      onPressAvatar={console.log}
+      renderInputToolbar={(props) => renderInputToolbar(props, colors)}
+      renderActions={(props) => renderActions(props, colors)}
+      renderComposer={(props) => renderComposer(props, colors)}
+      renderSend={(props) => renderSend(props, colors)}
+      renderMessage={renderMessage}
+      isCustomViewBottom
+      parsePatterns={(/* linkStyle */) => [
+        {
+          pattern: /#(\w+)/,
+          style: { color: colors.primary, fontWeight: 'bold', fontSize: fonts.bodyMedium.fontSize },
+          onPress: (tag) => console.log(`Pressed on hashtag: ${tag}`),
+        },
+      ]}
+    />
   )
 }
 

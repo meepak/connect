@@ -2,21 +2,28 @@
 // To be decided on the user object will pass through to here
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Text, Divider, TouchableRipple } from 'react-native-paper'
+import {
+  Text, Divider, TouchableRipple, useTheme,
+} from 'react-native-paper'
 import Avatar from './core/Avatar'
 
-const UserListItem = ({
-  name, industry, location, occupation, isPromoted, image, onPress,
+const ChatListItem = ({
+  name, industry, /* location, occupation, isPromoted */ image, onPress,
 }) => {
+  const { colors } = useTheme()
+
   const styles = StyleSheet.create({
     container: {
+      flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
       paddingLeft: 16,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.2,
       shadowRadius: 4,
-      marginTop: 15,
+      marginTop: 10,
+      marginBottom: 5,
+      justifyContent: 'space-between',
     },
     Image: {
       alignSelf: 'flex-start',
@@ -25,13 +32,11 @@ const UserListItem = ({
     //   borderRadius: 32,
     },
     Info: {
-      flex: 1,
       alignSelf: 'flex-start',
       marginLeft: 10,
     },
     Title: {
       fontSize: 18,
-      fontWeight: 'bold',
     },
     Company: {
       fontSize: 16,
@@ -41,12 +46,20 @@ const UserListItem = ({
     },
     Rate: {
       fontSize: 16,
-      fontWeight: 'bold',
     },
-    Promoted: {
-      padding: 4,
-      borderRadius: 2,
+    divider: {
+      marginTop: 5,
+    },
+    DateAgo: {
+      flex: 1,
+      alignSelf: 'flex-start',
+      alignItems: 'flex-end',
+      justifyContent: 'center',
+      marginRight: 20,
+    },
+    Date: {
       fontSize: 12,
+      color: colors.surfaceVariant,
     },
   })
 
@@ -59,18 +72,18 @@ const UserListItem = ({
       rippleColor="rgba(0, 0, 0, .32)"
     >
       <View style={styles.container}>
-        <Avatar fullName={name} url={image} style={styles.Image} width={55} height={55} rounded={false} />
+        <Avatar fullName={name} url={image} style={styles.Image} width={55} height={55} rounded />
         <View style={styles.Info}>
           <Text style={styles.Title}>{name}</Text>
           <Text style={styles.Company}>{industry}</Text>
-          <Text style={styles.Location}>{location}</Text>
-          <Text style={styles.Rate}>{occupation}</Text>
-          {isPromoted && <Text style={styles.Promoted}>Promoted</Text>}
-          <Divider />
+          <Divider style={styles.divider} />
+        </View>
+        <View style={styles.DateAgo}>
+          <Text style={styles.Date}>Thurs</Text>
         </View>
       </View>
     </TouchableRipple>
   )
 }
 
-export default UserListItem
+export default ChatListItem

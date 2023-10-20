@@ -28,8 +28,9 @@ const ScreenTemplate = (props) => {
     return <LoadingScreen />
   }
 
+  /* onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}> */
   return (
-    <SafeAreaView style={styles.container} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+    <SafeAreaView style={styles.container}>
       <StatusBar />
       { children }
     </SafeAreaView>

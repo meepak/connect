@@ -118,3 +118,75 @@ Let's just use hardcoded score for each question as above
 3 stars: This is very important to me and I would like to match with partners who also rank this point highly.
 2 stars: This is important to me, but I am willing to compromise on this point if I find a good partner who does not rank this point as highly as I do.
 1 star: This is not important to me and I do not mind if my partner does not rank this point highly.
+
+
+/users
+  /$user_id
+    /basic_profile
+      /name
+      /email
+      /phone_number
+  /public_profiles
+    /avatar
+    /banner
+    /industry
+    /occupation
+    /business_stage
+    /location
+    /education
+    /work_arrangement
+    /communication_preference
+    -
+/detailed_profiles
+  /$user_id
+    /full_bio
+    /website
+    /social_media
+    /portfolio
+    /experience
+    /references
+
+/connection_requests
+  /$connection_request_id
+    /sent_by_user_id
+    /sent_to_user_id
+    /status (sent, received, accepted, declined)
+
+/potential_matches
+  /$potential_match_id
+    /user1_id
+    /user2_id
+    /user2_public_profile
+      /name
+      /profile_picture
+      /industry
+      /occupation
+      /business_stage
+      /location
+      /education
+      /work_arrangement
+      /communication_preference
+    /match_score
+
+/chat_rooms
+  /$chat_room_id
+    /participants
+      /$user_id
+        /name
+        /profile_picture
+    /messages
+      /$message_id
+        /user_id
+        /timestamp
+        /content
+
+
+
+---------------------------
+Next
+
+Create 10 users -- 3 founder, 7 associates
+Match all founders with all associates
+
+Test ability to send connection request
+Test ability to chat one to one

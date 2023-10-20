@@ -1,7 +1,6 @@
 import React from 'react'
-// import { useColorScheme } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import { createStackNavigator } from '@react-navigation/stack'
-// import { lightProps, darkProps } from '../../navigationProps'
 import HeaderStyle from '../../../components/HeaderStyle'
 
 import Login from '../../../scenes/login'
@@ -9,23 +8,30 @@ import SignUp from '../../../scenes/signup'
 
 const Stack = createStackNavigator()
 
-const LoginStack = () => (
-  <Stack.Navigator>
-    <Stack.Screen
-      name="Sign in"
-      component={Login}
-      options={(/* { navigation } */) => ({
+const LoginStack = () => {
+  const { colors } = useTheme()
+  return (
+    <Stack.Navigator
+      screenOptions={(/* { navigation } */) => ({
         headerBackground: () => <HeaderStyle />,
+        headerTintColor: colors.onBackground,
+        headerTitleAlign: 'left',
       })}
-    />
-    <Stack.Screen
-      name="Sign up"
-      component={SignUp}
-      options={(/* { navigation } */) => ({
-        headerBackground: () => <HeaderStyle />,
-      })}
-    />
-  </Stack.Navigator>
-)
+    >
+      <Stack.Screen
+        name="Sign in"
+        component={Login}
+        options={(/* { navigation } */) => ({
+        })}
+      />
+      <Stack.Screen
+        name="Sign up"
+        component={SignUp}
+        options={(/* { navigation } */) => ({
+        })}
+      />
+    </Stack.Navigator>
+  )
+}
 
 export default LoginStack
