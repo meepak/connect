@@ -13,7 +13,9 @@ import { fontAssets } from 'theme/fonts'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 
+import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import { UserDataContextProvider } from './context/UserDataContext'
+
 import LoadingScreen from './components/LoadingScreen'
 
 import jsonData from '../assets/data/occupations.json'
@@ -86,11 +88,13 @@ const App = () => {
   return (
     <Provider>
       <UserDataContextProvider>
-        <PaperProvider theme={finalTheme}>
-          {didLoad
-            ? <Router />
-            : <LoadingScreen />}
-        </PaperProvider>
+        <ActionSheetProvider>
+          <PaperProvider theme={finalTheme}>
+            {didLoad
+              ? <Router />
+              : <LoadingScreen />}
+          </PaperProvider>
+        </ActionSheetProvider>
       </UserDataContextProvider>
     </Provider>
   )

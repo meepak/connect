@@ -15,13 +15,13 @@ const ProfileStack = () => (
     <Stack.Screen
       name="Profile"
       component={Profile}
-      options={{
-        title: 'Hello',
-        headerBackTitle: 'Back',
-        headerTitleAlign: 'center',
-        // headerBackground: () => <HeaderStyle />,
-        // headerTintColor: isDark ? colors.white : colors.white,
-      }}
+      // options={{
+      //   title: 'Hello',
+      //   headerBackTitle: 'Back',
+      //   headerTitleAlign: 'center',
+      //   // headerBackground: () => <HeaderStyle />,
+      //   // headerTintColor: isDark ? colors.white : colors.white,
+      // }}
     />
 
   </Stack.Navigator>

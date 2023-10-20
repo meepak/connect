@@ -1,19 +1,17 @@
 import React, { useState } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import { useColorScheme } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import HomeTitleContext from '../../../context/HomeTitleContext'
 
 import HeaderStyle from '../../../components/HeaderStyle'
 import Post from '../../../scenes/post'
 import Print from '../../../scenes/print'
-import { colors } from '../../../theme'
 
 const Stack = createStackNavigator()
 
 const ModalStack = () => {
   const [title, setTitle] = useState('Back')
-  const scheme = useColorScheme()
-  const isDark = scheme === 'dark'
+  const { colors } = useTheme()
 
   return (
     <HomeTitleContext.Provider
@@ -27,6 +25,7 @@ const ModalStack = () => {
           <Stack.Navigator
             screenOptions={{
               headerShown: true,
+              headerTintColor: colors.onBackground,
             }}
           >
             <Stack.Screen
@@ -36,7 +35,7 @@ const ModalStack = () => {
                 title: ctx.title,
                 headerBackTitle: '',
                 headerBackground: () => <HeaderStyle />,
-                headerTintColor: isDark ? colors.white : colors.white,
+                headerTintColor: colors.onBackground,
               }}
             />
             <Stack.Screen
@@ -45,7 +44,7 @@ const ModalStack = () => {
               options={{
                 // title: ctx.title,
                 headerBackground: () => <HeaderStyle />,
-                headerTintColor: isDark ? colors.white : colors.white,
+                headerTintColor: colors.onBackground,
               }}
             />
           </Stack.Navigator>

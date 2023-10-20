@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import {
-  View, Text, TouchableOpacity,
+  View, Text,
 } from 'react-native'
 // import PropTypes from 'prop-types'
 // import { DrawerActions } from '@react-navigation/native'
@@ -67,7 +67,7 @@ const DrawerMenu = (/* {navigation} */) => {
         userId: userData.id,
         userFullName: userData.fullName,
         userAvatar: userData.avatar,
-        userBannerImage: {uri: userData.bannerImage}
+        userBannerImage: { uri: userData.bannerImage },
       },
     })
   }

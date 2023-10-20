@@ -49,7 +49,7 @@ export default function Post() {
       const result = await AsyncStorage.getItem(key)
       const dt = JSON.parse(result)
       // console.log(`loaded ${dt.date}`)
-      setDate(JSON.parse(result))
+      setDate(dt)
     } catch (e) {
       const result = { date: 'no data' }
       setDate(result)

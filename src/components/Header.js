@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  StyleSheet, View, Alert,
+  StyleSheet, View,
 } from 'react-native'
 import {
   IconButton, Button, useTheme,
@@ -35,13 +35,17 @@ const styles = StyleSheet.create({
 //   },
 })
 
-const headerButtonPress = () => {
-  Alert.alert('Tapped header button')
-}
-
 export default function Header() {
   const navigation = useNavigation()
   const { colors } = useTheme()
+
+  const openChat = () => {
+    console.log('Lets go to chat')
+    navigation.navigate('ChatStack', {
+      screen: 'ChatTabs',
+    })
+  }
+
   return (
     <View style={styles.headerContainer}>
       <AvatarOfAuthUser
@@ -62,10 +66,11 @@ export default function Header() {
       </Button>
 
       <IconButton
-        icon="bell-outline"
+        icon="comment-processing-outline"
         color={colors.onBackground}
-        size={24}
-        onPress={() => headerButtonPress()}
+        size={26}
+        marginRight={15}
+        onPress={() => openChat()}
       />
 
     </View>

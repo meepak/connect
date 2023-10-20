@@ -1,4 +1,4 @@
-import FollowFollowerTabs from './followfollowerTabs'
+import ChatTabs from './ChatTabs'
+import FollowFollowerTabs from './FollowfollowerTabs'
 
-// eslint-disable-next-line import/prefer-default-export
-export { FollowFollowerTabs } // not setting default, may be we want more top tabs later
+export { FollowFollowerTabs, ChatTabs }

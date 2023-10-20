@@ -9,6 +9,7 @@ import * as Notifications from 'expo-notifications'
 import TabNavigator from '../tabsBottom/Tabs'
 import ModalStack from './ModalStack'
 import ProfileStack from './ProfileStack'
+import ChatStack from './ChatStack'
 // import { firestore } from '../../../firebase'
 // import { UserDataContext } from '../../../context/UserDataContext'
 // import { expoProjectId } from '../../../config'
@@ -97,6 +98,12 @@ export default function RootStack() {
           name="ProfileStack"
           component={ProfileStack}
         />
+
+        <Stack.Screen
+          name="ChatStack"
+          component={ChatStack}
+        />
+
       </Stack.Group>
 
       <Stack.Group

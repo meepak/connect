@@ -6,7 +6,9 @@ import * as ImagePicker from 'expo-image-picker'
 import * as ImageManipulator from 'expo-image-manipulator'
 import { storage } from '../firebase'
 
-const ImageSelectAndUpload = async ({ userId, setProgress, onFinished, resizeWidth, imageCompression }) => {
+const ImageSelectAndUpload = async ({
+  userId, setProgress, onFinished, resizeWidth, imageCompression,
+}) => {
   try {
     if (Platform.OS === 'ios') {
       const {

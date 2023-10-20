@@ -30,7 +30,7 @@ const Profile = () => {
   const userDataId = userId || userData.id // temp
   const bannerImageHardCoded = { uri: 'https://images.pexels.com/photos/818261/pexels-photo-818261.jpeg?auto=compress&cs=tinysrgb&w=400' }
   const [bannerImage, setBannerImage] = useState(userBannerImage?.uri ? userBannerImage : bannerImageHardCoded)
-  const [bannerSpinner, setBannerSpinner] = useState(true)
+  // const [bannerSpinner, setBannerSpinner] = useState(true)
 
   // TODO find more secure way to verify editMode, probably validate userId through auth token
   const editMode = userId !== undefined && userId !== null
@@ -56,13 +56,13 @@ const Profile = () => {
 
       // update userdata context
     } catch (e) {
-      setBannerSpinner(false)
+      // setBannerSpinner(false)
       Alert.alert('Error', e.message)
     }
   }
 
   const setUploadProgress = (progress) => {
-    setBannerSpinner(true)
+    // setBannerSpinner(true)
     console.log(progress)
   }
 
@@ -73,7 +73,7 @@ const Profile = () => {
     setBannerImage({ uri: image })
     // save to db?
     profileUpdate({ bannerImage: image }).then(() => {
-      setBannerSpinner(false)
+      // setBannerSpinner(false)
     })
   }
 
@@ -237,7 +237,7 @@ const Profile = () => {
           {editMode
             ? (
               <IconButton
-                icon="square-edit-outline"
+                icon="lead-pencil"
                 size={22}
                 iconColor={colors.onBackground}
                 style={styles.editBannerImage}
@@ -300,7 +300,7 @@ const Profile = () => {
           {editMode
             ? (
               <IconButton
-                icon="square-edit-outline"
+                icon="lead-pencil"
                 size={22}
                 iconColor={colors.onBackground}
               // underlayColor={colors.background}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-// import { useColorScheme } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import { createStackNavigator } from '@react-navigation/stack'
 import HomeTitleContext from '../../../context/HomeTitleContext'
 // import { lightProps, darkProps } from '../../navigationProps'
@@ -8,12 +8,12 @@ import Header from '../../../components/Header'
 
 import Find from '../../../scenes/find'
 import Detail from '../../../scenes/detail'
-import Profile from '../../../scenes/profile'
+// import Profile from '../../../scenes/profile'
 
 const Stack = createStackNavigator()
 
 const FindStack = () => {
-  // const scheme = useColorScheme()
+  const { colors } = useTheme()
   // const navigationProps = scheme === 'dark' ? darkProps : lightProps
   const [title, setTitle] = useState('default title')
   return (
@@ -50,6 +50,8 @@ const FindStack = () => {
               options={{
                 title: ctx.title,
                 headerBackground: () => <HeaderStyle />,
+                headerTintColor: colors.onBackground,
+
               }}
             />
           </Stack.Navigator>
