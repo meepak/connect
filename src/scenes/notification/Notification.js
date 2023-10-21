@@ -20,20 +20,20 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function Follow() {
+export default function Notification() {
   const { colors } = useTheme()
   const navigation = useNavigation()
   const { userData } = useContext(UserDataContext)
 
   useEffect(() => {
-    console.log('Follow screen')
+    console.log('Notification screen')
   }, [])
 
   return (
     <ScreenTemplate>
       <View style={[styles.container]}>
         <View style={{ width: '100%' }}>
-          <Text style={styles.field}>Follow Screen</Text>
+          <Text style={styles.field}>Notification Screen</Text>
           <Button
             label="Open Modal"
             color={colors.tertiary}
@@ -42,7 +42,7 @@ export default function Follow() {
                 screen: 'Post',
                 params: {
                   data: userData,
-                  from: 'Follow screen',
+                  from: 'Notification screen',
                 },
               })
             }}

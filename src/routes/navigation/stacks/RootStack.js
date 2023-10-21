@@ -10,6 +10,7 @@ import TabNavigator from '../tabsBottom/Tabs'
 import ModalStack from './ModalStack'
 import ProfileStack from './ProfileStack'
 import ChatStack from './ChatStack'
+import NotificationStack from './NotificationStack'
 // import { firestore } from '../../../firebase'
 // import { UserDataContext } from '../../../context/UserDataContext'
 // import { expoProjectId } from '../../../config'
@@ -97,6 +98,11 @@ export default function RootStack() {
         <Stack.Screen
           name="ProfileStack"
           component={ProfileStack}
+        />
+
+        <Stack.Screen
+          name="NotificationStack"
+          component={NotificationStack}
         />
 
         <Stack.Screen

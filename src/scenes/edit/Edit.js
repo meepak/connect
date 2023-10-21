@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {
-  Alert, View, StyleSheet,
+  Alert, View, StyleSheet, Platform
 } from 'react-native'
 import {
   Text, useTheme,

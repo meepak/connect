@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import Follow from '../../../scenes/follow'
+import Follow from '../../../scenes/notification'
 
 const Stack = createStackNavigator()
 

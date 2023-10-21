@@ -13,9 +13,9 @@ const UserListItem = ({
       flexDirection: 'row',
       alignItems: 'center',
       paddingLeft: 16,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 4,
+      // shadowOffset: { width: 0, height: 2 },
+      // shadowOpacity: 0.2,
+      // shadowRadius: 4,
       marginTop: 15,
     },
     Image: {

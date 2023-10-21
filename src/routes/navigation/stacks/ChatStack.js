@@ -3,9 +3,10 @@ import { useTheme } from 'react-native-paper'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import Chat from '../../../scenes/chat'
 import ChatMain from '../../../scenes/chatMain'
-import HeaderStyle from '../../../components/HeaderStyle'
-import Header4Chat from '../../../components/Header4Chat'
+import HeaderStyle from '../../../components/header/HeaderStyle'
+import Header4Chat from '../../../components/header/Header4Chat'
 import { ChatTabs } from '../tabsTop'
+import Header from '../../../components/header/Header'
 
 const Stack = createStackNavigator()
 
@@ -15,12 +16,8 @@ const ChatStack = () => {
     <Stack.Navigator
       screenOptions={(/* { navigation } */) => ({
         headerBackground: () => <HeaderStyle />,
-        headerBackTitleVisible: false,
-        headerBackTitleStyle: {
-          color: colors.onBackground,
-        },
         headerTitle: () => (
-          <Header4Chat />
+          <Header />
         ),
       })}
     >
@@ -28,15 +25,11 @@ const ChatStack = () => {
       <Stack.Group
         screenOptions={(/* { navigation } */) => ({
           headerBackground: () => <HeaderStyle />,
-          headerTintColor: colors.onBackground,
-          headerBackTitleVisible: false,
-          headerBackTitleStyle: {
-            color: colors.onBackground,
-          },
-          headerTitle: () => (
-            <Header4Chat />
-          ),
-          ...TransitionPresets.SlideFromRightIOS,
+          // headerTintColor: colors.onBackground,
+          // headerBackTitleVisible: false,
+          // headerBackTitleStyle: {
+          //   color: colors.onBackground,
+          // },
         })}
 
       >
@@ -54,6 +47,17 @@ const ChatStack = () => {
         <Stack.Screen
           name="Chat"
           component={Chat}
+          options={() => ({
+            headerTintColor: colors.onBackground,
+            headerBackTitleVisible: false,
+            headerBackTitleStyle: {
+              color: colors.onBackground,
+            },
+            headerTitle: () => (
+              <Header4Chat />
+            ),
+            ...TransitionPresets.SlideFromRightIOS,
+          })}
         />
 
       </Stack.Group>
