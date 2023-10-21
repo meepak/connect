@@ -89,15 +89,16 @@ export default function ChatMain() {
               rate="A$100/hr-A$110/hr"
               isPromoted
               onPress={() => {
-                console.log('going to profile')
+                // console.log('going to chat')
                 navigation.navigate('ChatStack', {
                   screen: 'Chat',
-                //   params: {
-                //     userFullName: name,
-                //     userAvatar: image,
-                //     userBannerImage: banner,
-                //     // from: 'Find screen',
-                //   },
+                  params: {
+                    userId: 1,
+                    userFullName: name,
+                    // userAvatar: image,
+                    // userBannerImage: banner,
+                    // from: 'Find screen',
+                  },
                 })
               }}
             />

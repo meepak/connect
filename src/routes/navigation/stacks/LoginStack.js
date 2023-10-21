@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTheme } from 'react-native-paper'
 import { createStackNavigator } from '@react-navigation/stack'
-import HeaderStyle from '../../../components/HeaderStyle'
+import HeaderStyle from '../../../components/header/HeaderStyle'
 
 import Login from '../../../scenes/login'
 import SignUp from '../../../scenes/signup'

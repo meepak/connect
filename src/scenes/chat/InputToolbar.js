@@ -57,10 +57,11 @@ export const renderComposer = (props, colors) => (
       borderWidth: 1,
       borderRadius: 20,
       borderColor: colors.onBackground,
-      paddingVertical: 10,
       paddingHorizontal: 18,
       marginLeft: 5,
       lineHeight: 18,
+      minHeight: 51,
+      textAlignVertical: 'center',
     }}
   />
 )

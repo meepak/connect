@@ -14,6 +14,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
+import * as SystemUI from 'expo-system-ui';
+
 import { UserDataContextProvider } from './context/UserDataContext'
 
 import LoadingScreen from './components/LoadingScreen'
@@ -82,6 +84,9 @@ const App = () => {
   const { adaptedTheme } = adaptNavigationTheme(isDark ? { reactNavigationLight: paperTheme } : { reactNavigationDark: paperTheme })
 
   const finalTheme = { ...adaptedTheme, colors: isDark ? theme.dark : theme.light }
+
+  // solution to white flash for android while keyboard appears
+  SystemUI.setBackgroundColorAsync(finalTheme.colors.background)
 
   // rendering
   // if (!didLoad) return <LoadingScreen />

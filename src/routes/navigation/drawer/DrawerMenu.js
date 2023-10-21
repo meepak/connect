@@ -8,7 +8,9 @@ import {
   DrawerContentScrollView,
   // DrawerItemList,
 } from '@react-navigation/drawer'
-import { Drawer, Divider, useTheme } from 'react-native-paper'
+import {
+  Drawer, Divider, useTheme, IconButton,
+} from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import AvatarOfAuthUser from '../../../components/AvatarOfAuthUser'
 import { UserDataContext } from '../../../context/UserDataContext'
@@ -56,6 +58,12 @@ const DrawerMenu = (/* {navigation} */) => {
     lastItem: {
       flex: 1,
       justifyContent: 'flex-end',
+      fontSize: 24,
+    },
+    settingsItem: {
+      fontWeight: 'bold',
+      color: colors.onBackground,
+      fontSize: 24,
     },
   }
 
@@ -115,7 +123,9 @@ const DrawerMenu = (/* {navigation} */) => {
         showDivider={false}
       >
         <Drawer.Item
-          label="Sign Out"
+          style={styles.settingsItem}
+          icon="cogs"
+          label="Settings"
           onPress={() => {
             // Handle sign-out logic here
             console.log('lets not put signout at front screen')

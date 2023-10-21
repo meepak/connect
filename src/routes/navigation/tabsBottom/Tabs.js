@@ -1,13 +1,11 @@
 import React from 'react'
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { View } from 'react-native'
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { useTheme, Badge } from 'react-native-paper'
+import { useTheme } from 'react-native-paper'
 // stack navigators
 import FindStack from '../stacks/FindStack'
 import ManageStack from '../stacks/ManageStack'
-import ConnectStack from '../stacks/ConnectStack'
+import ChatStack from '../stacks/ChatStack'
 
 const Tab = createMaterialBottomTabNavigator()
 
@@ -61,20 +59,12 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="ConnectTab"
-        component={ConnectStack}
+        name="ChatTab"
+        component={ChatStack}
         options={{
-          tabBarLabel: 'Notifications',
+          tabBarLabel: 'Chat',
           tabBarIcon: () => (
-            <View>
-              <Icon name="bell" color={colors.onSurface} size={size} />
-              <Badge
-                size={16}
-                style={{ position: 'absolute', top: 0, left: 20 }}
-              >
-                3
-              </Badge>
-            </View>
+            <Icon name="comment-processing-outline" color={colors.onSurface} size={size} />
           ),
         }}
       />
