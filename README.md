@@ -194,3 +194,16 @@ Match all founders with all associates
 
 Test ability to send connection request
 Test ability to chat one to one
+
+
+Revised potential matches
+
+/potential_matches
+  /$user_id_of_this_matches
+    /user_id_of_potential_match
+        /match_score
+        /profile_viewed
+        /check_later
+        /not_interested
+
+/similar_founders??

@@ -11,7 +11,7 @@ import {
   EmailAuthProvider,
   reauthenticateWithCredential,
 } from 'firebase/auth'
-import { doc, updateDoc } from 'firebase/firestore'
+import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { firestore, auth } from '../../firebase'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/core/Button'
@@ -77,6 +77,7 @@ export default function Edit() {
         phone,
         isOnboarded,
         avatar: avatar ?? null,
+        updatedAt: serverTimestamp(),
       }
       const usersRef = doc(firestore, 'users', userData.id)
       await updateDoc(usersRef, data)
