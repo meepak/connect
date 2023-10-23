@@ -11,23 +11,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { firebaseKey } from '../config'
 
 const app = initializeApp(firebaseKey)
-// const app = initializeApp({projectId: 'connect-411'})
 
-// const auth = initializeAuth(app, {
-//   persistence: getReactNativePersistence(AsyncStorage),
-// })
-// const firestore = initializeFirestore(app, {
-//   experimentalAutoDetectLongPolling: true,
-// })
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage),
+})
+const firestore = initializeFirestore(app, {
+  experimentalAutoDetectLongPolling: true,
+})
+
+// const auth = getAuth(app)
+// const authUrl = 'http://127.0.0.1:9099'
+// connectAuthEmulator(auth, authUrl)
+// const firestore = getFirestore(app)
+
 const storage = getStorage(app)
 
-const auth = getAuth(app)
-const firestore = getFirestore(app)
-
-
-const authUrl = 'http://192.168.16.47:9099'
-connectAuthEmulator(auth, authUrl)
-connectFirestoreEmulator(firestore, 'localhost', 8088)
-connectStorageEmulator(storage, 'locahost', 9199)
+// connectFirestoreEmulator(firestore, 'dev.local', 8089)
+// connectStorageEmulator(storage, 'dev.local', 9199)
 
 export { auth, firestore, storage }

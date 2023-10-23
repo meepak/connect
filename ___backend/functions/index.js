@@ -1,66 +1,113 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable max-len */
-/**
- * Connect-411 Function to assign match scores to users
- */
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/no-unresolved */
 
-// [START all]
-// [START import]
-// const { logger } = require("firebase-functions")
-// const { onRequest } = require("firebase-functions/v2/https")
-const functions = require("firebase-functions")
+
+// The Cloud Functions for Firebase SDK to create Cloud Functions and triggers.
+const { logger } = require("firebase-functions")
+const { onDocumentUpdated } = require("firebase-functions/v2/firestore")
+
 // The Firebase Admin SDK to access Firestore.
-const { admin } = require("firebase-admin")
-// [END import]
+const { initializeApp } = require("firebase-admin/app")
+const { getFirestore } = require("firebase-admin/firestore")
 
-admin.initializeApp()
-const db = admin.firestore()
-const fn = functions.firestore()
 
+initializeApp()
+
+/*
+* TODO: 1. If user updates this part of their profile too often,
+           do not trigger the update for every udpate, probably throttle for every 30 mins or so
+        2. Probably putting userID as field name isn't a great idea,
+           This doesn't give mechanism to track, potential match -> request sent -> connected...
+/potential_matches
+  /$user_id_of_this_matches
+    /user_id_of_potential_match
+        /match_score
+        /profile_viewed
+        /check_later
+        /not_interested
+*
+*/
 // Listens for users info updated to /users/:userId
 // and calculates the match score of this user against all other users
-exports.calculateMatchScores = fn.onDocumentUpdated("/users/{userId}", (event) => {
-  // Grab the current value of what was written to Firestore.
-  const user = event.data.data()
+exports.calculateMatchScores = onDocumentUpdated("/users/{userId}", (event) => {
+// Grab the current value of what was written to Firestore.
+
+  // Log the response
+  logger.log("Hello! I am goint to update the match scores for user:", event.params.userId)
+  const user = event.data.after.data()
 
   if (!user || !user.whoAmI) {
     return null // User type or data not available, exit
   }
 
   const oppositeUserType = (user.whoAmI === "founder") ? "associate" : "founder"
-  const oppositeUsersRef = db.ref("/users")
-      .orderByChild("whoAmI")
-      .equalTo(oppositeUserType)
-      // .orderByChild("updatedAt")
+
+  logger.log("Search for user type: ", oppositeUserType)
+
 
   // Calculate the match score of this user against all opposite users
   // and store the results in a temporary variable
-  const matchScores = {}
 
-  return oppositeUsersRef.once("value").then((snapshot) => {
-    const oppositeUsers = snapshot.val()
+  const matchScoresPromise = getFirestore()
+      .collection("/users")
+      .where("whoAmI", "==", oppositeUserType)
+      // .orderBy("updatedAt", "desc") // To be enabled later
+      .get()
+      .then((querySnapshot) => {
+        const matchScores = []
+        querySnapshot.forEach((doc) => {
+          // logger.log(`Found document at ${doc.ref.path}`)
+          const oppositeUser = doc.data()
+          const matchingScore = calculateMatchScore(user, oppositeUser) // Calculate the matching score here
+          matchScores[oppositeUser.id] = matchingScore
+        })
 
-    if (!oppositeUsers) {
-      return null
-    }
+        return { ...matchScores }
+      })
+      .catch((error) => {
+        logger.error("Error getting matching users:", error)
+      })
 
-    Object.keys(oppositeUsers).forEach((oppositeUserId) => {
-      const oppositeUser = oppositeUsers[oppositeUserId]
-      const matchingScore = calculateMatchScore(user, oppositeUser)
-      matchScores[oppositeUserId] = matchingScore
-    })
+  if (matchScoresPromise === null) {
+    return null
+  }
 
-    // Trigger the function that will update the match scores in batches
-    return db.collection("matchScores").doc(user.id).set(matchScores)
-  })
+  return matchScoresPromise
+      .then((matchScores) => {
+        let matchScoresJson
+
+        try {
+          matchScoresJson = JSON.parse(JSON.stringify(matchScores))
+        } catch (error) {
+          // If matchScores is not a valid JSON object, log an error and return null
+          const message = { error, matchScores, matchScoresJson }
+          logger.error("matchScores is not a valid JSON object:", message)
+          return null
+        }
+
+        const matchScoresRef = getFirestore()
+            .collection("matchScores")
+            .doc(user.id)
+
+        return getFirestore()
+            .batch()
+            .set(matchScoresRef, matchScoresJson)
+            .commit()
+      })
+      .catch((error) => {
+        logger.error("Error saving match scores:", error)
+      })
 })
+
 
 /**
  * Updates the match scores for all opposite users in batches.
 
  * @param {string} userId The ID of the user whose match scores to update.
  */
-// exports.updateMatchScores = fn.onDocumentUpdated("/matchScores/{userId}", async (event) => {
+// exports.updateMatchScores = onDocumentUpdated("/matchScores/{userId}", async (event) => {
 //   // extract the user ID from the event params
 //   const { userId } = event.params
 //   // Get the match scores for this user
@@ -77,8 +124,6 @@ exports.calculateMatchScores = fn.onDocumentUpdated("/users/{userId}", (event) =
 //   await batch.commit()
 // })
 
-
-// [START calculateMatchScore]
 /**
  * Calculate the match score of currentUser with user
  *
@@ -93,6 +138,3 @@ function calculateMatchScore(currentUser, user) {
   // For example, compare industries, businessStage, and other preferences
   return score
 }
-// [END calculateMatchScore]
-
-// [END all]
