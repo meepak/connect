@@ -12,7 +12,7 @@ const Stack = createStackNavigator()
 const OnboardingStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: true }}>
     <Stack.Screen
-      name="Back"
+      name="Onboarding"
       component={Onboarding}
       options={(/* { navigation } */) => ({
         // headerBackground: () => <HeaderStyle />,

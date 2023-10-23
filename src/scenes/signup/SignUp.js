@@ -4,7 +4,7 @@ import {
 } from 'react-native'
 import { Text } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { setDoc, doc } from 'firebase/firestore'
+import { setDoc, doc, serverTimestamp } from 'firebase/firestore'
 import Spinner from 'react-native-loading-spinner-overlay'
 import { useNavigation } from '@react-navigation/native'
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
@@ -89,6 +89,7 @@ export default function SignUp() {
         id: user.uid,
         email,
         fullName,
+        createdAt: serverTimestamp(),
         // avatar: null, // do not assign default avatar,
       }
       const usersRef = doc(firestore, 'users', user.uid)

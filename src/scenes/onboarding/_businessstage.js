@@ -18,7 +18,7 @@ const businessStages = [
 ]
 
 const SelectBusinessStage = ({
-  onBusinessStageChanged, question, allSelect,
+  onBusinessStageChanged, question, allSelect, initialValues,
 }) => (
   <Surface style={styles.card}>
 
@@ -36,7 +36,7 @@ const SelectBusinessStage = ({
           id: index + 1,
           text: stage,
           value: stage,
-          checked: '',
+          checked: initialValues?.includes(stage),
         }))}
         maxSelect={businessStages.length}
         onChecked={(value) => {
@@ -52,7 +52,7 @@ const SelectBusinessStage = ({
           id: index + 1,
           text: stage,
           value: stage,
-          checked: '',
+          checked: initialValues === stage,
         }))}
         onChecked={(value) => {
           onBusinessStageChanged(value)
@@ -67,11 +67,13 @@ SelectBusinessStage.propTypes = {
   question: PropTypes.string,
   allSelect: PropTypes.bool,
   onBusinessStageChanged: PropTypes.func.isRequired,
+  initialValues: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
 }
 
 SelectBusinessStage.defaultProps = {
   question: null,
   allSelect: false,
+  initialValues: null,
 }
 
 export default SelectBusinessStage

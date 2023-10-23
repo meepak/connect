@@ -8,7 +8,7 @@ import RadioButtonGroup from '../../components/core/RadioButtonGroup'
 import styles from './styles'
 
 const WhoAmI = ({
-  onWhoAmIChanged,
+  onWhoAmIChanged, initialValue,
 }) => (
   <Surface style={styles.card}>
 
@@ -23,13 +23,13 @@ const WhoAmI = ({
           id: 1,
           text: 'I am a founder, looking for associates',
           value: 'founder',
-          checked: false,
+          checked: initialValue === 'founder',
         },
         {
           id: 2,
           text: 'I want to be an associate of a business',
           value: 'associate',
-          checked: false,
+          checked: initialValue === 'associate',
         },
       ]}
       // textColor={colorScheme.text} // TODO: Move textColor within component (decide from there)
@@ -42,6 +42,11 @@ const WhoAmI = ({
 
 WhoAmI.propTypes = {
   onWhoAmIChanged: PropTypes.func.isRequired,
+  initialValue: PropTypes.string,
+}
+
+WhoAmI.defaultProps = {
+  initialValue: '',
 }
 
 export default WhoAmI

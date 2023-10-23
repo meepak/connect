@@ -18,7 +18,7 @@ const educationLevels = [
 ]
 
 const SelectEducation = ({
-  onEducationChanged, question,
+  onEducationChanged, question, initialValue,
 }) => (
   <Surface style={styles.card}>
 
@@ -34,7 +34,7 @@ const SelectEducation = ({
         id: index + 1,
         text: stage,
         value: stage,
-        checked: '',
+        checked: initialValue === stage,
       }))}
       onChecked={(value) => {
         onEducationChanged(value)
@@ -46,10 +46,12 @@ const SelectEducation = ({
 SelectEducation.propTypes = {
   question: PropTypes.string,
   onEducationChanged: PropTypes.func.isRequired,
+  initialValue: PropTypes.string,
 }
 
 SelectEducation.defaultProps = {
   question: null,
+  initialValue: '',
 }
 
 export default SelectEducation

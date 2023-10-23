@@ -9,7 +9,7 @@ import styles from './styles'
 const CommunicationPreferences = ['Chat', 'Email', 'Phone call', 'Online meeting', 'In-person meeting']
 
 const SelectCommunicationPreference = ({
-  onCommunicationPreferenceChanged,
+  onCommunicationPreferenceChanged, initialValues,
 }) => (
   <Surface style={styles.card}>
     <Text style={styles.question}>
@@ -21,12 +21,11 @@ const SelectCommunicationPreference = ({
         id: index + 1,
         text: industry,
         value: industry,
-        checked: '',
+        checked: initialValues.includes(industry),
       }))}
       maxSelect={CommunicationPreferences.length}
       onChecked={(value) => {
         onCommunicationPreferenceChanged(value)
-        console.log(value)
       }}
       reverse
     />
@@ -35,6 +34,11 @@ const SelectCommunicationPreference = ({
 
 SelectCommunicationPreference.propTypes = {
   onCommunicationPreferenceChanged: PropTypes.func.isRequired,
+  initialValues: PropTypes.arrayOf(PropTypes.string),
+}
+
+SelectCommunicationPreference.defaultProps = {
+  initialValues: [],
 }
 
 export default SelectCommunicationPreference

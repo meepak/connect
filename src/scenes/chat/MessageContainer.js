@@ -13,7 +13,7 @@ export const renderAvatar = (props, colors) => (
   />
 )
 
-export const renderBubble = (props, colors) => (
+export const renderBubble = (props) => (
   <Bubble
     {...props}
     // renderTime={() => <Text>Time</Text>}
@@ -43,7 +43,7 @@ export const renderBubble = (props, colors) => (
   />
 )
 
-export const renderSystemMessage = (props, colors) => (
+export const renderSystemMessage = (props) => (
   <SystemMessage
     {...props}
     containerStyle={{ backgroundColor: 'pink' }}
@@ -52,7 +52,7 @@ export const renderSystemMessage = (props, colors) => (
   />
 )
 
-export const renderMessage = (props, colors) => (
+export const renderMessage = (props) => (
   <Message
     {...props}
     // renderDay={() => <Text>Date</Text>}
@@ -63,7 +63,7 @@ export const renderMessage = (props, colors) => (
   />
 )
 
-export const renderMessageText = (props, colors) => (
+export const renderMessageText = (props) => (
   <MessageText
     {...props}
     containerStyle={{
@@ -82,7 +82,7 @@ export const renderMessageText = (props, colors) => (
   />
 )
 
-export const renderCustomView = ({ user, colors }) => (
+export const renderCustomView = ({ user }) => (
   <View style={{ minHeight: 20, alignItems: 'center' }}>
     <Text>
       Current user:

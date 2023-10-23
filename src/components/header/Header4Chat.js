@@ -45,10 +45,10 @@ export default function Header4Chat() {
   })
 
   const openManageChat = () => {
-    console.log('Lets go to chat')
+    // console.log('Lets go to chat')
   }
 
-  // console.log(route)
+  console.log(`current user id is -- use this to fetch more user info or save to db?? ${userId}`)
 
   return (
     <View style={styles.header}>

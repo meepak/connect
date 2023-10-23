@@ -10,9 +10,9 @@ import { colors } from '../../theme'
 import styles from './styles'
 
 const SelectOccupations = ({
-  onOccupationsSelected, question, maxSelect,
+  onOccupationsSelected, question, maxSelect, initialValues,
 }) => {
-  const [Occupations, setOccupations] = useState([])
+  const [Occupations, setOccupations] = useState(initialValues)
   const navigation = useNavigation()
 
   useEffect(() => {
@@ -58,11 +58,13 @@ SelectOccupations.propTypes = {
   question: PropTypes.string,
   maxSelect: PropTypes.number,
   onOccupationsSelected: PropTypes.func.isRequired,
+  initialValues: PropTypes.arrayOf(PropTypes.string),
 }
 
 SelectOccupations.defaultProps = {
   question: null,
   maxSelect: 5,
+  initialValues: [],
 }
 
 export default SelectOccupations

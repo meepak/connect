@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, // useRef,
+  useState, // useRef,
 } from 'react'
 import {
   Alert, View, StyleSheet, LogBox,
@@ -61,9 +61,9 @@ export default function Login() {
     Alert.alert('Info', 'Email verification link sent.')
   }
 
-  useEffect(() => {
-    console.log('Login screen')
-  }, [])
+  // useEffect(() => {
+  //   console.log('Login screen')
+  // }, [])
 
   const onLoginPress = async () => {
     try {
@@ -75,12 +75,12 @@ export default function Login() {
       }
 
       if (emailError !== '') {
-        console.log(email)
+        // console.log(email)
         if (isValidEmail(email)) {
-          console.log('email is valid')
+          // console.log('email is valid')
           setEmailError('')
         } else {
-          console.log('email is IN valid')
+          // console.log('email is IN valid')
           return
         }
       }
@@ -96,7 +96,7 @@ export default function Login() {
       const { user } = response
       const usersRef = doc(firestore, 'users', user.uid)
       const firestoreDocument = await getDoc(usersRef)
-      console.log(firestoreDocument)
+      // console.log(firestoreDocument)
       /*
       {"_converter": null, "_document": null, "_firestore": {"app": [FirebaseAppImpl], "databaseId": [Dt], "settings": [lc]},
       "_firestoreImpl": {"app": [FirebaseAppImpl], "databaseId": [Dt], "settings": [lc]},
@@ -151,7 +151,7 @@ export default function Login() {
           keyboardType="email-address"
           errorMessage={emailError}
           onEndEditing={() => {
-            console.log('blurred email')
+            // console.log('blurred email')
             let error = ''
             if (email !== '') {
               error = isValidEmail(email) ? '' : 'Invalid E-mail'
@@ -169,7 +169,7 @@ export default function Login() {
           autoCapitalize="none"
           errorMessage={passwordError}
           onEndEditing={() => {
-            console.log('blurred password')
+            // console.log('blurred password')
             if (password !== '') {
               setPasswordError('')
             }

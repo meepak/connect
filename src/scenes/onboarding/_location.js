@@ -11,9 +11,9 @@ import styles from './styles'
 
 // TODO -- geolocation autocomplete
 const SelectLocation = ({
-  onBusinessLocationChanged, question,
+  onBusinessLocationChanged, question, initialValue,
 }) => {
-  const [selectedAddress, setSelectedAddress] = useState('')
+  const [selectedAddress, setSelectedAddress] = useState(initialValue)
   const navigation = useNavigation()
 
   return (
@@ -47,10 +47,12 @@ const SelectLocation = ({
 SelectLocation.propTypes = {
   question: PropTypes.string,
   onBusinessLocationChanged: PropTypes.func.isRequired,
+  initialValue: PropTypes.string,
 }
 
 SelectLocation.defaultProps = {
   question: null,
+  initialValue: '',
 }
 
 export default SelectLocation

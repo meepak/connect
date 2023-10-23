@@ -1,28 +1,27 @@
-import React, { useState, useEffect, useContext } from 'react'
-import {
-  Alert, View, StyleSheet, Platform
-} from 'react-native'
+import React, { useState, useContext } from 'react'
+import { Alert, View, StyleSheet } from 'react-native'
 import {
   Text, useTheme,
 } from 'react-native-paper'
-import { doc, updateDoc } from 'firebase/firestore'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation } from '@react-navigation/native'
+import Spinner from 'react-native-loading-spinner-overlay'
 import {
   updatePassword,
   EmailAuthProvider,
   reauthenticateWithCredential,
 } from 'firebase/auth'
-import Spinner from 'react-native-loading-spinner-overlay'
+import { doc, updateDoc } from 'firebase/firestore'
+import { firestore, auth } from '../../firebase'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/core/Button'
 import TextInputBox from '../../components/core/TextInputBox'
 import Checkbox from '../../components/core/Checkbox'
-import { firestore, auth } from '../../firebase'
 import { fontSize } from '../../theme'
 import { UserDataContext } from '../../context/UserDataContext'
 import { showToast } from '../../utils/ShowToast'
 import AvatarOfAuthUser from '../../components/AvatarOfAuthUser'
+// import mergeJsonObjects from '../../utils/functions'
 
 const styles = StyleSheet.create({
   progress: {
@@ -63,28 +62,34 @@ export default function Edit() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [spinner, setSpinner] = useState(false)
 
-  useEffect(() => {
-    console.log('Edit screen')
-  }, [])
+  // useEffect(() => {
+  //   console.log('Edit screen')
+  // }, [])
 
   const profileUpdate = async () => {
     try {
+      console.log('PROFILE UPDATING********************************')
       setSpinner(true)
       const data = {
         id: userData.id,
         email: userData.email,
         fullName,
-        avatar: avatar ?? null,
         phone,
         isOnboarded,
+        avatar: avatar ?? null,
       }
       const usersRef = doc(firestore, 'users', userData.id)
       await updateDoc(usersRef, data)
-      navigation.goBack()
+      // const updatedUserData = mergeJsonObjects(userData, data)
+      // setUserData(updatedUserData)
       setSpinner(false)
+      if (isOnboarded) {
+        // we don't want goBack to trigger at onboarding screen
+        navigation.goBack()
+      }
     } catch (e) {
       setSpinner(false)
-      Alert.alert('Error', e.message)
+      Alert.alert('Error at profile update', e.message)
     }
   }
 

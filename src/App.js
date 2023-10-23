@@ -14,7 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
-import * as SystemUI from 'expo-system-ui';
+import * as SystemUI from 'expo-system-ui'
 
 import { UserDataContextProvider } from './context/UserDataContext'
 
