@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 const LoadingScreen = () => {
   const animation = useRef(null)
   const { colors } = useTheme()
-
+  console.log('LoadingScreen.js -- LoadingScreen called')
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LottieView

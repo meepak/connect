@@ -9,7 +9,7 @@ import styles from './styles'
 const operationModes = ['Investor', 'Active partner', 'Advisory partner']
 
 const SelectPartnerTypes = ({
-  onPartnerTypesChanged, question,
+  onPartnerTypesChanged, question, initialValues,
 }) => (
   <Surface style={styles.card}>
     <Text style={styles.question}>
@@ -24,12 +24,11 @@ const SelectPartnerTypes = ({
         id: index + 1,
         text: item,
         value: item,
-        checked: '',
+        checked: initialValues.includes(item),
       }))}
       // textColor={colorScheme.text} // TODO: Move textColor within component (decide from there)
       onChecked={(value) => {
         if (onPartnerTypesChanged) onPartnerTypesChanged(value)
-        console.log(value)
       }}
       maxSelect={operationModes.length}
     />
@@ -39,10 +38,12 @@ const SelectPartnerTypes = ({
 SelectPartnerTypes.propTypes = {
   question: PropTypes.string,
   onPartnerTypesChanged: PropTypes.func.isRequired,
+  initialValues: PropTypes.arrayOf(PropTypes.string),
 }
 
 SelectPartnerTypes.defaultProps = {
   question: null,
+  initialValues: [],
 }
 
 export default SelectPartnerTypes

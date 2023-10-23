@@ -1,11 +1,10 @@
 import React, {
-  useState, useEffect, useContext, // useRef,
+  useState, useContext, useLayoutEffect, // useRef,
 } from 'react'
 import {
   Alert,
 } from 'react-native'
-import { doc, updateDoc } from 'firebase/firestore'
-// import { Avatar } from '@rneui/themed'
+import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Spinner from 'react-native-loading-spinner-overlay'
 import ScreenTemplate from '../../components/ScreenTemplate'
@@ -29,40 +28,65 @@ import SelectYesNo from './_yesno'
 
 import styles from './styles'
 
+// import mergeJsonObjects from '../../utils/functions'
+
 export default function Onboarding() {
   const { userData } = useContext(UserDataContext)
-  // const route = useRoute()
-  // const scheme = useColorScheme()
+
   const [avatar, setAvatar] = useState(userData.avatar)
-  const [whoAmI, setWhoAmI] = useState()
   const [fullName] = useState(userData.fullName)
   const [phone] = useState(userData.phone ?? '')
   const [spinner, setSpinner] = useState(false)
-  // const block1 = useRef(null)
-  // const isDark = scheme === 'dark'
-  // const colorScheme = {
-  //   text: isDark ? colors.white : colors.primaryText,
-  //   progress: isDark ? styles.darkprogress : styles.progress,
-  // }
+  // Onboarding data
+  const [whoAmI, setWhoAmI] = useState(userData.whoAmI ?? '')
+  const [industries, setIndustries] = useState(userData.industries ?? [])
+  const [businessStage, setBusinessStage] = useState(userData.businessStage ?? '')
+  const [operationMode, setOperationMode] = useState(userData.operationMode ?? '')
+  const [location, setLocation] = useState(userData.location ?? '')
+  const [workArrangementPreference, setWorkArrangementPreference] = useState(userData.workArrangementPreference ?? '')
+  const [communicationPreference, setCommunicationPreference] = useState(userData.communicationPreference ?? '')
+  const [partnerTypes, setPartnerTypes] = useState(userData.partnerTypes ?? [])
+  const [education, setEducation] = useState(userData.education ?? [])
+  const [occupations, setOccupations] = useState(userData.occupations ?? [])
+  const [ndaSign, setNdaSign] = useState(userData.ndaSign ?? '')
+  const [requireBackgroundCheck, setRequireBackgroundCheck] = useState(userData.requireBackgroundCheck ?? '')
+  const [agreesBackgroundCheck, setAgreesBackgroundCheck] = useState(userData.agreesBackgroundCheck ?? '')
 
-  useEffect(() => {
-    console.log('Edit screen')
+  useLayoutEffect(() => {
+    console.log('ONBOARDING--------------------------------')
   }, [])
 
   const profileUpdate = async () => {
     setSpinner(true)
-
     try {
       const data = {
         id: userData.id,
         fullName,
         avatar: avatar ?? null,
         phone,
+        email: userData.email,
         isOnboarded: !userData.isOnboarded,
+        whoAmI,
+        industries,
+        businessStage,
+        operationMode,
+        location,
+        workArrangementPreference,
+        communicationPreference,
+        partnerTypes,
+        education,
+        occupations,
+        ndaSign,
+        requireBackgroundCheck,
+        agreesBackgroundCheck,
+        updatedAt: serverTimestamp(),
       }
       const usersRef = doc(firestore, 'users', userData.id)
       await updateDoc(usersRef, data)
-      console.log(userData)
+      // const updatedUserData = mergeJsonObjects(userData, data)
+      // setUserData(updatedUserData)
+      // console.log('Updated User Data')
+      // console.log(updatedUserData)
     } catch (e) {
       // TODO: navigate to error screen, log errors for later debugging
       Alert.alert('Error', e.message)
@@ -85,6 +109,7 @@ export default function Onboarding() {
 
         <WhoAmI
           onWhoAmIChanged={(item) => setWhoAmI(item)}
+          initialValue={userData.whoAmI}
         />
 
         {whoAmI === 'founder'
@@ -92,56 +117,68 @@ export default function Onboarding() {
             <>
               <SelectIndustries
                 maxSelect={3}
+                initialValues={userData.industries}
                 onChecked={(values) => {
-                  console.log(values)
+                  setIndustries(values)
                 }}
               />
 
               <SelectBusinessStage
-                onBusinessStageChanged={(item) => { console.log(item) }}
+                initialValues={userData.businessStage}
+                onBusinessStageChanged={(item) => { setBusinessStage(item) }}
               />
 
               <SelectOperationMode
-                onBusinessOperationModeChanged={(item) => { console.log(item) }}
+                initialValue={userData.operationMode}
+                onBusinessOperationModeChanged={(item) => { setOperationMode(item) }}
               />
 
               <SelectLocation
-                onBusinessLocationChanged={(item) => { console.log(`selected business location - ${item}`) }}
+                initialValue={userData.location}
+                onBusinessLocationChanged={(item) => { setLocation(item) }}
               />
 
               <SelectWorkArrangementPreference
-                onWorkArrangementPreferenceChanged={(item) => { console.log(item) }}
+                initialValue={userData.workArrangementPreference}
+                onWorkArrangementPreferenceChanged={(item) => { setWorkArrangementPreference(item) }}
               />
 
               <SelectCommunicationPreference
-                onCommunicationPreferenceChanged={(item) => { console.log(item) }}
+                initialValues={userData.communicationPreference}
+                onCommunicationPreferenceChanged={(item) => { setCommunicationPreference(item) }}
               />
 
               <SelectPartnerTypes
-                onPartnerTypesChanged={(item) => { console.log(item) }}
+                initialValues={userData.partnerTypes}
+                onPartnerTypesChanged={(item) => { setPartnerTypes(item) }}
               />
 
               <SelectOccupations
+                initialValues={userData.occupations}
                 question="Do you have any preferences on occupational skills background of your partner?"
-                onOccupationsSelected={(items) => { console.log(`selected occupation - ${JSON.stringify(items)}`) }}
+                onOccupationsSelected={(items) => { setOccupations(items) }}
               />
 
               <SelectEducation
-                onEducationChanged={(item) => { console.log(item) }}
+                initialValue={userData.education}
+                onEducationChanged={(item) => { setEducation(item) }}
               />
 
               <SelectYesNo
-                OnYesNoSelected={(item) => { console.log(item) }}
+                initialValue={userData.ndaSign}
+                OnYesNoSelected={(item) => { setNdaSign(item) }}
                 question="Will you ask to sign NDA?"
               />
 
               <SelectYesNo
-                OnYesNoSelected={(item) => { console.log(item) }}
+                initialValue={userData.requireBackgroundCheck}
+                OnYesNoSelected={(item) => { setRequireBackgroundCheck(item) }}
                 question="Will you ask for references & background check?"
               />
 
               <SelectYesNo
-                OnYesNoSelected={(item) => { console.log(item) }}
+                initialValue={userData.agreesBackgroundCheck}
+                OnYesNoSelected={(item) => { setAgreesBackgroundCheck(item) }}
                 question="If requested, will you provide references & consent to background check?"
               />
 
@@ -153,60 +190,71 @@ export default function Onboarding() {
             <>
               <SelectIndustries
                 maxSelect={5}
+                initialValues={userData.industries}
                 question="Select up to 5 industries you are interested in."
                 onChecked={(values) => {
-                  console.log(values)
+                  setIndustries(values)
                 }}
               />
 
               <SelectBusinessStage
                 allSelect
+                initialValues={userData.businessStage}
                 question="What stage of business are you most interested in?"
-                onBusinessStageChanged={(item) => { console.log(item) }}
+                onBusinessStageChanged={(item) => { setBusinessStage(item) }}
               />
 
               <SelectOperationMode
+                initialValue={userData.operationMode}
                 question="Do you prefer business that operates online and/or offline?"
-                onBusinessOperationModeChanged={(item) => { console.log(item) }}
+                onBusinessOperationModeChanged={(item) => { setOperationMode(item) }}
               />
 
               <SelectPartnerTypes
+                initialValues={userData.partnerTypes}
                 question="What kind of role are you looking to take on?"
-                onPartnerTypesChanged={(item) => { console.log(item) }}
+                onPartnerTypesChanged={(item) => { setPartnerTypes(item) }}
               />
 
               <SelectWorkArrangementPreference
-                onWorkArrangementPreferenceChanged={(item) => { console.log(item) }}
+                initialValue={userData.workArrangementPreference}
+                onWorkArrangementPreferenceChanged={(item) => { setWorkArrangementPreference(item) }}
               />
 
               <SelectLocation
+                initialValue={userData.location}
                 question="Do you have specific preference on business location? If so, select city/country."
-                onBusinessLocationChanged={(item) => { console.log(`selected business location - ${item}`) }}
+                onBusinessLocationChanged={(item) => { setLocation(item) }}
               />
 
               <SelectOccupations
+                initialValues={userData.occupations}
                 question="Select your occupational skills background."
                 maxSelect={5}
-                onOccupationsSelected={(items) => { console.log(`selected occupation - ${JSON.stringify(items)}`) }}
+                onOccupationsSelected={(items) => { setOccupations(items) }}
               />
 
               <SelectEducation
+                initialValue={userData.education}
                 question="What is your highest educational qualification?"
-                onEducationChanged={(item) => { console.log(item) }}
+                onEducationChanged={(item) => { setEducation(item) }}
               />
 
               <SelectYesNo
-                OnYesNoSelected={(item) => { console.log(item) }}
+                initialValue={userData.requireBackgroundCheck}
+                OnYesNoSelected={(item) => { setRequireBackgroundCheck(item) }}
                 question="Will you ask for references & background check?"
               />
 
               <SelectYesNo
-                OnYesNoSelected={(item) => { console.log(item) }}
+                initialValue={userData.ndaSign}
+                OnYesNoSelected={(item) => { setNdaSign(item) }}
                 question="If requested, will you sign NDA?"
               />
 
               <SelectYesNo
-                OnYesNoSelected={(item) => { console.log(item) }}
+                initialValue={userData.agreesBackgroundCheck}
+                OnYesNoSelected={(item) => { setAgreesBackgroundCheck(item) }}
                 question="If requested, will you provide references & consent to background check?"
               />
 

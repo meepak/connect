@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useLayoutEffect, useContext } from 'react'
 import {
   Alert,
 } from 'react-native'
@@ -24,26 +24,45 @@ export default function Initial() {
   const [, setLoggedIn] = useAtom(loggedInAtom)
   const { setUserData } = useContext(UserDataContext)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onAuthStateChanged(auth, (user) => {
+      console.log('Initial.js -- Auth state changed')
       if (user) {
+        console.log('Initial.js -- received user data')
         if (!user.emailVerified) {
           Alert.alert('Error', 'Email verification required.') // To Do handle more gracefully
         }
         const usersRef = doc(firestore, 'users', user.uid)
-        onSnapshot(usersRef, (querySnapshot) => {
-          const userData = querySnapshot.data()
-          setUserData(userData)
-          setLoggedIn(true)
-          setChecked(true)
+        const unsubscribe = onSnapshot(usersRef, (querySnapshot) => {
+          // console.log('Initial.js -- snapshot fired', querySnapshot)
+          const newUserData = querySnapshot.data()
+          // console.log(userData)
+          if (newUserData !== setUserData) {
+            setUserData(newUserData)
+          }
+          if (auth.currentUser) {
+            setLoggedIn(true)
+            setChecked(true)
+          }
+
+          // lets just wait and see
+          // console.log('Initial.js -- Set User Data called')
+          // console.log('Initial.js -- loggin querysnapshot after set user data', querySnapshot)
         })
-      } else {
-        setLoggedIn(false)
-        setChecked(true) // TO DO, get rid of set checked and just use logged in flag or user data context
+
+        return () => {
+          console.log('Initial.js -- Unsubscribe')
+          // Unsubscribe when the component is unmounted
+          unsubscribe()
+        }
       }
+      setLoggedIn(false)
+      setChecked(true) // TO DO, get rid of set checked and just use logged in flag or user data context
+      return () => {} // just to satisfy eslint
     })
   }, [])
 
+  console.log('Initial.js -- Returning Loading Screen')
   return (
     <LoadingScreen />
   )

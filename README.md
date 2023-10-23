@@ -122,20 +122,24 @@ Let's just use hardcoded score for each question as above
 
 /users
   /$user_id
-    /basic_profile
-      /name
-      /email
-      /phone_number
-  /public_profiles
+    /name
+    /email
+    /phone_number
     /avatar
     /banner
-    /industry
-    /occupation
-    /business_stage
-    /location
-    /education
-    /work_arrangement
-    /communication_preference
+    /whoAmI,
+    /industries,
+    /businessStage,
+    /operationMode,
+    /location,
+    /workArrangementPreference,
+    /communicationPreference,
+    /partnerTypes,
+    /education,
+    /occupations,
+    /ndaSign,
+    /requireBackgroundCheck,
+    /agreesBackgroundCheck,
     -
 /detailed_profiles
   /$user_id

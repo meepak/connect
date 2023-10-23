@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useContext } from 'react'
 import {
   ScrollView,
   StyleSheet,
@@ -54,9 +54,9 @@ export default function Detail() {
     setTitle(title)
   })
 
-  useEffect(() => {
-    console.log('Detail screen')
-  }, [])
+  // useEffect(() => {
+  //   console.log('Detail screen')
+  // }, [])
 
   return (
     <ScreenTemplate>

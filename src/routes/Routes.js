@@ -14,6 +14,7 @@ const Routes = () => {
 
   // rendering
   if (!checked) {
+    console.log('[Routes.js] not checked')
     return <Initial />
   }
 

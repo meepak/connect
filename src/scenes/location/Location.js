@@ -71,7 +71,7 @@ const SelectLocation = ({ route }) => {
   })
 
   const handleSelect = (selectedAddress) => {
-    // console.log(`closing screen, ${selectedAddress} has been selected.`)
+    console.log(`closing screen, ${selectedAddress} has been selected.`)
     route.params.onReturn(selectedAddress)
     navigation.goBack()
   }

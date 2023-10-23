@@ -9,7 +9,7 @@ import {
   // DrawerItemList,
 } from '@react-navigation/drawer'
 import {
-  Drawer, Divider, useTheme, IconButton,
+  Drawer, Divider, useTheme,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import AvatarOfAuthUser from '../../../components/AvatarOfAuthUser'
@@ -68,7 +68,7 @@ const DrawerMenu = (/* {navigation} */) => {
   }
 
   const openProfile = () => {
-    console.log('Lets go to profile')
+    // console.log('Lets go to profile')
     navigation.navigate('ProfileStack', {
       screen: 'Profile',
       params: { // userId, userFullName, userAvatar, userBannerImage,
@@ -128,7 +128,7 @@ const DrawerMenu = (/* {navigation} */) => {
           label="Settings"
           onPress={() => {
             // Handle sign-out logic here
-            console.log('lets not put signout at front screen')
+            // console.log('lets not put signout at front screen')
           }}
         />
       </Drawer.Section>

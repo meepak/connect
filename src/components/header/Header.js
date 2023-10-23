@@ -47,7 +47,7 @@ export default function Header() {
 
   const openNotification = () => {
     setTempNotificationSimulation(tempNotificationSimulation + 1)
-    console.log(`Lets go to notification window -- ${tempNotificationSimulation}`)
+    // console.log(`Lets go to notification window -- ${tempNotificationSimulation}`)
     navigation.navigate('NotificationStack', {
       screen: 'Connect',
     })

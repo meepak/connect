@@ -100,7 +100,7 @@ export default function Find() {
               rate="A$100/hr-A$110/hr"
               isPromoted
               onPress={() => {
-                console.log('going to profile')
+                // console.log('going to profile')
                 navigation.navigate('ProfileStack', {
                   screen: 'Profile',
                   params: {

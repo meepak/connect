@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
 import ScreenTemplate from '../../components/ScreenTemplate'
@@ -23,9 +23,9 @@ export default function Follower() {
   const { colors } = useTheme()
   const [visible, setVisible] = useState(false)
 
-  useEffect(() => {
-    console.log('Follower screen')
-  }, [])
+  // useEffect(() => {
+  //   console.log('Follower screen')
+  // }, [])
 
   const onDismissSnackBar = () => setVisible(false)
 

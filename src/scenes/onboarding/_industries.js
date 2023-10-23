@@ -20,7 +20,7 @@ const industries = [
 ]
 
 const SelectIndustries = ({
-  maxSelect, onChecked, question,
+  maxSelect, onChecked, question, initialValues,
 }) => (
   <Surface style={styles.card}>
     <Text style={styles.question}>
@@ -32,11 +32,12 @@ const SelectIndustries = ({
         id: index + 1,
         text: industry,
         value: industry,
-        checked: '',
+        checked: initialValues.includes(industry),
       }))}
       maxSelect={maxSelect}
       onChecked={onChecked || (() => {})}
       reverse
+      initialValues={initialValues}
     />
   </Surface>
 )
@@ -45,10 +46,12 @@ SelectIndustries.propTypes = {
   question: PropTypes.string,
   maxSelect: PropTypes.number.isRequired,
   onChecked: PropTypes.func.isRequired,
+  initialValues: PropTypes.arrayOf(PropTypes.string),
 }
 
 SelectIndustries.defaultProps = {
   question: null,
+  initialValues: [],
 }
 
 export default SelectIndustries

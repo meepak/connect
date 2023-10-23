@@ -53,9 +53,21 @@ export default function RadioButtonGroup(props) {
 
   const flexStyle = reverse ? { flexDirection: 'row-reverse', alignSelf: 'flex-start' } : { flexDirection: 'row' }
   return (
-    <RadioButton.Group style={styles.container} onValueChange={(newValue) => handleCheckChange(newValue)} value={value}>
+    <RadioButton.Group
+      style={styles.container}
+      onValueChange={(newValue) => handleCheckChange(newValue)}
+      value={value}
+    >
       {items.map((item) => (
-        <RadioButton.Item mode="android" key={item.id} style={[styles.row, flexStyle]} labelStyle={styles.labelStyle} label={item.text} value={item.value} />
+        <RadioButton.Item
+          mode="android"
+          key={item.id}
+          style={[styles.row, flexStyle]}
+          labelStyle={styles.labelStyle}
+          label={item.text}
+          value={item.value}
+          selected={item.checked}
+        />
       ))}
     </RadioButton.Group>
   )

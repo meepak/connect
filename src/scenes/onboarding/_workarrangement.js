@@ -6,9 +6,9 @@ import PropTypes from 'prop-types'
 import styles from './styles'
 
 const SelectWorkArrangementPreference = ({
-  onWorkArrangementPreferenceChanged,
+  onWorkArrangementPreferenceChanged, initialValue,
 }) => {
-  const [answer, setAnswer] = useState()
+  const [answer, setAnswer] = useState(initialValue)
 
   return (
     <Surface style={styles.card}>
@@ -46,6 +46,11 @@ const SelectWorkArrangementPreference = ({
 
 SelectWorkArrangementPreference.propTypes = {
   onWorkArrangementPreferenceChanged: PropTypes.func.isRequired,
+  initialValue: PropTypes.string,
+}
+
+SelectWorkArrangementPreference.defaultProps = {
+  initialValue: '',
 }
 
 export default SelectWorkArrangementPreference

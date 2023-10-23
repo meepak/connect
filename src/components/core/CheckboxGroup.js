@@ -8,7 +8,10 @@ export default function CheckboxGroup(props) {
     items, maxSelect, onChecked, reverse,
   } = props
 
-  const [checkedValues, setCheckedValues] = useState([])
+  // get array of item.value from items array where item.checked is true
+  const initialValues = items.filter((item) => item.checked && item.checked === true).map((item) => item.value)
+
+  const [checkedValues, setCheckedValues] = useState(initialValues)
 
   useEffect(() => {
     onChecked(checkedValues)
@@ -28,7 +31,7 @@ export default function CheckboxGroup(props) {
         <Checkbox
           key={item.id}
           label={item.text}
-          checked={checkedValues.includes(item.value)}
+          checked={item.checked}
           onChecked={(isChecked) => {
             if (checkedValues.length < maxSelect || checkedValues.includes(item.value)) {
               handleCheckboxChange(item.value, isChecked)

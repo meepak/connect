@@ -18,7 +18,7 @@ export default function Header4Notification() {
   })
 
   const openManageNotification = () => {
-    console.log("Let's go to Notification Management")
+    // console.log("Let's go to Notification Management")
   }
 
   return (

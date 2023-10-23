@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 import React, {
-  useState, useContext, useLayoutEffect, useCallback, useEffect,
+  useState, useContext, useLayoutEffect, useCallback,
 } from 'react'
-import { GiftedChat, Message } from 'react-native-gifted-chat'
-import { View, Platform, Text } from 'react-native'
+import { GiftedChat } from 'react-native-gifted-chat'
+import { View, Platform } from 'react-native'
 import {
-  collection, addDoc, query, orderBy, onSnapshot, limit,
+  collection, addDoc, query, orderBy, onSnapshot, // limit,
 } from 'firebase/firestore'
 import { useNavigation } from '@react-navigation/native'
 import { Divider, useTheme } from 'react-native-paper'
@@ -28,11 +28,11 @@ const Chat = () => {
   const navigation = useNavigation()
   const { colors, fonts } = useTheme() // Get colors and fonts from useTheme
   const { userData } = useContext(UserDataContext)
-  const [isLoading, setIsLoading] = useState(false)
+  // const [isLoading, setIsLoading] = useState(false)
 
   useLayoutEffect(() => {
-    //return
-    setIsLoading(true)
+    // return
+    // setIsLoading(true)
     const q = query(collection(firestore, 'chats'), orderBy('createdAt', 'desc')) // , limit(20))
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setMessages(
@@ -43,7 +43,7 @@ const Chat = () => {
           user: doc.data().user,
         })),
       )
-      setIsLoading(false)
+      // setIsLoading(false)
     })
     return () => {
       unsubscribe()
@@ -132,7 +132,7 @@ const Chat = () => {
         scrollToBottom
         // isTyping
       // bottomOffset={30}
-        onPressAvatar={console.log}
+        onPressAvatar={console.log('Avatar pressed')}
         renderInputToolbar={(props) => renderInputToolbar(props, colors)}
         renderActions={(props) => renderActions(props, colors)}
         renderComposer={(props) => renderComposer(props, colors)}

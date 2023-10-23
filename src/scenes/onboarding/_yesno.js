@@ -6,9 +6,9 @@ import PropTypes from 'prop-types'
 import styles from './styles'
 
 const SelectYesNo = ({
-  OnYesNoSelected, question,
+  OnYesNoSelected, question, initialValue,
 }) => {
-  const [answer, setAnswer] = useState()
+  const [answer, setAnswer] = useState(initialValue)
   return (
     <Surface style={styles.card}>
 
@@ -48,6 +48,11 @@ const SelectYesNo = ({
 SelectYesNo.propTypes = {
   question: PropTypes.string.isRequired,
   OnYesNoSelected: PropTypes.func.isRequired,
+  initialValue: PropTypes.string,
+}
+
+SelectYesNo.defaultProps = {
+  initialValue: null,
 }
 
 export default SelectYesNo

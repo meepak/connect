@@ -26,7 +26,7 @@ const Profile = () => {
   const {
     userId, userFullName, userAvatar, userBannerImage,
   } = route.params
-  const { userData, setUserData } = useContext(UserDataContext)
+  const { userData } = useContext(UserDataContext)
   const userDataId = userId || userData.id // temp
   const bannerImageHardCoded = { uri: 'https://images.pexels.com/photos/818261/pexels-photo-818261.jpeg?auto=compress&cs=tinysrgb&w=400' }
   const [bannerImage, setBannerImage] = useState(userBannerImage?.uri ? userBannerImage : bannerImageHardCoded)
@@ -49,7 +49,8 @@ const Profile = () => {
       // }
       const usersRef = doc(firestore, 'users', userData.id)
       updateDoc(usersRef, data).then(() => {
-        setUserData([...userData, data])
+        // const updatedUserData = mergeJsonObjects(userData, data)
+        // setUserData(updatedUserData)
       }).catch((error) => {
         Alert.alert('Error during profile update', error)
       })

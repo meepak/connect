@@ -6,10 +6,9 @@ import PropTypes from 'prop-types'
 import styles from './styles'
 
 const SelectOperationMode = ({
-  onBusinessOperationModeChanged, question,
+  onBusinessOperationModeChanged, question, initialValue,
 }) => {
-  const [answer, setAnswer] = useState()
-
+  const [answer, setAnswer] = useState(initialValue)
   return (
     <Surface style={styles.card}>
       <Text style={styles.question}>
@@ -48,10 +47,12 @@ const SelectOperationMode = ({
 SelectOperationMode.propTypes = {
   question: PropTypes.string,
   onBusinessOperationModeChanged: PropTypes.func.isRequired,
+  initialValue: PropTypes.string,
 }
 
 SelectOperationMode.defaultProps = {
   question: null,
+  initialValue: '',
 }
 
 export default SelectOperationMode

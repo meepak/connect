@@ -13,15 +13,16 @@ import DrawerNavigator from './drawer'
 export default function Navigation() {
   const { userData } = useContext(UserDataContext)
   const theme = useTheme()
+
   const getMainComponent = () => {
-    if (userData) {
-      if (auth.currentUser && auth.currentUser.emailVerified) {
-        return userData.isOnboarded ? <DrawerNavigator /> : <OnboardingStack />
-      }
+    if (auth.currentUser && auth.currentUser.emailVerified && userData) {
+      console.log('NAVIGATION userData is on boarded??', userData.isOnboarded)
+      return userData.isOnboarded ? <DrawerNavigator /> : <OnboardingStack />
     }
     return <IntroStack />
   }
 
+  console.log('NAVIGATION Container LOADING........................')
   return (
     <>
       <NavigationContainer theme={theme}>
