@@ -26,14 +26,93 @@ function calculateMatchScore(currentUser, user) {
   return score
 }
 
+/**
+ * Throttle the firebase function execution
+ *
+ * @param {user.id} userId the current user id
+ * @param {Timestamp} timestamp current timestamp
+ * @return {boolean} true if the function should be throttled
+ */
+async function isThrottled(userId, timestamp) {
+  const THROTTLE_SECONDS = 60 // TODO revise this period!!!
+  // get current function tracking info for this user
+  const trackFunctionTriggerRef = getFirestore()
+      .collection("track_function_triggers")
+      .doc(userId)
+
+  // Get the last trigger time.
+  let lastTriggerTime = null
+  await trackFunctionTriggerRef.get().then((doc) => {
+    if (doc.exists && doc.data().calculateMatchScore) {
+      lastTriggerTime = doc.data().calculateMatchScore
+    } else {
+      trackFunctionTriggerRef.set({ calculateMatchScore: timestamp })
+    }
+  })
+
+  // Check if we need to throttle.
+  if (lastTriggerTime) {
+    const lastTriggered = timestamp - lastTriggerTime
+    if (lastTriggered <= THROTTLE_SECONDS) {
+      // Throttle the function.
+      const throttleMessage =
+      "Skipping calculate match scores function due to throttling"
+      logger.info(throttleMessage, userId, lastTriggered)
+      return true
+    }
+  }
+
+  // Update the last trigger time.
+  await trackFunctionTriggerRef.update({ calculateMatchScore: timestamp })
+  return false
+}
+
+
+/**
+ * Save potential matches to database
+ * @param {user.id} userId the current user id
+ * @param {Array} potentialMatches potential matches to be saved
+ */
+async function saveToDatabase(userId, potentialMatches) {
+  const potentialMatchRef = getFirestore()
+      .collection("potential_matches")
+      .doc(userId)
+
+  await getFirestore()
+      .batch()
+      .set(potentialMatchRef, { ...potentialMatches })
+      .commit() // update for current user
+
+  // update for corresponding users in bulk
+  const batch = getFirestore().batch()
+  Object.keys(potentialMatches).forEach((otherUserId) => {
+    const potMatchForOtherUser = []
+    potMatchForOtherUser[userId] = potentialMatches[otherUserId]
+    const potentialMatchForOtherUserRef = getFirestore()
+        .collection("potential_matches")
+        .doc(otherUserId)
+    batch.set(potentialMatchForOtherUserRef,
+        { ...potMatchForOtherUser }, { merge: true })
+  })
+  await batch.commit()
+}
+
 // Listens for users info updated to /users/:userId
 // and calculates the match score of this user against all other users
 exports.calculateMatchScores =
   onDocumentUpdated("/users/{userId}", async (event) => {
-    const throttleSeconds = 60 // TODO revise this period!!!
+    // TODO implement bath size pagination
+    // so that we only fetch batch size users and
+    // process them and insert into db,
+    // then only we move on to next batch.
+    // Idea is user will have something to look at immediately
+    // const BATCH_SIZE = 100
+
     const user = event.data.after.data()
+
     // TODO compare before and after to see if the change
     // was significant enough to impact match scores
+
     const timestamp = Timestamp.fromDate(new Date())
 
     if (!user || !user.whoAmI) {
@@ -41,41 +120,13 @@ exports.calculateMatchScores =
     }
 
     try {
-      const potentialMatchRef = getFirestore()
-          .collection("potential_matches")
-          .doc(user.id)
-
-      // get current function tracking info for this user
-      const trackFunctionTriggerRef = getFirestore()
-          .collection("track_function_triggers")
-          .doc(user.id)
-
-      // Get the last trigger time.
-      let lastTriggerTime = null
-      await trackFunctionTriggerRef.get().then((doc) => {
-        if (doc.exists && doc.data().calculateMatchScore) {
-          lastTriggerTime = doc.data().calculateMatchScore
-        } else {
-          trackFunctionTriggerRef.set({ calculateMatchScore: timestamp })
-        }
-      })
-
-      // Check if we need to throttle.
-      if (lastTriggerTime) {
-        const lastTriggered = timestamp - lastTriggerTime
-        if (lastTriggered <= throttleSeconds) {
-        // Throttle the function.
-          const throttleMessage =
-        "Skipping calculate match scores function due to throttling"
-          logger.info(throttleMessage, user.id, lastTriggered)
-          return
-        }
+      const throttled = await isThrottled(user.id, timestamp)
+      if (throttled) {
+        return // function is throttled for this user
       }
 
-      // Update the last trigger time.
-      trackFunctionTriggerRef.update({ calculateMatchScore: timestamp })
       const startMessage =
-    "Hello! I am going to update the potential matches for user:"
+        "Hello! I am going to update the potential matches for user:"
       logger.info(startMessage, user.id)
 
       const potentialMatchUserType =
@@ -86,7 +137,8 @@ exports.calculateMatchScores =
       const querySnapshot = await getFirestore()
           .collection("/users")
           .where("whoAmI", "==", potentialMatchUserType)
-          // .orderBy("updatedAt", "desc") // To be enabled later
+          // The field must be present for it to work
+          // .orderBy("updatedAt", "desc")
           .get()
 
       const potentialMatches = []
@@ -105,25 +157,9 @@ exports.calculateMatchScores =
         potentialMatches[potentialMatchUser.id] = potentialMatch
       })
 
-      await getFirestore()
-          .batch()
-          .set(potentialMatchRef, { ...potentialMatches })
-          .commit() // update for current user
-
-      // update for corresponding users in bulk
-      const batch = getFirestore().batch()
-      Object.keys(potentialMatches).forEach((otherUserId) => {
-        const potMatchForOtherUser = []
-        potMatchForOtherUser[user.id] = potentialMatches[otherUserId]
-        const potentialMatchForOtherUserRef = getFirestore()
-            .collection("potential_matches")
-            .doc(otherUserId)
-        batch.set(potentialMatchForOtherUserRef,
-            { ...potMatchForOtherUser }, { merge: true })
+      await saveToDatabase(user.id, potentialMatches).then(() => {
+        logger.info("I am done saving potential matches for user ", user.id)
       })
-      await batch.commit()
-
-      logger.info("I am done saving potential matches for user ", user.id)
     } catch (error) {
       logger.error("Error in calculateMatchScores.", error, user.id)
     }
