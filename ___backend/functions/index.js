@@ -68,21 +68,30 @@ async function isThrottled(userId, timestamp) {
 }
 
 /**
- *
+ * Gets potential matches for the given user
  * @param {user} user the current user
  * @param {Timestamp} timestamp current timestamp
+ * @param {number} limit limit on users to be matched
+ * @param {number} offset offset from where users should be matched
  * @return {Array} potential matches array
  */
-async function getPotentialMatches(user, timestamp) {
+async function getPotentialMatches(user, timestamp, limit = -1, offset = -1) {
   const potentialMatchUserType =
   (user.whoAmI === "founder") ? "associate" : "founder"
 
-  const querySnapshot = await getFirestore()
+  let querySnapshot = getFirestore()
       .collection("/users")
       .where("whoAmI", "==", potentialMatchUserType)
       // The field must be present for orderBy to work
       // .orderBy("updatedAt", "desc")
-      .get()
+
+  if (limit > 0) {
+    querySnapshot = querySnapshot.limit(limit)
+  }
+  if (offset > 0) {
+    querySnapshot = querySnapshot.offset(offset)
+  }
+  querySnapshot = await querySnapshot.get()
 
   const potentialMatches = []
 
@@ -114,7 +123,7 @@ async function saveToDatabase(userId, potentialMatches) {
 
   await getFirestore()
       .batch()
-      .set(potentialMatchRef, { ...potentialMatches })
+      .set(potentialMatchRef, { ...potentialMatches }, { merge: true })
       .commit() // update for current user
 
   // update for corresponding users in bulk
@@ -131,6 +140,39 @@ async function saveToDatabase(userId, potentialMatches) {
   await batch.commit()
 }
 
+/**
+ * Recursive function to get potential matches and
+ * save it in dataabase in batch sizes
+ * @param {user} user the current user
+ * @param {Timestamp} timestamp current timestamp
+ * @param {number} limit limit on users to be matched
+ * @param {number} offset offset from where users should be matched
+ * @return {Array} potential matches array
+ */
+async function savePotentialMatches(user, timestamp, limit = -1, offset = -1) {
+  await getPotentialMatches(user, timestamp, limit, offset)
+      .then(async (potentialMatches) => {
+        if (Object.keys(potentialMatches).length > 0) {
+          logger.info("Saving potential matches", potentialMatches)
+          await saveToDatabase(user.id, potentialMatches)
+              .then(async () => {
+                logger.info("Batch processed..")
+                // Recursively call the function
+                // to save the next batch of matches
+                if (limit > -1 && offset > -1) {
+                  await savePotentialMatches(
+                      user,
+                      timestamp,
+                      limit,
+                      offset + limit,
+                  )
+                }
+              })
+        }
+      })
+}
+
+
 // Listens for users info updated to /users/:userId
 // and calculates the match score of this user against all other users
 exports.calculateMatchScores =
@@ -140,7 +182,7 @@ exports.calculateMatchScores =
     // process them and insert into db,
     // then only we move on to next batch.
     // Idea is user will have something to look at immediately
-    // const BATCH_SIZE = 100
+    const BATCH_SIZE = 100
 
     const user = event.data.after.data()
 
@@ -163,11 +205,10 @@ exports.calculateMatchScores =
         "Hello! I am going to update the potential matches for user:"
       logger.info(startMessage, user.id)
 
-      const potentialMatches = await getPotentialMatches(user, timestamp)
+      // Start the recursive function
+      await savePotentialMatches(user, timestamp, BATCH_SIZE, 0)
 
-      await saveToDatabase(user.id, potentialMatches).then(() => {
-        logger.info("I am done saving potential matches for user ", user.id)
-      })
+      logger.info("I am done saving potential matches for user ", user.id)
     } catch (error) {
       logger.error("Error in calculateMatchScores.", error, user.id)
     }
