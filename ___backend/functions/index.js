@@ -32,6 +32,8 @@ exports.calculateMatchScores =
   onDocumentUpdated("/users/{userId}", async (event) => {
     const throttleSeconds = 60 // TODO revise this period!!!
     const user = event.data.after.data()
+    // TODO compare before and after to see if the change
+    // was significant enough to impact match scores
     const timestamp = Timestamp.fromDate(new Date())
 
     if (!user || !user.whoAmI) {
