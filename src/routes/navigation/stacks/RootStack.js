@@ -3,8 +3,6 @@ import React from 'react' // , { useContext, useEffect }
 import { useTheme } from 'react-native-paper'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import * as Notifications from 'expo-notifications'
-// import { setDoc, doc } from 'firebase/firestore'
-// import * as Device from 'expo-device'import { StackNavigator } from 'react-navigation';
 
 import TabNavigator from '../tabsBottom/Tabs'
 import ModalStack from './ModalStack'

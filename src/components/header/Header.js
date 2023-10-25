@@ -11,7 +11,7 @@ import {
 } from 'react-native-paper'
 
 import { useNavigation } from '@react-navigation/native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+// import { TouchableOpacity } from 'react-native-gesture-handler'
 import AvatarOfAuthUser from '../AvatarOfAuthUser'
 
 export default function Header() {
@@ -55,13 +55,13 @@ export default function Header() {
 
   return (
     <View style={styles.headerContainer}>
-      <TouchableOpacity
+      {/* <TouchableOpacity // DOESN'T WORK IN IOS
         hitSlop={{
           top: 10, bottom: 10, left: 10, right: 10,
         }}
-      >
-        <AvatarOfAuthUser size="small" onPress={() => navigation.openDrawer()} />
-      </TouchableOpacity>
+      > */}
+      <AvatarOfAuthUser size="small" onPress={() => navigation.openDrawer()} />
+      {/* </TouchableOpacity> */}
       <Button
         title="Search"
         icon="text-search"

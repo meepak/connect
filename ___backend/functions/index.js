@@ -83,13 +83,17 @@ exports.calculateMatchScores =
     getFirestore()
         .collection("/users")
         .where("whoAmI", "==", potentialMatchUserType)
-        // .orderBy("updatedAt", "desc") // To be enabled later
-        .get()
+        .orderBy("updatedAt", "desc") // To be enabled later
+        .get() // TODO: retrieve in batch of N users and update them
         .then((querySnapshot) => {
+          // TODO: instead of checking all users,
+          // may be do it in batch and update db,
+          // so user have somethin available to view quicly
           const potentialMatches = []
           querySnapshot.forEach((doc) => {
             const potentialMatchUser = doc.data()
             const matchingScore = calculateMatchScore(user, potentialMatchUser)
+            // TODO: skip users who have low match scores
             const potentialMatch = {
               "matchScore": matchingScore,
               "profileViewed": false,
@@ -107,7 +111,21 @@ exports.calculateMatchScores =
           return getFirestore()
               .batch()
               .set(potentialMatchRef, potentialMatchesJson)
-              .commit()
+              .commit() // update for current user
+              .then(() => {
+                // update for corresponding users in bulk
+                const batch = getFirestore().batch()
+                Object.keys(potentialMatches).forEach((otherUserId) => {
+                  const potMatchForOtherUser = []
+                  potMatchForOtherUser[user.id] = potentialMatches[otherUserId]
+                  const potentialMatchForOtherUserRef = getFirestore()
+                      .collection("potential_matches")
+                      .doc(otherUserId)
+                  batch.set(potentialMatchForOtherUserRef,
+                      { ...potMatchForOtherUser })
+                })
+                return batch.commit()
+              })
         })
         .then(() => {
           logger.info("I am done saving potential matches for user ", user.id)

@@ -98,7 +98,7 @@ export default function Post() {
         <Text style={styles.field}>from</Text>
         <Text style={styles.title}>{from}</Text>
         <Text style={styles.field}>Latest save date</Text>
-        <Text style={styles.title}>{date.date}</Text>
+        <Text style={styles.title}>date.date</Text>
       </Surface>
       <View style={styles.container}>
         <Button
