@@ -38,99 +38,91 @@ exports.calculateMatchScores =
       return // User type or data not available, exit
     }
 
-    const potentialMatchRef = getFirestore()
-        .collection("potential_matches")
-        .doc(user.id)
+    try {
+      const potentialMatchRef = getFirestore()
+          .collection("potential_matches")
+          .doc(user.id)
 
-    // get current function tracking info for this user
-    const trackFunctionTriggerRef = getFirestore()
-        .collection("track_function_triggers")
-        .doc(user.id)
+      // get current function tracking info for this user
+      const trackFunctionTriggerRef = getFirestore()
+          .collection("track_function_triggers")
+          .doc(user.id)
 
-    // Get the last trigger time.
-    let lastTriggerTime = null
-    await trackFunctionTriggerRef.get().then((doc) => {
-      if (doc.exists && doc.data().calculateMatchScore) {
-        lastTriggerTime = doc.data().calculateMatchScore
-      } else {
-        trackFunctionTriggerRef.set({ calculateMatchScore: timestamp })
-      }
-    })
+      // Get the last trigger time.
+      let lastTriggerTime = null
+      await trackFunctionTriggerRef.get().then((doc) => {
+        if (doc.exists && doc.data().calculateMatchScore) {
+          lastTriggerTime = doc.data().calculateMatchScore
+        } else {
+          trackFunctionTriggerRef.set({ calculateMatchScore: timestamp })
+        }
+      })
 
-    // Check if we need to throttle.
-    if (lastTriggerTime) {
-      const lastTriggered = timestamp - lastTriggerTime
-      if (lastTriggered <= throttleSeconds) {
+      // Check if we need to throttle.
+      if (lastTriggerTime) {
+        const lastTriggered = timestamp - lastTriggerTime
+        if (lastTriggered <= throttleSeconds) {
         // Throttle the function.
-        const throttleMessage =
+          const throttleMessage =
         "Skipping calculate match scores function due to throttling"
-        logger.info(throttleMessage, user.id, lastTriggered)
-        return
+          logger.info(throttleMessage, user.id, lastTriggered)
+          return
+        }
       }
-    }
 
-    // Update the last trigger time.
-    trackFunctionTriggerRef.update({ calculateMatchScore: timestamp })
-    const startMessage =
+      // Update the last trigger time.
+      trackFunctionTriggerRef.update({ calculateMatchScore: timestamp })
+      const startMessage =
     "Hello! I am going to update the potential matches for user:"
-    logger.info(startMessage, user.id)
+      logger.info(startMessage, user.id)
 
-    const potentialMatchUserType =
+      const potentialMatchUserType =
       (user.whoAmI === "founder") ? "associate" : "founder"
 
-    // Calculate the match score of this user against all opposite users
-    // and store the results in a temporary variable
-    getFirestore()
-        .collection("/users")
-        .where("whoAmI", "==", potentialMatchUserType)
-        .orderBy("updatedAt", "desc") // To be enabled later
-        .get() // TODO: retrieve in batch of N users and update them
-        .then((querySnapshot) => {
-          // TODO: instead of checking all users,
-          // may be do it in batch and update db,
-          // so user have somethin available to view quicly
-          const potentialMatches = []
-          querySnapshot.forEach((doc) => {
-            const potentialMatchUser = doc.data()
-            const matchingScore = calculateMatchScore(user, potentialMatchUser)
-            // TODO: skip users who have low match scores
-            const potentialMatch = {
-              "matchScore": matchingScore,
-              "profileViewed": false,
-              "checkLater": false,
-              "notInterested": false,
-              "createdAt": timestamp,
-            }
-            potentialMatches[potentialMatchUser.id] = potentialMatch
-          })
-          return { ...potentialMatches }
-        })
-        .then((potentialMatches) => {
-          const potentialMatchesJson =
-            JSON.parse(JSON.stringify(potentialMatches))
-          return getFirestore()
-              .batch()
-              .set(potentialMatchRef, potentialMatchesJson)
-              .commit() // update for current user
-              .then(() => {
-                // update for corresponding users in bulk
-                const batch = getFirestore().batch()
-                Object.keys(potentialMatches).forEach((otherUserId) => {
-                  const potMatchForOtherUser = []
-                  potMatchForOtherUser[user.id] = potentialMatches[otherUserId]
-                  const potentialMatchForOtherUserRef = getFirestore()
-                      .collection("potential_matches")
-                      .doc(otherUserId)
-                  batch.set(potentialMatchForOtherUserRef,
-                      { ...potMatchForOtherUser })
-                })
-                return batch.commit()
-              })
-        })
-        .then(() => {
-          logger.info("I am done saving potential matches for user ", user.id)
-        })
-        .catch((error) => {
-          logger.error("Error in calculateMatchScores.", error, user.id)
-        })
+      // Calculate the match score of this user against all opposite users
+      // and store the results in a temporary variable
+      const querySnapshot = await getFirestore()
+          .collection("/users")
+          .where("whoAmI", "==", potentialMatchUserType)
+          // .orderBy("updatedAt", "desc") // To be enabled later
+          .get()
+
+      const potentialMatches = []
+
+      querySnapshot.forEach((doc) => {
+        const potentialMatchUser = doc.data()
+        const matchingScore = calculateMatchScore(user, potentialMatchUser)
+        // TODO: skip users who have low match scores
+        const potentialMatch = {
+          "matchScore": matchingScore,
+          "profileViewed": false,
+          "checkLater": false,
+          "notInterested": false,
+          "createdAt": timestamp,
+        }
+        potentialMatches[potentialMatchUser.id] = potentialMatch
+      })
+
+      await getFirestore()
+          .batch()
+          .set(potentialMatchRef, { ...potentialMatches })
+          .commit() // update for current user
+
+      // update for corresponding users in bulk
+      const batch = getFirestore().batch()
+      Object.keys(potentialMatches).forEach((otherUserId) => {
+        const potMatchForOtherUser = []
+        potMatchForOtherUser[user.id] = potentialMatches[otherUserId]
+        const potentialMatchForOtherUserRef = getFirestore()
+            .collection("potential_matches")
+            .doc(otherUserId)
+        batch.set(potentialMatchForOtherUserRef,
+            { ...potMatchForOtherUser }, { merge: true })
+      })
+      await batch.commit()
+
+      logger.info("I am done saving potential matches for user ", user.id)
+    } catch (error) {
+      logger.error("Error in calculateMatchScores.", error, user.id)
+    }
   })
