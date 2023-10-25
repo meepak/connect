@@ -67,6 +67,40 @@ async function isThrottled(userId, timestamp) {
   return false
 }
 
+/**
+ *
+ * @param {user} user the current user
+ * @param {Timestamp} timestamp current timestamp
+ * @return {Array} potential matches array
+ */
+async function getPotentialMatches(user, timestamp) {
+  const potentialMatchUserType =
+  (user.whoAmI === "founder") ? "associate" : "founder"
+
+  const querySnapshot = await getFirestore()
+      .collection("/users")
+      .where("whoAmI", "==", potentialMatchUserType)
+      // The field must be present for orderBy to work
+      // .orderBy("updatedAt", "desc")
+      .get()
+
+  const potentialMatches = []
+
+  querySnapshot.forEach((doc) => {
+    const potentialMatchUser = doc.data()
+    const matchingScore = calculateMatchScore(user, potentialMatchUser)
+    // TODO: skip users who have low match scores
+    const potentialMatch = {
+      "matchScore": matchingScore,
+      "profileViewed": false,
+      "checkLater": false,
+      "notInterested": false,
+      "createdAt": timestamp,
+    }
+    potentialMatches[potentialMatchUser.id] = potentialMatch
+  })
+  return potentialMatches
+}
 
 /**
  * Save potential matches to database
@@ -129,33 +163,7 @@ exports.calculateMatchScores =
         "Hello! I am going to update the potential matches for user:"
       logger.info(startMessage, user.id)
 
-      const potentialMatchUserType =
-      (user.whoAmI === "founder") ? "associate" : "founder"
-
-      // Calculate the match score of this user against all opposite users
-      // and store the results in a temporary variable
-      const querySnapshot = await getFirestore()
-          .collection("/users")
-          .where("whoAmI", "==", potentialMatchUserType)
-          // The field must be present for it to work
-          // .orderBy("updatedAt", "desc")
-          .get()
-
-      const potentialMatches = []
-
-      querySnapshot.forEach((doc) => {
-        const potentialMatchUser = doc.data()
-        const matchingScore = calculateMatchScore(user, potentialMatchUser)
-        // TODO: skip users who have low match scores
-        const potentialMatch = {
-          "matchScore": matchingScore,
-          "profileViewed": false,
-          "checkLater": false,
-          "notInterested": false,
-          "createdAt": timestamp,
-        }
-        potentialMatches[potentialMatchUser.id] = potentialMatch
-      })
+      const potentialMatches = await getPotentialMatches(user, timestamp)
 
       await saveToDatabase(user.id, potentialMatches).then(() => {
         logger.info("I am done saving potential matches for user ", user.id)
