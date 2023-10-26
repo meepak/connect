@@ -1,50 +1,63 @@
 import React, {
-  useState, useContext, useCallback,
+  useState, useCallback, useEffect,
 } from 'react'
 import {
-  ScrollView, StyleSheet, RefreshControl,
+  ActivityIndicator, StyleSheet, View, FlatList,
 } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
-import { colors } from '../../theme'
+// import { colors } from '../../theme'
 
 import ScreenTemplate from '../../components/ScreenTemplate'
-import Button from '../../components/core/Button'
-import { UserDataContext } from '../../context/UserDataContext'
+// import Button from '../../components/core/Button'
+// import { UserDataContext } from '../../context/UserDataContext'
 import UserListItem from '../../components/UserListItem'
 
-const styles = StyleSheet.create({
+const styles = (colors = null) => StyleSheet.create({
   main: {
     flex: 1,
     width: '100%',
   },
-  Title: {
+  title: {
     fontSize: 18,
     fontWeight: 'bold',
     marginTop: 5,
     marginLeft: 20,
   },
-  ResultCount: {
+  resultCount: {
     fontSize: 14,
     margin: 10,
     marginLeft: 20,
+  },
+  spinnerView: {
+    paddingVertical: 20,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+  },
+  appBar: {
+    backgroundColor: colors.elevation.level3,
+    color: colors.onBackground,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 10,
   },
 })
 
 export default function Find() {
   const navigation = useNavigation()
   // const [token, setToken] = useState('')
-  const { userData } = useContext(UserDataContext)
-  const [refreshing, setRefreshing] = useState(false)
+  // const { userData } = useContext(UserDataContext)
+  const [loadingMoreData, setLoadingMoreData] = useState(false)
+  // const [refreshing, setRefreshing] = useState(false)
+  const [dataItems, setDataItems] = useState([])
+  // const [showScrollToTopButton, setShowScrollToTopButton] = useState(false)
+  // const [scrollY, setScrollY] = useState(0)
+  const { colors } = useTheme()
 
-  const onRefresh = useCallback(() => {
-    setRefreshing(true)
-    setTimeout(() => {
-      setRefreshing(false)
-    }, 2000)
-  }, [])
-
-  const indexArray = new Array(10).fill('')
   function generateRandomName() {
     // Create a list of first names and last names.
     const firstNames = ['Alice', 'Bob', 'Carol', 'Dave', 'Eve', 'Frank', 'George', 'Hannah', 'Isaac', 'Jack', 'Kate']
@@ -73,67 +86,152 @@ export default function Find() {
     { uri: 'https://images.freeimages.com/images/large-previews/e78/family-1421593.jpg?fmt=webp&w=550' },
   ]
 
+  // Define the data generation function
+  const generateDummyData = (startIndex, itemCount) => {
+    const dummyData = []
+
+    for (let index = startIndex; index < startIndex + itemCount; index += 1) {
+      const name = `${index} ${generateRandomName()}`
+      const image = index % 2 === 0 ? images[Math.floor(index / 2)] : null
+      const banner = bannerImages[Math.floor(Math.random() * bannerImages.length)]
+
+      const userItem = {
+        key: index,
+        name,
+        image,
+        banner,
+        occupation: 'Full Stack Engineer - Frontend Focus',
+        industry: 'Jeeve Solutions Australia',
+        location: 'Australia (Remote)',
+        rate: 'A$100/hr-A$110/hr',
+        isPromoted: true,
+        onPress: () => {
+        // Your navigation logic here
+          console.log('Going to profile')
+        },
+      }
+
+      dummyData.push(userItem)
+    }
+
+    return dummyData
+  }
+
+  // const handleScroll = (event) => {
+  // const scrollPosition = event.nativeEvent.contentOffset.y
+  // console.log(`scrollY is: ${scrollPosition}`)
+  // setScrollY(scrollPosition)
+
+  // Decide when to show the button based on the scroll position
+  // setShowScrollToTopButton(scrollPosition > 200)
+  // }
+
+  const onLoadingMoreData = useCallback(() => {
+    setLoadingMoreData(true)
+  }, [])
+
+  useEffect(() => {
+    if (!loadingMoreData) {
+      return
+    }
+    const startIndex = dataItems.length + 1
+    // console.log(`onRefresh generating dummy data, current start Index is: ${startIndex}`)
+    // if (startIndex === 1) {
+    //   setRefreshing(false)
+    //   return // WHY IS THIS HAPPENING???
+    // }
+    const newDataItems = generateDummyData(startIndex, 5)
+    setTimeout(() => {
+      setDataItems((prevDataItems) => [...prevDataItems, ...newDataItems])
+      setLoadingMoreData(false)
+      // console.log(`added  ${newDataItems.length} items to dataItems`)
+    }, 2000)
+  }, [loadingMoreData])
+
+  // Render Footer
+  const renderSpinner = () => {
+    try {
+      // Check If Loading
+      if (loadingMoreData) {
+        return (
+          <View style={styles.spinnerView}>
+            <ActivityIndicator size="large" />
+          </View>
+        )
+      }
+      return <></>
+    } catch (error) {
+      console.log(error)
+      return <></>
+    }
+  }
+
+  const renderItem = useCallback(({ item }) => (
+    <UserListItem
+  // eslint-disable-next-line react/no-array-index-key
+      name={item.name}
+      image={item.image}
+      occupation={item.occupation}
+      industry={item.industry}
+      location={item.location}
+      rate={item.rate}
+      isPromoted={item.isPromoted}
+      onPress={() => {
+        // console.log('going to profile')
+        navigation.navigate('ProfileStack', {
+          screen: 'Profile',
+          params: {
+            userFullName: item.name,
+            userAvatar: item.image,
+            userBannerImage: item.banner,
+            // from: 'Find screen',
+          },
+        })
+      }}
+    />
+
+  ), [])
+
+  // like constructor to load data
+  useEffect(() => {
+    // console.log(`loading data, current dataItems length is: ${dataItems.length}`)
+    if (dataItems.length === 0) {
+      const listData = generateDummyData(0, 10)
+      setDataItems(listData)
+    }
+  }, [])
+
   return (
     <ScreenTemplate>
-      <Text style={styles.Title}>Matches based on your preferences.</Text>
-      <Text style={styles.ResultCount}>99 results.</Text>
-      <ScrollView
-        style={styles.main}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
-        {/* name, industry, location, occupation, isPromoted, image, */}
-        {indexArray.map((_, index) => {
-          const name = generateRandomName()
-          const image = index % 2 === 0 ? images[index / 2] : null
-          const banner = bannerImages[Math.floor(Math.random() * bannerImages.length) + 1]
-          return (
-            <UserListItem
-        // eslint-disable-next-line react/no-array-index-key
-              key={index + 1}
-              name={name}
-              image={image}
-              occupation="Full Stack Engineer - Frontend Focus"
-              industry="Jeeve Solutions Australia"
-              location="Australia (Remote)"
-              rate="A$100/hr-A$110/hr"
-              isPromoted
-              onPress={() => {
-                // console.log('going to profile')
-                navigation.navigate('ProfileStack', {
-                  screen: 'Profile',
-                  params: {
-                    userFullName: name,
-                    userAvatar: image,
-                    userBannerImage: banner,
-                    // from: 'Find screen',
-                  },
-                })
-              }}
-            />
-
-          )
-        })}
-        <Button
-          label="Go to Detail"
-          color={colors.primary}
-          onPress={() => navigation.navigate('Detail', { userData, from: 'Find', title: userData.email })}
-        />
-        <Button
-          label="Open Modal"
-          color={colors.tertiary}
-          onPress={() => {
-            navigation.navigate('ModalStack', {
-              screen: 'Post',
-              params: {
-                data: userData,
-                from: 'Find screen',
-              },
-            })
-          }}
-        />
-      </ScrollView>
+      <View style={styles(colors).appBar}>
+        <Text style={styles.title}>Matches based on your preferences.</Text>
+        <Text style={styles.resultCount}>{dataItems.length} results.</Text>
+      </View>
+      <FlatList
+        // onScroll={handleScroll}
+        data={dataItems}
+        // refreshControl={(
+        //   <RefreshControl
+        //     refreshing={refreshing}
+        //     onRefresh={onRefresh}
+        //   />
+        // )}
+        renderItem={renderItem}
+        ListFooterComponent={renderSpinner}
+        keyExtractor={(item) => item.key}
+        // onScrollEndDrag={console.log('Scroll End Drag')}
+        onEndReached={onLoadingMoreData}
+          // How Close To The End Of List Until Next Data Request Is Made
+        onEndReachedThreshold={0}
+        refreshing={loadingMoreData}
+      />
+      {/* <FAB
+        icon="plus"
+        size="small"
+        style={styles.fab}
+        visible={showScrollToTopButton}
+        onPress={() => console.log('Pressed')}
+      /> */}
     </ScreenTemplate>
   )
 }

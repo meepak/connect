@@ -4,7 +4,7 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 
-const Animate = ({
+const AnimateAlert = ({
   children,
 }) => {
   const [animationTiming] = useState(new Animated.Value(0))
@@ -58,8 +58,8 @@ const Animate = ({
   )
 }
 
-Animate.propTypes = {
+AnimateAlert.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default Animate
+export default AnimateAlert
