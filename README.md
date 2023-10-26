@@ -214,3 +214,23 @@ THIRD PARTY DEPENDENT
 
 as02156we+6ds+f6/809/9800987=--892q1``
 
+/users
+  /$user_id
+    /name
+    /email
+    /phone_number
+    /avatar
+    /banner
+    /whoAmI,
+    /industries,
+    /businessStage,
+    /operationMode,
+    /location,
+
+  /potential_matches
+    /$user_id
+      /user_id_of_potential_match
+          /match_score
+          /profile_viewed
+          /check_later
+          /not_interested

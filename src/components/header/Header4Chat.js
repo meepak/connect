@@ -48,7 +48,7 @@ export default function Header4Chat() {
     // console.log('Lets go to chat')
   }
 
-  console.log(`current user id is -- use this to fetch more user info or save to db?? ${userId}`)
+  // console.log(`current user id is -- use this to fetch more user info or save to db?? ${userId}`)
 
   return (
     <View style={styles.header}>
