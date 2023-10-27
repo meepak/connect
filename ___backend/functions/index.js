@@ -113,30 +113,31 @@ async function getPotentialMatches(user, timestamp, limit = -1, offset = -1) {
 
 /**
  * Save potential matches to database
+ * we are using potential_matches subcollection in users collection
  * @param {user.id} userId the current user id
  * @param {Array} potentialMatches potential matches to be saved
  */
 async function saveToDatabase(userId, potentialMatches) {
-  const potentialMatchRef = getFirestore()
-      .collection("potential_matches")
+  const potentialMatchesRef = getFirestore()
+      .collection("users")
       .doc(userId)
+      .collection("potential_matches")
 
-  await getFirestore()
-      .batch()
-      .set(potentialMatchRef, { ...potentialMatches }, { merge: true })
-      .commit() // update for current user
-
-  // update for corresponding users in bulk
   const batch = getFirestore().batch()
   Object.keys(potentialMatches).forEach((otherUserId) => {
-    const potMatchForOtherUser = []
-    potMatchForOtherUser[userId] = potentialMatches[otherUserId]
-    const potentialMatchForOtherUserRef = getFirestore()
-        .collection("potential_matches")
+    const potentialMatchRef = potentialMatchesRef.doc(otherUserId)
+    const matchData = potentialMatches[otherUserId]
+    // updating current user
+    batch.set(potentialMatchRef, { ...matchData }, { merge: true })
+    // updating corresponding user
+    const otherUserRef = getFirestore()
+        .collection("users")
         .doc(otherUserId)
-    batch.set(potentialMatchForOtherUserRef,
-        { ...potMatchForOtherUser }, { merge: true })
+        .collection("potential_matches")
+        .doc(userId)
+    batch.set(otherUserRef, { ...matchData }, { merge: true })
   })
+
   await batch.commit()
 }
 
@@ -153,7 +154,7 @@ async function savePotentialMatches(user, timestamp, limit = -1, offset = -1) {
   await getPotentialMatches(user, timestamp, limit, offset)
       .then(async (potentialMatches) => {
         if (Object.keys(potentialMatches).length > 0) {
-          logger.info("Saving potential matches", potentialMatches)
+          // logger.info("Saving potential matches", potentialMatches)
           await saveToDatabase(user.id, potentialMatches)
               .then(async () => {
                 logger.info("Batch processed..")
