@@ -1,17 +1,19 @@
 import React, {
-  useState, useCallback, useEffect,
+  useState, useCallback, useEffect, useContext,
 } from 'react'
 import {
   ActivityIndicator, StyleSheet, View, FlatList,
 } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
-// import { colors } from '../../theme'
 
+import {
+  collection, addDoc, query, orderBy, onSnapshot, where, getDocs, limit, startAfter,
+} from 'firebase/firestore'
+import { firestore } from '../../firebase'
 import ScreenTemplate from '../../components/ScreenTemplate'
-// import Button from '../../components/core/Button'
-// import { UserDataContext } from '../../context/UserDataContext'
 import UserListItem from '../../components/UserListItem'
+import { UserDataContext } from '../../context/UserDataContext'
 
 const styles = (colors = null) => StyleSheet.create({
   main: {
@@ -44,87 +46,75 @@ const styles = (colors = null) => StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 10,
+    zIndex: 99,
+    height: 50,
   },
 })
 
 export default function Find() {
   const navigation = useNavigation()
-  // const [token, setToken] = useState('')
-  // const { userData } = useContext(UserDataContext)
   const [loadingMoreData, setLoadingMoreData] = useState(false)
-  // const [refreshing, setRefreshing] = useState(false)
   const [dataItems, setDataItems] = useState([])
-  // const [showScrollToTopButton, setShowScrollToTopButton] = useState(false)
-  // const [scrollY, setScrollY] = useState(0)
   const { colors } = useTheme()
+  const { userData } = useContext(UserDataContext)
 
-  function generateRandomName() {
-    // Create a list of first names and last names.
-    const firstNames = ['Alice', 'Bob', 'Carol', 'Dave', 'Eve', 'Frank', 'George', 'Hannah', 'Isaac', 'Jack', 'Kate']
-    const lastNames = ['Smith', 'Jones', 'Williams', 'Brown', 'Johnson', 'Davis', 'Miller', 'Wilson', 'Taylor', 'Anderson', 'Thomas']
-
-    // Choose a random first name and last name from the lists.
-    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)]
-    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)]
-
-    // Return the full name.
-    return `${firstName} ${lastName}`
-  }
-
-  const images = [
-    'https://images.pexels.com/photos/2218786/pexels-photo-2218786.jpeg?auto=compress&cs=tinysrgb&w=200&dpr=1',
-    'https://images.pexels.com/photos/2906635/pexels-photo-2906635.jpeg?auto=compress&cs=tinysrgb&w=200',
-    'https://images.pexels.com/photos/989200/pexels-photo-989200.jpeg?auto=compress&cs=tinysrgb&w=200',
-    'https://images.pexels.com/photos/1804514/pexels-photo-1804514.jpeg?auto=compress&cs=tinysrgb&w=200',
-    'https://images.pexels.com/photos/3797438/pexels-photo-3797438.jpeg?auto=compress&cs=tinysrgb&w=1600',
-  ]
-
-  const bannerImages = [
-    { uri: 'https://images.pexels.com/photos/818261/pexels-photo-818261.jpeg?auto=compress&cs=tinysrgb&w=400' },
-    { uri: 'https://images.freeimages.com/variants/k1wQB7egQotJ7Hr3ZBPP1S5c/f4a36f6589a0e50e702740b15352bc00e4bfaf6f58bd4db850e167794d05993d?fmt=webp&w=550' },
-    { uri: 'https://images.freeimages.com/variants/YSotMxjHEvoFiBGaZkkJv5K8/f4a36f6589a0e50e702740b15352bc00e4bfaf6f58bd4db850e167794d05993d?fmt=webp&w=500' },
-    { uri: 'https://images.freeimages.com/images/large-previews/e78/family-1421593.jpg?fmt=webp&w=550' },
-  ]
+  const [lastFetchedData, setLastFetchedData] = useState(null)
 
   // Define the data generation function
-  const generateDummyData = (startIndex, itemCount) => {
-    const dummyData = []
+  const fetchPotentialMatches = async (itemCount) => {
+    const potentialMatchesCollection = firestore.collection('users').doc(userData.id).collection('potential_matches')
+    // where('__name__', '==', userData.id).get().then((snapshot) => {
 
-    for (let index = startIndex; index < startIndex + itemCount; index += 1) {
-      const name = `${index} ${generateRandomName()}`
-      const image = index % 2 === 0 ? images[Math.floor(index / 2)] : null
-      const banner = bannerImages[Math.floor(Math.random() * bannerImages.length)]
+    // // Get a reference to the potential matches collection.
+    // const potentialMatchesCollection = collection(firestore, 'potential_matches')
 
-      const userItem = {
-        key: index,
-        name,
-        image,
-        banner,
-        occupation: 'Full Stack Engineer - Frontend Focus',
-        industry: 'Jeeve Solutions Australia',
-        location: 'Australia (Remote)',
-        rate: 'A$100/hr-A$110/hr',
-        isPromoted: true,
-        onPress: () => {
-        // Your navigation logic here
-          console.log('Going to profile')
-        },
-      }
+    // // Create a query to get all potential matches for the current user, sorted by their match score.
+    const potentialMatchesQuery = query(potentialMatchesCollection, orderBy('match_score'), limit(itemCount))
+    // // , orderBy('match_score', 'desc')
 
-      dummyData.push(userItem)
+    // // Get the first page of results.
+    let potentialMatchesSnapshot = null
+
+    if (lastFetchedData === null) {
+      potentialMatchesSnapshot = await getDocs(potentialMatchesQuery)
+    } else {
+      potentialMatchesSnapshot = await getDocs(query(potentialMatchesQuery, startAfter(lastFetchedData)))
     }
 
-    return dummyData
+    const potentialMatches = potentialMatchesSnapshot.docs.map((doc) => doc.data())
+
+    console.log(potentialMatches)
+
+    // Get the last document in the first page of results.
+    const lastDocument = potentialMatches[potentialMatches.length - 1]
+    setLastFetchedData(lastDocument.id)
+
+    return potentialMatches
+
+    // Get a reference to the users collection.
+    // const usersRef = firebase.database().ref('users')
+    // // Get the profile of all users who are your potential matches.
+    // potentialMatchesQuery.get().then((snapshot) => {
+    //   // Get the profile of each user in the snapshot.
+    //   snapshot.forEach((userSnapshot) => {
+    //     // Get the user's profile data.
+    //     const userProfile = {
+    //     potentialMatchesapshot.child('name').val(),
+    //       email: userSnapshot.child('email').val(),
+    //       phoneNumber: userSnapshot.child('phone_number').val(),
+    //       avatar: userSnapshot.child('avatar').val(),
+    //       banner: userSnapshot.child('banner').val(),
+    //       whoAmI: userSnapshot.child('whoAmI').val(),
+    //       industries: userSnapshot.child('industries').val(),
+    //       businessStage: userSnapshot.child('businessStage').val(),
+    //       operationMode: userSnapshot.child('operationMode').val(),
+    //       location: userSnapshot.child('location').val(),
+    //     }
+
+    //     // Do something with the user's profile data.
+    //   })
+    // })
   }
-
-  // const handleScroll = (event) => {
-  // const scrollPosition = event.nativeEvent.contentOffset.y
-  // console.log(`scrollY is: ${scrollPosition}`)
-  // setScrollY(scrollPosition)
-
-  // Decide when to show the button based on the scroll position
-  // setShowScrollToTopButton(scrollPosition > 200)
-  // }
 
   const onLoadingMoreData = useCallback(() => {
     setLoadingMoreData(true)
@@ -134,17 +124,10 @@ export default function Find() {
     if (!loadingMoreData) {
       return
     }
-    const startIndex = dataItems.length + 1
-    // console.log(`onRefresh generating dummy data, current start Index is: ${startIndex}`)
-    // if (startIndex === 1) {
-    //   setRefreshing(false)
-    //   return // WHY IS THIS HAPPENING???
-    // }
-    const newDataItems = generateDummyData(startIndex, 5)
+    const newDataItems = fetchPotentialMatches(5)
     setTimeout(() => {
       setDataItems((prevDataItems) => [...prevDataItems, ...newDataItems])
       setLoadingMoreData(false)
-      // console.log(`added  ${newDataItems.length} items to dataItems`)
     }, 2000)
   }, [loadingMoreData])
 
@@ -196,7 +179,7 @@ export default function Find() {
   useEffect(() => {
     // console.log(`loading data, current dataItems length is: ${dataItems.length}`)
     if (dataItems.length === 0) {
-      const listData = generateDummyData(0, 10)
+      const listData = fetchPotentialMatches(1)
       setDataItems(listData)
     }
   }, [])
@@ -208,30 +191,14 @@ export default function Find() {
         <Text style={styles.resultCount}>{dataItems.length} results.</Text>
       </View>
       <FlatList
-        // onScroll={handleScroll}
         data={dataItems}
-        // refreshControl={(
-        //   <RefreshControl
-        //     refreshing={refreshing}
-        //     onRefresh={onRefresh}
-        //   />
-        // )}
         renderItem={renderItem}
         ListFooterComponent={renderSpinner}
         keyExtractor={(item) => item.key}
-        // onScrollEndDrag={console.log('Scroll End Drag')}
         onEndReached={onLoadingMoreData}
-          // How Close To The End Of List Until Next Data Request Is Made
         onEndReachedThreshold={0}
         refreshing={loadingMoreData}
       />
-      {/* <FAB
-        icon="plus"
-        size="small"
-        style={styles.fab}
-        visible={showScrollToTopButton}
-        onPress={() => console.log('Pressed')}
-      /> */}
     </ScreenTemplate>
   )
 }
