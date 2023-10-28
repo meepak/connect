@@ -85,7 +85,7 @@ export default function Find() {
     const potentialMatches = potentialMatchesSnapshot.docs.map((docP) => ({
       id: docP.id,
       matchScore: docP.data().matchScore,
-      viewedAt: docP.data().viewedAt,
+      viewedAt: docP.data().viewedAt ?? null,
     }))
 
     // setLastFetchedData(potentialMatches[potentialMatches.length - 1])
@@ -119,7 +119,7 @@ export default function Find() {
       finalUsers.push(finalUser)
     })
 
-    console.log('finalUsers', finalUsers)
+    // console.log('finalUsers', finalUsers)
     return finalUsers
   }
 
@@ -174,14 +174,17 @@ export default function Find() {
       isPromoted={item.isPromoted}
       viewedAt={item.viewedAt ?? null}
       onPress={() => {
+        const viewedAt = serverTimestamp()
         // save user is viewed
         const docRef = doc(firestore, `/users/${userData.id}/potential_matches/${item.key}`)
         // update dataItems for this item
-        setDataItems(dataItems.map((dataItem) => (item.key === dataItem.key ? { ...dataItem, viewedAt: serverTimestamp() } : dataItem)))
+        const updatedDataItems = (prevDataItems) => prevDataItems.map((dataItem) => (dataItem.key === item.key ? { ...dataItem, viewedAt } : dataItem))
+        console.log('updated dataItems', updatedDataItems)
+        setDataItems((prevDataItems) => updatedDataItems(prevDataItems))
         updateDoc(docRef, {
           viewedAt: serverTimestamp(),
         })
-        // console.log('going to profile')
+        console.log('going to profile')
         navigation.navigate('ProfileStack', {
           screen: 'Profile',
           params: {
