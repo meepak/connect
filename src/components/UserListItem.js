@@ -2,14 +2,18 @@
 // To be decided on the user object will pass through to here
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Text, Divider, TouchableRipple } from 'react-native-paper'
+import {
+  Text, Divider, TouchableRipple, useTheme,
+} from 'react-native-paper'
 import Avatar from './core/Avatar'
 
 const UserListItem = ({
   name, industry, location, occupation, isPromoted, image, onPress, viewedAt,
 }) => {
-  console.log(`${name} is viewed at ${viewedAt}`)
-  const fontWeight = viewedAt === null || viewedAt === undefined ? 'bold' : 'normal'
+  const { colors } = useTheme()
+  // console.log(`${name} is viewed at ${viewedAt}`)
+  const fontWeight = viewedAt === null || viewedAt === undefined ? 900 : 100
+  const color = viewedAt === null || viewedAt === undefined ? colors.onBackground : colors.onSurfaceDisabled
   const styles = StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -34,21 +38,26 @@ const UserListItem = ({
     Title: {
       fontSize: 18,
       fontWeight,
+      color,
     },
     Company: {
       fontSize: 16,
+      color,
     },
     Location: {
       fontSize: 14,
+      color,
     },
     Rate: {
       fontSize: 16,
       fontWeight,
+      color,
     },
     Promoted: {
       padding: 4,
       borderRadius: 2,
       fontSize: 12,
+      color,
     },
   })
 
