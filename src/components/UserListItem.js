@@ -6,8 +6,10 @@ import { Text, Divider, TouchableRipple } from 'react-native-paper'
 import Avatar from './core/Avatar'
 
 const UserListItem = ({
-  name, industry, location, occupation, isPromoted, image, onPress,
+  name, industry, location, occupation, isPromoted, image, onPress, viewedAt,
 }) => {
+  console.log(`${name} is viewed at ${viewedAt}`)
+  const fontWeight = viewedAt === null || viewedAt === undefined ? 'bold' : 'normal'
   const styles = StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -31,7 +33,7 @@ const UserListItem = ({
     },
     Title: {
       fontSize: 18,
-      fontWeight: 'bold',
+      fontWeight,
     },
     Company: {
       fontSize: 16,
@@ -41,7 +43,7 @@ const UserListItem = ({
     },
     Rate: {
       fontSize: 16,
-      fontWeight: 'bold',
+      fontWeight,
     },
     Promoted: {
       padding: 4,

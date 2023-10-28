@@ -4,11 +4,11 @@ import React, {
 import {
   ActivityIndicator, StyleSheet, View, FlatList,
 } from 'react-native'
-import { Text, useTheme } from 'react-native-paper'
+import { Button, Text, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 
 import {
-  collection, addDoc, query, orderBy, onSnapshot, where, getDocs, limit, startAfter,
+  collection, addDoc, query, orderBy, where, getDocs, limit, startAfter, serverTimestamp, doc, updateDoc,
 } from 'firebase/firestore'
 import { firestore } from '../../firebase'
 import ScreenTemplate from '../../components/ScreenTemplate'
@@ -61,59 +61,75 @@ export default function Find() {
   const [lastFetchedData, setLastFetchedData] = useState(null)
 
   // Define the data generation function
-  const fetchPotentialMatches = async (itemCount) => {
-    const potentialMatchesCollection = firestore.collection('users').doc(userData.id).collection('potential_matches')
-    // where('__name__', '==', userData.id).get().then((snapshot) => {
+  const fetchPotentialMatches = async (itemCount = 15) => {
+    console.log('Fetching potential matches for user', userData.id)
+    // // // Get a reference to the potential matches collection.
+    const potentialMatchesCollection = collection(firestore, `/users/${userData.id}/potential_matches`)
 
-    // // Get a reference to the potential matches collection.
-    // const potentialMatchesCollection = collection(firestore, 'potential_matches')
+    // // // Create a query to get all potential matches for the current user, sorted by their match score.
+    const potentialMatchesQuery = query(potentialMatchesCollection, orderBy('createdAt', 'desc'), orderBy('matchScore', 'desc'), limit(itemCount))
+    // // // , orderBy('match_score', 'desc')
 
-    // // Create a query to get all potential matches for the current user, sorted by their match score.
-    const potentialMatchesQuery = query(potentialMatchesCollection, orderBy('match_score'), limit(itemCount))
-    // // , orderBy('match_score', 'desc')
-
-    // // Get the first page of results.
+    // // // Get the first page of results.
     let potentialMatchesSnapshot = null
 
-    if (lastFetchedData === null) {
-      potentialMatchesSnapshot = await getDocs(potentialMatchesQuery)
-    } else {
-      potentialMatchesSnapshot = await getDocs(query(potentialMatchesQuery, startAfter(lastFetchedData)))
-    }
+    // if (lastFetchedData === null) {
+    console.log('Loading first page of potential matches...')
+    potentialMatchesSnapshot = await getDocs(potentialMatchesQuery)
+    // } else {
+    //   console.log('Loading next page of potential matches...')
+    //   potentialMatchesSnapshot = await getDocs(query(potentialMatchesQuery, startAfter(lastFetchedData)))
+    // }
 
-    const potentialMatches = potentialMatchesSnapshot.docs.map((doc) => doc.data())
+    // Get the IDs of the potential matches and their match scores.
+    const potentialMatches = potentialMatchesSnapshot.docs.map((docP) => ({
+      id: docP.id,
+      matchScore: docP.data().matchScore,
+      viewedAt: docP.data().viewedAt,
+    }))
 
-    console.log(potentialMatches)
-
-    // Get the last document in the first page of results.
-    const lastDocument = potentialMatches[potentialMatches.length - 1]
-    setLastFetchedData(lastDocument.id)
-
-    return potentialMatches
+    // setLastFetchedData(potentialMatches[potentialMatches.length - 1])
 
     // Get a reference to the users collection.
-    // const usersRef = firebase.database().ref('users')
-    // // Get the profile of all users who are your potential matches.
-    // potentialMatchesQuery.get().then((snapshot) => {
-    //   // Get the profile of each user in the snapshot.
-    //   snapshot.forEach((userSnapshot) => {
-    //     // Get the user's profile data.
-    //     const userProfile = {
-    //     potentialMatchesapshot.child('name').val(),
-    //       email: userSnapshot.child('email').val(),
-    //       phoneNumber: userSnapshot.child('phone_number').val(),
-    //       avatar: userSnapshot.child('avatar').val(),
-    //       banner: userSnapshot.child('banner').val(),
-    //       whoAmI: userSnapshot.child('whoAmI').val(),
-    //       industries: userSnapshot.child('industries').val(),
-    //       businessStage: userSnapshot.child('businessStage').val(),
-    //       operationMode: userSnapshot.child('operationMode').val(),
-    //       location: userSnapshot.child('location').val(),
-    //     }
+    const usersCollection = collection(firestore, '/users')
 
-    //     // Do something with the user's profile data.
-    //   })
-    // })
+    // Create a query to get all of the users whose IDs match the potential match IDs.
+    const usersQuery = query(usersCollection, where('id', 'in', potentialMatches.map((match) => match.id)))
+
+    // Get the users.
+    const usersSnapshot = await getDocs(usersQuery)
+    const users = usersSnapshot.docs.map((docU) => docU.data())
+
+    // Add the matchScore property to the final user property in the returned users array.
+    const finalUsers = []
+    users.forEach((user) => {
+      const finalUser = {
+        key: user.id,
+        name: user.fullName,
+        image: user.avatar,
+        banner: user.bannerImage,
+        occupation: user.occupation,
+        industry: user.industry,
+        location: user.location,
+        rate: 'To Be Defined',
+        isPromoted: false,
+        matchScore: potentialMatches.find((match) => match.id === user.id).matchScore,
+        viewedAt: potentialMatches.find((match) => match.id === user.id).viewedAt,
+      }
+      finalUsers.push(finalUser)
+    })
+
+    console.log('finalUsers', finalUsers)
+    return finalUsers
+  }
+
+  const fetchData = async () => {
+    const newDataItems = await fetchPotentialMatches(10)
+    if (dataItems.length > 0) {
+      setDataItems((prevDataItems) => [...prevDataItems, ...newDataItems])
+    } else {
+      setDataItems(newDataItems)
+    }
   }
 
   const onLoadingMoreData = useCallback(() => {
@@ -124,13 +140,9 @@ export default function Find() {
     if (!loadingMoreData) {
       return
     }
-    const newDataItems = fetchPotentialMatches(5)
-    setTimeout(() => {
-      setDataItems((prevDataItems) => [...prevDataItems, ...newDataItems])
-      setLoadingMoreData(false)
-    }, 2000)
+    setLoadingMoreData(false)
+    fetchData()
   }, [loadingMoreData])
-
   // Render Footer
   const renderSpinner = () => {
     try {
@@ -149,9 +161,10 @@ export default function Find() {
     }
   }
 
+  // useEffect(() => { console.log('dataItems', dataItems) }, [dataItems])
+
   const renderItem = useCallback(({ item }) => (
     <UserListItem
-  // eslint-disable-next-line react/no-array-index-key
       name={item.name}
       image={item.image}
       occupation={item.occupation}
@@ -159,11 +172,20 @@ export default function Find() {
       location={item.location}
       rate={item.rate}
       isPromoted={item.isPromoted}
+      viewedAt={item.viewedAt ?? null}
       onPress={() => {
+        // save user is viewed
+        const docRef = doc(firestore, `/users/${userData.id}/potential_matches/${item.key}`)
+        // update dataItems for this item
+        setDataItems(dataItems.map((dataItem) => (item.key === dataItem.key ? { ...dataItem, viewedAt: serverTimestamp() } : dataItem)))
+        updateDoc(docRef, {
+          viewedAt: serverTimestamp(),
+        })
         // console.log('going to profile')
         navigation.navigate('ProfileStack', {
           screen: 'Profile',
           params: {
+            userId: item.key,
             userFullName: item.name,
             userAvatar: item.image,
             userBannerImage: item.banner,
@@ -173,14 +195,15 @@ export default function Find() {
       }}
     />
 
-  ), [])
+  ),
+  [])
 
   // like constructor to load data
   useEffect(() => {
     // console.log(`loading data, current dataItems length is: ${dataItems.length}`)
     if (dataItems.length === 0) {
-      const listData = fetchPotentialMatches(1)
-      setDataItems(listData)
+      fetchData()
+      setLoadingMoreData(false)
     }
   }, [])
 
