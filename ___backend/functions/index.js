@@ -11,6 +11,9 @@ const { getFirestore, Timestamp } = require("firebase-admin/firestore")
 
 initializeApp()
 
+// TODO lets put matchscore as 100 to 0 to -100
+// 100 to 0 means opossite users matching scoroe
+// 0 to -100 means same type of users similarity score
 /**
  * Calculate the match score of currentUser with user
  *
@@ -101,7 +104,7 @@ async function getPotentialMatches(user, timestamp, limit = -1, offset = -1) {
     // TODO: skip users who have low match scores
     const potentialMatch = {
       "matchScore": matchingScore,
-      "profileViewed": false,
+      "viewedAt": null,
       "checkLater": false,
       "notInterested": false,
       "createdAt": timestamp,
@@ -130,6 +133,10 @@ async function saveToDatabase(userId, potentialMatches) {
     // updating current user
     batch.set(potentialMatchRef, { ...matchData }, { merge: true })
     // updating corresponding user
+    // ****************IMPORTANT NOTE***************
+    // TODO What if my user type changed and
+    // I need to remove my match from existing user of my new type
+    // ****************IMPORTANT NOTE***************
     const otherUserRef = getFirestore()
         .collection("users")
         .doc(otherUserId)

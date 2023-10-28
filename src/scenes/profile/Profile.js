@@ -27,7 +27,6 @@ const Profile = () => {
     userId, userFullName, userAvatar, userBannerImage,
   } = route.params
   const { userData } = useContext(UserDataContext)
-  const userDataId = userId || userData.id // temp
   const bannerImageHardCoded = { uri: 'https://images.pexels.com/photos/818261/pexels-photo-818261.jpeg?auto=compress&cs=tinysrgb&w=400' }
   const [bannerImage, setBannerImage] = useState(userBannerImage?.uri ? userBannerImage : bannerImageHardCoded)
   // const [bannerSpinner, setBannerSpinner] = useState(true)
@@ -269,7 +268,10 @@ const Profile = () => {
                 <View style={styles.connectContainer}>
                   <Button
                     icon="account-arrow-right-outline"
-                    onPress={() => { console.log('connect button') }}
+                    onPress={() => {
+                      console.log('connect button')
+                      // send connection request
+                    }}
                     mode="elevated"
                     labelStyle={styles.buttonLabel}
                     style={styles.connectButton}
