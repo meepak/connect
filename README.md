@@ -237,23 +237,19 @@ as02156we+6ds+f6/809/9800987=--892q1``
 
 
 
-/chat_groups
-          chat_group_id:
-               title:
-               created_at:
-               last Message: [createdAt, Message, user ]
+---------------------------------------------
 
-/chat_members
-            chat_group_id
-                user_id:
-                    name
-                    image
-                    addedOn
-                     ??
+Here are some suggestions for how to make the Find tab super useful:
 
-/chat_messages
-            chat_message_id:
-                chat_group_id:
-                  message:
-                  created_at:
-                  user_id:
+Show the user's match score with each potential match. This will help the user to quickly identify the potential matches that are most likely to be a good fit for them.
+Allow the user to filter potential matches by criteria such as industry, occupation, business stage, location, and education. This will make it easier for the user to find potential matches that are a good fit for their specific needs.
+Allow the user to see which of their connections have also connected with each potential match. This will help the user to get a better idea of how well-connected each potential match is.
+Allow the user to send personalized messages to potential matches along with their connection requests. This will help the user to stand out from other users and make a good first impression.
+You could also change the name of the tab from "Find" to "Home". This would make it more clear that this is the main tab of the app and the place where users can go to find new potential matches and connect with other users.
+
+Here are some ideas for how to handle potential matches that have already been viewed:
+
+You could mark the potential matches as "viewed" and move them to a separate section of the tab. This would make it easier for the user to keep track of the potential matches that they have already seen.
+You could allow the user to "hide" potential matches that they are not interested in. This would remove the potential matches from the user's view until they decide to unhide them.
+You could implement a "swipe to match/reject" feature. This would allow the user to quickly dismiss potential matches that they are not interested in.
+Ultimately, the best way to handle potential matches that have already been viewed is to choose a method that is consistent with the overall design and functionality of your app.

@@ -60,7 +60,6 @@ const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
       }
     }
   }
-
   return (
     <View>
       {progress
@@ -74,7 +73,7 @@ const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
       <Avatar
         size={size}
         rounded
-        title={userData.fullName ?? null}
+        fullName={userData.fullName ?? null}
         url={avatar ?? null}
         onPress={() => {
           if (onEdited) {
