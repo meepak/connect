@@ -40,16 +40,16 @@ async function isThrottled(userId, timestamp) {
   const THROTTLE_SECONDS = 60 // TODO revise this period!!!
   // get current function tracking info for this user
   const trackFunctionTriggerRef = getFirestore()
-      .collection("track_function_triggers")
-      .doc(userId)
+      .collection(`/users/${userId}/track_function_triggers`)
+      .doc("calculateMatchScores")
 
   // Get the last trigger time.
   let lastTriggerTime = null
   await trackFunctionTriggerRef.get().then((doc) => {
-    if (doc.exists && doc.data().calculateMatchScore) {
-      lastTriggerTime = doc.data().calculateMatchScore
+    if (doc.exists && doc.data().lastTriggerTime) {
+      lastTriggerTime = doc.data().lastTriggerTime
     } else {
-      trackFunctionTriggerRef.set({ calculateMatchScore: timestamp })
+      trackFunctionTriggerRef.set({ lastTriggerTime: timestamp })
     }
   })
 
@@ -66,7 +66,7 @@ async function isThrottled(userId, timestamp) {
   }
 
   // Update the last trigger time.
-  await trackFunctionTriggerRef.update({ calculateMatchScore: timestamp })
+  await trackFunctionTriggerRef.update({ lastTriggerTime: timestamp })
   return false
 }
 
