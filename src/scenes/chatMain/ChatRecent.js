@@ -90,16 +90,16 @@ export default function ChatRecent() {
               isPromoted
               onPress={() => {
                 // console.log('going to chat')
-                navigation.navigate('ChatStack', {
-                  screen: 'Chat',
-                  params: {
-                    userId: 1,
-                    userFullName: name,
-                    // userAvatar: image,
-                    // userBannerImage: banner,
-                    // from: 'Find screen',
-                  },
-                })
+                // navigation.navigate('ChatStack', {
+                //   screen: 'Chat',
+                //   params: {
+                //     userId: 1,
+                //     userFullName: name,
+                //     // userAvatar: image,
+                //     // userBannerImage: banner,
+                //     // from: 'Find screen',
+                //   },
+                // })
               }}
             />
 

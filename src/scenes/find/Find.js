@@ -95,7 +95,12 @@ export default function Find() {
     const usersCollection = collection(firestore, '/users')
 
     // Create a query to get all of the users whose IDs match the potential match IDs.
-    const usersQuery = query(usersCollection, where('id', 'in', potentialMatches.map((match) => match.id)))
+    const matches = potentialMatches.map((match) => match.id)
+    if (matches.length === 0) {
+      console.log('No potential matches found for user', userData.id)
+      return []
+    }
+    const usersQuery = query(usersCollection, where('id', 'in', matches))
 
     // Get the users.
     const usersSnapshot = await getDocs(usersQuery)

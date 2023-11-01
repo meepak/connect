@@ -148,6 +148,11 @@ export default function Manage() {
       userIds.push(docC.id)
     })
 
+    if (userIds.length === 0) {
+      console.log('no connections found')
+      setSpinner(false)
+      return
+    }
     // Get a reference to the users collection.
     const usersCollection = collection(firestore, '/users')
 

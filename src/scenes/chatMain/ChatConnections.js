@@ -61,6 +61,12 @@ export default function ChatConnections() {
       userIds.push(docC.id)
     })
 
+    if (userIds.length === 0) {
+      console.log('No connections')
+      setSpinner(false)
+      return
+    }
+
     // Get a reference to the users collection.
     const usersCollection = collection(firestore, '/users')
 
