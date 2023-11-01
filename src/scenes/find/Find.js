@@ -10,9 +10,10 @@ import { useNavigation } from '@react-navigation/native'
 import {
   collection, addDoc, query, orderBy, where, getDocs, limit, startAfter, serverTimestamp, doc, updateDoc,
 } from 'firebase/firestore'
+import Spinner from 'react-native-loading-spinner-overlay'
 import { firestore } from '../../firebase'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import UserListItem from '../../components/UserListItem'
+import ListItemUser from '../../components/ListItemUser'
 import { UserDataContext } from '../../context/UserDataContext'
 
 const styles = (colors = null) => StyleSheet.create({
@@ -57,7 +58,7 @@ export default function Find() {
   const [dataItems, setDataItems] = useState([])
   const { colors } = useTheme()
   const { userData } = useContext(UserDataContext)
-
+  const [spinner, setSpinner] = useState(false)
   const [lastFetchedData, setLastFetchedData] = useState(null)
 
   // Define the data generation function
@@ -130,6 +131,7 @@ export default function Find() {
     } else {
       setDataItems(newDataItems)
     }
+    setSpinner(false)
   }
 
   const onLoadingMoreData = useCallback(() => {
@@ -164,7 +166,7 @@ export default function Find() {
   // useEffect(() => { console.log('dataItems', dataItems) }, [dataItems])
 
   const renderItem = useCallback(({ item }) => (
-    <UserListItem
+    <ListItemUser
       name={item.name}
       image={item.image}
       occupation={item.occupation}
@@ -178,8 +180,8 @@ export default function Find() {
         // save user is viewed
         const docRef = doc(firestore, `/users/${userData.id}/potential_matches/${item.key}`)
         // update dataItems for this item
-        const updatedDataItems = (prevDataItems) => prevDataItems.map((dataItem) => (dataItem.key === item.key ? { ...dataItem, viewedAt } : dataItem))
-        console.log('updated dataItems', updatedDataItems)
+        const updatedDataItems = ((prevDataItems) => prevDataItems.map((dataItem) => (dataItem.key === item.key ? { ...dataItem, viewedAt } : dataItem)))
+        // console.log('updated dataItems', updatedDataItems)
         setDataItems((prevDataItems) => updatedDataItems(prevDataItems))
         updateDoc(docRef, {
           viewedAt: serverTimestamp(),
@@ -204,26 +206,39 @@ export default function Find() {
   // like constructor to load data
   useEffect(() => {
     // console.log(`loading data, current dataItems length is: ${dataItems.length}`)
+    setSpinner(true)
     if (dataItems.length === 0) {
       fetchData()
       setLoadingMoreData(false)
     }
+    // setSpinner(false)
   }, [])
 
   return (
     <ScreenTemplate>
-      <View style={styles(colors).appBar}>
-        <Text style={styles.title}>Matches based on your preferences.</Text>
-        <Text style={styles.resultCount}>{dataItems.length} results.</Text>
-      </View>
-      <FlatList
-        data={dataItems}
-        renderItem={renderItem}
-        ListFooterComponent={renderSpinner}
-        keyExtractor={(item) => item.key}
-        onEndReached={onLoadingMoreData}
-        onEndReachedThreshold={0}
-        refreshing={loadingMoreData}
+      {!spinner
+        ? (
+          <>
+            <View style={styles(colors).appBar}>
+              <Text style={styles.title}>Matches based on your preferences.</Text>
+              <Text style={styles.resultCount}>{dataItems.length} results.</Text>
+            </View>
+            <FlatList
+              data={dataItems}
+              renderItem={renderItem}
+              ListFooterComponent={renderSpinner}
+              keyExtractor={(item) => item.key}
+              // onEndReached={onLoadingMoreData}
+              onEndReachedThreshold={0}
+              refreshing={loadingMoreData}
+            />
+          </>
+        )
+        : null}
+      <Spinner
+        visible={spinner}
+        textStyle={{ color: colors.onSurface }}
+        overlayColor="rgba(0,0,0,0.5)"
       />
     </ScreenTemplate>
   )

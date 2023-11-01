@@ -1,3 +1,4 @@
-import ChatMain from './ChatMain'
+import ChatConnections from './ChatConnections'
+import ChatRecent from './ChatRecent'
 
-export default ChatMain
+export { ChatConnections, ChatRecent }

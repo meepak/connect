@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   Alert, View, ImageBackground, StyleSheet, SafeAreaView, StatusBar, ScrollView,
 } from 'react-native'
@@ -9,7 +9,10 @@ import {
   useNavigation, useRoute,
 } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { doc, updateDoc } from 'firebase/firestore'
+import {
+  doc, updateDoc, serverTimestamp, getDoc, query, setDoc, collection,
+} from 'firebase/firestore'
+import Spinner from 'react-native-loading-spinner-overlay'
 import { firestore } from '../../firebase'
 
 import Avatar from '../../components/core/Avatar'
@@ -30,9 +33,11 @@ const Profile = () => {
   const bannerImageHardCoded = { uri: 'https://images.pexels.com/photos/818261/pexels-photo-818261.jpeg?auto=compress&cs=tinysrgb&w=400' }
   const [bannerImage, setBannerImage] = useState(userBannerImage?.uri ? userBannerImage : bannerImageHardCoded)
   // const [bannerSpinner, setBannerSpinner] = useState(true)
+  const [spinner, setSpinner] = useState(true)
+  const [connectionStatus, setConnectionStatus] = useState([])
 
   // TODO find more secure way to verify editMode, probably validate userId through auth token
-  const editMode = userId !== undefined && userId !== null
+  const editMode = userId === userData.id
   console.log(`editing ;${editMode}`)
 
   // TODO orgaize this as utility functions
@@ -82,6 +87,28 @@ const Profile = () => {
       console.log('Avatar updated in db')
     })
   }
+
+  async function fetchConnection() {
+    const docSnap = await getDoc(doc(firestore, 'users', userData.id, 'connection', userId))
+
+    if (docSnap.exists()) {
+      console.log('Document data:', docSnap.data())
+      setConnectionStatus(docSnap.data())
+    } else {
+      console.log('No such document!')
+    }
+    setSpinner(false)
+  }
+
+  useEffect(() => {
+    if (!editMode) {
+      // setSpinner(true)
+      fetchConnection()
+      console.log('connection status', connectionStatus)
+    } else {
+      setSpinner(false)
+    }
+  }, [])
 
   const styles = StyleSheet.create({
     container: {
@@ -219,112 +246,140 @@ const Profile = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.banner}>
-        <ImageBackground source={bannerImage} style={styles.bannerImage}>
-          <View style={styles.avatarContainer}>
-            {editMode
-              ? <AvatarOfAuthUser size={120} onEdited={(newAvatar) => onAvatarEdited(newAvatar)} />
-              : <Avatar fullName={userFullName} url={userAvatar || null} width={120} height={120} rounded />}
-          </View>
-          {/* <View style={styles.BackButtonContainer}> */}
-          <IconButton
-            icon="arrow-left"
-            size={25}
-            iconColor={colors.onBackground}
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
-          />
-          {editMode
-            ? (
-              <IconButton
-                icon="lead-pencil"
-                size={22}
-                iconColor={colors.onBackground}
-                style={styles.editBannerImage}
-                onPress={() => {
-                  ImageSelectAndUpload({
-                    userId: userDataId, setProgress: setUploadProgress, onFinished: onBanerEdited, resizeWidth: 800, imageCompression: 1,
-                  })
-                }}
-              />
-            )
-            : <></>}
-          <View style={styles.userTypeLabelContainer}>
-            <Text style={styles.userTypeLabel}>{editMode ? 'Searching for Associates' : 'Open for opportunity'}</Text>
-          </View>
-        </ImageBackground>
-      </View>
-      <ScrollView style={styles.scrollContent}>
-        {/* USER INTRO */}
-        <View>
-          <View style={styles.userIntro}>
-            <Text style={styles.userFullName}>{userFullName} and some v V long name</Text>
-            <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
-            {/* Location */}
-            <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
-            {/* connect button */}
-            {!editMode
-              ? (
-                <View style={styles.connectContainer}>
-                  <Button
-                    icon="account-arrow-right-outline"
-                    onPress={() => {
-                      console.log('connect button')
-                      // send connection request
-                    }}
-                    mode="elevated"
-                    labelStyle={styles.buttonLabel}
-                    style={styles.connectButton}
-                  >Request Connection
-                  </Button>
+      <Spinner
+        visible={spinner}
+        textStyle={{ color: colors.onSurface }}
+        overlayColor="rgba(0,0,0,0.5)"
+      />
+      {!spinner
+        ? (
+          <>
+            <View style={styles.banner}>
+              <ImageBackground source={bannerImage} style={styles.bannerImage}>
+                <View style={styles.avatarContainer}>
+                  {editMode
+                    ? <AvatarOfAuthUser size={120} onEdited={(newAvatar) => onAvatarEdited(newAvatar)} />
+                    : <Avatar fullName={userFullName} url={userAvatar || null} width={120} height={120} rounded />}
                 </View>
-              )
-              : <></>}
-            {/* Onboarding point list */}
-            <View style={styles.userHighlightedList}>
-              {
-            [
-              { key: 'Investor/Active Partner/Advisory Partner' },
-              { key: 'Interested in business at any stage' },
-              { key: 'Occupation skill' },
-              { key: 'Work arrangement' },
-              { key: 'Mode of Operation' },
-              { key: 'Communication Preference' },
-              { key: 'References / NDA / Background Check' },
-            ].map((item) => (
-              <View style={styles.userHighlightedListItem} key={item.key}>
-                <Icon style={styles.userHighlightedListItemText} name="check" />
-                <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
-              </View>
-            ))
-          }
+                {/* <View style={styles.BackButtonContainer}> */}
+                <IconButton
+                  icon="arrow-left"
+                  size={25}
+                  iconColor={colors.onBackground}
+                  style={styles.backButton}
+                  onPress={() => navigation.goBack()}
+                />
+                {editMode
+                  ? (
+                    <IconButton
+                      icon="lead-pencil"
+                      size={22}
+                      iconColor={colors.onBackground}
+                      style={styles.editBannerImage}
+                      onPress={() => {
+                        ImageSelectAndUpload({
+                          userId, setProgress: setUploadProgress, onFinished: onBanerEdited, resizeWidth: 800, imageCompression: 1,
+                        })
+                      }}
+                    />
+                  )
+                  : <></>}
+                <View style={styles.userTypeLabelContainer}>
+                  <Text style={styles.userTypeLabel}>{editMode ? 'Searching for Associates' : 'Open for opportunity'}</Text>
+                </View>
+              </ImageBackground>
             </View>
-          </View>
-          {editMode
-            ? (
-              <IconButton
-                icon="lead-pencil"
-                size={22}
-                iconColor={colors.onBackground}
+            <ScrollView style={styles.scrollContent}>
+              {/* USER INTRO */}
+              <View>
+                <View style={styles.userIntro}>
+                  <Text style={styles.userFullName}>{userFullName} and some v V long name</Text>
+                  <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+                  {/* Location */}
+                  <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+                  {/* connect button */}
+                  {(!editMode)
+                    ? (
+                      <View style={styles.connectContainer}>
+                        <Button
+                          disabled={!(connectionStatus.requestSent === undefined && connectionStatus.requestReceived === undefined)}
+                          icon="account-arrow-right-outline"
+                          onPress={async () => {
+                            console.log('connect button')
+                            // send connection request, TODO ADD/UPDATE APPROPRIATELY LATER
+                            await setDoc(doc(firestore, 'users', userData.id, 'connection', userId), {
+                              requestSent: serverTimestamp(),
+                            })
+                            setConnectionStatus({ requestSent: serverTimestamp() })
+
+                            // TODO -- do this through firebase function, as in client
+                            // auth user can only write their own document,
+                            // also probably notification need to be generated
+                            await setDoc(doc(firestore, 'users', userId, 'connection', userData.id), {
+                              requestReceived: serverTimestamp(),
+                            })
+                          }}
+                          mode="elevated"
+                          labelStyle={styles.buttonLabel}
+                          style={styles.connectButton}
+                        >
+                          {
+                           // eslint-disable-next-line no-nested-ternary
+                           connectionStatus.requestSent !== undefined
+                             ? 'Connection Request Sent'
+                             : (connectionStatus.requestReceived !== undefined
+                               ? 'Connection Request Received'
+                               : 'Request Connection')
+                        }
+                        </Button>
+                      </View>
+                    )
+                    : <></>}
+                  {/* Onboarding point list */}
+                  <View style={styles.userHighlightedList}>
+                    {
+            [
+              { key: 'Investor/Active Partner/Advisory Partner' },
+              { key: 'Interested in business at any stage' },
+              { key: 'Occupation skill' },
+              { key: 'Work arrangement' },
+              { key: 'Mode of Operation' },
+              { key: 'Communication Preference' },
+              { key: 'References / NDA / Background Check' },
+            ].map((item) => (
+              <View style={styles.userHighlightedListItem} key={item.key}>
+                <Icon style={styles.userHighlightedListItemText} name="check" />
+                <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
+              </View>
+            ))
+          }
+                  </View>
+                </View>
+                {editMode
+                  ? (
+                    <IconButton
+                      icon="lead-pencil"
+                      size={22}
+                      iconColor={colors.onBackground}
               // underlayColor={colors.background}
-                style={styles.editUserIntro}
-                onPress={() => {
-                  console.log('Edit User Intro')
-                }}
-              />
-            )
-            : <></>}
-        </View>
-        {/* Rest of your content */}
-        {/* USER INTRO */}
-        <Surface style={styles.surfaceView}>
-          <Text style={styles.userFullName}>Professional Experience</Text>
-          <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
-          {/* Location */}
-          <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
-          {/* Onboarding point list */}
-          <View style={styles.userHighlightedList}>
-            {
+                      style={styles.editUserIntro}
+                      onPress={() => {
+                        console.log('Edit User Intro')
+                      }}
+                    />
+                  )
+                  : <></>}
+              </View>
+              {/* Rest of your content */}
+              {/* USER INTRO */}
+              <Surface style={styles.surfaceView}>
+                <Text style={styles.userFullName}>Professional Experience</Text>
+                <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+                {/* Location */}
+                <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+                {/* Onboarding point list */}
+                <View style={styles.userHighlightedList}>
+                  {
             [
               { key: 'Investor/Active Partner/Advisory Partner' },
               { key: 'Interested in business at any stage' },
@@ -340,17 +395,17 @@ const Profile = () => {
               </View>
             ))
           }
-          </View>
-        </Surface>
-        {/* USER INTRO */}
-        <Surface style={styles.surfaceView}>
-          <Text style={styles.userFullName}>Educational Qualifications</Text>
-          <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
-          {/* Location */}
-          <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
-          {/* Onboarding point list */}
-          <View style={styles.userHighlightedList}>
-            {
+                </View>
+              </Surface>
+              {/* USER INTRO */}
+              <Surface style={styles.surfaceView}>
+                <Text style={styles.userFullName}>Educational Qualifications</Text>
+                <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+                {/* Location */}
+                <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+                {/* Onboarding point list */}
+                <View style={styles.userHighlightedList}>
+                  {
             [
               { key: 'Investor/Active Partner/Advisory Partner' },
               { key: 'Interested in business at any stage' },
@@ -366,17 +421,17 @@ const Profile = () => {
               </View>
             ))
           }
-          </View>
-        </Surface>
-        {/* USER INTRO */}
-        <Surface style={styles.surfaceView}>
-          <Text style={styles.userFullName}>Licenses & Certifications</Text>
-          <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
-          {/* Location */}
-          <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
-          {/* Onboarding point list */}
-          <View style={styles.userHighlightedList}>
-            {
+                </View>
+              </Surface>
+              {/* USER INTRO */}
+              <Surface style={styles.surfaceView}>
+                <Text style={styles.userFullName}>Licenses & Certifications</Text>
+                <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+                {/* Location */}
+                <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+                {/* Onboarding point list */}
+                <View style={styles.userHighlightedList}>
+                  {
             [
               { key: 'Investor/Active Partner/Advisory Partner' },
               { key: 'Interested in business at any stage' },
@@ -392,17 +447,17 @@ const Profile = () => {
               </View>
             ))
           }
-          </View>
-        </Surface>
-        {/* USER INTRO */}
-        <Surface style={styles.surfaceView}>
-          <Text style={styles.userFullName}>Langauges</Text>
-          <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
-          {/* Location */}
-          <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
-          {/* Onboarding point list */}
-          <View style={styles.userHighlightedList}>
-            {
+                </View>
+              </Surface>
+              {/* USER INTRO */}
+              <Surface style={styles.surfaceView}>
+                <Text style={styles.userFullName}>Langauges</Text>
+                <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+                {/* Location */}
+                <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+                {/* Onboarding point list */}
+                <View style={styles.userHighlightedList}>
+                  {
             [
               { key: 'Investor/Active Partner/Advisory Partner' },
               { key: 'Interested in business at any stage' },
@@ -418,9 +473,11 @@ const Profile = () => {
               </View>
             ))
           }
-          </View>
-        </Surface>
-      </ScrollView>
+                </View>
+              </Surface>
+            </ScrollView>
+          </>
+        ) : null }
     </SafeAreaView>
   )
 }

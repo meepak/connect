@@ -2,7 +2,7 @@ import React from 'react'
 import { useTheme } from 'react-native-paper'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import Chat from '../../../scenes/chat'
-import ChatMain from '../../../scenes/chatMain'
+import { ChatRecent } from '../../../scenes/chatMain'
 import HeaderStyle from '../../../components/header/HeaderStyle'
 import Header4Chat from '../../../components/header/Header4Chat'
 import { ChatTabs } from '../tabsTop'
@@ -40,8 +40,8 @@ const ChatStack = () => {
         />
 
         <Stack.Screen
-          name="ChatMain"
-          component={ChatMain}
+          name="ChatRecent"
+          component={ChatRecent}
         />
 
         <Stack.Screen

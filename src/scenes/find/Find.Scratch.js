@@ -12,7 +12,7 @@ import * as Animatable from 'react-native-animatable'
 import ScreenTemplate from '../../components/ScreenTemplate'
 // import Button from '../../components/core/Button'
 // import { UserDataContext } from '../../context/UserDataContext'
-import UserListItem from '../../components/UserListItem'
+import ListItemUser from '../../components/ListItemUser'
 
 const styles = (colors = null) => StyleSheet.create({
   main: {
@@ -178,7 +178,7 @@ export default function FindScratch() {
   }
 
   const renderItem = useCallback(({ item }) => (
-    <UserListItem
+    <ListItemUser
   // eslint-disable-next-line react/no-array-index-key
       name={item.name}
       image={item.image}

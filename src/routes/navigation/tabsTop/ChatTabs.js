@@ -3,7 +3,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { useTheme } from 'react-native-paper'
 // import screenOptions from '../../navigationProps'
 
-import ChatMain from '../../../scenes/chatMain'
+import { ChatRecent, ChatConnections } from '../../../scenes/chatMain'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -16,13 +16,13 @@ const ChatTabs = () => {
     >
       <Tab.Screen
         name="Recent"
-        component={ChatMain}
+        component={ChatRecent}
         options={{ tabBarLabel: 'Recent' }}
       />
       <Tab.Screen
-        name="Others"
-        component={ChatMain}
-        options={{ tabBarLabel: 'Others' }}
+        name="Connections"
+        component={ChatConnections}
+        options={{ tabBarLabel: 'Connections' }}
       />
     </Tab.Navigator>
   )
