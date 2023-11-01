@@ -234,3 +234,26 @@ as02156we+6ds+f6/809/9800987=--892q1``
           /profile_viewed
           /check_later
           /not_interested
+
+
+
+/chat_groups
+          chat_group_id:
+               title:
+               created_at:
+               last Message: [createdAt, Message, user ]
+
+/chat_members
+            chat_group_id
+                user_id:
+                    name
+                    image
+                    addedOn
+                     ??
+
+/chat_messages
+            chat_message_id:
+                chat_group_id:
+                  message:
+                  created_at:
+                  user_id:

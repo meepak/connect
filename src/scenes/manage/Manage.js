@@ -1,12 +1,16 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, {
+  useState, useContext, useEffect, useCallback,
+} from 'react'
 import {
-  View, StyleSheet, ScrollView,
+  View, StyleSheet, ScrollView, RefreshControl,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Surface, Text } from 'react-native-paper'
 import Dialog from 'react-native-dialog'
 import Spinner from 'react-native-loading-spinner-overlay'
-import { doc, deleteDoc, onSnapshot } from 'firebase/firestore'
+import {
+  doc, deleteDoc, onSnapshot, collection, query, where, getDocs, setDoc, serverTimestamp, updateDoc,
+} from 'firebase/firestore'
 import { signOut, deleteUser } from 'firebase/auth'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/core/Button'
@@ -17,6 +21,7 @@ import { colors, fontSize } from '../../theme'
 import AvatarOfAuthUser from '../../components/AvatarOfAuthUser'
 import sendNotification from '../../utils/SendNotification'
 import TestFontsize from '../../components/TestFontsize'
+import ListItemConnection from '../../components/ListItemConnection'
 
 const styles = StyleSheet.create({
   main: {
@@ -61,23 +66,16 @@ export default function Manage() {
   const navigation = useNavigation()
   const [visible, setVisible] = useState(false)
   const [spinner, setSpinner] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
   const [token, setToken] = useState('')
+  const [connectionRequestReceived, setConnectionRequestReceived] = useState([])
+  const [connectionRequestSent, setConnectionRequestSent] = useState([])
 
-  // useEffect(() => {
-  //   console.log('Manage screen')
-  // }, [])
-
-  useEffect(() => {
-    const tokensRef = doc(firestore, 'tokens', userData.id)
-    const tokenListner = onSnapshot(tokensRef, (querySnapshot) => {
-      if (querySnapshot.exists) {
-        const data = querySnapshot.data()
-        setToken(data)
-      } else {
-        console.log('No such document!')
-      }
-    })
-    return () => tokenListner()
+  const onRefresh = useCallback(() => {
+    setRefreshing(true)
+    setTimeout(() => {
+      setRefreshing(false)
+    }, 200)
   }, [])
 
   const onNotificationPress = async () => {
@@ -139,9 +137,206 @@ export default function Manage() {
     }
   }
 
+  async function fetchConnection() {
+    const connections = []
+    const userIds = []
+    const docSnap = await getDocs(collection(firestore, 'users', userData.id, 'connection'))
+    docSnap.forEach((docC) => {
+      // doc.data() is never undefined for query doc snapshots
+      // connections.push({ [docC.id]: docC.data() })
+      connections[docC.id] = docC.data()
+      userIds.push(docC.id)
+    })
+
+    // Get a reference to the users collection.
+    const usersCollection = collection(firestore, '/users')
+
+    // Create a query to get all of the users whose IDs match the potential match IDs.
+    const usersQuery = query(usersCollection, where('id', 'in', userIds))
+
+    // Get the users.
+    const usersSnapshot = await getDocs(usersQuery)
+    const users = usersSnapshot.docs.map((docU) => docU.data())
+
+    const requestReceived = []
+    const requestSent = []
+    users.forEach((user) => {
+      if (connections[user.id].requestAccepted
+        || connections[user.id].requestRejected
+        || connections[user.id].requestCancelled) {
+        return
+      }
+      const finalConnection = {
+        ...connections[user.id],
+        key: user.id,
+        name: user.fullName,
+        image: user.avatar,
+        banner: user.bannerImage,
+        occupation: user.occupation,
+        industry: user.industry,
+        location: user.location,
+        // rate: 'To Be Defined',
+        // isPromoted: false,
+        // matchScore: potentialMatches.find((match) => match.id === user.id).matchScore,
+        // viewedAt: potentialMatches.find((match) => match.id === user.id).viewedAt,
+      }
+      if (finalConnection.requestReceived) {
+        // finalConnection.requestReceived = finalConnection.requestReceived.toLocaleTimeString()
+        // console.log(finalConnection.requestReceived)
+        requestReceived.push(finalConnection)
+      }
+      if (finalConnection.requestSent) {
+        // finalConnection.requestSent = finalConnection.requestReceived.toLocaleTimeString()
+        requestSent.push(finalConnection)
+      }
+    })
+
+    // console.log(requestReceived)
+    setConnectionRequestReceived(requestReceived)
+    setConnectionRequestSent(requestSent)
+
+    setSpinner(false)
+  }
+
+  const onAcceptConnection = async (connection) => {
+    console.log(`Connection Accepted - ${connection.key}`)
+    // send connection request, TODO ADD/UPDATE APPROPRIATELY LATER
+    await updateDoc(doc(firestore, 'users', userData.id, 'connection', connection.key), {
+      requestAccepted: serverTimestamp(),
+    })
+
+    // set state, to be revised properly later
+    const newConnectionRequestReceived = []
+    connectionRequestReceived.forEach((requestReceived) => {
+      if (requestReceived.key === connection.key) {
+        const newRequestReceived = { ...requestReceived, requestAccepted: serverTimestamp() }
+        newConnectionRequestReceived.push(newRequestReceived)
+      } else {
+        newConnectionRequestReceived.push(requestReceived)
+      }
+    })
+    setConnectionRequestReceived(newConnectionRequestReceived)
+    // setConnectionStatus({ requestSent: serverTimestamp() })
+
+    // TODO -- do this through firebase function, as in client
+    // auth user can only write their own document,
+    // also probably notification need to be generated
+    await updateDoc(doc(firestore, 'users', connection.key, 'connection', userData.id), {
+      requestAccepted: serverTimestamp(),
+    })
+  }
+  const onRejectConnection = async (connection) => {
+    console.log(`Connection Rejected - ${connection.key}`)
+    // send connection request, TODO ADD/UPDATE APPROPRIATELY LATER
+    await updateDoc(doc(firestore, 'users', userData.id, 'connection', connection.key), {
+      requestRejected: serverTimestamp(),
+    })
+
+    // set state, to be revised properly later
+    const newConnectionRequestReceived = []
+    connectionRequestReceived.forEach((requestReceived) => {
+      if (requestReceived.key === connection.key) {
+        const newRequestReceived = { ...requestReceived, requestRejected: serverTimestamp() }
+        newConnectionRequestReceived.push(newRequestReceived)
+      } else {
+        newConnectionRequestReceived.push(requestReceived)
+      }
+    })
+    setConnectionRequestReceived(newConnectionRequestReceived)
+    // setConnectionStatus({ requestSent: serverTimestamp() })
+
+    // TODO -- do this through firebase function, as in client
+    // auth user can only write their own document,
+    // also probably notification need to be generated
+    await updateDoc(doc(firestore, 'users', connection.key, 'connection', userData.id), {
+      requestRejected: serverTimestamp(),
+    })
+  }
+  const onCancelConnection = async (connection) => {
+    console.log(`Connection Cancelled - ${connection.key}`)
+    // send connection request, TODO ADD/UPDATE APPROPRIATELY LATER
+    await updateDoc(doc(firestore, 'users', userData.id, 'connection', connection.key), {
+      requestCancelled: serverTimestamp(),
+    })
+
+    // set state, to be revised properly later
+    const newConnectionRequestSent = []
+    connectionRequestSent.forEach((requestSent) => {
+      if (requestSent.key === connection.key) {
+        const newRequestSent = { ...requestSent, requestCancelled: serverTimestamp() }
+        newRequestSent.push(newRequestSent)
+      } else {
+        newConnectionRequestSent.push(requestSent)
+      }
+    })
+    setConnectionRequestReceived(newConnectionRequestSent)
+    // setConnectionStatus({ requestSent: serverTimestamp() })
+
+    // TODO -- do this through firebase function, as in client
+    // auth user can only write their own document,
+    // also probably notification need to be generated
+    await updateDoc(doc(firestore, 'users', connection.key, 'connection', userData.id), {
+      requestCancelled: serverTimestamp(),
+    })
+  }
+
+  useEffect(() => {
+    setSpinner(true)
+    fetchConnection()
+  }, [refreshing])
+
+  useEffect(() => {
+    const tokensRef = doc(firestore, 'tokens', userData.id)
+    const tokenListner = onSnapshot(tokensRef, (querySnapshot) => {
+      if (querySnapshot.exists) {
+        const data = querySnapshot.data()
+        setToken(data)
+      } else {
+        console.log('No such document!')
+      }
+    })
+    return () => tokenListner()
+  }, [])
+
+  const ConnectionRequests = () => (
+    <View>
+      <Text>Connection Request Received - </Text>
+      {connectionRequestReceived.map((connection) => (
+        <ListItemConnection
+          key={connection.key}
+          name={connection.name}
+          image={connection.image}
+          industry={connection.industry}
+          location={connection.location}
+          // date={connection.requestReceived}
+          onYes={() => onAcceptConnection(connection)}
+          onNo={() => onRejectConnection(connection)}
+        />
+      ))}
+      <Text>Connection Request Sent - </Text>
+      {connectionRequestSent.map((connection) => (
+        <ListItemConnection
+          key={connection.key}
+          name={connection.name}
+          image={connection.image}
+          industry={connection.industry}
+          location={connection.location}
+          // date={connection.requestReceived}
+          onNo={() => onCancelConnection(connection)}
+        />
+      ))}
+    </View>
+  )
+
   return (
     <ScreenTemplate>
-      <ScrollView style={styles.main}>
+      <ScrollView
+        style={styles.main}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <ConnectionRequests />
         <View style={styles.avatar}>
           <AvatarOfAuthUser
             size="xlarge"

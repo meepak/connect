@@ -7,22 +7,23 @@ import {
 } from 'react-native-paper'
 import Avatar from './core/Avatar'
 
-const UserListItem = ({
-  name, industry, location, occupation, isPromoted, image, onPress, viewedAt,
+const ListItemChat = ({
+  name, industry, location, occupation, isPromoted, image, onPress,
 }) => {
   const { colors } = useTheme()
-  // console.log(`${name} is viewed at ${viewedAt}`)
-  const fontWeight = viewedAt === null || viewedAt === undefined ? 900 : 100
-  const color = viewedAt === null || viewedAt === undefined ? colors.onBackground : colors.onSurfaceDisabled
+
   const styles = StyleSheet.create({
     container: {
+      flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
       paddingLeft: 16,
       // shadowOffset: { width: 0, height: 2 },
       // shadowOpacity: 0.2,
       // shadowRadius: 4,
-      marginTop: 15,
+      marginTop: 10,
+      marginBottom: 5,
+      justifyContent: 'space-between',
     },
     Image: {
       alignSelf: 'flex-start',
@@ -31,33 +32,34 @@ const UserListItem = ({
     //   borderRadius: 32,
     },
     Info: {
-      flex: 1,
       alignSelf: 'flex-start',
       marginLeft: 10,
     },
     Title: {
       fontSize: 18,
-      fontWeight,
-      color,
     },
     Company: {
       fontSize: 16,
-      color,
     },
     Location: {
       fontSize: 14,
-      color,
     },
     Rate: {
       fontSize: 16,
-      fontWeight,
-      color,
     },
-    Promoted: {
-      padding: 4,
-      borderRadius: 2,
+    divider: {
+      marginTop: 5,
+    },
+    DateAgo: {
+      flex: 1,
+      alignSelf: 'flex-start',
+      alignItems: 'flex-end',
+      justifyContent: 'center',
+      marginRight: 20,
+    },
+    Date: {
       fontSize: 12,
-      color,
+      color: colors.surfaceVariant,
     },
   })
 
@@ -70,18 +72,18 @@ const UserListItem = ({
       rippleColor="rgba(0, 0, 0, .32)"
     >
       <View style={styles.container}>
-        <Avatar fullName={name} url={image} style={styles.Image} width={55} height={55} rounded={false} />
+        <Avatar fullName={name} url={image} style={styles.Image} width={55} height={55} rounded />
         <View style={styles.Info}>
           <Text style={styles.Title}>{name}</Text>
-          <Text style={styles.Company}>{industry}</Text>
-          <Text style={styles.Location}>{location}</Text>
-          <Text style={styles.Rate}>{occupation}</Text>
-          {isPromoted && <Text style={styles.Promoted}>Promoted</Text>}
-          <Divider />
+          <Text style={styles.Company}>{location}</Text>
+          <Divider style={styles.divider} />
+        </View>
+        <View style={styles.DateAgo}>
+          <Text style={styles.Date}>Thurs</Text>
         </View>
       </View>
     </TouchableRipple>
   )
 }
 
-export default UserListItem
+export default ListItemChat

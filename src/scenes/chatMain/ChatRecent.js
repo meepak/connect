@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 
 import ScreenTemplate from '../../components/ScreenTemplate'
 // import { UserDataContext } from '../../context/UserDataContext'
-import ChatListItem from '../../components/ChatListItem'
+import ListItemChat from '../../components/ListItemChat'
 
 const styles = StyleSheet.create({
   main: {
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function ChatMain() {
+export default function ChatRecent() {
   const navigation = useNavigation()
   // const [token, setToken] = useState('')
   // const { userData } = useContext(UserDataContext)
@@ -66,7 +66,7 @@ export default function ChatMain() {
 
   return (
     <ScreenTemplate>
-      <Text style={styles.Title}>Your connections.</Text>
+      <Text style={styles.Title}>Continue chatting...</Text>
       <Text style={styles.ResultCount}>Let&apos;s chat!!.</Text>
       <ScrollView
         style={styles.main}
@@ -78,7 +78,7 @@ export default function ChatMain() {
           const name = generateRandomName()
           const image = index % 2 === 0 ? images[index / 2] : null
           return (
-            <ChatListItem
+            <ListItemChat
           // eslint-disable-next-line react/no-array-index-key
               key={index + 1}
               name={name}
