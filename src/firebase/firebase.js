@@ -7,15 +7,15 @@ import { getFirestore, connectFirestoreEmulator, initializeFirestore } from 'fir
 import { getStorage, connectStorageEmulator } from 'firebase/storage'
 import { getReactNativePersistence } from 'firebase/auth/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-// eslint-disable-next-line import/no-unresolved
-import { USE_FIREBASE_EMULATOR as useEmulator } from '@env'
 import { firebaseKey } from '../config'
 
 const app = initializeApp(firebaseKey)
 
-// const localhost = '10.0.2.2' // works for android virtual machine
-const localhost = '192.168.1.111'
-// const localhost = '127.0.0.1'
+const localhost = process.env.EXPO_PUBLIC_FIREBASE_EMULATOR_IP
+const useEmulator = process.env.EXPO_PUBLIC_USE_FIREBASE_EMULATOR
+const authPort = process.env.EXPO_PUBLIC_FIREBASE_EMULATOR_AUTH_PORT
+const firestorePort = process.env.EXPO_PUBLIC_FIREBASE_EMULATOR_FIRESTORE_PORT
+const storagePort = process.env.EXPO_PUBLIC_FIREBASE_EMULATOR_STORAGE_PORT
 
 const auth = useEmulator
   ? getAuth()
@@ -24,7 +24,7 @@ const auth = useEmulator
   })
 
 if (useEmulator) {
-  connectAuthEmulator(auth, `http://${localhost}:9099`)
+  connectAuthEmulator(auth, `http://${localhost}:${authPort}`)
 }
 
 const firestore = useEmulator
@@ -34,7 +34,7 @@ const firestore = useEmulator
   })
 
 if (useEmulator) {
-  connectFirestoreEmulator(firestore, localhost, 8089)
+  connectFirestoreEmulator(firestore, localhost, firestorePort)
 }
 
 const storage = useEmulator
@@ -42,7 +42,7 @@ const storage = useEmulator
   : getStorage(app)
 
 if (useEmulator) {
-  connectStorageEmulator(storage, localhost, 9199)
+  connectStorageEmulator(storage, localhost, storagePort)
 }
 
 export { auth, firestore, storage }
