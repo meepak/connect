@@ -6,6 +6,7 @@ import { Text, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import PropTypes from 'prop-types'
+import { GOOGLE_PLACES_API_KEY } from '@env'
 import { layout } from '../../theme'
 
 // TODO -- geolocation autocomplete
@@ -98,7 +99,7 @@ const SelectLocation = ({ route }) => {
           handleSelect(data.description)
         }}
         query={{
-          key: 'AIzaSyDSfNDyxe_X5EpgkcdJw4zYovB-P5FtBTw', // TODO - https://reactnative.dev/docs/security#storing-sensitive-info
+          key: { GOOGLE_PLACES_API_KEY }, // TODO - https://reactnative.dev/docs/security#storing-sensitive-info
           language: 'en',
         }}
       />

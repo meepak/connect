@@ -122,7 +122,9 @@ const Occupation = ({ route }) => {
   }, [allOccupations, query])
 
   useEffect(() => {
-    loadOccupations().then((item) => setAllOccupations(item))
+    loadOccupations()
+      .then((item) => setAllOccupations(item))
+      .catch((error) => console.log(error))
   }, [])
 
   return (

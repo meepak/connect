@@ -22,7 +22,7 @@ module.exports = (api) => {
             scenes: './src/scenes',
             theme: './src/theme',
             utils: './src/utils',
-            slices: './src/slices',
+            // slices: './src/slices',
           },
         },
       ],

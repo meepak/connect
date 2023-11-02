@@ -46,14 +46,17 @@ const ImageSelectAndUpload = async ({
           setProgress(`${parseInt(progressVar, 10)}%`)
         },
         (error) => {
-          console.log(error)
-          Alert.alert('Error', 'Upload failed.')
+          throw error
         },
         () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setProgress('')
-            onFinished(downloadURL)
-          })
+          getDownloadURL(uploadTask.snapshot.ref)
+            .then((downloadURL) => {
+              setProgress('')
+              onFinished(downloadURL)
+            })
+            .catch((error) => {
+              throw error
+            })
         },
       )
     }

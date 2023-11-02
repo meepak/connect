@@ -52,6 +52,10 @@ async function isThrottled(userId, timestamp) {
       trackFunctionTriggerRef.set({ lastTriggerTime: timestamp })
     }
   })
+      .catch((error) => {
+        logger.error("Error getting last trigger time", error)
+        return false
+      })
 
   // Check if we need to throttle.
   if (lastTriggerTime) {
@@ -176,7 +180,13 @@ async function savePotentialMatches(user, timestamp, limit = -1, offset = -1) {
                   )
                 }
               })
+              .catch((error) => {
+                throw error
+              })
         }
+      })
+      .catch((error) => {
+        logger.error("Error in savePotentialMatches", error)
       })
 }
 

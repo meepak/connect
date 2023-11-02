@@ -92,44 +92,48 @@ const Chat = () => {
 
     console.log(JSON.stringify(messages))
     let unsubscribe
-    fetchChatGroup().then((chatGroupId) => {
-      console.log(`got the chat group id ${chatGroupId}`)
-      setCurrentChatGroupId(chatGroupId)
-      const chatMessagesRef = collection(firestore, `/chats/${chatGroupId}/messages`)
-      // This is returning all the records of chat every time, why??
-      const q = query(chatMessagesRef, orderBy('createdAt', 'desc'))
-      // const q = query(collection(firestore, 'chat-messages'), orderBy('createdAt', 'desc')) // , limit(20))
-      unsubscribe = onSnapshot(q, (snapshot) => {
-      // console.log('In snapshot ')
-        setMessages(snapshot.docs.map((doc) => {
-          const msg = {
-            id: doc.data().id,
-            createdAt: doc.data().createdAt.toDate(),
-            text: doc.data().text,
-            userId: doc.data().userId,
-          }
+    fetchChatGroup()
+      .then((chatGroupId) => {
+        console.log(`got the chat group id ${chatGroupId}`)
+        setCurrentChatGroupId(chatGroupId)
+        const chatMessagesRef = collection(firestore, `/chats/${chatGroupId}/messages`)
+        // This is returning all the records of chat every time, why??
+        const q = query(chatMessagesRef, orderBy('createdAt', 'desc'))
+        // const q = query(collection(firestore, 'chat-messages'), orderBy('createdAt', 'desc')) // , limit(20))
+        unsubscribe = onSnapshot(q, (snapshot) => {
+          // console.log('In snapshot ')
+          setMessages(snapshot.docs.map((doc) => {
+            const msg = {
+              id: doc.data().id,
+              createdAt: doc.data().createdAt.toDate(),
+              text: doc.data().text,
+              userId: doc.data().userId,
+            }
 
-          // console.log(msg.userId)
-          let msgUser = null
-          if (msg.userId === userData.id) {
-          // console.log(`message from user ${userData.id}`)
-            msgUser = { _id: userData.id, fullName: userData.fullName, avatar: userData.avatar }
-          }
-          if (msg.userId === userId) {
-          // console.log(`message from user ${userId}`)
-            msgUser = { _id: userId, fullName: userFullName, avatar: userAvatar }
-          }
+            // console.log(msg.userId)
+            let msgUser = null
+            if (msg.userId === userData.id) {
+              // console.log(`message from user ${userData.id}`)
+              msgUser = { _id: userData.id, fullName: userData.fullName, avatar: userData.avatar }
+            }
+            if (msg.userId === userId) {
+              // console.log(`message from user ${userId}`)
+              msgUser = { _id: userId, fullName: userFullName, avatar: userAvatar }
+            }
 
-          // if (msgUser !== null) {
-          const message = {
-            _id: msg.id, createdAt: msg.createdAt, text: msg.text, user: msgUser,
-          }
-          // console.log(`message: ${JSON.stringify(message)}`)
-          return message
-        // }
-        }))
+            // if (msgUser !== null) {
+            const message = {
+              _id: msg.id, createdAt: msg.createdAt, text: msg.text, user: msgUser,
+            }
+            // console.log(`message: ${JSON.stringify(message)}`)
+            return message
+            // }
+          }))
+        })
       })
-    })
+      .catch((err) => {
+        console.log('Error in fetching chat group', err)
+      })
     // setIsLoading(false)
     return () => {
       if (unsubscribe !== undefined) { unsubscribe() }

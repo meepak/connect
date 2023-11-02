@@ -269,7 +269,7 @@ export default function Manage() {
     connectionRequestSent.forEach((requestSent) => {
       if (requestSent.key === connection.key) {
         const newRequestSent = { ...requestSent, requestCancelled: serverTimestamp() }
-        newRequestSent.push(newRequestSent)
+        newConnectionRequestSent.push(newRequestSent)
       } else {
         newConnectionRequestSent.push(requestSent)
       }

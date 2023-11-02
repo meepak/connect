@@ -77,15 +77,23 @@ const Profile = () => {
     }
     setBannerImage({ uri: image })
     // save to db?
-    profileUpdate({ bannerImage: image }).then(() => {
+    profileUpdate({ bannerImage: image })
+      .then(() => {
       // setBannerSpinner(false)
-    })
+      })
+      .catch((error) => {
+        Alert.alert('Error during profile update', error)
+      })
   }
 
   const onAvatarEdited = (image) => {
-    profileUpdate({ avatar: image }).then(() => {
-      console.log('Avatar updated in db')
-    })
+    profileUpdate({ avatar: image })
+      .then(() => {
+        console.log('Avatar updated in db')
+      })
+      .catch((error) => {
+        Alert.alert('Error during profile update', error)
+      })
   }
 
   async function fetchConnection() {
