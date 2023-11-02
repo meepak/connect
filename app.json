@@ -32,8 +32,8 @@
       "package": "connect.firebase",
       "versionCode": 1,
       "userInterfaceStyle": "automatic",
-      "permissions": ["VIBRATE", "CAMERA"]
-      // "softwarekeyboardlayoutmode": "pan"
+      "permissions": ["VIBRATE", "CAMERA"],
+      "softwareKeyboardLayoutMode": "resize"
     },
     "packagerOpts": {
       "config": "metro.config.js",

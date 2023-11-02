@@ -50,6 +50,7 @@ export default function ChatConnections() {
     }, 200)
   }, [])
 
+  // TODO CHECK FOR BUG, THAT IT CREATES FIRST GROUP EMPTY WITH ID ONLY AND WILL LET THE CHAT BUT CAN'T BE RETRIEVED
   async function fetchConnection() {
     const connections = []
     const userIds = []

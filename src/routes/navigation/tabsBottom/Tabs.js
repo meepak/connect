@@ -13,6 +13,30 @@ const TabNavigator = () => {
   const { colors } = useTheme()
   const size = 26
 
+  const getTabBarIcon = (focused, tabName) => {
+    let iconName = ''
+    switch (tabName) {
+      case 'HomeTab':
+        iconName = `account-search${focused ? '' : '-outline'}`
+        break
+      case 'ManageTab':
+        iconName = `account-group${focused ? '' : '-outline'}`
+        break
+      case 'ChatTab':
+        iconName = `comment-processing${focused ? '' : '-outline'}`
+        break
+      default:
+        break
+    }
+    return (
+      <Icon
+        name={iconName}
+        color={colors.onSurface}
+        size={size}
+      />
+    )
+  }
+
   return (
     <Tab.Navigator
       // defaultScreenOptions={{
@@ -22,6 +46,7 @@ const TabNavigator = () => {
       screenOptions={(/* { route } */) => ({
         headerShown: false,
         // cardOverlayEnabled: false,
+        gestureEnabled: true,
         tabBarHideOnKeyboard: true,
         // tabBarActiveTintColor: colors.primary,
         // tabBarInactiveTintColor: colors.gray,
@@ -30,16 +55,26 @@ const TabNavigator = () => {
         // tabBarStyle: {
         //   borderTopColor: contrastColor,
         // },
+        sceneAnimationEnabled: true,
       })}
+      // tabBarHideOnKeyboard
+      // windowSoftInputMode="adjustResize" //set in app.json for android
+      keyboardHidesNavigationBar
       initialRouteName="HomeTab"
-      swipeEnabled
+      // theme={{colors: {secondaryContainer: 'yellow'}}}
+      barStyle={{
+        // backgroundColor: '#694fad',
+        // position: 'absolute',
+        justifyContent: 'center',
+        height: 50,
+      }}
     >
       <Tab.Screen
         name="HomeTab"
         component={FindStack}
         options={{
           tabBarLabel: 'Find',
-          tabBarIcon: () => <Icon name="account-search" color={colors.onSurface} size={size} />,
+          tabBarIcon: ({ focused }) => getTabBarIcon(focused, 'HomeTab'),
         }}
       />
       {/* <Tab.Screen
@@ -55,7 +90,8 @@ const TabNavigator = () => {
         component={ManageStack}
         options={{
           tabBarLabel: 'Manage',
-          tabBarIcon: () => <Icon name="account-group" color={colors.onSurface} size={size} />,
+          tabBarIcon: ({ focused }) => getTabBarIcon(focused, 'ManageTab'),
+          tabBarHideOnKeyboard: true,
         }}
       />
       <Tab.Screen
@@ -63,9 +99,8 @@ const TabNavigator = () => {
         component={ChatStack}
         options={{
           tabBarLabel: 'Chat',
-          tabBarIcon: () => (
-            <Icon name="comment-processing-outline" color={colors.onSurface} size={size} />
-          ),
+          tabBarIcon: ({ focused }) => getTabBarIcon(focused, 'ChatTab'),
+          tabBarBadge: 3,
         }}
       />
     </Tab.Navigator>

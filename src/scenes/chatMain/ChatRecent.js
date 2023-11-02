@@ -89,17 +89,17 @@ export default function ChatRecent() {
               rate="A$100/hr-A$110/hr"
               isPromoted
               onPress={() => {
-                // console.log('going to chat')
-                // navigation.navigate('ChatStack', {
-                //   screen: 'Chat',
-                //   params: {
-                //     userId: 1,
-                //     userFullName: name,
-                //     // userAvatar: image,
-                //     // userBannerImage: banner,
-                //     // from: 'Find screen',
-                //   },
-                // })
+                console.log('going to chat')
+                navigation.navigate('ChatStack', {
+                  screen: 'Chat',
+                  params: {
+                    userId: 1,
+                    userFullName: name,
+                    // userAvatar: image,
+                    // userBannerImage: banner,
+                    // from: 'Find screen',
+                  },
+                })
               }}
             />
 

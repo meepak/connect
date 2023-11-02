@@ -36,13 +36,11 @@ function extractInitials(fullName) {
   return initials
 }
 
-console.log('In avatar')
 // TODO implement onError, return error within onEdited
 const Avatar = ({
   rounded, size, width, height, style, fullName, url, onPress, children,
 }) => {
   if (url) {
-    console.log('got url', url)
     return (
       <SystemAvatar
         source={{ uri: url }}
@@ -58,7 +56,6 @@ const Avatar = ({
       </SystemAvatar>
     )
   } if (fullName) {
-    console.log('got fullName', fullName)
     const { backgroundColor, textColor } = mapNameToColor(fullName)
     const initials = extractInitials(fullName)
     return (

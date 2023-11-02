@@ -132,7 +132,7 @@ const Chat = () => {
     })
     // setIsLoading(false)
     return () => {
-      unsubscribe()
+      if (unsubscribe !== undefined) { unsubscribe() }
     }
   }, [navigation])
 
@@ -213,7 +213,7 @@ const Chat = () => {
   return (
     <ScreenTemplate>
       <GiftedChat
-        keyboardShouldPersistTaps="never"
+        keyboardShouldPersistTaps="handled"
         messages={messages}
         text={cText}
         onInputTextChanged={setcText}

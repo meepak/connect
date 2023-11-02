@@ -128,7 +128,8 @@ export default function Edit() {
     <ScreenTemplate>
       <KeyboardAwareScrollView
         style={styles.main}
-        keyboardShouldPersistTaps="never"
+        keyboardShouldPersistTaps="handled"
+        enableOnAndroid
       >
         <View style={styles.avatar}>
           <AvatarOfAuthUser

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useContext } from 'react'
+import React, { useLayoutEffect, useContext, useEffect } from 'react'
 import {
   Alert,
 } from 'react-native'
@@ -24,7 +24,7 @@ export default function Initial() {
   const [, setLoggedIn] = useAtom(loggedInAtom)
   const { setUserData } = useContext(UserDataContext)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       console.log('Initial.js -- Auth state changed')
       if (user) {

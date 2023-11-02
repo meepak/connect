@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
 // https://stackoverflow.com/questions/44603362/setting-a-timer-for-a-long-period-of-time-i-e-multiple-minutes
 LogBox.ignoreLogs(['Setting a timer'])
 
+// TODO -- THERE IS A BUG IN LOGIN WHERE AFTER REGISTRATION, IT DOESN'T LET USER LOGIN TILL APP IS RESTARTED
 export default function Login() {
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState('')
@@ -128,7 +129,8 @@ export default function Login() {
     <ScreenTemplate>
       <KeyboardAwareScrollView
         style={styles.main}
-        keyboardShouldPersistTaps="always"
+        keyboardShouldPersistTaps="handled"
+        enableOnAndroid
       >
         <Logo />
 

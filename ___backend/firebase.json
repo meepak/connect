@@ -16,6 +16,7 @@
   ],
   "emulators": {
     "functions": {
+      "host": "192.168.1.111",
       "port": 5001
     },
     "ui": {
@@ -23,12 +24,15 @@
     },
     "singleProjectMode": true,
     "auth": {
+      "host": "192.168.1.111",
       "port": 9099
     },
     "firestore": {
+      "host": "192.168.1.111",
       "port": 8089
     },
     "storage": {
+      "host": "192.168.1.111",
       "port": 9199
     }
   },

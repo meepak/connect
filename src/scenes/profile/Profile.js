@@ -158,10 +158,10 @@ const Profile = () => {
       top: 5,
       left: 5,
       zIndex: 3,
-      width: 30,
-      height: 30,
+      width: 40,
+      height: 40,
       backgroundColor: colors.background,
-      borderRadius: 15,
+      borderRadius: 20,
     },
     editBannerImage: {
       position: 'absolute',
@@ -170,9 +170,9 @@ const Profile = () => {
       zIndex: 3,
       backgroundColor: colors.background,
       color: colors.onPrimary,
-      borderRadius: 50,
-      width: 30,
-      height: 30,
+      borderRadius: 20,
+      width: 40,
+      height: 40,
     },
     bannerSpinner: {
       position: 'absolute',
@@ -183,19 +183,22 @@ const Profile = () => {
     },
     editUserIntro: {
       position: 'absolute',
-      bottom: 5,
+      top: 40,
       right: 10,
       zIndex: 3,
       backgroundColor: colors.background,
-      borderRadius: 50,
-      width: 27,
-      height: 27,
+      borderRadius: 20,
+      width: 40,
+      height: 40,
     },
     userIntro: {
       marginLeft: 20,
       marginRight: 20,
-      marginBottom: 20,
-      marginTop: 30,
+      marginTop: 25,
+      paddingBottom: 20,
+    },
+    userIntroHeader: {
+      marginRight: 30,
     },
     userFullName: {
       fontSize: fonts.headlineSmall.fontSize,
@@ -293,8 +296,10 @@ const Profile = () => {
               {/* USER INTRO */}
               <View>
                 <View style={styles.userIntro}>
-                  <Text style={styles.userFullName}>{userFullName} and some v V long name</Text>
-                  <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+                  <View style={styles.userIntroHeader}>
+                    <Text style={styles.userFullName}>{userFullName} asfdvxczvasdds asdfasfdasfdsafdsasdfasfdasfdsafds</Text>
+                    <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+                  </View>
                   {/* Location */}
                   <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
                   {/* connect button */}
@@ -364,7 +369,13 @@ const Profile = () => {
               // underlayColor={colors.background}
                       style={styles.editUserIntro}
                       onPress={() => {
-                        console.log('Edit User Intro')
+                        navigation.navigate('ProfileStack', {
+                          screen: 'EditIntro',
+                          params: {
+                            data: userData,
+                            from: 'My Profilie',
+                          },
+                        })
                       }}
                     />
                   )

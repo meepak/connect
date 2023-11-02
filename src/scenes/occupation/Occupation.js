@@ -140,7 +140,7 @@ const Occupation = ({ route }) => {
             onChangeText={setQuery}
             placeholder={placeholder}
             flatListProps={{
-              keyboardShouldPersistTaps: 'never',
+              keyboardShouldPersistTaps: 'handled',
               // keyExtractor: (movie: Movie) => movie.episodeId,
               renderItem: ({ item }) => (
                 <TouchableOpacity onPress={() => handleSelect(item.title)}>

@@ -99,7 +99,8 @@ export default function Onboarding() {
     <ScreenTemplate>
       <KeyboardAwareScrollView
         style={styles.main}
-        keyboardShouldPersistTaps="never"
+        keyboardShouldPersistTaps="handled"
+        enableOnAndroid
       >
 
         <Header

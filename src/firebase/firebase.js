@@ -13,7 +13,9 @@ import { firebaseKey } from '../config'
 
 const app = initializeApp(firebaseKey)
 
-const localhost = '10.0.2.2'
+// const localhost = '10.0.2.2' // works for android virtual machine
+const localhost = '192.168.1.111'
+// const localhost = '127.0.0.1'
 
 const auth = useEmulator
   ? getAuth()
