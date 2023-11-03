@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react'
-import { Alert, View, StyleSheet } from 'react-native'
+import {
+  Alert, View, StyleSheet, StatusBar, Platform,
+} from 'react-native'
 import {
   Text, useTheme,
 } from 'react-native-paper'
@@ -41,11 +43,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   avatar: {
-    margin: 30,
+    flex: 1,
+    marginTop: StatusBar.currentHeight,
     alignSelf: 'center',
   },
   changePasswordContainer: {
     paddingVertical: 30,
+    marginBottom: Platform.OS === 'android' ? 50 : 30,
   },
 })
 
@@ -129,7 +133,9 @@ export default function Edit() {
       <KeyboardAwareScrollView
         style={styles.main}
         keyboardShouldPersistTaps="handled"
-        enableOnAndroid
+        // enableOnAndroid
+        stickyHeaderIndices={[0]} // IMPORTANT THIS WILL PROVIDE WITH STICKY HEADER EASILY
+        stickyHeaderHiddenOnScroll // IMPORTANT THIS WILL PROVIDE WITH STICKY HEADER EASILY
       >
         <View style={styles.avatar}>
           <AvatarOfAuthUser

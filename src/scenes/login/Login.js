@@ -16,7 +16,7 @@ import Button from '../../components/core/Button'
 import TextInputBox from '../../components/core/TextInputBox'
 import Logo from '../../components/core/Logo'
 import { colors, fontSize } from '../../theme'
-import isValidEmail from '../../utils/validation'
+import { isValidEmail } from '../../utils/validation'
 // import { UserDataContext } from '../../context/UserDataContext'
 
 const styles = StyleSheet.create({
@@ -130,7 +130,7 @@ export default function Login() {
       <KeyboardAwareScrollView
         style={styles.main}
         keyboardShouldPersistTaps="handled"
-        enableOnAndroid
+        // enableOnAndroid
       >
         <Logo />
 

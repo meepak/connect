@@ -24,9 +24,9 @@ export default function Header4Notification() {
   return (
     <View style={styles.header}>
       <IconButton
-        icon="menu"
+        icon="ellipsis-v"
         color={colors.onBackground}
-        size={26}
+        size={20}
         onPress={() => openManageNotification()}
       />
     </View>

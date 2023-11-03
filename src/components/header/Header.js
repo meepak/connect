@@ -64,7 +64,7 @@ export default function Header() {
       {/* </TouchableOpacity> */}
       <Button
         title="Search"
-        icon="text-search"
+        icon="search"
         buttonColor={colors.surfaceDisabled}
         textColor={colors.onSurfaceDisabled}
         onPress={() => console.log('go to new window')}

@@ -13,11 +13,13 @@ import {
   doc, updateDoc, serverTimestamp, getDoc, query, setDoc, collection,
 } from 'firebase/firestore'
 import Spinner from 'react-native-loading-spinner-overlay'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { firestore } from '../../firebase'
 
 import Avatar from '../../components/core/Avatar'
 import AvatarOfAuthUser from '../../components/AvatarOfAuthUser'
 import ImageSelectAndUpload from '../../utils/ImageSelectAndUpload'
+import { convertHexToRGBA } from '../../utils/functions'
 
 // Temporary measure to get user id of logged in user to test banner upload
 import { UserDataContext } from '../../context/UserDataContext'
@@ -125,25 +127,25 @@ const Profile = () => {
       // position: 'relative', // Added for positioning the Avatar
     },
     banner: {
-      height: 160,
+      height: 185,
       zIndex: 2,
     },
     bannerImage: {
       flex: 1,
       resizeMode: 'cover', // Use 'cover' for better image fitting
-      height: 160,
+      height: 140,
       zIndex: 2,
     },
     userTypeLabelContainer: {
       position: 'absolute',
-      bottom: 0,
+      top: -42,
       left: 0,
       backgroundColor: colors.tertiaryContainer,
-      paddingTop: 3,
       paddingBottom: 3,
       paddingLeft: 20,
       paddingRight: 10,
       zIndex: 3,
+      width: '100%',
     },
     userTypeLabel: {
       color: colors.onTertiaryContainer,
@@ -156,7 +158,7 @@ const Profile = () => {
       right: 10,
       zIndex: 3,
       borderColor: colors.background,
-      borderWidth: 6,
+      borderWidth: 4,
       borderRadius: 100,
       // backgroundColor: 'transparent',
       // borderRadius: '50 50 0 0',
@@ -166,9 +168,9 @@ const Profile = () => {
       top: 5,
       left: 5,
       zIndex: 3,
-      width: 40,
-      height: 40,
-      backgroundColor: colors.background,
+      width: 30,
+      height: 30,
+      backgroundColor: convertHexToRGBA(colors.background, 0.5),
       borderRadius: 20,
     },
     editBannerImage: {
@@ -176,11 +178,11 @@ const Profile = () => {
       top: 5,
       right: 10,
       zIndex: 3,
-      backgroundColor: colors.background,
+      backgroundColor: convertHexToRGBA(colors.background, 0.5),
       color: colors.onPrimary,
       borderRadius: 20,
-      width: 40,
-      height: 40,
+      width: 30,
+      height: 30,
     },
     bannerSpinner: {
       position: 'absolute',
@@ -191,18 +193,17 @@ const Profile = () => {
     },
     editUserIntro: {
       position: 'absolute',
-      top: 40,
-      right: 10,
+      top: 30,
+      right: 0,
       zIndex: 3,
-      backgroundColor: colors.background,
-      borderRadius: 20,
-      width: 40,
-      height: 40,
+      // backgroundColor: colors.background,
+      // borderRadius: 20,
+      // width: 35,
+      // height: 35,
     },
     userIntro: {
       marginLeft: 20,
       marginRight: 20,
-      marginTop: 25,
       paddingBottom: 20,
     },
     userIntroHeader: {
@@ -253,6 +254,16 @@ const Profile = () => {
       paddingHorizontal: 30,
       paddingVertical: 30,
     },
+    editKeySummary: {
+      position: 'absolute',
+      top: 30,
+      right: 0,
+      zIndex: 3,
+      // backgroundColor: colors.background,
+      // borderRadius: 20,
+      // width: 35,
+      // height: 35,
+    },
   })
 
   return (
@@ -264,7 +275,13 @@ const Profile = () => {
       />
       {!spinner
         ? (
-          <>
+
+          <KeyboardAwareScrollView
+            style={styles.scrollContent}
+            keyboardShouldPersistTaps="handled"
+            stickyHeaderIndices={[0]} // IMPORTANT THIS WILL PROVIDE WITH STICKY HEADER EASILY
+            stickyHeaderHiddenOnScroll // IMPORTANT THIS WILL PROVIDE WITH STICKY HEADER EASILY
+          >
             <View style={styles.banner}>
               <ImageBackground source={bannerImage} style={styles.bannerImage}>
                 <View style={styles.avatarContainer}>
@@ -275,7 +292,7 @@ const Profile = () => {
                 {/* <View style={styles.BackButtonContainer}> */}
                 <IconButton
                   icon="arrow-left"
-                  size={25}
+                  size={20}
                   iconColor={colors.onBackground}
                   style={styles.backButton}
                   onPress={() => navigation.goBack()}
@@ -283,8 +300,8 @@ const Profile = () => {
                 {editMode
                   ? (
                     <IconButton
-                      icon="lead-pencil"
-                      size={22}
+                      icon="pencil-alt"
+                      size={15}
                       iconColor={colors.onBackground}
                       style={styles.editBannerImage}
                       onPress={() => {
@@ -295,48 +312,72 @@ const Profile = () => {
                     />
                   )
                   : <></>}
-                <View style={styles.userTypeLabelContainer}>
-                  <Text style={styles.userTypeLabel}>{editMode ? 'Searching for Associates' : 'Open for opportunity'}</Text>
-                </View>
               </ImageBackground>
             </View>
-            <ScrollView style={styles.scrollContent}>
-              {/* USER INTRO */}
-              <View>
-                <View style={styles.userIntro}>
-                  <View style={styles.userIntroHeader}>
-                    <Text style={styles.userFullName}>{userFullName} asfdvxczvasdds asdfasfdasfdsafdsasdfasfdasfdsafds</Text>
-                    <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
-                  </View>
-                  {/* Location */}
-                  <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
-                  {/* connect button */}
-                  {(!editMode)
-                    ? (
-                      <View style={styles.connectContainer}>
-                        <Button
-                          disabled={!(connectionStatus.requestSent === undefined && connectionStatus.requestReceived === undefined)}
-                          icon="account-arrow-right-outline"
-                          onPress={async () => {
-                            console.log('connect button')
-                            // send connection request, TODO ADD/UPDATE APPROPRIATELY LATER
-                            await setDoc(doc(firestore, 'users', userData.id, 'connection', userId), {
-                              requestSent: serverTimestamp(),
-                            })
-                            setConnectionStatus({ requestSent: serverTimestamp() })
+            {/* <ScrollView style={styles.scrollContent}> */}
+            {/* USER INTRO */}
 
-                            // TODO -- do this through firebase function, as in client
-                            // auth user can only write their own document,
-                            // also probably notification need to be generated
-                            await setDoc(doc(firestore, 'users', userId, 'connection', userData.id), {
-                              requestReceived: serverTimestamp(),
-                            })
-                          }}
-                          mode="elevated"
-                          labelStyle={styles.buttonLabel}
-                          style={styles.connectButton}
-                        >
-                          {
+            <View>
+
+              <View style={styles.userTypeLabelContainer}>
+                <Text style={styles.userTypeLabel}>{editMode ? 'Searching for Associates' : 'Open for opportunity'}</Text>
+              </View>
+
+              {editMode
+                ? (
+                  <IconButton
+                    icon="pencil-alt"
+                    size={20}
+                    iconColor={colors.onBackground}
+              // underlayColor={colors.background}
+                    style={styles.editUserIntro}
+                    onPress={() => {
+                      navigation.navigate('ProfileStack', {
+                        screen: 'EditIntro',
+                        params: {
+                          data: userData,
+                          from: 'My Profilie',
+                        },
+                      })
+                    }}
+                  />
+                )
+                : <></>}
+
+              <View style={styles.userIntro}>
+                <View style={styles.userIntroHeader}>
+                  <Text style={styles.userFullName}>{userFullName} asfdvxczvasdds asdfasfdasfdsafdsasdfasfdasfdsafds</Text>
+                  <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+                </View>
+                {/* Location */}
+                <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+                {/* connect button */}
+                {(!editMode)
+                  ? (
+                    <View style={styles.connectContainer}>
+                      <Button
+                        disabled={!(connectionStatus.requestSent === undefined && connectionStatus.requestReceived === undefined)}
+                        icon="account-arrow-right-outline"
+                        onPress={async () => {
+                          console.log('connect button')
+                          // send connection request, TODO ADD/UPDATE APPROPRIATELY LATER
+                          await setDoc(doc(firestore, 'users', userData.id, 'connection', userId), {
+                            requestSent: serverTimestamp(),
+                          })
+                          setConnectionStatus({ requestSent: serverTimestamp() })
+
+                          // TODO -- do this through firebase function, as in client
+                          // auth user can only write their own document,
+                          // also probably notification need to be generated
+                          await setDoc(doc(firestore, 'users', userId, 'connection', userData.id), {
+                            requestReceived: serverTimestamp(),
+                          })
+                        }}
+                        mode="elevated"
+                        labelStyle={styles.buttonLabel}
+                        style={styles.connectButton}
+                      >
+                        {
                            // eslint-disable-next-line no-nested-ternary
                            connectionStatus.requestSent !== undefined
                              ? 'Connection Request Sent'
@@ -344,59 +385,38 @@ const Profile = () => {
                                ? 'Connection Request Received'
                                : 'Request Connection')
                         }
-                        </Button>
-                      </View>
-                    )
-                    : <></>}
-                  {/* Onboarding point list */}
-                  <View style={styles.userHighlightedList}>
-                    {
-            [
-              { key: 'Investor/Active Partner/Advisory Partner' },
-              { key: 'Interested in business at any stage' },
-              { key: 'Occupation skill' },
-              { key: 'Work arrangement' },
-              { key: 'Mode of Operation' },
-              { key: 'Communication Preference' },
-              { key: 'References / NDA / Background Check' },
-            ].map((item) => (
-              <View style={styles.userHighlightedListItem} key={item.key}>
-                <Icon style={styles.userHighlightedListItemText} name="check" />
-                <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
-              </View>
-            ))
-          }
-                  </View>
-                </View>
-                {editMode
-                  ? (
-                    <IconButton
-                      icon="lead-pencil"
-                      size={22}
-                      iconColor={colors.onBackground}
-              // underlayColor={colors.background}
-                      style={styles.editUserIntro}
-                      onPress={() => {
-                        navigation.navigate('ProfileStack', {
-                          screen: 'EditIntro',
-                          params: {
-                            data: userData,
-                            from: 'My Profilie',
-                          },
-                        })
-                      }}
-                    />
+                      </Button>
+                    </View>
                   )
                   : <></>}
               </View>
-              {/* Rest of your content */}
-              {/* USER INTRO */}
+            </View>
+            {/* Onboarding point list */}
+
+            <View>
+              {editMode
+                ? (
+                  <IconButton
+                    icon="pencil-alt"
+                    size={20}
+                    iconColor={colors.onBackground}
+              // underlayColor={colors.background}
+                    style={styles.editKeySummary}
+                    onPress={() => {
+                      navigation.navigate('EditKeySummary', {
+                        screen: 'EditKeySummary',
+                        params: {
+                          data: userData,
+                          from: 'My Profilie',
+                        },
+                      })
+                    }}
+                  />
+                )
+                : <></>}
+
               <Surface style={styles.surfaceView}>
-                <Text style={styles.userFullName}>Professional Experience</Text>
-                <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
-                {/* Location */}
-                <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
-                {/* Onboarding point list */}
+                <Text style={styles.userFullName}>Key Summary</Text>
                 <View style={styles.userHighlightedList}>
                   {
             [
@@ -416,15 +436,19 @@ const Profile = () => {
           }
                 </View>
               </Surface>
-              {/* USER INTRO */}
-              <Surface style={styles.surfaceView}>
-                <Text style={styles.userFullName}>Educational Qualifications</Text>
-                <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
-                {/* Location */}
-                <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
-                {/* Onboarding point list */}
-                <View style={styles.userHighlightedList}>
-                  {
+            </View>
+
+
+            {/* Rest of your content */}
+            {/* USER INTRO */}
+            <Surface style={styles.surfaceView}>
+              <Text style={styles.userFullName}>Professional Experience</Text>
+              <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+              {/* Location */}
+              <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+              {/* Onboarding point list */}
+              <View style={styles.userHighlightedList}>
+                {
             [
               { key: 'Investor/Active Partner/Advisory Partner' },
               { key: 'Interested in business at any stage' },
@@ -440,17 +464,17 @@ const Profile = () => {
               </View>
             ))
           }
-                </View>
-              </Surface>
-              {/* USER INTRO */}
-              <Surface style={styles.surfaceView}>
-                <Text style={styles.userFullName}>Licenses & Certifications</Text>
-                <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
-                {/* Location */}
-                <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
-                {/* Onboarding point list */}
-                <View style={styles.userHighlightedList}>
-                  {
+              </View>
+            </Surface>
+            {/* USER INTRO */}
+            <Surface style={styles.surfaceView}>
+              <Text style={styles.userFullName}>Educational Qualifications</Text>
+              <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+              {/* Location */}
+              <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+              {/* Onboarding point list */}
+              <View style={styles.userHighlightedList}>
+                {
             [
               { key: 'Investor/Active Partner/Advisory Partner' },
               { key: 'Interested in business at any stage' },
@@ -466,17 +490,17 @@ const Profile = () => {
               </View>
             ))
           }
-                </View>
-              </Surface>
-              {/* USER INTRO */}
-              <Surface style={styles.surfaceView}>
-                <Text style={styles.userFullName}>Langauges</Text>
-                <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
-                {/* Location */}
-                <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
-                {/* Onboarding point list */}
-                <View style={styles.userHighlightedList}>
-                  {
+              </View>
+            </Surface>
+            {/* USER INTRO */}
+            <Surface style={styles.surfaceView}>
+              <Text style={styles.userFullName}>Licenses & Certifications</Text>
+              <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+              {/* Location */}
+              <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+              {/* Onboarding point list */}
+              <View style={styles.userHighlightedList}>
+                {
             [
               { key: 'Investor/Active Partner/Advisory Partner' },
               { key: 'Interested in business at any stage' },
@@ -492,10 +516,36 @@ const Profile = () => {
               </View>
             ))
           }
-                </View>
-              </Surface>
-            </ScrollView>
-          </>
+              </View>
+            </Surface>
+            {/* USER INTRO */}
+            <Surface style={styles.surfaceView}>
+              <Text style={styles.userFullName}>Langauges</Text>
+              <Text style={styles.userOccupationTitle}>Chief Digital Transformation Officer and something else and more</Text>
+              {/* Location */}
+              <Text style={styles.userLocation}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+              {/* Onboarding point list */}
+              <View style={styles.userHighlightedList}>
+                {
+            [
+              { key: 'Investor/Active Partner/Advisory Partner' },
+              { key: 'Interested in business at any stage' },
+              { key: 'Occupation skill' },
+              { key: 'Work arrangement' },
+              { key: 'Mode of Operation' },
+              { key: 'Communication Preference' },
+              { key: 'References / NDA / Background Check' },
+            ].map((item) => (
+              <View style={styles.userHighlightedListItem} key={item.key}>
+                <Icon style={styles.userHighlightedListItemText} name="check" />
+                <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
+              </View>
+            ))
+          }
+              </View>
+            </Surface>
+            {/* </ScrollView> */}
+          </KeyboardAwareScrollView>
         ) : null }
     </SafeAreaView>
   )

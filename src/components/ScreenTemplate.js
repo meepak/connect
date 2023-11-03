@@ -2,6 +2,8 @@ import React from 'react'
 import { StyleSheet, SafeAreaView } from 'react-native'
 // import { SafeAreaView } from 'react-native-safe-area-context' // This suppose to work better when there is no header bar
 import { StatusBar } from 'expo-status-bar'
+
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import PropTypes from 'prop-types'
 import LoadingScreen from './LoadingScreen'
 import ErrorScreen from './ErrorScreen'
@@ -9,6 +11,7 @@ import ErrorScreen from './ErrorScreen'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexGrow: 1,
   },
 })
 
@@ -29,10 +32,12 @@ const ScreenTemplate = (props) => {
   }
 
   return (
-    <SafeAreaView style={styles.container} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-      <StatusBar />
-      { children }
-    </SafeAreaView>
+    <GestureHandlerRootView style={styles.container}>
+      <SafeAreaView style={styles.container} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+        <StatusBar />
+        { children }
+      </SafeAreaView>
+    </GestureHandlerRootView>
   )
 }
 

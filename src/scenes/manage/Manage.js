@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     width: '100%',
+    marginBottom: 80,
   },
   title: {
     fontSize: fontSize.xxxLarge,

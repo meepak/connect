@@ -65,7 +65,7 @@ export default function Onboarding() {
         avatar: avatar ?? null,
         phone,
         email: userData.email,
-        isOnboarded: !userData.isOnboarded,
+        isOnboarded: true,
         whoAmI,
         industries,
         businessStage,
@@ -100,7 +100,7 @@ export default function Onboarding() {
       <KeyboardAwareScrollView
         style={styles.main}
         keyboardShouldPersistTaps="handled"
-        enableOnAndroid
+        // enableOnAndroid
       >
 
         <Header

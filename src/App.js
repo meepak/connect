@@ -16,6 +16,8 @@ import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import * as SystemUI from 'expo-system-ui'
 
+import FontIcon from 'react-native-vector-icons/FontAwesome5'
+
 import { UserDataContextProvider } from './context/UserDataContext'
 
 import LoadingScreen from './components/LoadingScreen'
@@ -94,7 +96,12 @@ const App = () => {
     <Provider>
       <UserDataContextProvider>
         <ActionSheetProvider>
-          <PaperProvider theme={finalTheme}>
+          <PaperProvider
+            settings={{
+              icon: (props) => <FontIcon {...props} />,
+            }}
+            theme={finalTheme}
+          >
             {didLoad
               ? <Router />
               : <LoadingScreen />}

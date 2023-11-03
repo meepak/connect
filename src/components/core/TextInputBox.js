@@ -5,19 +5,21 @@ import PropTypes from 'prop-types'
 import FontIcon from 'react-native-vector-icons/FontAwesome5' // TODO replace with material icon
 import { layout } from '../../theme'
 
+// TODO -- Fork the react-native-paper TextInput and allow cutomization of spacing between labels and lines
+
 const styles = StyleSheet.create({
   input: {
-    marginLeft: layout.marginLeft,
-    marginRight: layout.marginRight,
+    // marginLeft: layout.marginLeft,
+    // marginRight: layout.marginRight,
     marginTop: layout.marginTop,
     marginBottom: layout.marginBottom - 15,
-    height: 62,
-    borderRadius: 5,
+    minHeight: 54,
+    // borderBottomWidth: 1,
     overflow: 'hidden',
     fontSize: 18,
   },
   helperText: {
-    marginLeft: 30,
+    marginLeft: 5,
   },
 
   container: {
@@ -41,7 +43,12 @@ const TextInputBox = (props) => {
     keyboardType,
     errorMessage,
     icon,
+    rightIcon,
     onFocus,
+    showKeyboard,
+    bgColor,
+    onBgColor,
+    numberOfLines,
   } = props
   const { colors } = useTheme()
 
@@ -50,9 +57,36 @@ const TextInputBox = (props) => {
   return (
     <>
       <TextInput
+        mode="flat"
         editable={editable}
+        multiline={numberOfLines > 1}
+        numberOfLines={numberOfLines}
         style={[styles.input]}
         secureTextEntry={secureText}
+        theme={{
+          colors: {
+            surfaceVariant: colors.background,
+          },
+        }}
+        label={label}
+        placeholder={placeholder}
+        onChangeText={onChangeText}
+        onEndEditing={onEndEditing}
+        // onBlur={onBlur}
+        value={value}
+        autoCapitalize={autoCapitalize}
+        keyboardType={keyboardType}
+        activeUnderlineColor={colors.primary}
+        underlineColor={onBgColor ?? colors.onBackground}
+        underlineColorAndroid={onBgColor ?? colors.onBackground}
+        textColor={onBgColor ?? colors.onBackground}
+        backgroundColor={bgColor ?? colors.background}
+        placeholderTextColor={onBgColor ?? colors.onBackground}
+        iconBackgroundColor={onBgColor ?? colors.onBackground}
+        error={errorMessage !== ''}
+        onFocus={onFocus}
+        showSoftInputOnFocus={showKeyboard}
+        // underlineStyle={{ borderWidth: 1, borderColor: colors.onBackground }}
         left={icon !== ''
           ? (
             <TextInput.Icon
@@ -66,6 +100,7 @@ const TextInputBox = (props) => {
               forceTextInputFocus
             />
           ) : null}
+        // eslint-disable-next-line no-nested-ternary
         right={secureTextEntry
           ? (
             <TextInput.Icon
@@ -79,24 +114,20 @@ const TextInputBox = (props) => {
               onPress={() => setSecureText(!secureText)}
               forceTextInputFocus={false}
             />
-          ) : null}
-        label={label}
-        placeholder={placeholder}
-        onChangeText={onChangeText}
-        onEndEditing={onEndEditing}
-        // onBlur={onBlur}
-        value={value}
-        autoCapitalize={autoCapitalize}
-        keyboardType={keyboardType}
-        mode="flat"
-        // activeUnderlineColor={colors.primary}
-        // underlineColor={colorScheme.line}
-        // underlineColorAndroid={colorScheme.line}
-        // textColor={colorScheme.text}
-        // backgroundColor={colorScheme.bg}
-        // placeholderTextColor={colorScheme.line}
-        error={errorMessage !== ''}
-        onFocus={onFocus}
+          ) : (rightIcon !== ''
+            ? (
+              <TextInput.Icon
+                icon={() => (
+                  <FontIcon
+                    name={rightIcon}
+                    size={20}
+                    color={colors.primary}
+                  />
+                )}
+                onPress={onFocus ? () => onFocus() : null}
+              />
+            ) : null
+          )}
       />
       <HelperText
         style={styles.helperText}
@@ -122,7 +153,12 @@ TextInputBox.propTypes = {
   keyboardType: PropTypes.string,
   errorMessage: PropTypes.string,
   icon: PropTypes.string,
+  rightIcon: PropTypes.string,
   onFocus: PropTypes.func,
+  showKeyboard: PropTypes.bool,
+  bgColor: PropTypes.string,
+  onBgColor: PropTypes.string,
+  numberOfLines: PropTypes.number,
 }
 
 TextInputBox.defaultProps = {
@@ -136,7 +172,12 @@ TextInputBox.defaultProps = {
   placeholder: '',
   errorMessage: '',
   icon: '',
+  rightIcon: '',
   onFocus: null,
+  showKeyboard: true,
+  bgColor: null,
+  onBgColor: null,
+  numberOfLines: 1,
 }
 
 export default TextInputBox

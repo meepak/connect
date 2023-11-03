@@ -41,7 +41,7 @@ const getIconSize = (size) => {
   if (typeof size === 'string') {
     return sizeMap[size] ?? 8
   }
-  return Math.round(size / 4) + 4
+  return Math.round(size / 4)
 }
 
 // TODO implement onError, return error within onEdited
@@ -89,7 +89,12 @@ const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
             <SystemAvatar.Accessory
               containerStyle={{
                 backgroundColor: colors.background,
-                borderRadius: 25,
+                borderRadius: 20,
+              }}
+              style={{
+                position: 'absolute',
+                right: 0,
+                bottom: 7,
               }}
               size={iconSize}
               iconProps={{

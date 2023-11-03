@@ -15,7 +15,7 @@ import Logo from '../../components/core/Logo'
 import { firestore, auth } from '../../firebase'
 import { colors, fontSize } from '../../theme'
 import { eulaLink } from '../../config'
-import isValidEmail from '../../utils/validation'
+import { isValidEmail } from '../../utils/validation'
 
 const styles = StyleSheet.create({
   main: {
@@ -107,7 +107,7 @@ export default function SignUp() {
       <KeyboardAwareScrollView
         style={styles.main}
         keyboardShouldPersistTaps="handled"
-        enableOnAndroid
+        // enableOnAndroid
       >
         <Logo />
         <TextInputBox

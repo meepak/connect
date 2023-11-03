@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { Keyboard, Animated, Easing } from 'react-native'
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useTheme } from 'react-native-paper'
@@ -11,7 +12,38 @@ const Tab = createMaterialBottomTabNavigator()
 
 const TabNavigator = () => {
   const { colors } = useTheme()
+  // const [tabPosition, setTabPosition] = useState(new Animated.Value(0))
   const size = 26
+
+  const opacity = new Animated.Value(1)
+  const keyboardWillShow = () => {
+    Animated.timing(opacity, {
+      toValue: 0, // Adjust this value to the height you want to move the tab bar
+      duration: 10, // Animation duration in milliseconds
+      easing: Easing.linear,
+      useNativeDriver: false, // Required when using position and bottom properties
+    }).start()
+  }
+
+  const keyboardWillHide = () => {
+    Animated.timing(opacity, {
+      toValue: 1, // Move the tab bar back to its original position
+      duration: 10,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start()
+  }
+
+  useEffect(() => {
+    const keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', keyboardWillShow)
+    const keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', keyboardWillHide)
+
+    // returned function will be called on component unmount
+    return () => {
+      keyboardWillShowListener.remove()
+      keyboardWillHideListener.remove()
+    }
+  }, [])
 
   const getTabBarIcon = (focused, tabName) => {
     let iconName = ''
@@ -37,6 +69,10 @@ const TabNavigator = () => {
     )
   }
 
+  const animatedStyles = {
+    opacity,
+  }
+
   return (
     <Tab.Navigator
       // defaultScreenOptions={{
@@ -47,7 +83,6 @@ const TabNavigator = () => {
         headerShown: false,
         // cardOverlayEnabled: false,
         gestureEnabled: true,
-        tabBarHideOnKeyboard: true,
         // tabBarActiveTintColor: colors.primary,
         // tabBarInactiveTintColor: colors.gray,
         // tabBarActiveBackgroundColor: colors.secondary,
@@ -55,19 +90,21 @@ const TabNavigator = () => {
         // tabBarStyle: {
         //   borderTopColor: contrastColor,
         // },
-        sceneAnimationEnabled: true,
       })}
-      // tabBarHideOnKeyboard
-      // windowSoftInputMode="adjustResize" //set in app.json for android
+      // sceneAnimationEnabled
+      // sceneAnimationType="opacity"
       keyboardHidesNavigationBar
       initialRouteName="HomeTab"
       // theme={{colors: {secondaryContainer: 'yellow'}}}
-      barStyle={{
+      barStyle={[{
         // backgroundColor: '#694fad',
-        // position: 'absolute',
+        position: 'absolute',
+        bottom: -10,
+        marginTop: 20,
         justifyContent: 'center',
-        height: 50,
-      }}
+        height: 80,
+      }, // , animatedStyles
+      ]}
     >
       <Tab.Screen
         name="HomeTab"
@@ -91,7 +128,7 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: 'Manage',
           tabBarIcon: ({ focused }) => getTabBarIcon(focused, 'ManageTab'),
-          tabBarHideOnKeyboard: true,
+          keyboardHidesNavigationBar: true,
         }}
       />
       <Tab.Screen
@@ -101,6 +138,7 @@ const TabNavigator = () => {
           tabBarLabel: 'Chat',
           tabBarIcon: ({ focused }) => getTabBarIcon(focused, 'ChatTab'),
           tabBarBadge: 3,
+          keyboardHidesNavigationBar: true,
         }}
       />
     </Tab.Navigator>
