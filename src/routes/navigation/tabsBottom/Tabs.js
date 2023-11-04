@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Keyboard, Animated, Easing } from 'react-native'
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+// import Icon from 'react-native-vector-icons/Ionicons'
 import { useTheme } from 'react-native-paper'
 // stack navigators
 import FindStack from '../stacks/FindStack'
@@ -45,17 +46,21 @@ const TabNavigator = () => {
     }
   }, [])
 
+  // material icons
+  const icons = { home: 'account-search', manage: 'account-group', chat: 'comment-processing' }
+  // ionic icons
+  // const icons = { home: 'home', manage: 'people', chat: 'chatbox-ellipses' }
   const getTabBarIcon = (focused, tabName) => {
     let iconName = ''
     switch (tabName) {
       case 'HomeTab':
-        iconName = `account-search${focused ? '' : '-outline'}`
+        iconName = `${icons.home}${focused ? '' : '-outline'}`
         break
       case 'ManageTab':
-        iconName = `account-group${focused ? '' : '-outline'}`
+        iconName = `${icons.manage}${focused ? '' : '-outline'}`
         break
       case 'ChatTab':
-        iconName = `comment-processing${focused ? '' : '-outline'}`
+        iconName = `${icons.chat}${focused ? '' : '-outline'}`
         break
       default:
         break

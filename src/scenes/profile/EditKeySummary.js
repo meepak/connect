@@ -168,8 +168,8 @@ export default function EditKeySummary() {
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <IconButton
-            icon="times"
-            size={20}
+            icon="close-sharp"
+            size={25}
             iconColor={colors.onBackground}
             style={styles.cancelButton}
             onPress={() => navigation.goBack()}
@@ -191,7 +191,7 @@ export default function EditKeySummary() {
             }}
             mode="outlined"
             style={styles.saveButton}
-            icon="check"
+            icon="checkmark-sharp"
             textColor={colors.onBackground}
           ><Text style={styles.saveButtonLabel}>Save</Text>
           </Button>

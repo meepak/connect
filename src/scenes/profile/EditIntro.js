@@ -178,8 +178,8 @@ export default function EditIntro() {
         <SafeAreaView style={styles.container}>
           <View style={styles.header}>
             <IconButton
-              icon="times"
-              size={20}
+              icon="close-sharp"
+              size={25}
               iconColor={colors.onBackground}
               style={styles.cancelButton}
               onPress={() => navigation.goBack()}
@@ -200,7 +200,8 @@ export default function EditIntro() {
               }}
               mode="outlined"
               style={styles.saveButton}
-              icon="check"
+              icon="checkmark-sharp"
+              // labelStyle={{ fontSize: 25 }}
               textColor={colors.onBackground}
             ><Text style={styles.saveButtonLabel}>Save</Text>
             </Button>

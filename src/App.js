@@ -16,7 +16,8 @@ import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import * as SystemUI from 'expo-system-ui'
 
-import FontIcon from 'react-native-vector-icons/FontAwesome5'
+// import FontIcon from 'react-native-vector-icons/FontAwesome5'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 import { UserDataContextProvider } from './context/UserDataContext'
 
@@ -98,7 +99,7 @@ const App = () => {
         <ActionSheetProvider>
           <PaperProvider
             settings={{
-              icon: (props) => <FontIcon {...props} />,
+              icon: (props) => <Icon {...props} />,
             }}
             theme={finalTheme}
           >

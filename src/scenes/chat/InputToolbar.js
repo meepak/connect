@@ -31,7 +31,7 @@ export const renderActions = (props, colors) => (
     }}
     icon={() => (
       <IconButton
-        icon="attachment"
+        icon="attach-outline"
         size={25}
         iconColor={colors.onBackground}
       />
@@ -79,7 +79,7 @@ export const renderSend = (props, colors) => (
     }}
   >
     <IconButton
-      icon="send"
+      icon="send-sharp"
       size={25}
       iconColor={colors.onBackground}
     />

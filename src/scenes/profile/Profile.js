@@ -8,7 +8,7 @@ import {
 import {
   useNavigation, useRoute,
 } from '@react-navigation/native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon from 'react-native-vector-icons/Ionicons'
 import {
   doc, updateDoc, serverTimestamp, getDoc, query, setDoc, collection,
 } from 'firebase/firestore'
@@ -291,8 +291,8 @@ const Profile = () => {
                 </View>
                 {/* <View style={styles.BackButtonContainer}> */}
                 <IconButton
-                  icon="arrow-left"
-                  size={20}
+                  icon="arrow-back"
+                  size={25}
                   iconColor={colors.onBackground}
                   style={styles.backButton}
                   onPress={() => navigation.goBack()}
@@ -300,8 +300,8 @@ const Profile = () => {
                 {editMode
                   ? (
                     <IconButton
-                      icon="pencil-alt"
-                      size={15}
+                      icon="pencil-sharp"
+                      size={18}
                       iconColor={colors.onBackground}
                       style={styles.editBannerImage}
                       onPress={() => {
@@ -326,7 +326,7 @@ const Profile = () => {
               {editMode
                 ? (
                   <IconButton
-                    icon="pencil-alt"
+                    icon="pencil"
                     size={20}
                     iconColor={colors.onBackground}
               // underlayColor={colors.background}
@@ -397,7 +397,7 @@ const Profile = () => {
               {editMode
                 ? (
                   <IconButton
-                    icon="pencil-alt"
+                    icon="pencil"
                     size={20}
                     iconColor={colors.onBackground}
               // underlayColor={colors.background}
@@ -429,7 +429,7 @@ const Profile = () => {
               { key: 'References / NDA / Background Check' },
             ].map((item) => (
               <View style={styles.userHighlightedListItem} key={item.key}>
-                <Icon style={styles.userHighlightedListItemText} name="check" />
+                <Icon style={styles.userHighlightedListItemText} name="checkmark-sharp" />
                 <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
               </View>
             ))
@@ -459,7 +459,7 @@ const Profile = () => {
               { key: 'References / NDA / Background Check' },
             ].map((item) => (
               <View style={styles.userHighlightedListItem} key={item.key}>
-                <Icon style={styles.userHighlightedListItemText} name="check" />
+                <Icon style={styles.userHighlightedListItemText} name="checkmark-sharp" />
                 <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
               </View>
             ))
@@ -485,7 +485,7 @@ const Profile = () => {
               { key: 'References / NDA / Background Check' },
             ].map((item) => (
               <View style={styles.userHighlightedListItem} key={item.key}>
-                <Icon style={styles.userHighlightedListItemText} name="check" />
+                <Icon style={styles.userHighlightedListItemText} name="checkmark-sharp" />
                 <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
               </View>
             ))
@@ -511,7 +511,7 @@ const Profile = () => {
               { key: 'References / NDA / Background Check' },
             ].map((item) => (
               <View style={styles.userHighlightedListItem} key={item.key}>
-                <Icon style={styles.userHighlightedListItemText} name="check" />
+                <Icon style={styles.userHighlightedListItemText} name="checkmark-sharp" />
                 <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
               </View>
             ))
@@ -537,7 +537,7 @@ const Profile = () => {
               { key: 'References / NDA / Background Check' },
             ].map((item) => (
               <View style={styles.userHighlightedListItem} key={item.key}>
-                <Icon style={styles.userHighlightedListItemText} name="check" />
+                <Icon style={styles.userHighlightedListItemText} name="checkmark-sharp" />
                 <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
               </View>
             ))
