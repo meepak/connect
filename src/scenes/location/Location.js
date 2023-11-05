@@ -98,7 +98,7 @@ const SelectLocation = ({ route }) => {
           handleSelect(data.description)
         }}
         query={{
-          key: { GOOGLE_CLOUD_API_KEY }, // TODO - https://reactnative.dev/docs/security#storing-sensitive-info
+          key: process.env.EXPO_PUBLIC_GOOGLE_CLOUD_API_KEY, // TODO - https://reactnative.dev/docs/security#storing-sensitive-info
           language: 'en',
         }}
       />

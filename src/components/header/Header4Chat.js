@@ -58,7 +58,7 @@ export default function Header4Chat() {
       </Text>
 
       <IconButton
-        icon="three-bars"
+        icon="zap"
         color={colors.onBackground}
         size={18}
         onPress={() => openManageChat()}

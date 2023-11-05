@@ -36,4 +36,3 @@ export const convertHexToRGBA = (hexCode, opacity = 1) => {
 
   return `rgba(${r},${g},${b},${op})`
 }
-

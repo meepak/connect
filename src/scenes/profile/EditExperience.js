@@ -93,6 +93,34 @@ export default function EditExperience() {
     },
   })
 
+  const ExperienceForm = () => {
+    let a // just a filler
+    return (
+      <View style={{ marginHorizontal: 30, marginVertical: 10 }}>
+        <Text>FIND ASSOCIATE</Text>
+        <TextInputBox
+          autoFocus
+          bgColor={colors.surfface}
+          onBgColor={colors.onSurface}
+          placeholder="Your full name"
+          label="7Full Name (Required)*"
+  // onChangeText={(text) => setEmail(text)}
+          autoCapitalize="words"
+          value={fullName}
+      // keyboardType="email-address"
+          errorMessage={fullNameError}
+          onChangeText={(name) => {
+            let error = ''
+            setFulName(name)
+            error = !isValidName(name)
+            error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
+            setFullNameError(error)
+          }}
+        />
+      </View>
+    )
+  }
+
   return (
     <ScreenTemplate>
       <SafeAreaView style={styles.container}>
@@ -135,13 +163,17 @@ export default function EditExperience() {
                   onPress={() => console.log('add')}
                 /> */}
         </KeyboardAwareScrollView>
+
+        {/* I don't think putting text entry form looks good on bottom sheet,
+        even though technically there seems to be no problem with it. */}
         <SheetModal ref={bottomSheetRef} snapsAt={['90%']}>
           <KeyboardAwareScrollView
             style={styles.content}
             keyboardShouldPersistTaps="never"
           >
             <View style={{ marginHorizontal: 30, marginVertical: 10 }}>
-              <Text>FIND ASSOCIATE</Text>
+              <Text>Sample Bottom Sheet Content</Text>
+              <Text>Will host componets that requires popup like data selection, map location selection, etc..</Text>
               <TextInputBox
                 autoFocus
                 bgColor={colors.surfface}
@@ -161,129 +193,10 @@ export default function EditExperience() {
                   setFullNameError(error)
                 }}
               />
-
-              <TextInputBox
-                autoFocus
-                bgColor={colors.surfface}
-                onBgColor={colors.onSurface}
-                placeholder="Your full name"
-                label="6Full Name (Required)*"
-          // onChangeText={(text) => setEmail(text)}
-                autoCapitalize="words"
-                value={fullName}
-              // keyboardType="email-address"
-                errorMessage={fullNameError}
-                onChangeText={(name) => {
-                  let error = ''
-                  setFulName(name)
-                  error = !isValidName(name)
-                  error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
-                  setFullNameError(error)
-                }}
-              />
-
-              <TextInputBox
-                autoFocus
-                bgColor={colors.surfface}
-                onBgColor={colors.onSurface}
-                placeholder="Your full name"
-                label="5Full Name (Required)*"
-          // onChangeText={(text) => setEmail(text)}
-                autoCapitalize="words"
-                value={fullName}
-              // keyboardType="email-address"
-                errorMessage={fullNameError}
-                onChangeText={(name) => {
-                  let error = ''
-                  setFulName(name)
-                  error = !isValidName(name)
-                  error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
-                  setFullNameError(error)
-                }}
-              />
-
-              <TextInputBox
-                autoFocus
-                bgColor={colors.surfface}
-                onBgColor={colors.onSurface}
-                placeholder="Your full name"
-                label="4Full Name (Required)*"
-          // onChangeText={(text) => setEmail(text)}
-                autoCapitalize="words"
-                value={fullName}
-              // keyboardType="email-address"
-                errorMessage={fullNameError}
-                onChangeText={(name) => {
-                  let error = ''
-                  setFulName(name)
-                  error = !isValidName(name)
-                  error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
-                  setFullNameError(error)
-                }}
-              />
-
-              <TextInputBox
-                autoFocus
-                bgColor={colors.surfface}
-                onBgColor={colors.onSurface}
-                placeholder="Your full name"
-                label="3Full Name (Required)*"
-          // onChangeText={(text) => setEmail(text)}
-                autoCapitalize="words"
-                value={fullName}
-              // keyboardType="email-address"
-                errorMessage={fullNameError}
-                onChangeText={(name) => {
-                  let error = ''
-                  setFulName(name)
-                  error = !isValidName(name)
-                  error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
-                  setFullNameError(error)
-                }}
-              />
-
-              <TextInputBox
-                autoFocus
-                bgColor={colors.surfface}
-                onBgColor={colors.onSurface}
-                placeholder="Your full name"
-                label="2Full Name (Required)*"
-          // onChangeText={(text) => setEmail(text)}
-                autoCapitalize="words"
-                value={fullName}
-              // keyboardType="email-address"
-                errorMessage={fullNameError}
-                onChangeText={(name) => {
-                  let error = ''
-                  setFulName(name)
-                  error = !isValidName(name)
-                  error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
-                  setFullNameError(error)
-                }}
-              />
-
-              <TextInputBox
-                autoFocus
-                bgColor={colors.surfface}
-                onBgColor={colors.onSurface}
-                placeholder="Your full name"
-                label="1Full Name (Required)*"
-          // onChangeText={(text) => setEmail(text)}
-                autoCapitalize="words"
-                value={fullName}
-              // keyboardType="email-address"
-                errorMessage={fullNameError}
-                onChangeText={(name) => {
-                  let error = ''
-                  setFulName(name)
-                  error = !isValidName(name)
-                  error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
-                  setFullNameError(error)
-                }}
-              />
             </View>
           </KeyboardAwareScrollView>
         </SheetModal>
+
       </SafeAreaView>
     </ScreenTemplate>
   )

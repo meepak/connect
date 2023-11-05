@@ -122,7 +122,7 @@ export default function EditIntro() {
 
           <TextInputBox
             autoFocus
-            bgColor={colors.surfface}
+            bgColor={colors.surface}
             onBgColor={colors.onSurface}
             placeholder="Your full name"
             label="Full Name (Required)*"

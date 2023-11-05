@@ -33,4 +33,3 @@ AnimatedAppBar.propTypes = {
   translateY: PropTypes.number.isRequired,
   children: PropTypes.node.isRequired,
 }
-

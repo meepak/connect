@@ -39,7 +39,7 @@ const items = [
 */
 export default function RadioButtonGroup(props) {
   const {
-    items, onChecked, reverse, disabled
+    items, onChecked, reverse, disabled,
   } = props
 
   const checkedItem = items.find((item) => item.checked && item.checked === true)

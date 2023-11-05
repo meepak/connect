@@ -2,7 +2,7 @@ import React, {
   useState, useContext, useLayoutEffect, // useRef,
 } from 'react'
 import {
-  Alert, StatusBar, SafeAreaView, StyleSheet,
+  Alert, StatusBar, SafeAreaView, StyleSheet, ScrollView,
 } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
@@ -61,6 +61,9 @@ export default function EditKeySummary() {
     container: {
       flex: 1,
       marginTop: StatusBar.currentHeight,
+    },
+    content: {
+      flex: 1,
     },
     footer: {
       marginVertical: 15,
@@ -221,6 +224,7 @@ export default function EditKeySummary() {
                     setIndustries(values)
                   }}
                 />
+
 
                 <SelectBusinessStage
                   allSelect
