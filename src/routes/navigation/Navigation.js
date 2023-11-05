@@ -16,13 +16,13 @@ export default function Navigation() {
 
   const getMainComponent = () => {
     if (auth.currentUser && auth.currentUser.emailVerified && userData) {
-      console.log('NAVIGATION userData is on boarded??', userData.isOnboarded)
+      // console.log('NAVIGATION userData is on boarded??', userData.isOnboarded)
       return userData.isOnboarded ? <DrawerNavigator /> : <OnboardingStack />
     }
     return <IntroStack />
   }
 
-  console.log('NAVIGATION Container LOADING........................')
+  // console.log('NAVIGATION Container LOADING........................')
   return (
     <>
       <NavigationContainer theme={theme}>

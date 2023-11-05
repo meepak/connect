@@ -10,7 +10,6 @@ import { Avatar as SystemAvatar } from '@rneui/themed'
 import Avatar from './core/Avatar'
 import { UserDataContext } from '../context/UserDataContext'
 import ImageSelectAndUpload from '../utils/ImageSelectAndUpload'
-import { convertHexToRGBA } from '../utils/functions'
 
 const styles = StyleSheet.create({
   progressView: {
@@ -42,7 +41,7 @@ const getIconSize = (size) => {
   if (typeof size === 'string') {
     return sizeMap[size] ?? 8
   }
-  return Math.round(size / 4)
+  return Math.round(size / 5)
 }
 
 // TODO implement onError, return error within onEdited
@@ -89,19 +88,19 @@ const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
           ? (
             <SystemAvatar.Accessory
               containerStyle={{
-                backgroundColor: colors.onBackground,
+                backgroundColor: colors.onPrimary,
                 borderRadius: 20,
               }}
               style={{
                 position: 'absolute',
-                right: 0,
+                right: 5,
                 bottom: 7,
               }}
               size={iconSize}
               iconProps={{
                 name: 'add-circle', // Use the plus sign icon name
                 size: iconSize,
-                color: colors.background,
+                color: colors.primary,
                 // bottom: 10,
                 // right: 7,
               }}

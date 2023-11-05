@@ -112,7 +112,7 @@ export default function FindScratch() {
         isPromoted: true,
         onPress: () => {
         // Your navigation logic here
-          console.log('Going to profile')
+          // console.log('Going to profile')
         },
       }
 

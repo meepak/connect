@@ -79,7 +79,7 @@ const ListItemConnection = ({
         {onYes
           ? (
             <IconButton
-              icon="account-check"
+              icon="thumbsup"
               size={20}
               onPress={onYes}
             />
@@ -88,7 +88,7 @@ const ListItemConnection = ({
         {onNo
           ? (
             <IconButton
-              icon="account-cancel"
+              icon="thumbsdown"
               size={20}
               onPress={onNo}
             />

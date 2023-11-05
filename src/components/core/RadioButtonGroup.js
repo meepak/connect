@@ -39,7 +39,7 @@ const items = [
 */
 export default function RadioButtonGroup(props) {
   const {
-    items, onChecked, reverse,
+    items, onChecked, reverse, disabled
   } = props
 
   const checkedItem = items.find((item) => item.checked && item.checked === true)
@@ -67,6 +67,7 @@ export default function RadioButtonGroup(props) {
           label={item.text}
           value={item.value}
           selected={item.checked}
+          disabled={disabled}
         />
       ))}
     </RadioButton.Group>
@@ -83,8 +84,10 @@ RadioButtonGroup.propTypes = {
   ).isRequired,
   onChecked: PropTypes.func.isRequired,
   reverse: PropTypes.bool,
+  disabled: PropTypes.bool,
 }
 
 RadioButtonGroup.defaultProps = {
   reverse: false,
+  disabled: false,
 }

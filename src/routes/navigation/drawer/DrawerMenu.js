@@ -124,7 +124,7 @@ const DrawerMenu = (/* {navigation} */) => {
       >
         <Drawer.Item
           style={styles.settingsItem}
-          icon="settings-outline"
+          icon="gear"
           label="Settings"
           onPress={() => {
             // Handle sign-out logic here

@@ -64,7 +64,7 @@ export default function Post() {
     //     date: today,
     //   },
     // })
-    console.log(`saved ${today}`)
+    // console.log(`saved ${today}`)
   }
 
   const removeStorage = () => {
@@ -82,7 +82,7 @@ export default function Post() {
   }
 
   useEffect(() => {
-    console.log('Post screen')
+    // console.log('Post screen')
     loadStorage()
   }, [])
 

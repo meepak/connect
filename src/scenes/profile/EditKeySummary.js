@@ -1,10 +1,10 @@
 import React, {
-  useState, useContext, useLayoutEffect, useEffect, // useRef,
+  useState, useContext, useLayoutEffect, // useRef,
 } from 'react'
 import {
-  Alert, StatusBar, SafeAreaView, View, Text, StyleSheet,
+  Alert, StatusBar, SafeAreaView, StyleSheet,
 } from 'react-native'
-import { useTheme, IconButton, Button } from 'react-native-paper'
+import { useTheme } from 'react-native-paper'
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -12,6 +12,7 @@ import { useRoute, useNavigation } from '@react-navigation/native'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import { firestore } from '../../firebase'
 import { UserDataContext } from '../../context/UserDataContext'
+import Header4Profile from '../../components/header/Header4Profile'
 
 import WhoAmI from '../onboarding/_whoami'
 import SelectIndustries from '../onboarding/_industries'
@@ -61,68 +62,10 @@ export default function EditKeySummary() {
       flex: 1,
       marginTop: StatusBar.currentHeight,
     },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'center', // Center items vertically in the row
-      justifyContent: 'space-between', // Space out items horizontally
-      alignSelf: 'stretch',
-    },
-    cancelButton: {
-      // alignSelf: 'flex-start',
-    },
-    saveButton: {
-      width: 85,
-      height: 32,
-      marginRight: 10,
-      paddingVertical: 0,
-    },
-    saveButtonLabel: {
-      fontSize: fonts.bodyMedium.fontSize,
-      color: colors.onBackground,
-      lineHeight: 13,
-      height: 12,
-      fontWeight: 'bold',
-    },
-    headerTitle: {
-      fontSize: fonts.headlineSmall.fontSize,
-      fontWeight: 'bold',
-      marginLeft: 10,
-      marginRight: 'auto',
-    },
     footer: {
       marginVertical: 15,
     },
   })
-
-  useEffect(
-    () => navigation.addListener('beforeRemove', (e) => {
-      const { action } = e.data
-      console.log(e.data)
-
-      e.preventDefault()
-
-      // TODO check for actual unsaved changes
-      // https://reactnavigation.org/docs/preventing-going-back/
-
-      Alert.alert(
-        'Discard changes?',
-        'You have unsaved changes. Are you sure to discard them and leave the screen?',
-        [
-          { text: "Don't leave", style: 'cancel', onPress: () => {} },
-          {
-            text: 'Discard',
-            style: 'destructive',
-            onPress: () => navigation.dispatch(action),
-          },
-        ],
-      )
-    }),
-    [navigation],
-  )
-
-  useLayoutEffect(() => {
-    console.log('ONBOARDING--------------------------------')
-  }, [])
 
   const profileUpdate = async () => {
     setSpinner(true)
@@ -166,36 +109,23 @@ export default function EditKeySummary() {
   return (
     <ScreenTemplate>
       <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <IconButton
-            icon="close-sharp"
-            size={25}
-            iconColor={colors.onBackground}
-            style={styles.cancelButton}
-            onPress={() => navigation.goBack()}
-          />
-          <Text style={styles.headerTitle}>Edit Intro</Text>
-          <Button
-            onPress={() => {
-              profileUpdate()
-              console.log('saved changes')
-              navigation.navigate('ProfileStack', {
-                screen: 'Profile',
-                params: { // userId, userFullName, userAvatar, userBannerImage,
-                  userId: userData.id,
-                  userFullName: userData.fullName,
-                  userAvatar: userData.avatar,
-                  userBannerImage: { uri: userData.bannerImage },
-                },
-              })
-            }}
-            mode="outlined"
-            style={styles.saveButton}
-            icon="checkmark-sharp"
-            textColor={colors.onBackground}
-          ><Text style={styles.saveButtonLabel}>Save</Text>
-          </Button>
-        </View>
+        <Header4Profile
+          title="Edit Key Summary"
+          changed
+          onSave={() => {
+            profileUpdate()
+            // console.log('saved changes')
+            navigation.navigate('ProfileStack', {
+              screen: 'Profile',
+              params: { // userId, userFullName, userAvatar, userBannerImage,
+                userId: userData.id,
+                userFullName: userData.fullName,
+                userAvatar: userData.avatar,
+                userBannerImage: { uri: userData.bannerImage },
+              },
+            })
+          }}
+        />
         <KeyboardAwareScrollView
           style={styles.content}
           keyboardShouldPersistTaps="never"
@@ -204,6 +134,7 @@ export default function EditKeySummary() {
           <WhoAmI
             onWhoAmIChanged={(item) => setWhoAmI(item)}
             initialValue={userData.whoAmI}
+            disabled
           />
 
           {whoAmI === 'founder'

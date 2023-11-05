@@ -150,7 +150,7 @@ export default function Edit() {
           value={fullName}
           autoCapitalize="none"
           label="Full Name"
-          icon="user"
+          icon="person"
         />
         <Text style={styles.field}>Mail:</Text>
         <Text style={styles.title}>
@@ -164,7 +164,7 @@ export default function Edit() {
           autoCapitalize="none"
           keyboardType="phone-pad"
           label="Phone"
-          icon="phone"
+          icon="device-mobile"
         />
         <Checkbox
           label="Has user been onboarded?"

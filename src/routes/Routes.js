@@ -8,13 +8,13 @@ const Routes = () => {
   const [checked] = useAtom(checkedAtom)
   const [loggedIn] = useAtom(loggedInAtom)
 
-  console.log('route loaded')
+  // console.log('route loaded')
   // TODO: switch router by loggedIn state
-  console.log('[##] loggedIn', loggedIn)
+  // console.log('[##] loggedIn', loggedIn)
 
   // rendering
   if (!checked) {
-    console.log('[Routes.js] not checked')
+    // console.log('[Routes.js] not checked')
     return <Initial />
   }
 

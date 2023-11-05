@@ -65,7 +65,7 @@ export default function SignUp() {
   }
 
   useEffect(() => {
-    console.log('Sign Up screen')
+    // console.log('Sign Up screen')
   }, [])
 
   const onFooterLinkPress = () => {
@@ -82,9 +82,9 @@ export default function SignUp() {
       const response = await createUserWithEmailAndPassword(auth, email, password)
       const { user } = response
       // Send an email verification email
-      console.log(`sending verification email for -- ${JSON.stringify(user)}`)
+      // console.log(`sending verification email for -- ${JSON.stringify(user)}`)
       await sendEmailVerification(auth.currentUser)
-      console.log('---------------')
+      // console.log('---------------')
       const data = {
         id: user.uid,
         email,
@@ -115,7 +115,7 @@ export default function SignUp() {
           onChangeText={(text) => setFullName(text)}
           value={fullName}
           autoCapitalize="none"
-          icon="user"
+          icon="person"
           errorMessage={nameError}
         />
         <TextInputBox
@@ -124,10 +124,10 @@ export default function SignUp() {
           value={email}
           autoCapitalize="none"
           keyboardType="email-address"
-          icon="envelope"
+          icon="mail"
           errorMessage={emailError}
           onEndEditing={() => {
-            console.log('blurred email')
+            // console.log('blurred email')
             let error = ''
             if (email !== '') {
               error = isValidEmail(email) ? '' : 'Invalid E-mail'

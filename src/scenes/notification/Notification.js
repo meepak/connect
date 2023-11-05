@@ -26,7 +26,7 @@ export default function Notification() {
   const { userData } = useContext(UserDataContext)
 
   useEffect(() => {
-    console.log('Notification screen')
+    // console.log('Notification screen')
   }, [])
 
   return (

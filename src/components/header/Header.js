@@ -83,7 +83,7 @@ export default function Header() {
         </Badge>
         {/* Not sure animated Icon is appropriate, leaving it here cuz just because */}
         <IconButton
-          icon="notifications-outline"
+          icon="bell"
           color={colors.onBackground}
           size={24}
           onPress={() => openNotification()}

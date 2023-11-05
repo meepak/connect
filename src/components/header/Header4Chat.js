@@ -58,9 +58,9 @@ export default function Header4Chat() {
       </Text>
 
       <IconButton
-        icon="menu"
+        icon="three-bars"
         color={colors.onBackground}
-        size={26}
+        size={18}
         onPress={() => openManageChat()}
       />
     </View>

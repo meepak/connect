@@ -61,7 +61,7 @@ const ImageSelectAndUpload = async ({
       )
     }
   } catch (e) {
-    console.log('error', e.message)
+    // console.log('error', e.message)
     Alert.alert('Error', 'The size may be too much.')
   }
 }

@@ -1,20 +1,14 @@
 import React, {
-  useState, useEffect, useContext, useCallback, useMemo, useRef,
+  useState, useContext, useCallback, useRef,
 } from 'react'
 import {
-  View, StyleSheet, StatusBar, SafeAreaView, Alert,
+  View, StyleSheet, StatusBar, SafeAreaView,
 } from 'react-native'
 import {
-  Text, Button, IconButton, useTheme,
+  Text, useTheme,
 } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useRoute, useNavigation } from '@react-navigation/native'
-
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-  BottomSheetBackdrop,
-} from '@gorhom/bottom-sheet'
 
 import ScreenTemplate from '../../components/ScreenTemplate'
 import TextInputBox from '../../components/core/TextInputBox'
@@ -22,6 +16,8 @@ import TextInputBox from '../../components/core/TextInputBox'
 // TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE
 import { UserDataContext } from '../../context/UserDataContext'
 import { isValidName, isValidLength } from '../../utils/validation'
+import Header4Profile from '../../components/header/Header4Profile'
+import SheetModal from '../../components/core/SheetModal'
 
 export default function EditIntro() {
   const route = useRoute()
@@ -47,24 +43,6 @@ export default function EditIntro() {
   // refs
   const bottomSheetRef = useRef(null)
 
-  // variables
-  const snapPoints = useMemo(() => ['25%', '50%', '100%'], [])
-
-  // #region callbacks
-  const handleChange = useCallback((index) => {
-    // eslint-disable-next-line no-console
-    console.log('index', index)
-  }, [])
-  const handleDismiss = useCallback(() => {
-    // eslint-disable-next-line no-console
-    console.log('on dismiss')
-  }, [])
-  const handleDismissPress = useCallback(() => {
-   bottomSheetRef.current?.dismiss()
-  }, [])
-  const handleClosePress = useCallback(() => {
-   bottomSheetRef.current?.close()
-  }, [])
   const handlePresentPress = useCallback(() => {
    bottomSheetRef.current?.present()
   }, [])
@@ -74,34 +52,6 @@ export default function EditIntro() {
     container: {
       flex: 1,
       marginTop: StatusBar.currentHeight,
-    },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'center', // Center items vertically in the row
-      justifyContent: 'space-between', // Space out items horizontally
-      alignSelf: 'stretch',
-    },
-    cancelButton: {
-      // alignSelf: 'flex-start',
-    },
-    saveButton: {
-      width: 85,
-      height: 32,
-      marginRight: 10,
-      paddingVertical: 0,
-    },
-    saveButtonLabel: {
-      fontSize: fonts.bodyMedium.fontSize,
-      color: colors.onBackground,
-      lineHeight: 13,
-      height: 12,
-      fontWeight: 700,
-    },
-    headerTitle: {
-      fontSize: fonts.headlineSmall.fontSize,
-      fontWeight: 700,
-      marginLeft: 10,
-      marginRight: 'auto',
     },
     h1: {
       fontSize: fonts.headlineMedium.fontSize,
@@ -146,277 +96,210 @@ export default function EditIntro() {
     },
   })
 
-  useEffect(
-    () => navigation.addListener('beforeRemove', (e) => {
-      const { action } = e.data
-      console.log(e.data)
-
-      e.preventDefault()
-
-      // TODO check for actual unsaved changes
-      // https://reactnavigation.org/docs/preventing-going-back/
-
-      Alert.alert(
-        'Discard changes?',
-        'You have unsaved changes. Are you sure to discard them and leave the screen?',
-        [
-          { text: "Don't leave", style: 'cancel', onPress: () => {} },
-          {
-            text: 'Discard',
-            style: 'destructive',
-            onPress: () => navigation.dispatch(action),
-          },
-        ],
-      )
-    }),
-    [navigation],
-  )
-
   return (
-    <BottomSheetModalProvider>
-      <ScreenTemplate>
-        <SafeAreaView style={styles.container}>
-          <View style={styles.header}>
-            <IconButton
-              icon="close-sharp"
-              size={25}
-              iconColor={colors.onBackground}
-              style={styles.cancelButton}
-              onPress={() => navigation.goBack()}
-            />
-            <Text style={styles.headerTitle}>Edit Intro</Text>
-            <Button
-              onPress={() => {
-                console.log('saved changes')
-                navigation.navigate('ProfileStack', {
-                  screen: 'Profile',
-                  params: { // userId, userFullName, userAvatar, userBannerImage,
-                    userId: userData.id,
-                    userFullName: userData.fullName,
-                    userAvatar: userData.avatar,
-                    userBannerImage: { uri: userData.bannerImage },
-                  },
-                })
-              }}
-              mode="outlined"
-              style={styles.saveButton}
-              icon="checkmark-sharp"
-              // labelStyle={{ fontSize: 25 }}
-              textColor={colors.onBackground}
-            ><Text style={styles.saveButtonLabel}>Save</Text>
-            </Button>
+    <ScreenTemplate>
+      <SafeAreaView style={styles.container}>
+        <Header4Profile
+          title="Edit Intro"
+          changed
+          onSave={() => {
+            // console.log('saved changes')
+            navigation.navigate('ProfileStack', {
+              screen: 'Profile',
+              params: { // userId, userFullName, userAvatar, userBannerImage,
+                userId: userData.id,
+                userFullName: userData.fullName,
+                userAvatar: userData.avatar,
+                userBannerImage: { uri: userData.bannerImage },
+              },
+            })
+          }}
+        />
+        <KeyboardAwareScrollView
+          style={styles.content}
+          keyboardShouldPersistTaps="never"
+        >
+
+          <TextInputBox
+            autoFocus
+            bgColor={colors.surfface}
+            onBgColor={colors.onSurface}
+            placeholder="Your full name"
+            label="Full Name (Required)*"
+          // onChangeText={(text) => setEmail(text)}
+            autoCapitalize="words"
+            value={fullName}
+              // keyboardType="email-address"
+            errorMessage={fullNameError}
+            onChangeText={(name) => {
+              let error = ''
+              setFulName(name)
+              error = !isValidName(name)
+              error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
+              setFullNameError(error)
+            }}
+          />
+
+          <TextInputBox
+            autoFocus
+            placeholder="Your additional name"
+            label="Nickname"
+          // onChangeText={(text) => setEmail(text)}
+            autoCapitalize="words"
+            value={nickName}
+              // keyboardType="email-address"
+            errorMessage={nickNameError}
+            onChangeText={(name) => {
+              let error = ''
+              setNickName(name)
+              error = !isValidName(name)
+              error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
+              setNickNameError(error)
+            }}
+          />
+
+          <TextInputBox
+              // editable={false}
+            autoFocus
+            placeholder="Please select"
+            label="Pronouns"
+          // onChangeText={(text) => setEmail(text)}
+                // autoCapitalize="words"
+            value={pronouns}
+            rightIcon="plus-circle"
+              // keyboardType="email-address"
+                // errorMessage={nickNameError}
+                // onChangeText={(pronouns) => {
+                //   setPronouns(pronouns)
+                // }}
+            onFocus={() => handlePresentPress(1)}
+            showKeyboard={false}
+          />
+
+          <TextInputBox
+            autoFocus
+            numberOfLines={3}
+            placeholder="Describe yourself very briefly"
+            label="About You (Required)*"
+          // onChangeText={(text) => setEmail(text)}
+            autoCapitalize="sentences"
+            value={headLine}
+              // keyboardType="email-address"
+            errorMessage={headLineError}
+            onChangeText={(text) => {
+              let error = ''
+              setHeadLine(text)
+              error = !isValidLength(text, 100)
+              error = error ? 'Maximum 100 characters allowed' : ''
+              setHeadLineError(error)
+            }}
+          />
+
+          <TextInputBox
+              // editable={false}
+            autoFocus
+            placeholder="Please select"
+            label="Location (Required)*"
+          // onChangeText={(text) => setEmail(text)}
+                // autoCapitalize="words"
+            value={location}
+            rightIcon="plus-circle"
+              // keyboardType="email-address"
+                // errorMessage={nickNameError}
+                // onChangeText={(pronouns) => {
+                //   setPronouns(pronouns)
+                // }}
+            onFocus={() => handlePresentPress(1)}
+            showKeyboard={false}
+          />
+
+          <TextInputBox
+              // editable={false}
+            autoFocus
+            placeholder="Please select"
+            label="Occupation (Required)*"
+          // onChangeText={(text) => setEmail(text)}
+                // autoCapitalize="words"
+            value={occupation}
+            rightIcon="plus-circle"
+              // keyboardType="email-address"
+                // errorMessage={nickNameError}
+                // onChangeText={(pronouns) => {
+                //   setPronouns(pronouns)
+                // }}
+            onFocus={() => handlePresentPress(1)}
+            showKeyboard={false}
+          />
+
+          <TextInputBox
+              // editable={false}
+            autoFocus
+            placeholder="Please select"
+            label="Related Industries (Required)*"
+          // onChangeText={(text) => setEmail(text)}
+                // autoCapitalize="words"
+            value={industries}
+            rightIcon="plus-circle"
+              // keyboardType="email-address"
+                // errorMessage={nickNameError}
+                // onChangeText={(pronouns) => {
+                //   setPronouns(pronouns)
+                // }}
+            onFocus={() => handlePresentPress(1)}
+            showKeyboard={false}
+          />
+
+          <Text style={styles.h1}>Contact Info</Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>Email</Text>
+            <Text style={styles.value}>{userData.email} </Text>
           </View>
-          <KeyboardAwareScrollView
-            style={styles.content}
-            keyboardShouldPersistTaps="never"
-          >
 
-            <TextInputBox
-              autoFocus
-              bgColor={colors.surfface}
-              onBgColor={colors.onSurface}
-              placeholder="Your full name"
-              label="Full Name (Required)*"
-          // onChangeText={(text) => setEmail(text)}
-              autoCapitalize="words"
-              value={fullName}
-              // keyboardType="email-address"
-              errorMessage={fullNameError}
-              onChangeText={(name) => {
-                let error = ''
-                setFulName(name)
-                error = !isValidName(name)
-                error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
-                setFullNameError(error)
-              }}
-            />
-
-            <TextInputBox
-              autoFocus
-              placeholder="Your additional name"
-              label="Nickname"
-          // onChangeText={(text) => setEmail(text)}
-              autoCapitalize="words"
-              value={nickName}
-              // keyboardType="email-address"
-              errorMessage={nickNameError}
-              onChangeText={(name) => {
-                let error = ''
-                setNickName(name)
-                error = !isValidName(name)
-                error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
-                setNickNameError(error)
-              }}
-            />
-
-            <TextInputBox
-              // editable={false}
-              autoFocus
-              placeholder="Please select"
-              label="Pronouns"
-          // onChangeText={(text) => setEmail(text)}
-                // autoCapitalize="words"
-              value={pronouns}
-              rightIcon="plus-circle"
-              // keyboardType="email-address"
-                // errorMessage={nickNameError}
-                // onChangeText={(pronouns) => {
-                //   setPronouns(pronouns)
-                // }}
-              onFocus={() => handlePresentPress(1)}
-              showKeyboard={false}
-            />
-
-            <TextInputBox
-              autoFocus
-              numberOfLines={3}
-              placeholder="Describe yourself very briefly"
-              label="About You (Required)*"
-          // onChangeText={(text) => setEmail(text)}
-              autoCapitalize="sentences"
-              value={headLine}
-              // keyboardType="email-address"
-              errorMessage={headLineError}
-              onChangeText={(text) => {
-                let error = ''
-                setHeadLine(text)
-                error = !isValidLength(text, 100)
-                error = error ? 'Maximum 100 characters allowed' : ''
-                setHeadLineError(error)
-              }}
-            />
-
-            <TextInputBox
-              // editable={false}
-              autoFocus
-              placeholder="Please select"
-              label="Location (Required)*"
-          // onChangeText={(text) => setEmail(text)}
-                // autoCapitalize="words"
-              value={location}
-              rightIcon="plus-circle"
-              // keyboardType="email-address"
-                // errorMessage={nickNameError}
-                // onChangeText={(pronouns) => {
-                //   setPronouns(pronouns)
-                // }}
-              onFocus={() => handlePresentPress(1)}
-              showKeyboard={false}
-            />
-
-            <TextInputBox
-              // editable={false}
-              autoFocus
-              placeholder="Please select"
-              label="Occupation (Required)*"
-          // onChangeText={(text) => setEmail(text)}
-                // autoCapitalize="words"
-              value={occupation}
-              rightIcon="plus-circle"
-              // keyboardType="email-address"
-                // errorMessage={nickNameError}
-                // onChangeText={(pronouns) => {
-                //   setPronouns(pronouns)
-                // }}
-              onFocus={() => handlePresentPress(1)}
-              showKeyboard={false}
-            />
-
-            <TextInputBox
-              // editable={false}
-              autoFocus
-              placeholder="Please select"
-              label="Related Industries (Required)*"
-          // onChangeText={(text) => setEmail(text)}
-                // autoCapitalize="words"
-              value={industries}
-              rightIcon="plus-circle"
-              // keyboardType="email-address"
-                // errorMessage={nickNameError}
-                // onChangeText={(pronouns) => {
-                //   setPronouns(pronouns)
-                // }}
-              onFocus={() => handlePresentPress(1)}
-              showKeyboard={false}
-            />
-
-            <Text style={styles.h1}>Contact Info</Text>
-            <View style={styles.row}>
-              <Text style={styles.label}>Email</Text>
-              <Text style={styles.value}>{userData.email} </Text>
-            </View>
-
-            <TextInputBox
-              autoFocus
+          <TextInputBox
+            autoFocus
               // placeholder="Your mobile phone number"
-              label="Mobile number"
+            label="Mobile number"
           // onChangeText={(text) => setEmail(text)}
               // autoCapitalize="words"
-              value={mobile}
-              keyboardType="phone-pad"
-              // errorMessage={nickNameError}
-              // onChangeText={(name) => {
-              //   let error = ''
-              //   setNickName(name)
-              //   error = !isValidName(name)
-              //   error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
-              //   setNickNameError(error)
-              // }}
-            />
+            value={mobile}
+            keyboardType="phone-pad"
+          />
 
-            <TextInputBox
-              autoFocus
-              placeholder="Your personal or business website"
-              label="Website"
+          <TextInputBox
+            autoFocus
+            placeholder="Your personal or business website"
+            label="Website"
           // onChangeText={(text) => setEmail(text)}
               // autoCapitalize="words"
-              value={website}
-            />
+            value={website}
+          />
 
-            <TextInputBox
-              autoFocus
+          <TextInputBox
+            autoFocus
               // placeholder="Your linkedin profile"
-              label="LinkedIn"
+            label="LinkedIn"
           // onChangeText={(text) => setEmail(text)}
               // autoCapitalize="words"
-              value={linkedIn}
-            />
+            value={linkedIn}
+          />
 
-            {/* Empty space at bottom of page */}
-            <View style={styles.footer} />
+          {/* Empty space at bottom of page */}
+          <View style={styles.footer} />
 
-            {/* <IconButton
+          {/* <IconButton
                 style={styles.rowIcon}
                 icon="plus-circle"
                 size={20}
                 iconColor={colors.primary}
                 onPress={() => console.log('add')}
               /> */}
-          </KeyboardAwareScrollView>
-          <BottomSheetModal
-            ref={bottomSheetRef}
-            snapPoints={snapPoints}
-            topInset={StatusBar.currentHeight}
-            enablePanDownToClose
-            enableDismissOnClose
-            onDismiss={handleDismiss}
-            onChange={handleChange}
-            backdropComponent={({ animatedIndex, style }) => (
-              <BottomSheetBackdrop
-                animatedIndex={animatedIndex}
-                style={[style, { backgroundColor: colors.surfaceDisabled }]}
-                disappearsOnIndex={-1}
-              />
-            )}
-            backgroundStyle={{ backgroundColor: colors.surfaceVariant, borderRadius: 40 }}
-            handleIndicatorStyle={{ width: '15%', height: 7, backgroundColor: colors.background }}
-          >
-            <View style={{ marginHorizontal: 30, marginVertical: 10 }}>
-              <Text>FIND ASSOCIATE</Text>
-            </View>
-          </BottomSheetModal>
-        </SafeAreaView>
-      </ScreenTemplate>
-    </BottomSheetModalProvider>
+        </KeyboardAwareScrollView>
+        <SheetModal ref={bottomSheetRef}>
+          <View style={{ marginHorizontal: 30, marginVertical: 10 }}>
+            <Text>FIND ASSOCIATE</Text>
+          </View>
+        </SheetModal>
+      </SafeAreaView>
+    </ScreenTemplate>
   )
 }

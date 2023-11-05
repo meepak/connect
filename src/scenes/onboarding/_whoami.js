@@ -8,7 +8,7 @@ import RadioButtonGroup from '../../components/core/RadioButtonGroup'
 import styles from './styles'
 
 const WhoAmI = ({
-  onWhoAmIChanged, initialValue,
+  onWhoAmIChanged, initialValue, disabled,
 }) => (
   <Surface style={styles.card}>
 
@@ -17,6 +17,7 @@ const WhoAmI = ({
     </Text>
     <Divider style={styles.divider} />
     <RadioButtonGroup
+      disabled={disabled}
       reverse
       items={[
         {
@@ -43,10 +44,12 @@ const WhoAmI = ({
 WhoAmI.propTypes = {
   onWhoAmIChanged: PropTypes.func.isRequired,
   initialValue: PropTypes.string,
+  disabled: PropTypes.bool,
 }
 
 WhoAmI.defaultProps = {
   initialValue: '',
+  disabled: false,
 }
 
 export default WhoAmI

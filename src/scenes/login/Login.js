@@ -111,7 +111,7 @@ export default function Login() {
         return
       }
     } catch (error) {
-      console.log(error.message)
+      // console.log(error.message)
       setSpinner(false)
       // Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests).
 
@@ -143,7 +143,7 @@ export default function Login() {
           ) : <></>}
         <TextInputBox
           // ref={emailTextInput}
-          icon="envelope"
+          icon="mail"
           autoFocus
           // placeholder="E-mail"
           label="E-mail"

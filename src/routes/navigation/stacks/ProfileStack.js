@@ -4,6 +4,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import Profile from '../../../scenes/profile'
 import EditIntro from '../../../scenes/profile/EditIntro'
 import EditKeySummary from '../../../scenes/profile/EditKeySummary'
+import EditExperience from '../../../scenes/profile/EditExperience'
 // import HeaderStyle from '../../../components/header/HeaderStyle'
 
 const Stack = createStackNavigator()
@@ -12,7 +13,7 @@ const ProfileStack = () => (
   <Stack.Navigator
     screenOptions={{
       headerShown: false,
-      gestureEnabled: false,
+      gestureEnabled: true,
     }}
   >
 
@@ -33,11 +34,6 @@ const ProfileStack = () => (
       component={EditIntro}
       options={{
         ...TransitionPresets.ModalSlideFromBottomIOS,
-        gestureEnabled: false,
-        // title: 'Edit Intro',
-        // headerBackTitle: '',
-        // headerBackground: () => <HeaderStyle />,
-        // headerTintColor: colors.onBackground,
       }}
     />
 
@@ -46,11 +42,14 @@ const ProfileStack = () => (
       component={EditKeySummary}
       options={{
         ...TransitionPresets.ModalSlideFromBottomIOS,
-        gestureEnabled: false,
-        // title: 'Edit Intro',
-        // headerBackTitle: '',
-        // headerBackground: () => <HeaderStyle />,
-        // headerTintColor: colors.onBackground,
+      }}
+    />
+
+    <Stack.Screen
+      name="EditExperience"
+      component={EditExperience}
+      options={{
+        ...TransitionPresets.ModalSlideFromBottomIOS,
       }}
     />
 

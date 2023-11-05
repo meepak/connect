@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet } from 'react-native'
 import { TextInput, HelperText, useTheme } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import FontIcon from 'react-native-vector-icons/FontAwesome5' // TODO replace with material icon
+import Icon from 'react-native-vector-icons/Octicons' // TODO replace with material icon
 import { layout } from '../../theme'
 
 // TODO -- Fork the react-native-paper TextInput and allow cutomization of spacing between labels and lines
@@ -91,7 +91,7 @@ const TextInputBox = (props) => {
           ? (
             <TextInput.Icon
               icon={() => (
-                <FontIcon
+                <Icon
                   name={icon}
                   size={20}
                   color={colors.primary}
@@ -105,8 +105,8 @@ const TextInputBox = (props) => {
           ? (
             <TextInput.Icon
               icon={() => (
-                <FontIcon
-                  name={secureText ? 'eye' : 'eye-slash'}
+                <Icon
+                  name={secureText ? 'eye' : 'eye-closed'}
                   size={20}
                   color={colors.primary}
                 />
@@ -118,7 +118,7 @@ const TextInputBox = (props) => {
             ? (
               <TextInput.Icon
                 icon={() => (
-                  <FontIcon
+                  <Icon
                     name={rightIcon}
                     size={20}
                     color={colors.primary}

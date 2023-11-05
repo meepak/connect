@@ -31,17 +31,17 @@ export const renderActions = (props, colors) => (
     }}
     icon={() => (
       <IconButton
-        icon="attach-outline"
-        size={25}
+        icon="upload"
+        size={24}
         iconColor={colors.onBackground}
       />
     )}
     options={{
       'Choose From Library': () => {
-        console.log('Choose From Library')
+        // console.log('Choose From Library')
       },
       Cancel: () => {
-        console.log('Cancel')
+        // console.log('Cancel')
       },
     }}
     optionTintColor={colors.backgroundColor}
@@ -79,8 +79,8 @@ export const renderSend = (props, colors) => (
     }}
   >
     <IconButton
-      icon="send-sharp"
-      size={25}
+      icon="paper-airplane"
+      size={24}
       iconColor={colors.onBackground}
     />
   </Send>

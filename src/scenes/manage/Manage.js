@@ -86,7 +86,7 @@ export default function Manage() {
       data: 'something data',
       token: token.token,
     })
-    console.log(res)
+    // console.log(res)
   }
 
   const goDetail = () => {
@@ -100,7 +100,7 @@ export default function Manage() {
         // Restart() // do not restart, just go back to pre login page
       })
       .catch((error) => {
-        console.log(`on sign out press - ${error.message}`)
+        // console.log(`on sign out press - ${error.message}`)
       })
   }
 
@@ -124,17 +124,17 @@ export default function Manage() {
         setSpinner(false)
         signOut(auth)
           .then(() => {
-            console.log('user deleted')
+            // console.log('user deleted')
           })
           .catch((error) => {
-            console.log(error.message)
+            // console.log(error.message)
           })
       }).catch((error) => {
         setSpinner(false)
-        console.log(error)
+        // console.log(error)
       })
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     }
   }
 
@@ -150,7 +150,7 @@ export default function Manage() {
     })
 
     if (userIds.length === 0) {
-      console.log('no connections found')
+      // console.log('no connections found')
       setSpinner(false)
       return
     }
@@ -205,7 +205,7 @@ export default function Manage() {
   }
 
   const onAcceptConnection = async (connection) => {
-    console.log(`Connection Accepted - ${connection.key}`)
+    // console.log(`Connection Accepted - ${connection.key}`)
     // send connection request, TODO ADD/UPDATE APPROPRIATELY LATER
     await updateDoc(doc(firestore, 'users', userData.id, 'connection', connection.key), {
       requestAccepted: serverTimestamp(),
@@ -232,7 +232,7 @@ export default function Manage() {
     })
   }
   const onRejectConnection = async (connection) => {
-    console.log(`Connection Rejected - ${connection.key}`)
+    // console.log(`Connection Rejected - ${connection.key}`)
     // send connection request, TODO ADD/UPDATE APPROPRIATELY LATER
     await updateDoc(doc(firestore, 'users', userData.id, 'connection', connection.key), {
       requestRejected: serverTimestamp(),
@@ -259,7 +259,7 @@ export default function Manage() {
     })
   }
   const onCancelConnection = async (connection) => {
-    console.log(`Connection Cancelled - ${connection.key}`)
+    // console.log(`Connection Cancelled - ${connection.key}`)
     // send connection request, TODO ADD/UPDATE APPROPRIATELY LATER
     await updateDoc(doc(firestore, 'users', userData.id, 'connection', connection.key), {
       requestCancelled: serverTimestamp(),
@@ -298,7 +298,7 @@ export default function Manage() {
         const data = querySnapshot.data()
         setToken(data)
       } else {
-        console.log('No such document!')
+        // console.log('No such document!')
       }
     })
     return () => tokenListner()

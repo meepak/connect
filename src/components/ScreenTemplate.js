@@ -4,6 +4,7 @@ import { StyleSheet, SafeAreaView } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import PropTypes from 'prop-types'
 import LoadingScreen from './LoadingScreen'
 import ErrorScreen from './ErrorScreen'
@@ -23,7 +24,7 @@ const ScreenTemplate = (props) => {
   } = props
 
   if (isError) {
-    console.log('Screen Template received IsError')
+    // console.log('Screen Template received IsError')
     return <ErrorScreen />
   }
 
@@ -33,10 +34,12 @@ const ScreenTemplate = (props) => {
 
   return (
     <GestureHandlerRootView style={styles.container}>
-      <SafeAreaView style={styles.container} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-        <StatusBar />
-        { children }
-      </SafeAreaView>
+      <BottomSheetModalProvider>
+        <SafeAreaView style={styles.container} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+          <StatusBar />
+          { children }
+        </SafeAreaView>
+      </BottomSheetModalProvider>
     </GestureHandlerRootView>
   )
 }

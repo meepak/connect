@@ -26,9 +26,9 @@ export default function Initial() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log('Initial.js -- Auth state changed')
+      // console.log('Initial.js -- Auth state changed')
       if (user) {
-        console.log('Initial.js -- received user data')
+        // console.log('Initial.js -- received user data')
         if (!user.emailVerified) {
           Alert.alert('Error', 'Email verification required.') // To Do handle more gracefully
         }
@@ -51,7 +51,7 @@ export default function Initial() {
         })
 
         return () => {
-          console.log('Initial.js -- Unsubscribe')
+          // console.log('Initial.js -- Unsubscribe')
           // Unsubscribe when the component is unmounted
           unsubscribe()
         }
@@ -62,7 +62,7 @@ export default function Initial() {
     })
   }, [])
 
-  console.log('Initial.js -- Returning Loading Screen')
+  // console.log('Initial.js -- Returning Loading Screen')
   return (
     <LoadingScreen />
   )

@@ -63,7 +63,7 @@ export default function ChatConnections() {
     })
 
     if (userIds.length === 0) {
-      console.log('No connections')
+      // console.log('No connections')
       setSpinner(false)
       return
     }
@@ -118,7 +118,7 @@ export default function ChatConnections() {
       rate=""
       isPromoted
       onPress={() => {
-        console.log('going to chat', requestAccepted)
+        // console.log('going to chat', requestAccepted)
         navigation.navigate('ChatStack', {
           screen: 'Chat',
           params: {

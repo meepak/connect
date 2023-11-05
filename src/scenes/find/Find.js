@@ -63,7 +63,7 @@ export default function Find() {
 
   // Define the data generation function
   const fetchPotentialMatches = async (itemCount = 15) => {
-    console.log('Fetching potential matches for user', userData.id)
+    // console.log('Fetching potential matches for user', userData.id)
     // // // Get a reference to the potential matches collection.
     const potentialMatchesCollection = collection(firestore, `/users/${userData.id}/potential_matches`)
 
@@ -75,7 +75,7 @@ export default function Find() {
     let potentialMatchesSnapshot = null
 
     // if (lastFetchedData === null) {
-    console.log('Loading first page of potential matches...')
+    // console.log('Loading first page of potential matches...')
     potentialMatchesSnapshot = await getDocs(potentialMatchesQuery)
     // } else {
     //   console.log('Loading next page of potential matches...')
@@ -97,7 +97,7 @@ export default function Find() {
     // Create a query to get all of the users whose IDs match the potential match IDs.
     const matches = potentialMatches.map((match) => match.id)
     if (matches.length === 0) {
-      console.log('No potential matches found for user', userData.id)
+      // console.log('No potential matches found for user', userData.id)
       return []
     }
     const usersQuery = query(usersCollection, where('id', 'in', matches))
@@ -163,7 +163,7 @@ export default function Find() {
       }
       return <></>
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       return <></>
     }
   }

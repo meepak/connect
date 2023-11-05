@@ -17,7 +17,8 @@ import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import * as SystemUI from 'expo-system-ui'
 
 // import FontIcon from 'react-native-vector-icons/FontAwesome5'
-import Icon from 'react-native-vector-icons/Ionicons'
+// import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/Octicons'
 
 import { UserDataContextProvider } from './context/UserDataContext'
 
@@ -33,7 +34,7 @@ const isHermes = () => !!global.HermesInternal
 const App = () => {
   // state
   const [didLoad, setDidLoad] = useState(false)
-  console.log('isHermes', isHermes())
+  // console.log('isHermes', isHermes())
 
   // load json data to async storage
   const storeData = async () => {
@@ -56,9 +57,9 @@ const App = () => {
         const jsonStr = JSON.stringify(sortedJsonData)
         // console.log(jsonStr)
         await AsyncStorage.setItem(key, jsonStr)
-        console.log('Occupation Data stored successfully')
+        // console.log('Occupation Data stored successfully')
       } else {
-        console.log('Occupation Data already exists in AsyncStorage')
+        // console.log('Occupation Data already exists in AsyncStorage')
       }
     } catch (error) {
       console.error('Error storing data:', error)

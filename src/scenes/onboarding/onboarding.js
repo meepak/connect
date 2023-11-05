@@ -52,10 +52,6 @@ export default function Onboarding() {
   const [requireBackgroundCheck, setRequireBackgroundCheck] = useState(userData.requireBackgroundCheck ?? '')
   const [agreesBackgroundCheck, setAgreesBackgroundCheck] = useState(userData.agreesBackgroundCheck ?? '')
 
-  useLayoutEffect(() => {
-    console.log('ONBOARDING--------------------------------')
-  }, [])
-
   const profileUpdate = async () => {
     setSpinner(true)
     try {
