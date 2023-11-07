@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet } from 'react-native'
 import { TextInput, HelperText, useTheme } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import Icon from 'react-native-vector-icons/Octicons' // TODO replace with material icon
+import Icon from './Icon'
 import { layout } from '../../theme'
 
 // TODO -- Fork the react-native-paper TextInput and allow cutomization of spacing between labels and lines
@@ -148,7 +148,7 @@ TextInputBox.propTypes = {
   onChangeText: PropTypes.func,
   onEndEditing: PropTypes.func,
   // onBlur: PropTypes.func,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   autoCapitalize: PropTypes.string,
   keyboardType: PropTypes.string,
   errorMessage: PropTypes.string,
@@ -178,6 +178,7 @@ TextInputBox.defaultProps = {
   bgColor: null,
   onBgColor: null,
   numberOfLines: 1,
+  value: '',
 }
 
 export default TextInputBox

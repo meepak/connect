@@ -4,6 +4,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import Profile from '../../../scenes/profile'
 import EditIntro from '../../../scenes/profile/EditIntro'
 import EditKeySummary from '../../../scenes/profile/EditKeySummary'
+import EditExperiences from '../../../scenes/profile/EditExperiences'
 import EditExperience from '../../../scenes/profile/EditExperience'
 // import HeaderStyle from '../../../components/header/HeaderStyle'
 
@@ -33,7 +34,7 @@ const ProfileStack = () => (
       name="EditIntro"
       component={EditIntro}
       options={{
-        ...TransitionPresets.ModalSlideFromBottomIOS,
+        ...TransitionPresets.SlideFromRightIOS,
       }}
     />
 
@@ -41,15 +42,22 @@ const ProfileStack = () => (
       name="EditKeySummary"
       component={EditKeySummary}
       options={{
-        ...TransitionPresets.ModalSlideFromBottomIOS,
+        ...TransitionPresets.SlideFromRightIOS,
       }}
     />
 
     <Stack.Screen
+      name="EditExperiences"
+      component={EditExperiences}
+      options={{
+        ...TransitionPresets.SlideFromRightIOS,
+      }}
+    />
+    <Stack.Screen
       name="EditExperience"
       component={EditExperience}
       options={{
-        ...TransitionPresets.ModalSlideFromBottomIOS,
+        ...TransitionPresets.ModalPresentationIOS,
       }}
     />
 

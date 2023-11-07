@@ -5,6 +5,14 @@ author: Deepak Mahat
 Notes -- for associate, separate primary occupation & skills
 Currently works fulltime partime, will leave job or need side hustle.
 
+##KNOWN ISSUE TO BE RESOLVED AT THE END
+1. Annoying keyword pushing tab bar issue in Android
+2. Form loading slowness and framerate dropping plus some stutter
+3.[SOLVED] Scrolling issue in Android?? -- issue was in  ...TransitionPresets.SlideFromRightIOS, 
+    Android gesture handler goes crazy if two things scrolling in same direction
+
+
+
 
 TODO
 
@@ -253,3 +261,6 @@ You could mark the potential matches as "viewed" and move them to a separate sec
 You could allow the user to "hide" potential matches that they are not interested in. This would remove the potential matches from the user's view until they decide to unhide them.
 You could implement a "swipe to match/reject" feature. This would allow the user to quickly dismiss potential matches that they are not interested in.
 Ultimately, the best way to handle potential matches that have already been viewed is to choose a method that is consistent with the overall design and functionality of your app.
+
+
+

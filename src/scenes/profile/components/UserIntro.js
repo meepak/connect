@@ -19,9 +19,6 @@ const UserIntro = (
 
   const styles = StyleSheet.create({
     ...Styles(colors, fonts),
-    scrollContent: {
-      zIndex: 1,
-    },
     userIntro: {
       marginHorizontal: 20,
       paddingBottom: 20,

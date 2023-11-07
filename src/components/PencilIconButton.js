@@ -1,5 +1,4 @@
 import React from 'react'
-import { View } from 'react-native'
 import { IconButton, useTheme } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import { convertHexToRGBA } from '../utils/functions'

@@ -2,16 +2,19 @@ import { StyleSheet } from 'react-native'
 
 const Styles = (colors, fonts) => StyleSheet.create({
   sectionHeading: {
+    color: colors.onBackground,
     fontSize: fonts.headlineSmall.fontSize,
     fontWeight: '600',
     textTransform: 'capitalize',
   },
   sectionSubHeading: {
+    color: colors.onBackground,
     fontSize: fonts.titleMedium.fontSize,
     fontWeight: 'bold',
     textTransform: 'capitalize',
   },
   sectionContent: {
+    color: colors.onBackground,
     fontSize: fonts.titleMedium.fontSize,
     // fontWeight: 'bold',
     textTransform: 'capitalize',
@@ -19,15 +22,26 @@ const Styles = (colors, fonts) => StyleSheet.create({
   surfaceView: {
     marginBottom: 20,
     marginTop: 30,
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 30,
+    padding: 20,
   },
   row: {
     flexDirection: 'row',
-    alignItems: 'center', // Center items vertically in the row
-    justifyContent: 'space-between', // Space out items horizontally
+    alignItems: 'center',
+    justifyContent: 'space-between',
     alignSelf: 'stretch',
+  },
+  list: {
+    paddingTop: 20,
+    marginLeft: 10,
+    fontSize: fonts.titleMedium.fontSize,
+  },
+  listItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  listItemText: {
+    fontSize: fonts.titleMedium.fontSize,
+    color: colors.onBackground,
   },
 })
 

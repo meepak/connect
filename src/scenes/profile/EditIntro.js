@@ -98,7 +98,7 @@ export default function EditIntro() {
 
   return (
     <ScreenTemplate>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <Header4Profile
           title="Edit Intro"
           changed
@@ -117,7 +117,7 @@ export default function EditIntro() {
         />
         <KeyboardAwareScrollView
           style={styles.content}
-          keyboardShouldPersistTaps="never"
+          keyboardShouldPersistTaps="handled"
         >
 
           <TextInputBox
@@ -299,7 +299,7 @@ export default function EditIntro() {
             <Text>FIND ASSOCIATE</Text>
           </View>
         </SheetModal>
-      </SafeAreaView>
+      </View>
     </ScreenTemplate>
   )
 }

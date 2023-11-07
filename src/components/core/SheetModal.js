@@ -47,12 +47,12 @@ const SheetModal = React.forwardRef(({ children, snapsAt }, ref) => {
       backdropComponent={({ animatedIndex, style }) => (
         <BottomSheetBackdrop
           animatedIndex={animatedIndex}
-          style={[style, { backgroundColor: colors.surfaceDisabled }]}
+          style={[style, { backgroundColor: colors.background }]}
           disappearsOnIndex={-1}
         />
       )}
-      backgroundStyle={{ backgroundColor: colors.surfaceVariant, borderRadius: 40 }}
-      handleIndicatorStyle={{ width: '15%', height: 7, backgroundColor: colors.background }}
+      backgroundStyle={{ backgroundColor: colors.surfaceContainerHigh, borderRadius: 40 }}
+      handleIndicatorStyle={{ width: '15%', height: 7, backgroundColor: colors.surfaceTint }}
     >
       {children}
     </BottomSheetModal>

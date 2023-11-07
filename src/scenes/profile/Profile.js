@@ -1,9 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, {
+  useContext, useState, useRef, useCallback,
+} from 'react'
 import {
-  Alert, View, StyleSheet, SafeAreaView, StatusBar,
+  Alert, View, StyleSheet, StatusBar,
 } from 'react-native'
 import {
-  Text, useTheme, Surface,
+  Text, useTheme, Surface, Button,
 } from 'react-native-paper'
 import {
   useNavigation, useRoute,
@@ -16,14 +18,23 @@ import {
 } from 'firebase/firestore'
 import { firestore } from '../../firebase'
 
+import IconLink from '../../components/core/IconLink'
 import PencilIconButton from '../../components/PencilIconButton'
 import Styles from './components/_styles'
 import Banner from './components/Banner'
 import UserIntro from './components/UserIntro'
 import Buttons from './components/Buttons'
+import Summary from './components/Summary'
+import SheetModal from '../../components/core/SheetModal'
 
 // Temporary measure to get user id of logged in user to test banner upload
 import { UserDataContext } from '../../context/UserDataContext'
+import ScreenTemplate from '../../components/ScreenTemplate'
+import Experience from './components/Experience'
+import Volunteer from './components/Volunteer'
+import Education from './components/Education'
+import Licenses from './components/Licenses'
+import Languages from './components/Languages'
 
 const Profile = () => {
   const { colors, fonts } = useTheme()
@@ -37,11 +48,17 @@ const Profile = () => {
   const [bannerImage, setBannerImage] = useState(userBannerImage?.uri ? userBannerImage.uri : null)
   const [spinner, setSpinner] = useState(false)
 
+  const addSectionSheetRef = useRef(null)
+
+  const handleAddSectionPress = useCallback(() => {
+    addSectionSheetRef.current?.present()
+  }, [])
+
   // TODO find more secure way to verify editMode, probably validate userId through auth token
   const editMode = userId === userData.id
   // console.log(`editing ;${editMode}`)
 
-  // TODO orgaize this as utility functions
+  // TODO organize this as utility functions
   const profileUpdate = async (data) => {
     try {
       // const data = {
@@ -91,28 +108,6 @@ const Profile = () => {
       })
   }
 
-  // async function fetchConnection() {
-  //   const docSnap = await getDoc(doc(firestore, 'users', userData.id, 'connection', userId))
-
-  //   if (docSnap.exists()) {
-  //     // console.log('Document data:', docSnap.data())
-  //     setConnectionStatus(docSnap.data())
-  //   } else {
-  //     // console.log('No such document!')
-  //   }
-  //   setSpinner(false)
-  // }
-
-  // useEffect(() => {
-  //   if (!editMode) {
-  //     // setSpinner(true)
-  //     fetchConnection()
-  //     // console.log('connection status', connectionStatus)
-  //   } else {
-  //     setSpinner(false)
-  //   }
-  // }, [])
-
   const styles = StyleSheet.create({
     ...Styles(colors, fonts),
     container: {
@@ -123,338 +118,160 @@ const Profile = () => {
     scrollContent: {
       zIndex: 1,
     },
-    userHighlightedList: {
-      paddingTop: 20,
-      marginLeft: 10,
-      fontSize: fonts.titleMedium.fontSize,
-    },
-    userHighlightedListItem: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    userHighlightedListItemText: {
-      fontSize: fonts.titleMedium.fontSize,
-      color: colors.onBackground,
-    },
     footer: {
       marginVertical: 15,
     },
+    addSection: {
+      marginVertical: 15,
+      width: '70%',
+      alignSelf: 'center',
+    },
+    addSectionLabel: {
+
+    },
+
   })
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Spinner
-        visible={spinner}
-        textStyle={{ color: colors.onSurface }}
-        overlayColor="rgba(0,0,0,0.5)"
-      />
-      {!spinner
-        ? (
+    <ScreenTemplate>
+      <View style={styles.container}>
+        <Spinner
+          visible={spinner}
+          textStyle={{ color: colors.onSurface }}
+          overlayColor="rgba(0,0,0,0.5)"
+        />
+        {!spinner
+          ? (
+            // TODO: Convert this to flatlist for performance
+            <KeyboardAwareScrollView
+              style={styles.scrollContent}
+              keyboardShouldPersistTaps="handled"
+              stickyHeaderIndices={[0]}
+              stickyHeaderHiddenOnScroll
+            >
 
-          <KeyboardAwareScrollView
-            style={styles.scrollContent}
-            keyboardShouldPersistTaps="handled"
-            stickyHeaderIndices={[0]}
-            stickyHeaderHiddenOnScroll
-          >
+              <Banner
+                editMode={editMode}
+                bannerImage={bannerImage}
+                userId={userId}
+                userAvatar={userAvatar}
+                userFullName={userFullName}
+                onBanerEdited={onBanerEdited}
+                onAvatarEdited={onAvatarEdited}
+              />
 
-            <Banner
-              editMode={editMode}
-              bannerImage={bannerImage}
-              userId={userId}
-              userAvatar={userAvatar}
-              userFullName={userFullName}
-              onBanerEdited={onBanerEdited}
-              onAvatarEdited={onAvatarEdited}
-            />
+              <UserIntro
+                editMode={editMode}
+                userFullName={userFullName}
+              />
 
-            <UserIntro
-              editMode={editMode}
-              userFullName={userFullName}
-            />
+              {
+                /* Section to show connection
+                request and other buttons */
+              }
+              <Buttons
+                editMode={editMode}
+                userId={userId}
+              />
 
-            <Buttons
-              editMode={editMode}
-              userId={userId}
-            />
+              <Summary editMode={editMode} />
 
-            {/* Key Summary Start */}
-            <Surface style={styles.surfaceView}>
-              <View style={styles.row}>
-                <Text style={styles.sectionHeading}>Summary</Text>
-                {editMode
-                  ? (
-                    <PencilIconButton
-                      top={-10}
-                      right={-10}
-                      onPress={() => {
-                        navigation.navigate('EditKeySummary', {
-                          screen: 'EditKeySummary',
-                          params: {
-                            data: userData,
-                            from: 'My Profilie',
-                          },
-                        })
-                      }}
-                    />
-                  )
-                  : <></>}
-              </View>
-              <View style={styles.userHighlightedList}>
-                {
-                    [
-                      { key: 'Investor/Active Partner/Advisory Partner' },
-                      { key: 'Interested in business at any stage' },
-                      { key: 'Occupation skill' },
-                      { key: 'Work arrangement' },
-                      { key: 'Mode of Operation' },
-                      { key: 'Communication Preference' },
-                      { key: 'References / NDA / Background Check' },
-                    ].map((item) => (
-                      <View style={styles.userHighlightedListItem} key={item.key}>
-                        <Icon style={styles.userHighlightedListItemText} name="check" />
-                        <Text style={styles.userHighlightedListItemText}> {item.key}</Text>
-                      </View>
-                    ))
-                  }
-              </View>
-            </Surface>
-            {/* Key Summary End */}
+              {/* Section up to here can be displayed
+              just based on onboarding info
+              From here on, let user select which section they want to add
+              Display the following button at the end of the added section
+              Till all available sections are covered */}
+              <Button
+                onPress={() => handleAddSectionPress(1)}
+                mode="outlined"
+                style={styles.addSection}
+                icon="plus"
+                textColor={colors.onBackground}
+              ><Text style={styles.addSectionLabel}>Add new section</Text>
+              </Button>
 
-            {/* Professional Experience Start */}
-            <Surface style={styles.surfaceView}>
-              <View style={styles.row}>
-                <Text style={styles.sectionHeading}>Work Experience</Text>
-                {editMode
-                  ? (
-                    <PencilIconButton
-                      top={-10}
-                      right={-10}
-                      onPress={() => {
-                        navigation.navigate('EditExperience', {
-                          screen: 'EditExperience',
-                          params: {
-                            data: userData,
-                            from: 'My Profilie',
-                          },
-                        })
-                      }}
-                    />
-                  )
-                  : <></>}
-              </View>
-              <Text style={styles.sectionContent}>Company Position,</Text>
-              <Text style={styles.sectionContent}>Some Company Name</Text>
-              {/* Onboarding point list */}
-              <View style={styles.userHighlightedList}>
-                {
-                  [
-                    { key: 'Investor/Active Partner/Advisory Partner' },
-                    { key: 'Interested in business at any stage' },
-                    { key: 'Occupation skill' },
-                    { key: 'Work arrangement' },
-                    { key: 'Mode of Operation' },
-                    { key: 'Communication Preference' },
-                    { key: 'References / NDA / Background Check' },
-                  ].map((item) => (
-                    <View style={styles.userHighlightedListItem} key={item.key}>
-                      <Icon style={styles.userHighlightedListItemText} name="check" />
-                      <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
-                    </View>
-                  ))
-                }
-              </View>
-            </Surface>
-            {/* Professional Experience End */}
+              <Experience editMode={editMode} />
 
-            {/* Volunteer Experience Start */}
-            <Surface style={styles.surfaceView}>
-              <View style={styles.row}>
-                <Text style={styles.sectionHeading}>Volunteer</Text>
-                {editMode
-                  ? (
-                    <PencilIconButton
-                      top={-10}
-                      right={-10}
-                      onPress={() => {
-                        navigation.navigate('EditExperience', {
-                          screen: 'EditExperience',
-                          params: {
-                            data: userData,
-                            from: 'My Profilie',
-                          },
-                        })
-                      }}
-                    />
-                  )
-                  : <></>}
-              </View>
-              <Text style={styles.sectionContent}>Company Position,</Text>
-              <Text style={styles.sectionContent}>Some Company Name</Text>
-              {/* Onboarding point list */}
-              <View style={styles.userHighlightedList}>
-                {
-                  [
-                    { key: 'Investor/Active Partner/Advisory Partner' },
-                    { key: 'Interested in business at any stage' },
-                    { key: 'Occupation skill' },
-                    { key: 'Work arrangement' },
-                    { key: 'Mode of Operation' },
-                    { key: 'Communication Preference' },
-                    { key: 'References / NDA / Background Check' },
-                  ].map((item) => (
-                    <View style={styles.userHighlightedListItem} key={item.key}>
-                      <Icon style={styles.userHighlightedListItemText} name="check" />
-                      <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
-                    </View>
-                  ))
-                }
-              </View>
-            </Surface>
-            {/* Volunteer Experience End */}
+              <Volunteer editMode={editMode} />
 
-            {/* Educational Qualifications Start */}
-            <Surface style={styles.surfaceView}>
-              <View style={styles.row}>
-                <Text style={styles.sectionHeading}>Education</Text>
-                {editMode
-                  ? (
-                    <PencilIconButton
-                      top={-10}
-                      right={-10}
-                      onPress={() => {
-                        navigation.navigate('EditExperience', {
-                          screen: 'EditExperience',
-                          params: {
-                            data: userData,
-                            from: 'My Profilie',
-                          },
-                        })
-                      }}
-                    />
-                  )
-                  : <></>}
-              </View>
-              <Text style={styles.sectionContent}>Company Position,</Text>
-              <Text style={styles.sectionContent}>Some Company Name</Text>
-              {/* Onboarding point list */}
-              <View style={styles.userHighlightedList}>
-                {
-                  [
-                    { key: 'Investor/Active Partner/Advisory Partner' },
-                    { key: 'Interested in business at any stage' },
-                    { key: 'Occupation skill' },
-                    { key: 'Work arrangement' },
-                    { key: 'Mode of Operation' },
-                    { key: 'Communication Preference' },
-                    { key: 'References / NDA / Background Check' },
-                  ].map((item) => (
-                    <View style={styles.userHighlightedListItem} key={item.key}>
-                      <Icon style={styles.userHighlightedListItemText} name="check" />
-                      <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
-                    </View>
-                  ))
-                }
-              </View>
-            </Surface>
-            {/* Educational Qualifications End */}
+              <Education editMode={editMode} />
 
-            {/* Licenses & Certification Start */}
-            <Surface style={styles.surfaceView}>
-              <View style={styles.row}>
-                <Text style={styles.sectionHeading}>Licenses & Certificates</Text>
-                {editMode
-                  ? (
-                    <PencilIconButton
-                      top={-10}
-                      right={-10}
-                      onPress={() => {
-                        navigation.navigate('EditExperience', {
-                          screen: 'EditExperience',
-                          params: {
-                            data: userData,
-                            from: 'My Profilie',
-                          },
-                        })
-                      }}
-                    />
-                  )
-                  : <></>}
-              </View>
-              <Text style={styles.sectionContent}>Company Position,</Text>
-              <Text style={styles.sectionContent}>Some Company Name</Text>
-              {/* Onboarding point list */}
-              <View style={styles.userHighlightedList}>
-                {
-                  [
-                    { key: 'Investor/Active Partner/Advisory Partner' },
-                    { key: 'Interested in business at any stage' },
-                    { key: 'Occupation skill' },
-                    { key: 'Work arrangement' },
-                    { key: 'Mode of Operation' },
-                    { key: 'Communication Preference' },
-                    { key: 'References / NDA / Background Check' },
-                  ].map((item) => (
-                    <View style={styles.userHighlightedListItem} key={item.key}>
-                      <Icon style={styles.userHighlightedListItemText} name="check" />
-                      <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
-                    </View>
-                  ))
-                }
-              </View>
-            </Surface>
-            {/* Educational Qualifications End */}
+              <Licenses editMode={editMode} />
 
-            {/* Languages Start */}
-            <Surface style={styles.surfaceView}>
-              <View style={styles.row}>
-                <Text style={styles.sectionHeading}>Languages</Text>
-                {editMode
-                  ? (
-                    <PencilIconButton
-                      top={-10}
-                      right={-10}
-                      onPress={() => {
-                        navigation.navigate('EditExperience', {
-                          screen: 'EditExperience',
-                          params: {
-                            data: userData,
-                            from: 'My Profilie',
-                          },
-                        })
-                      }}
-                    />
-                  )
-                  : <></>}
-              </View>
-              <Text style={styles.sectionContent}>Company Position,</Text>
-              <Text style={styles.sectionContent}>Some Company Name</Text>
-              {/* Onboarding point list */}
-              <View style={styles.userHighlightedList}>
-                {
-                  [
-                    { key: 'Investor/Active Partner/Advisory Partner' },
-                    { key: 'Interested in business at any stage' },
-                    { key: 'Occupation skill' },
-                    { key: 'Work arrangement' },
-                    { key: 'Mode of Operation' },
-                    { key: 'Communication Preference' },
-                    { key: 'References / NDA / Background Check' },
-                  ].map((item) => (
-                    <View style={styles.userHighlightedListItem} key={item.key}>
-                      <Icon style={styles.userHighlightedListItemText} name="check" />
-                      <Text style={styles.userHighlightedListItemText}>{item.key}</Text>
-                    </View>
-                  ))
-                }
-              </View>
-            </Surface>
-            {/* Languages End */}
+              <Languages editMode={editMode} />
 
-            <View style={styles.footer} />
-          </KeyboardAwareScrollView>
-        ) : null }
-    </SafeAreaView>
+              {/* To be decided on Interest, References, Business documents, etc.. */}
+
+              <View style={styles.footer} />
+            </KeyboardAwareScrollView>
+          ) : null }
+      </View>
+
+      <SheetModal ref={addSectionSheetRef} snapsAt={['40%']}>
+        <View style={{ marginHorizontal: 40, marginVertical: 20 }}>
+          <IconLink
+            marginLeft={-10}
+            icon="plus-circle"
+            text="Professional Experiences"
+            color={colors.onPrimaryContainer}
+            onPress={() => {
+              navigation.navigate('EditExperiences', {
+                screen: 'EditExperiences',
+                params: {
+                  data: userData,
+                  from: 'My Profilie',
+                },
+              })
+            }}
+          />
+          <IconLink
+            marginLeft={-10}
+            icon="plus-circle"
+            text="Educational Qualifications"
+            color={colors.onPrimaryContainer}
+            onPress={() => {
+              navigation.navigate('EditExperiences', {
+                screen: 'EditExperiences',
+                params: {
+                  data: userData,
+                  from: 'My Profilie',
+                },
+              })
+            }}
+          />
+          <IconLink
+            marginLeft={-10}
+            icon="plus-circle"
+            text="Licenses & Certifications"
+            color={colors.onPrimaryContainer}
+            onPress={() => {
+              navigation.navigate('EditExperiences', {
+                screen: 'EditExperiences',
+                params: {
+                  data: userData,
+                  from: 'My Profilie',
+                },
+              })
+            }}
+          />
+          <IconLink
+            marginLeft={-10}
+            icon="plus-circle"
+            text="Languages"
+            color={colors.onPrimaryContainer}
+            onPress={() => {
+              navigation.navigate('EditExperiences', {
+                screen: 'EditExperiences',
+                params: {
+                  data: userData,
+                  from: 'My Profilie',
+                },
+              })
+            }}
+          />
+        </View>
+      </SheetModal>
+    </ScreenTemplate>
   )
 }
 

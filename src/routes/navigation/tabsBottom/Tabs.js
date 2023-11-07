@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
 import { Keyboard, Animated, Easing } from 'react-native'
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-// import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons' // kinda like the material icons in tabss for now, will see later
 import { useTheme } from 'react-native-paper'
-// stack navigators
+
 import FindStack from '../stacks/FindStack'
 import ManageStack from '../stacks/ManageStack'
 import ChatStack from '../stacks/ChatStack'
@@ -15,6 +14,8 @@ const TabNavigator = () => {
   const { colors } = useTheme()
   // const [tabPosition, setTabPosition] = useState(new Animated.Value(0))
   const size = 26
+
+  // #region Trying to solve the issue of keyboard pushing tabs in android
 
   const opacity = new Animated.Value(1)
   const keyboardWillShow = () => {
@@ -46,6 +47,12 @@ const TabNavigator = () => {
     }
   }, [])
 
+  const animatedStyles = {
+    opacity,
+  }
+
+  // #endregion
+
   // material icons
   const icons = { home: 'account-search', manage: 'account-group', chat: 'comment-processing' }
   // ionic icons
@@ -72,10 +79,6 @@ const TabNavigator = () => {
         size={size}
       />
     )
-  }
-
-  const animatedStyles = {
-    opacity,
   }
 
   return (
@@ -108,7 +111,7 @@ const TabNavigator = () => {
         marginTop: 20,
         justifyContent: 'center',
         height: 80,
-      }, // , animatedStyles
+      }, // animatedStyles,
       ]}
     >
       <Tab.Screen

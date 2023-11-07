@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import {
   Alert,
 } from 'react-native'

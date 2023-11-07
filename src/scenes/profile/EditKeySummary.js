@@ -1,8 +1,8 @@
 import React, {
-  useState, useContext, useLayoutEffect, // useRef,
+  useState, useContext, // useLayoutEffect, // useRef,
 } from 'react'
 import {
-  Alert, StatusBar, SafeAreaView, StyleSheet, ScrollView,
+  Alert, StatusBar, SafeAreaView, StyleSheet, View,
 } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
@@ -26,6 +26,9 @@ import SelectEducation from '../onboarding/_education'
 import SelectOccupations from '../onboarding/_occupation'
 import SelectYesNo from '../onboarding/_yesno'
 
+// THIS HAS BECOME A SERIOUS TIME WASTER
+// DOESN'T SCROLL PROPERLY IN ANDROID.. CAN'T FIGURE OUT YET WHY??
+// JUST DELETE THIS FILE AND RE DO THIS ALL TOGETHER AGAIN, ***********FIND THE CAUSE THOUGH WHY SCROLLING IS GETTING BLOCKED ....
 // PROFILE SCREENS NEED SERIOUS REFACTORING.......
 
 // TODO COPIED FROM ONBOARDING, FIRST MAKE CONSISTENT HEADER
@@ -63,7 +66,7 @@ export default function EditKeySummary() {
       marginTop: StatusBar.currentHeight,
     },
     content: {
-      flex: 1,
+      zIndex: 1,
     },
     footer: {
       marginVertical: 15,
@@ -111,7 +114,7 @@ export default function EditKeySummary() {
 
   return (
     <ScreenTemplate>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <Header4Profile
           title="Edit Key Summary"
           changed
@@ -129,9 +132,10 @@ export default function EditKeySummary() {
             })
           }}
         />
+        {/* TODO replace this with FLATLIST for lazy loading */}
         <KeyboardAwareScrollView
           style={styles.content}
-          keyboardShouldPersistTaps="never"
+          keyboardShouldPersistTaps="handled"
         >
 
           <WhoAmI
@@ -225,7 +229,6 @@ export default function EditKeySummary() {
                   }}
                 />
 
-
                 <SelectBusinessStage
                   allSelect
                   initialValues={userData.businessStage}
@@ -290,15 +293,10 @@ export default function EditKeySummary() {
               </>
             )
             : <></>}
-          {/* <Button
-            label="Simulate Error"
-            color={colors.secondary}
-            onPress={() => {
-              block1.current.scrollIntoView({ behavior: 'smooth' })
-            }}
-          /> // tried with forward ref, didn't work, retry again */}
+
+          <View style={styles.footer} />
         </KeyboardAwareScrollView>
-      </SafeAreaView>
+      </View>
       <Spinner
         visible={spinner}
         textStyle={{ color: colors.white }}

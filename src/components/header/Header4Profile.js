@@ -6,7 +6,9 @@ import { useTheme, IconButton, Button } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
 
-const Header4Profile = ({ title, changed, onSave }) => {
+const Header4Profile = ({
+  icon, title, changed, onSave,
+}) => {
   const { colors, fonts } = useTheme()
   const navigation = useNavigation()
 
@@ -32,6 +34,9 @@ const Header4Profile = ({ title, changed, onSave }) => {
             onPress: () => navigation.dispatch(action),
           },
         ],
+        {
+          userInterfaceStyle: 'dark',
+        },
       )
     }),
     [navigation],
@@ -71,29 +76,40 @@ const Header4Profile = ({ title, changed, onSave }) => {
   return (
     <View style={styles.header}>
       <IconButton
-        icon="x"
+        icon={icon ?? 'x'}
         size={24}
         iconColor={colors.onBackground}
         style={styles.cancelButton}
         onPress={() => navigation.goBack()}
       />
       <Text style={styles.headerTitle}>{title}</Text>
-      <Button
-        onPress={onSave}
-        mode="outlined"
-        style={styles.saveButton}
-        icon="check"
-        textColor={colors.onBackground}
-      ><Text style={styles.saveButtonLabel}>Save</Text>
-      </Button>
+      {onSave
+        ? (
+          <Button
+            onPress={onSave}
+            mode="outlined"
+            style={styles.saveButton}
+            icon="check"
+            textColor={colors.onBackground}
+          ><Text style={styles.saveButtonLabel}>Save</Text>
+          </Button>
+        )
+        : null}
     </View>
   )
 }
 
 Header4Profile.propTypes = {
   title: PropTypes.string.isRequired,
-  onSave: PropTypes.func.isRequired,
-  changed: PropTypes.bool.isRequired,
+  onSave: PropTypes.func,
+  changed: PropTypes.bool,
+  icon: PropTypes.string,
+}
+
+Header4Profile.defaultProps = {
+  onSave: null,
+  changed: false,
+  icon: 'x',
 }
 
 export default Header4Profile

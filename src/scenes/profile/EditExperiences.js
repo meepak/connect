@@ -2,7 +2,7 @@ import React, {
   useState, useContext, useCallback, useRef,
 } from 'react'
 import {
-  View, StyleSheet, StatusBar, SafeAreaView,
+  View, StyleSheet, StatusBar, SafeAreaView, Pressable,
 } from 'react-native'
 import {
   Text, useTheme, IconButton,
@@ -21,16 +21,13 @@ import Header4Profile from '../../components/header/Header4Profile'
 import SheetModal from '../../components/core/SheetModal'
 import IconLink from '../../components/core/IconLink'
 
-export default function EditExperience() {
+export default function EditExperiences() {
   // const route = useRoute()
   // const { data, from } = route.params
   const navigation = useNavigation()
   const { colors, fonts } = useTheme()
 
   const { userData, setUserData } = useContext(UserDataContext)
-
-  const [date, setDate] = useState(new Date(1598051730000))
-
   // const [fullName, setFulName] = useState(userData.fullName)
   // const [fullNameError, setFullNameError] = useState('')
 
@@ -54,12 +51,6 @@ export default function EditExperience() {
     footer: {
       marginVertical: 15,
     },
-    row: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      alignSelf: 'stretch',
-    },
   })
 
   /*
@@ -82,17 +73,20 @@ export default function EditExperience() {
     <ScreenTemplate>
       <SafeAreaView style={styles.container}>
         <Header4Profile
-          title="Add Experience"
-          changed
-          onSave={() => {
-            // console.log('saved changes')
-            navigation.navigate('ProfileStack', {
-              screen: 'EditExperiences',
-              params: { // userId, userFullName, userAvatar, userBannerImage,
-                userId: userData.id,
-                userFullName: userData.fullName,
-                userAvatar: userData.avatar,
-                userBannerImage: { uri: userData.bannerImage },
+          icon="arrow-left"
+          title="Edit Experiences"
+        />
+        <IconLink
+          marginLeft={15}
+          icon="plus-circle"
+          text="Add new experience"
+          color={colors.primary}
+          onPress={() => {
+            navigation.navigate('EditExperience', {
+              screen: 'EditExperience',
+              params: {
+                data: userData,
+                from: 'My Profilie',
               },
             })
           }}
@@ -102,82 +96,6 @@ export default function EditExperience() {
           style={styles.content}
           keyboardShouldPersistTaps="handled"
         >
-
-          <View style={styles.row}>
-            <View style={{ width: '45%' }}>
-              <TextInputBox
-                autoFocus
-                bgColor={colors.surface}
-                onBgColor={colors.onSurface}
-                placeholder="Month - Year"
-                label="Start Date*"
-                value={date.toDateString()}
-          // onChangeText={(text) => setEmail(text)}
-                onFocus={null}
-                showKeyboard={false}
-              />
-            </View>
-            <View style={{ width: '45%' }}>
-              <TextInputBox
-                autoFocus
-                bgColor={colors.surface}
-                onBgColor={colors.onSurface}
-                placeholder="Month - Year"
-                label="End Date*"
-                value={date.toDateString()}
-                    // onChangeText={(text) => setEmail(text)}
-                onFocus={null}
-                showKeyboard={false}
-              />
-            </View>
-          </View>
-          <TextInputBox
-            autoFocus
-            bgColor={colors.surface}
-            onBgColor={colors.onSurface}
-            placeholder="Position"
-            label="Your Position (required)*"
-          // onChangeText={(text) => setEmail(text)}
-            autoCapitalize="words"
-          />
-
-          <TextInputBox
-            autoFocus
-            bgColor={colors.surface}
-            onBgColor={colors.onSurface}
-            placeholder="Employer"
-            label="Your employer name (required)*"
-          // onChangeText={(text) => setEmail(text)}
-            autoCapitalize="words"
-          />
-
-          <TextInputBox
-            autoFocus
-            bgColor={colors.surface}
-            onBgColor={colors.onSurface}
-            placeholder="Company Website"
-            label="Your company website"
-          // onChangeText={(text) => setEmail(text)}
-            autoCapitalize="words"
-          />
-
-          <TextInputBox
-            autoFocus
-            numberOfLines={3}
-            placeholder="Summarize your role"
-            label="Responsibilities"
-          // onChangeText={(text) => setEmail(text)}
-            autoCapitalize="sentences"
-          />
-
-          <TextInputBox
-            autoFocus
-            numberOfLines={3}
-            placeholder="List out notable achievements"
-            label="Achievements"
-          // onChangeText={(text) => setEmail(text)}
-            autoCapitalize="sentences"
-          />
           {/* Empty space at bottom of page */}
           <View style={styles.footer} />
         </KeyboardAwareScrollView>

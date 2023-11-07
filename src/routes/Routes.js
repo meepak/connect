@@ -2,11 +2,11 @@ import React from 'react'
 import { useAtom } from 'jotai'
 import Navigation from './navigation'
 import Initial from '../scenes/initial/Initial'
-import { checkedAtom, loggedInAtom } from '../utils/atom'
+import { checkedAtom } from '../utils/atom' // loggedInAtom
 
 const Routes = () => {
   const [checked] = useAtom(checkedAtom)
-  const [loggedIn] = useAtom(loggedInAtom)
+  // const [loggedIn] = useAtom(loggedInAtom)
 
   // console.log('route loaded')
   // TODO: switch router by loggedIn state
