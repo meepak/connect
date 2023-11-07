@@ -4,46 +4,7 @@ import React, {
 import * as SplashScreen from 'expo-splash-screen'
 import { Animated, StyleSheet, View } from 'react-native'
 import PropTypes from 'prop-types'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { imageAssets } from '../../theme/images'
-import { fontAssets } from '../../theme/fonts'
-import jsonData from '../../../assets/data/occupations.json'
-
-// Things that needs pre-loading
-// load json data to async storage
-const storeData = async () => {
-  try {
-    const key = 'occupation'
-    // Check if the data already exists in AsyncStorage
-    const existingData = await AsyncStorage.getItem(key)
-
-    if (existingData === null) {
-      // TODO PRE-CLEAN UP THE JSON FILE TO AVOID DELAYED LOAD TIME
-      // we just want unique SOCTitles
-      // Extract unique titles from jsonData
-      const uniqueTitles = [
-        ...new Set(jsonData.SOCGroups.map((item) => item.SOCTitle)),
-      ]
-
-      // Create newJsonData with unique titles
-      const newJsonData = uniqueTitles.map((title) => ({ title }))
-
-      // Sort the newJsonData array by the length of the title (shortest titles first)
-      const sortedJsonData = newJsonData
-        .slice()
-        .sort((a, b) => a.title.length - b.title.length)
-        // Data doesn't exist, so store it
-      const jsonStr = JSON.stringify(sortedJsonData)
-      // console.log(jsonStr)
-      await AsyncStorage.setItem(key, jsonStr)
-      // console.log('Occupation Data stored successfully')
-    } else {
-      // console.log('Occupation Data already exists in AsyncStorage')
-    }
-  } catch (error) {
-    console.error('Error storing data:', error)
-  }
-}
+import Preload from '../../Preload'
 
 const AnimatedSplashScreen = ({
   children, image, resizeMode, bgColor,
@@ -66,9 +27,7 @@ const AnimatedSplashScreen = ({
     try {
       await SplashScreen.hideAsync()
       // Load stuff
-      await Promise.all([...imageAssets, ...fontAssets])
-      await storeData()
-      // Anything else to load??
+      await Preload()
       await Promise.all([])
     } catch (e) {
       // handle errors
@@ -78,6 +37,7 @@ const AnimatedSplashScreen = ({
     }
   }, [])
 
+  // TODO: Make this splsh screen animation bit fancy??
   return (
     <View style={{ flex: 1 }}>
       {isAppReady && children}
@@ -99,13 +59,22 @@ const AnimatedSplashScreen = ({
               resizeMode,
               transform: [
                 {
-                  scale: animation,
+                  scale: animation.interpolate({
+                    inputRange: [0, 0.5, 1, 1.5, 2.0, 2.5],
+                    outputRange: [1, 1.5, 1, 1.5, 1, 0.5], // Scale up, then scale down
+                  }),
+                },
+                {
+                  rotate: animation.interpolate({
+                    inputRange: [0, 0.5, 1, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5],
+                    outputRange: ['0deg', '180deg', '0deg', '180deg', '0deg', '180deg', '0deg', '0deg', '180deg', '0deg'], // Rotate counterclockwise, then clockwise
+                  }),
                 },
               ],
             }}
             source={{ uri: image }}
             onLoadEnd={onImageLoaded}
-            fadeDuration={0}
+            fadeDuration={4000}
           />
         </Animated.View>
       )}

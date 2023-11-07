@@ -20,8 +20,6 @@ import Constants from 'expo-constants'
 
 import { UserDataContextProvider } from './context/UserDataContext'
 import Icon from './components/core/Icon'
-// import LoadingScreen from './components/LoadingScreen'
-// import jsonData from '../assets/data/occupations.json'
 import AnimatedAppLoader from './components/splash/AnimatedAppLoader'
 // assets
 import Router from './routes'
@@ -54,6 +52,7 @@ const App = () => {
   return (
     <AnimatedAppLoader
       image={isDark ? Constants.expoConfig.splash.imageBlack : Constants.expoConfig.splash.imageWhite}
+      // image={Constants.expoConfig.splash.imageSvg}
       // image={image}
       resizeMode={Constants.expoConfig.splash.resizeMode || 'contain'}
       bgColor={finalTheme.colors.background}
