@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, Keyboard, View } from 'react-native'
 import {
-  TextInput, HelperText, useTheme, IconButton,
+  TextInput, HelperText, useTheme,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import Icon from './Icon'
