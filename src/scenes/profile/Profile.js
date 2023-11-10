@@ -1,16 +1,13 @@
 import React, {
-  useContext, useState, useRef, useCallback,
+  useContext, useEffect, useState,
 } from 'react'
 import {
   Alert, View, StyleSheet, StatusBar,
 } from 'react-native'
 import {
-  Text, useTheme, Surface, Button,
+  Text, useTheme, Button,
 } from 'react-native-paper'
-import {
-  useNavigation, useRoute,
-} from '@react-navigation/native'
-import Icon from 'react-native-vector-icons/Octicons'
+import { useRoute } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {
@@ -18,14 +15,12 @@ import {
 } from 'firebase/firestore'
 import { firestore } from '../../firebase'
 
-import IconLink from '../../components/core/IconLink'
-import PencilIconButton from '../../components/PencilIconButton'
 import Styles from './components/_styles'
 import Banner from './components/Banner'
 import UserIntro from './components/UserIntro'
 import Buttons from './components/Buttons'
 import Summary from './components/Summary'
-import SheetModal from '../../components/core/SheetModal'
+import AddSectionMenu from './components/Sheets/AddSectionMenu'
 
 // Temporary measure to get user id of logged in user to test banner upload
 import { UserDataContext } from '../../context/UserDataContext'
@@ -38,7 +33,6 @@ import Languages from './components/Languages'
 
 const Profile = () => {
   const { colors, fonts } = useTheme()
-  const navigation = useNavigation()
   const route = useRoute()
   const {
     userId, userFullName, userAvatar, userBannerImage,
@@ -47,12 +41,7 @@ const Profile = () => {
 
   const [bannerImage, setBannerImage] = useState(userBannerImage?.uri ? userBannerImage.uri : null)
   const [spinner, setSpinner] = useState(false)
-
-  const addSectionSheetRef = useRef(null)
-
-  const handleAddSectionPress = useCallback(() => {
-    addSectionSheetRef.current?.present()
-  }, [])
+  const [showAddSectionMenu, setShowAddSectionMenu] = useState(false)
 
   // TODO find more secure way to verify editMode, probably validate userId through auth token
   const editMode = userId === userData.id
@@ -132,6 +121,14 @@ const Profile = () => {
 
   })
 
+  useEffect(() => {
+    if (showAddSectionMenu) {
+      console.log('opening the menu...')
+    } else {
+      console.log('menu is being closed...')
+    }
+  }, [showAddSectionMenu])
+
   return (
     <ScreenTemplate>
       <View style={styles.container}>
@@ -182,12 +179,13 @@ const Profile = () => {
               Display the following button at the end of the added section
               Till all available sections are covered */}
               <Button
-                onPress={() => handleAddSectionPress(1)}
+                onPress={() => setShowAddSectionMenu(true)}
                 mode="outlined"
                 style={styles.addSection}
                 icon="plus"
                 textColor={colors.onBackground}
-              ><Text style={styles.addSectionLabel}>Add new section</Text>
+              >
+                <Text style={styles.addSectionLabel}>Add more sections</Text>
               </Button>
 
               <Experience editMode={editMode} />
@@ -206,71 +204,7 @@ const Profile = () => {
             </KeyboardAwareScrollView>
           ) : null }
       </View>
-
-      <SheetModal ref={addSectionSheetRef} snapsAt={['40%']}>
-        <View style={{ marginHorizontal: 40, marginVertical: 20 }}>
-          <IconLink
-            marginLeft={-10}
-            icon="plus-circle"
-            text="Professional Experiences"
-            color={colors.onPrimaryContainer}
-            onPress={() => {
-              navigation.navigate('EditExperiences', {
-                screen: 'EditExperiences',
-                params: {
-                  data: userData,
-                  from: 'My Profilie',
-                },
-              })
-            }}
-          />
-          <IconLink
-            marginLeft={-10}
-            icon="plus-circle"
-            text="Educational Qualifications"
-            color={colors.onPrimaryContainer}
-            onPress={() => {
-              navigation.navigate('EditExperiences', {
-                screen: 'EditExperiences',
-                params: {
-                  data: userData,
-                  from: 'My Profilie',
-                },
-              })
-            }}
-          />
-          <IconLink
-            marginLeft={-10}
-            icon="plus-circle"
-            text="Licenses & Certifications"
-            color={colors.onPrimaryContainer}
-            onPress={() => {
-              navigation.navigate('EditExperiences', {
-                screen: 'EditExperiences',
-                params: {
-                  data: userData,
-                  from: 'My Profilie',
-                },
-              })
-            }}
-          />
-          <IconLink
-            marginLeft={-10}
-            icon="plus-circle"
-            text="Languages"
-            color={colors.onPrimaryContainer}
-            onPress={() => {
-              navigation.navigate('EditExperiences', {
-                screen: 'EditExperiences',
-                params: {
-                  data: userData,
-                  from: 'My Profilie',
-                },
-              })
-            }}
-          />
-        </View>
-      </SheetModal>
+      <AddSectionMenu show={showAddSectionMenu} onClose={() => { setShowAddSectionMenu(false) }} />
     </ScreenTemplate>
   )
 }

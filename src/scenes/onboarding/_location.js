@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Surface, Text, Divider,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import Button from '../../components/core/Button'
 import { colors } from '../../theme'
 
@@ -15,6 +15,17 @@ const SelectLocation = ({
 }) => {
   const [selectedAddress, setSelectedAddress] = useState(initialValue)
   const navigation = useNavigation()
+  const route = useRoute()
+
+  useEffect(() => {
+    if (route.params?.selectedAddress) {
+      // doesn't this suppose to do automatic merging,
+      // anyway can be looked at when such use case arises
+      const item = route.params.selectedAddress
+      setSelectedAddress(item)
+      onBusinessLocationChanged(item)
+    }
+  }, [route.params?.selectedAddress])
 
   return (
     <Surface style={styles.card}>
@@ -31,11 +42,8 @@ const SelectLocation = ({
         label="Select"
         color={colors.tertiary}
         onPress={() => {
-          navigation.navigate('Select Location', {
-            onReturn: (item) => {
-              setSelectedAddress(item)
-              onBusinessLocationChanged(item)
-            },
+          navigation.navigate('SelectLocation', {
+            title: 'Preferred location',
           })
         }}
       />

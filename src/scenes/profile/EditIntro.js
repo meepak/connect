@@ -2,7 +2,7 @@ import React, {
   useState, useContext, useCallback, useRef,
 } from 'react'
 import {
-  View, StyleSheet, StatusBar, SafeAreaView,
+  View, StyleSheet, StatusBar, Keyboard,
 } from 'react-native'
 import {
   Text, useTheme,
@@ -44,7 +44,10 @@ export default function EditIntro() {
   const bottomSheetRef = useRef(null)
 
   const handlePresentPress = useCallback(() => {
-   bottomSheetRef.current?.present()
+    if (Keyboard.isVisible) {
+      Keyboard.dismiss()
+    }
+    bottomSheetRef.current?.present()
   }, [])
   // #endregion
 
@@ -178,7 +181,7 @@ export default function EditIntro() {
 
           <TextInputBox
             autoFocus
-            numberOfLines={3}
+            multiline
             placeholder="Describe yourself very briefly"
             label="About You (Required)*"
           // onChangeText={(text) => setEmail(text)}

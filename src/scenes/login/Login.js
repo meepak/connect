@@ -46,9 +46,9 @@ LogBox.ignoreLogs(['Setting a timer'])
 
 // TODO -- THERE IS A BUG IN LOGIN WHERE AFTER REGISTRATION, IT DOESN'T LET USER LOGIN TILL APP IS RESTARTED
 export default function Login() {
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('meepak@gmail.com')
   const [emailError, setEmailError] = useState('')
-  const [password, setPassword] = useState('')
+  const [password, setPassword] = useState('qwerty')
   const [passwordError, setPasswordError] = useState('')
   const [spinner, setSpinner] = useState(false)
   const navigation = useNavigation()

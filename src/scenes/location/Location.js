@@ -1,21 +1,43 @@
-import React from 'react'
+import React, {
+  useState, useLayoutEffect, useRef, useEffect,
+} from 'react'
 import {
-  StyleSheet,
+  StyleSheet, View, Platform,
 } from 'react-native'
-import { Text, useTheme } from 'react-native-paper'
-import { useNavigation } from '@react-navigation/native'
+import { Text, TouchableRipple, useTheme } from 'react-native-paper'
+import { CommonActions, useNavigation, useRoute } from '@react-navigation/native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
-import PropTypes from 'prop-types'
 import { layout } from '../../theme'
 
 // TODO -- geolocation autocomplete
-const SelectLocation = ({ route }) => {
+const SelectLocation = () => {
   const { colors } = useTheme()
   const navigation = useNavigation()
+  const route = useRoute()
+  const [title] = useState(route.params?.title || '')
+  const inputRef = useRef(null)
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      title,
+    })
+  }, [navigation, title])
+
+  useEffect(() => {
+    const delay = Platform.OS === 'android' ? 100 : 0
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.setAddressText('')
+        inputRef.current.focus()
+      }
+    }, delay)
+  })
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
+      backgroundColor: colors.background,
     },
     label: {
       margin: layout.marginLeft,
@@ -33,18 +55,8 @@ const SelectLocation = ({ route }) => {
       paddingHorizontal: 10,
       fontSize: 15,
       flex: 1,
-      borderColor: colors.primary,
-    },
-    poweredContainer: {
-      justifyContent: 'flex-end',
-      alignItems: 'center',
-      borderBottomRightRadius: 5,
-      borderBottomLeftRadius: 5,
-      borderTopWidth: 0.5,
-      backgroundColor: colors.background,
-    },
-    powered: {
-      tintColor: colors.onBackground,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.primary,
     },
     listView: {
       marginLeft: layout.marginLeft,
@@ -52,46 +64,76 @@ const SelectLocation = ({ route }) => {
       color: colors.onBackground,
     },
     row: {
-      color: colors.onSurface,
-      backgroundColor: colors.surface,
-      padding: 13,
-      height: 44,
-      flexDirection: 'row',
+      flex: 1,
+      flexDirection: 'column',
+      backgroundColor: colors.transparent,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.surfaceDisabled,
     },
-    separator: {
-      height: 0.5,
-      backgroundColor: colors.outline,
+    rowText1: {
+      paddingTop: 10,
+      paddingLeft: 10,
+      color: colors.onBackground,
     },
-    description: {},
-    loader: {
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
-      height: 20,
+    rowText2: {
+      paddingLeft: 10,
+      paddingBottom: 10,
+      color: colors.onBackground,
     },
   })
 
   const handleSelect = (selectedAddress) => {
-    // console.log(`closing screen, ${selectedAddress} has been selected.`)
-    route.params.onReturn(selectedAddress)
-    navigation.goBack()
+    // pity navigation.goBack() can't include params
+    navigation.dispatch((state) => {
+      const prevRoute = state.routes[state.routes.length - 2]
+      return CommonActions.navigate({
+        name: prevRoute.name,
+        params: {
+          selectedAddress,
+        },
+        merge: true,
+      })
+    })
   }
 
-  const renderRow = (row) => (
-    <Text style={styles.row}>
-      {row.description}
-    </Text>
-  )
+  const renderRow = (rowData) => {
+    const main = rowData.structured_formatting.main_text
+    const secondary = rowData.structured_formatting.secondary_text
+    return (
+      <TouchableRipple rippleColor={colors.primaryContainer}>
+        <View style={styles.row}>
+          <Text style={styles.rowText1}>
+            {main}
+          </Text>
+          <Text style={styles.rowText2}>
+            {secondary}
+          </Text>
+        </View>
+      </TouchableRipple>
+    )
+  }
 
   return (
     <>
-      <Text style={styles.label}>Please select location.</Text>
+      {
+        title === ''
+          ? <Text style={styles.label}>Please select location.</Text>
+          : <View style={{ marginVertical: 10 }} />
+      }
       <GooglePlacesAutocomplete
+        ref={inputRef}
+        enablePoweredByContainer={false}
+        suppressDefaultStyles
         styles={styles}
         textInputProps={{
-          color: colors.onSecondary,
-          placeholderTextColor: colors.onSecondary,
+          color: colors.onBackground,
+          placeholderTextColor: colors.onBackground,
+          backgroundColor: colors.background,
+          borderBottomWidth: 1,
+          borderBottomColor: colors.onBackground,
+          textColor: colors.onBackground,
         }}
-        placeholder="Enter your location"
+        placeholder="Enter business name, address or landmarks"
         renderRow={renderRow}
       // fetchDetails for details param on onPress
         onPress={(data) => {
@@ -104,14 +146,6 @@ const SelectLocation = ({ route }) => {
       />
     </>
   )
-}
-
-SelectLocation.propTypes = {
-  route: PropTypes.shape({
-    params: PropTypes.shape({
-      onReturn: PropTypes.func.isRequired,
-    }).isRequired,
-  }).isRequired,
 }
 
 export default SelectLocation

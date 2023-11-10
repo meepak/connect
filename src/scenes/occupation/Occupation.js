@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import {
   Platform,
   StyleSheet,
@@ -7,9 +7,8 @@ import {
   SafeAreaView,
 } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute, CommonActions } from '@react-navigation/native'
 import Autocomplete from 'react-native-autocomplete-input'
-import PropTypes from 'prop-types'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { layout, fontSize } from '../../theme'
 
@@ -19,9 +18,18 @@ const loadOccupations = async () => {
   return occupations
 }
 
-const Occupation = ({ route }) => {
+const Occupation = () => {
   const { colors } = useTheme()
   const navigation = useNavigation()
+  const route = useRoute()
+  const [title] = useState(route.params?.title || '')
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      title,
+    })
+  }, [navigation, title])
 
   const styles = StyleSheet.create({
     saveView: {
@@ -90,10 +98,18 @@ const Occupation = ({ route }) => {
     },
   })
 
-  const handleSelect = (selectedAddress) => {
-    // console.log(`closing screen, ${selectedAddress} has been selected.`)
-    route.params.onReturn(selectedAddress)
-    navigation.goBack()
+  const handleSelect = (selectedOccupation) => {
+    // pity navigation.goBack() can't include params
+    navigation.dispatch((state) => {
+      const prevRoute = state.routes[state.routes.length - 2]
+      return CommonActions.navigate({
+        name: prevRoute.name,
+        params: {
+          selectedOccupation,
+        },
+        merge: true,
+      })
+    })
   }
   const [allOccupations, setAllOccupations] = useState([])
   const [searchResult, setSearchResult] = useState([])
@@ -160,14 +176,6 @@ const Occupation = ({ route }) => {
       </View>
     </SafeAreaView>
   )
-}
-
-Occupation.propTypes = {
-  route: PropTypes.shape({
-    params: PropTypes.shape({
-      onReturn: PropTypes.func.isRequired,
-    }).isRequired,
-  }).isRequired,
 }
 
 export default Occupation

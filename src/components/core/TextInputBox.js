@@ -1,43 +1,22 @@
 import React, { useState } from 'react'
-import { StyleSheet } from 'react-native'
-import { TextInput, HelperText, useTheme } from 'react-native-paper'
+import { StyleSheet, Keyboard, View } from 'react-native'
+import {
+  TextInput, HelperText, useTheme, IconButton,
+} from 'react-native-paper'
 import PropTypes from 'prop-types'
 import Icon from './Icon'
 import { layout } from '../../theme'
 
-// TODO -- Fork the react-native-paper TextInput and allow cutomization of spacing between labels and lines
-
-const styles = StyleSheet.create({
-  input: {
-    // marginLeft: layout.marginLeft,
-    // marginRight: layout.marginRight,
-    marginTop: layout.marginTop,
-    marginBottom: layout.marginBottom - 15,
-    minHeight: 54,
-    // borderBottomWidth: 1,
-    overflow: 'hidden',
-    fontSize: 18,
-  },
-  helperText: {
-    marginLeft: 5,
-  },
-
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 10,
-  },
-})
-
-const TextInputBox = (props) => {
+const TextInputBox = React.forwardRef((props, ref) => {
   const {
     editable,
+    disabled,
     secureTextEntry,
     label,
     placeholder,
     onChangeText,
     onEndEditing,
-    // onBlur,
+    onBlur,
     value,
     autoCapitalize,
     keyboardType,
@@ -48,19 +27,46 @@ const TextInputBox = (props) => {
     showKeyboard,
     bgColor,
     onBgColor,
-    numberOfLines,
+    multiline,
+    autoFillType, // textContentType, to allow autofilling by OS like OTP in sms
   } = props
   const { colors } = useTheme()
-
   const [secureText, setSecureText] = useState(secureTextEntry)
 
+  const styles = StyleSheet.create({
+    input: {
+      // marginLeft: layout.marginLeft,
+      // marginRight: layout.marginRight,
+      marginTop: layout.marginTop,
+      marginBottom: layout.marginBottom - 15,
+      minHeight: 54,
+      paddingVertical: 10,
+      fontSize: 18,
+      borderBottomWidth: 1,
+      borderBottomColor: onBgColor ?? colors.onBackground,
+    },
+    helperText: {
+      marginLeft: 5,
+    },
+
+    container: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: 10,
+    },
+  })
+
   return (
-    <>
+    <View>
       <TextInput
+        ref={ref}
         mode="flat"
         editable={editable}
-        multiline={numberOfLines > 1}
-        numberOfLines={numberOfLines}
+        disabled={disabled}
+        showSoftInputOnFocus={showKeyboard}
+        keyboardType={keyboardType}
+        textContentType={autoFillType}
+        multiline={multiline}
         style={[styles.input]}
         secureTextEntry={secureText}
         theme={{
@@ -72,20 +78,29 @@ const TextInputBox = (props) => {
         placeholder={placeholder}
         onChangeText={onChangeText}
         onEndEditing={onEndEditing}
-        // onBlur={onBlur}
+        onBlur={onBlur}
         value={value}
         autoCapitalize={autoCapitalize}
-        keyboardType={keyboardType}
         activeUnderlineColor={colors.primary}
-        underlineColor={onBgColor ?? colors.onBackground}
-        underlineColorAndroid={onBgColor ?? colors.onBackground}
+        // underlineColor={onBgColor ?? colors.onBackground}
+        // underlineColorAndroid={onBgColor ?? colors.onBackground}
         textColor={onBgColor ?? colors.onBackground}
         backgroundColor={bgColor ?? colors.background}
         placeholderTextColor={onBgColor ?? colors.onBackground}
         iconBackgroundColor={onBgColor ?? colors.onBackground}
         error={errorMessage !== ''}
-        onFocus={onFocus}
-        showSoftInputOnFocus={showKeyboard}
+        onFocus={() => {
+          if (onFocus) {
+            if (!showKeyboard && Keyboard.isVisible()) {
+              Keyboard.dismiss()
+              setTimeout(() => {
+                onFocus()
+              }, 75)
+            } else {
+              onFocus()
+            }
+          }
+        }}
         // underlineStyle={{ borderWidth: 1, borderColor: colors.onBackground }}
         left={icon !== ''
           ? (
@@ -120,7 +135,7 @@ const TextInputBox = (props) => {
                 icon={() => (
                   <Icon
                     name={rightIcon}
-                    size={20}
+                    size={16}
                     color={colors.primary}
                   />
                 )}
@@ -136,18 +151,19 @@ const TextInputBox = (props) => {
       >
         {errorMessage}
       </HelperText>
-    </>
+    </View>
   )
-}
+})
 
 TextInputBox.propTypes = {
   editable: PropTypes.bool,
+  disabled: PropTypes.bool,
   secureTextEntry: PropTypes.bool,
   placeholder: PropTypes.string,
   label: PropTypes.string.isRequired,
   onChangeText: PropTypes.func,
   onEndEditing: PropTypes.func,
-  // onBlur: PropTypes.func,
+  onBlur: PropTypes.func,
   value: PropTypes.string,
   autoCapitalize: PropTypes.string,
   keyboardType: PropTypes.string,
@@ -158,15 +174,17 @@ TextInputBox.propTypes = {
   showKeyboard: PropTypes.bool,
   bgColor: PropTypes.string,
   onBgColor: PropTypes.string,
-  numberOfLines: PropTypes.number,
+  multiline: PropTypes.bool,
+  autoFillType: PropTypes.string,
 }
 
 TextInputBox.defaultProps = {
   editable: true,
+  disabled: false,
   secureTextEntry: false,
   onEndEditing: null,
   onChangeText: null,
-  // onBlur: null,
+  onBlur: null,
   autoCapitalize: 'none',
   keyboardType: 'default',
   placeholder: '',
@@ -177,8 +195,9 @@ TextInputBox.defaultProps = {
   showKeyboard: true,
   bgColor: null,
   onBgColor: null,
-  numberOfLines: 1,
+  multiline: false,
   value: '',
+  autoFillType: undefined,
 }
 
 export default TextInputBox

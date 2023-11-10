@@ -1,44 +1,96 @@
 import React, {
-  useState, useContext, useCallback, useRef,
+  useState, useContext, useEffect, useRef,
 } from 'react'
 import {
   View, StyleSheet, StatusBar, SafeAreaView,
 } from 'react-native'
 import {
-  Text, useTheme, IconButton,
+  useTheme, SegmentedButtons, Text,
 } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { useRoute, useNavigation } from '@react-navigation/native'
-
-// import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import TextInputBox from '../../components/core/TextInputBox'
-// import storage from '../../utils/Storage'
-// TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE
 import { UserDataContext } from '../../context/UserDataContext'
 // import { isValidName, isValidLength } from '../../utils/validation'
 import Header4Profile from '../../components/header/Header4Profile'
-import SheetModal from '../../components/core/SheetModal'
-import IconLink from '../../components/core/IconLink'
+import MonthYearPicker from '../../components/MonthYearPicker'
+import Checkbox from '../../components/core/Checkbox'
 
 export default function EditExperience() {
   // const route = useRoute()
   // const { data, from } = route.params
   const navigation = useNavigation()
-  const { colors, fonts } = useTheme()
+  const route = useRoute()
+  const { colors } = useTheme()
+  const { userData } = useContext(UserDataContext)
+  const endDateRef = useRef(null)
 
-  const { userData, setUserData } = useContext(UserDataContext)
+  const [position, setPosition] = useState(userData.fullName)
+  const [isCurrentJob, setIsCurrentJob] = useState(false)
+  const [currentDate, setCurrentDate] = useState('')
+  const [startDate, setStartDate] = useState({ month: '', year: 0 })
+  const [endDate, setEndDate] = useState({ month: '', year: 0 })
+  const [dateError, setDateError] = useState()
+  const [location, setLocation] = useState()
+  const [employerName, setEmployerName] = useState('')
+  const [highlights, setHighlights] = useState()
 
-  const [date, setDate] = useState(new Date(1598051730000))
+  const [dialogVisible, setDialogVisible] = useState(false)
+  const [dialogTitle, setDialogTitle] = useState('Select date')
 
-  // const [fullName, setFulName] = useState(userData.fullName)
+  const showDialog = () => setDialogVisible(() => true)
+  const hideDialog = () => setDialogVisible(() => false)
+
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
   // const [fullNameError, setFullNameError] = useState('')
 
-  // refs
-  // const bottomSheetRef = useRef(null)
-  // const handlePresentPress = useCallback(() => {
-  //    bottomSheetRef.current?.present()
-  // }, [])
+  let pendingChanges = true
+
+  function setDate(date) {
+    if (currentDate === 'start') {
+      setStartDate(date)
+    } else {
+      setEndDate(date)
+    }
+  }
+
+  useEffect(() => {
+    let error = ''
+    if (startDate.year > 0 && endDate.year > 0
+    && startDate.month && endDate.month) {
+      if (startDate.year > endDate.year) {
+        error = 'Error'
+      } else if (startDate.year === endDate.year) {
+        const startMonth = months.indexOf(startDate.month)
+        const endMonth = months.indexOf(endDate.month)
+        if (startMonth > endMonth) {
+          error = 'Error'
+        }
+      }
+    }
+    setDateError(error)
+  }, [startDate, endDate])
+
+  useEffect(() => {
+    if (route.params.selectedAddress) {
+      setLocation(route.params.selectedAddress)
+    }
+  }, [route.params?.selectedAddress])
+
+  useEffect(() => {
+    if (endDateRef.current) {
+      setDateError('')
+      setEndDate({ month: '', year: 0 })
+      if (isCurrentJob) {
+        endDateRef.current.clear()
+        endDateRef.current.setNativeProps({ editable: false, disabled: true })
+      } else {
+        endDateRef.current.setNativeProps({ editable: true, disabled: false })
+      }
+    }
+  }, [isCurrentJob])
 
   const styles = StyleSheet.create({
     container: {
@@ -52,7 +104,7 @@ export default function EditExperience() {
       marginRight: 10,
     },
     footer: {
-      marginVertical: 15,
+      marginVertical: 40,
     },
     row: {
       flexDirection: 'row',
@@ -77,24 +129,26 @@ export default function EditExperience() {
       }
     ],
   */
-
   return (
     <ScreenTemplate>
       <SafeAreaView style={styles.container}>
         <Header4Profile
           title="Add Experience"
-          changed
+          pendingChanges={pendingChanges}
           onSave={() => {
+            // saved the data
+            pendingChanges = false
+            navigation.goBack()
             // console.log('saved changes')
-            navigation.navigate('ProfileStack', {
-              screen: 'EditExperiences',
-              params: { // userId, userFullName, userAvatar, userBannerImage,
-                userId: userData.id,
-                userFullName: userData.fullName,
-                userAvatar: userData.avatar,
-                userBannerImage: { uri: userData.bannerImage },
-              },
-            })
+            // navigation.navigate('ProfileStack', {
+            //   screen: 'EditExperiences',
+            //   params: { // userId, userFullName, userAvatar, userBannerImage,
+            //     userId: userData.id,
+            //     userFullName: userData.fullName,
+            //     userAvatar: userData.avatar,
+            //     userBannerImage: { uri: userData.bannerImage },
+            //   },
+            // })
           }}
         />
 
@@ -102,41 +156,74 @@ export default function EditExperience() {
           style={styles.content}
           keyboardShouldPersistTaps="handled"
         >
-
           <View style={styles.row}>
             <View style={{ width: '45%' }}>
               <TextInputBox
                 autoFocus
                 bgColor={colors.surface}
                 onBgColor={colors.onSurface}
-                placeholder="Month - Year"
+                placeholder="Month-Year"
                 label="Start Date*"
-                value={date.toDateString()}
-          // onChangeText={(text) => setEmail(text)}
-                onFocus={null}
+                value={(startDate.year > 0 && startDate.month) ? `${startDate.month}-${startDate.year}` : ' '}
+                onFocus={() => {
+                  setDialogTitle('Start Date')
+                  setCurrentDate('start')
+                  showDialog()
+                }}
                 showKeyboard={false}
+                errorMessage={dateError}
+                rightIcon="calendar"
               />
             </View>
             <View style={{ width: '45%' }}>
               <TextInputBox
+                ref={endDateRef}
                 autoFocus
                 bgColor={colors.surface}
                 onBgColor={colors.onSurface}
-                placeholder="Month - Year"
-                label="End Date*"
-                value={date.toDateString()}
-                    // onChangeText={(text) => setEmail(text)}
-                onFocus={null}
+                placeholder={isCurrentJob ? '' : 'Month-Year'}
+                label={isCurrentJob ? '' : 'End Date*'}
+                value={isCurrentJob ? 'Present' : ((endDate.year > 0 && endDate.month) ? `${endDate.month}-${endDate.year}` : ' ')}
+                onFocus={() => {
+                  setDialogTitle('End Date')
+                  setCurrentDate('end')
+                  showDialog()
+                }}
                 showKeyboard={false}
+                errorMessage={dateError}
+                rightIcon={isCurrentJob ? '' : 'calendar'}
               />
             </View>
+          </View>
+          <View style={{ alignSelf: 'flex-end', right: -30 }}>
+            <Checkbox
+              label="I am currently working in this position"
+              checked={isCurrentJob}
+              onChecked={(isChecked) => { setIsCurrentJob(isChecked) }}
+              reverse
+            />
           </View>
           <TextInputBox
             autoFocus
             bgColor={colors.surface}
             onBgColor={colors.onSurface}
-            placeholder="Position"
-            label="Your Position (required)*"
+            label="Position"
+            placeholder="Your Position (required)*"
+            value={position}
+            onChangeText={(text) => setPosition(text)}
+            autoCapitalize="words"
+            textContentType="telephoneNumber"
+          />
+
+          <TextInputBox
+            autoFocus
+            bgColor={colors.surface}
+            onBgColor={colors.onSurface}
+            label="Employer"
+            placeholder="Your employer name (required)*"
+            value={employerName}
+            onChangeText={(text) => setEmployerName(text)}
+            multiline
           // onChangeText={(text) => setEmail(text)}
             autoCapitalize="words"
           />
@@ -145,8 +232,8 @@ export default function EditExperience() {
             autoFocus
             bgColor={colors.surface}
             onBgColor={colors.onSurface}
-            placeholder="Employer"
-            label="Your employer name (required)*"
+            label="Website"
+            placeholder="Your company website"
           // onChangeText={(text) => setEmail(text)}
             autoCapitalize="words"
           />
@@ -155,66 +242,60 @@ export default function EditExperience() {
             autoFocus
             bgColor={colors.surface}
             onBgColor={colors.onSurface}
-            placeholder="Company Website"
-            label="Your company website"
-          // onChangeText={(text) => setEmail(text)}
-            autoCapitalize="words"
+            label="Location"
+            placeholder="Your company address"
+            value={location}
+            onFocus={() => {
+              navigation.navigate('SelectLocation', {
+                title: employerName ? `Address of ${employerName}` : 'Employers address',
+              })
+            }}
+            multiline
+            showKeyboard={false}
+          />
+
+          <Text>Work operation mode</Text>
+          <SegmentedButtons
+            style={styles.segmentedButtons}
+            value=""
+            onValueChange={(value) => console.log(value)}
+            buttons={[
+              {
+                value: 'remote',
+                label: 'Remote',
+              },
+              {
+                value: 'onsite',
+                label: 'Onsite',
+              },
+              {
+                value: 'hybrid',
+                label: 'Hybrid',
+              },
+            ]}
           />
 
           <TextInputBox
             autoFocus
-            numberOfLines={3}
-            placeholder="Summarize your role"
-            label="Responsibilities"
-          // onChangeText={(text) => setEmail(text)}
+            multiline
+            label="Highlights"
+            placeholder="Resposibilities and achievements"
+            value={highlights}
+            onChangeText={(text) => setHighlights(text)}
             autoCapitalize="sentences"
-          />
-
-          <TextInputBox
-            autoFocus
-            numberOfLines={3}
-            placeholder="List out notable achievements"
-            label="Achievements"
-          // onChangeText={(text) => setEmail(text)}
-            autoCapitalize="sentences"
+            maxLength={20}
           />
           {/* Empty space at bottom of page */}
           <View style={styles.footer} />
         </KeyboardAwareScrollView>
-
-        {/* I don't think putting text entry form looks good on bottom sheet,
-        even though technically there seems to be no problem with it. */}
-        {/* <SheetModal ref={bottomSheetRef} snapsAt={['90%']}>
-          <KeyboardAwareScrollView
-            style={styles.content}
-            keyboardShouldPersistTaps="never"
-          >
-            <View style={{ marginHorizontal: 30, marginVertical: 10 }}>
-              <Text>Sample Bottom Sheet Content</Text>
-              <Text>Will host componets that requires popup like data selection, map location selection, etc..</Text>
-              <TextInputBox
-                autoFocus
-                bgColor={colors.surfface}
-                onBgColor={colors.onSurface}
-                placeholder="Your full name"
-                label="7Full Name (Required)*"
-          // onChangeText={(text) => setEmail(text)}
-                autoCapitalize="words"
-                value={fullName}
-              // keyboardType="email-address"
-                errorMessage={fullNameError}
-                onChangeText={(name) => {
-                  let error = ''
-                  setFulName(name)
-                  error = !isValidName(name)
-                  error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
-                  setFullNameError(error)
-                }}
-              />
-            </View>
-          </KeyboardAwareScrollView>
-        </SheetModal> */}
-
+        <MonthYearPicker
+          onClose={hideDialog}
+          visible={dialogVisible}
+          title={dialogTitle}
+          initialMonth={currentDate === 'start' ? startDate.month : endDate.month}
+          initialYear={currentDate === 'start' ? startDate.year : endDate.year}
+          onChange={(val) => setDate(val)}
+        />
       </SafeAreaView>
     </ScreenTemplate>
   )

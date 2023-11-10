@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
 export default function Logo({ style }) {
   const scheme = useColorScheme()
   const newStyle = style ?? styles.logo
-  // console.log(newStyle)
   return (
     <Image
       style={newStyle} // Merge default styles with the provided style prop

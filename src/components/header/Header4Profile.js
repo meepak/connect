@@ -7,14 +7,14 @@ import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
 
 const Header4Profile = ({
-  icon, title, changed, onSave,
+  icon, title, pendingChanges, onSave,
 }) => {
   const { colors, fonts } = useTheme()
   const navigation = useNavigation()
 
   useEffect(
     () => navigation.addListener('beforeRemove', (e) => {
-      if (!changed) return
+      if (!pendingChanges) return
       const { action } = e.data
       //   console.log(e.data)
 
@@ -57,10 +57,12 @@ const Header4Profile = ({
       height: 32,
       marginRight: 10,
       paddingVertical: 0,
+      backgroundColor: colors.primary,
+      color: colors.onPrimary,
     },
     saveButtonLabel: {
       fontSize: fonts.bodyMedium.fontSize,
-      color: colors.onBackground,
+      color: colors.onPrimary,
       lineHeight: 13,
       height: 12,
       fontWeight: 'bold',
@@ -90,7 +92,7 @@ const Header4Profile = ({
             mode="outlined"
             style={styles.saveButton}
             icon="check"
-            textColor={colors.onBackground}
+            textColor={colors.onPrimary}
           ><Text style={styles.saveButtonLabel}>Save</Text>
           </Button>
         )
@@ -102,13 +104,13 @@ const Header4Profile = ({
 Header4Profile.propTypes = {
   title: PropTypes.string.isRequired,
   onSave: PropTypes.func,
-  changed: PropTypes.bool,
+  pendingChanges: PropTypes.bool,
   icon: PropTypes.string,
 }
 
 Header4Profile.defaultProps = {
   onSave: null,
-  changed: false,
+  pendingChanges: false,
   icon: 'x',
 }
 

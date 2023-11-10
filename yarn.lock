@@ -4898,6 +4898,11 @@ expo-font@~11.4.0:
   dependencies:
     fontfaceobserver "^2.1.0"
 
+expo-haptics@^12.6.0:
+  version "12.6.0"
+  resolved "https://registry.yarnpkg.com/expo-haptics/-/expo-haptics-12.6.0.tgz#1e32e5411c15e91df1f757faf1a53484cc47cf6d"
+  integrity sha512-/kw75+2qKfr+K1wIjul0BFG1YUqidXYt1wMzsEmdDTCBU/P/xTKX5O3X5W3mdAeUSvA8FFPbij0IHbyw3W4XKg==
+
 expo-image-loader@~4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/expo-image-loader/-/expo-image-loader-4.3.0.tgz#d897b4d4f1838faa8291c36f00b99c2b36a6ac5c"
@@ -4926,6 +4931,11 @@ expo-keep-awake@~12.3.0:
   version "12.3.0"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-12.3.0.tgz#c42449ae19c993274ddc43aafa618792b6aec408"
   integrity sha512-ujiJg1p9EdCOYS05jh5PtUrfiZnK0yyLy+UewzqrjUqIT8eAGMQbkfOn3C3fHE7AKd5AefSMzJnS3lYZcZYHDw==
+
+expo-linear-gradient@^12.5.0:
+  version "12.5.0"
+  resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-12.5.0.tgz#793f56fdc87f57b99b64f4a1b2bb16cba8c47672"
+  integrity sha512-GOV2wODawr2biRCtF2Yb5+wLzvnwXS8dAblfQO7qjyh4f7TDTJn7X0TlVSDMNhIdbAcZBrdxvGFeE2iXdzQ6ow==
 
 expo-manifests@~0.7.0:
   version "0.7.2"
@@ -8396,6 +8406,11 @@ react-native-vector-icons@^9.2.0:
   dependencies:
     prop-types "^15.7.2"
     yargs "^16.1.1"
+
+react-native-wheel-picker-expo@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/react-native-wheel-picker-expo/-/react-native-wheel-picker-expo-0.5.4.tgz#6a22785d919ee45d0f998833dc74000d4b5f21eb"
+  integrity sha512-mTA35pqAGioi7gie+nLF4EcwCj7zU36zzlYZVRS/bZul84zvvoMFKJu6Sm84WuWQiUJ40J1EgYxQ3Ui1pIMJZg==
 
 react-native@0.72.6:
   version "0.72.6"

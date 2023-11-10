@@ -99,40 +99,6 @@ export default function EditExperiences() {
           {/* Empty space at bottom of page */}
           <View style={styles.footer} />
         </KeyboardAwareScrollView>
-
-        {/* I don't think putting text entry form looks good on bottom sheet,
-        even though technically there seems to be no problem with it. */}
-        {/* <SheetModal ref={bottomSheetRef} snapsAt={['90%']}>
-          <KeyboardAwareScrollView
-            style={styles.content}
-            keyboardShouldPersistTaps="never"
-          >
-            <View style={{ marginHorizontal: 30, marginVertical: 10 }}>
-              <Text>Sample Bottom Sheet Content</Text>
-              <Text>Will host componets that requires popup like data selection, map location selection, etc..</Text>
-              <TextInputBox
-                autoFocus
-                bgColor={colors.surfface}
-                onBgColor={colors.onSurface}
-                placeholder="Your full name"
-                label="7Full Name (Required)*"
-          // onChangeText={(text) => setEmail(text)}
-                autoCapitalize="words"
-                value={fullName}
-              // keyboardType="email-address"
-                errorMessage={fullNameError}
-                onChangeText={(name) => {
-                  let error = ''
-                  setFulName(name)
-                  error = !isValidName(name)
-                  error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
-                  setFullNameError(error)
-                }}
-              />
-            </View>
-          </KeyboardAwareScrollView>
-        </SheetModal> */}
-
       </SafeAreaView>
     </ScreenTemplate>
   )

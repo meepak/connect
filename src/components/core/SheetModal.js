@@ -7,7 +7,7 @@ import {
 } from '@gorhom/bottom-sheet'
 import PropTypes from 'prop-types'
 
-const SheetModal = React.forwardRef(({ children, snapsAt }, ref) => {
+const SheetModal = React.forwardRef(({ children, snapsAt, onDismiss }, ref) => {
   const { colors } = useTheme()
   // refs
   //   const bottomSheetRef = useRef(null)
@@ -20,10 +20,10 @@ const SheetModal = React.forwardRef(({ children, snapsAt }, ref) => {
     // eslint-disable-next-line no-console
     // console.log('index', index)
   }, [])
-  const handleDismiss = useCallback(() => {
-    // eslint-disable-next-line no-console
-    // console.log('on dismiss')
-  }, [])
+  // const handleDismiss = useCallback(() => {
+  // eslint-disable-next-line no-console
+  // console.log('on dismiss')
+  // }, [])
   //   const handleDismissPress = useCallback(() => {
   //    bottomSheetRef.current?.dismiss()
   //   }, [])
@@ -42,7 +42,7 @@ const SheetModal = React.forwardRef(({ children, snapsAt }, ref) => {
       topInset={+StatusBar.currentHeight}
       enablePanDownToClose
       enableDismissOnClose
-      onDismiss={handleDismiss}
+      onDismiss={onDismiss}
       onChange={handleChange}
       backdropComponent={({ animatedIndex, style }) => (
         <BottomSheetBackdrop
@@ -62,10 +62,12 @@ const SheetModal = React.forwardRef(({ children, snapsAt }, ref) => {
 SheetModal.propTypes = {
   children: PropTypes.node.isRequired,
   snapsAt: PropTypes.arrayOf(PropTypes.string),
+  onDismiss: PropTypes.func,
 }
 
 SheetModal.defaultProps = {
   snapsAt: ['25%', '50%', '75%', '100%'],
+  onDismiss: null,
 }
 
 export default SheetModal

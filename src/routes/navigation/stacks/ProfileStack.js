@@ -6,6 +6,8 @@ import EditIntro from '../../../scenes/profile/EditIntro'
 import EditKeySummary from '../../../scenes/profile/EditKeySummary'
 import EditExperiences from '../../../scenes/profile/EditExperiences'
 import EditExperience from '../../../scenes/profile/EditExperience'
+import SelectLocation from '../../../scenes/location'
+import Occupation from '../../../scenes/occupation'
 // import HeaderStyle from '../../../components/header/HeaderStyle'
 
 const Stack = createStackNavigator()
@@ -14,7 +16,8 @@ const ProfileStack = () => (
   <Stack.Navigator
     screenOptions={{
       headerShown: false,
-      gestureEnabled: true,
+      gestureEnabled: false,
+      cardStyle: { flex: 1 },
     }}
   >
 
@@ -57,6 +60,24 @@ const ProfileStack = () => (
       name="EditExperience"
       component={EditExperience}
       options={{
+        ...TransitionPresets.ModalPresentationIOS,
+      }}
+    />
+
+    <Stack.Screen
+      name="SelectLocation"
+      component={SelectLocation}
+      options={{
+        headerShown: true,
+        ...TransitionPresets.ModalPresentationIOS,
+      }}
+    />
+
+    <Stack.Screen
+      name="SelectOccupation"
+      component={Occupation}
+      options={{
+        headerShown: true,
         ...TransitionPresets.ModalPresentationIOS,
       }}
     />

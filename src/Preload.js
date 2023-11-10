@@ -51,5 +51,5 @@ export default async function Preload() {
   await storeData()
 
   // additional simulated delay
-  await new Promise((resolve) => setTimeout(resolve, 5000))
+  // await new Promise((resolve) => setTimeout(resolve, 5000))
 }

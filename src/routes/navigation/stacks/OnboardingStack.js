@@ -1,7 +1,5 @@
 import React from 'react'
-// import { useColorScheme } from 'react-native'
-import { createStackNavigator } from '@react-navigation/stack'
-// import HeaderStyle from '../../../components/HeaderStyle'
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import Onboarding from '../../../scenes/onboarding'
 import Logo from '../../../components/core/Logo'
 import SelectLocation from '../../../scenes/location'
@@ -14,31 +12,24 @@ const OnboardingStack = () => (
     <Stack.Screen
       name="Onboarding"
       component={Onboarding}
-      options={(/* { navigation } */) => ({
-        // headerBackground: () => <HeaderStyle />,
+      options={() => ({
         headerTitle: () => ( // App Logo
           <Logo style={{ width: 200, alignSelf: 'center' }} />
         ),
       })}
     />
     <Stack.Screen
-      name="Select Location"
+      name="SelectLocation"
       component={SelectLocation}
-      options={(/* { navigation } */) => ({
-        // headerBackground: () => <HeaderStyle />,
-        headerTitle: () => ( // App Logo
-          <Logo style={{ width: 200, alignSelf: 'center' }} />
-        ),
+      options={() => ({
+        ...TransitionPresets.ModalPresentationIOS,
       })}
     />
     <Stack.Screen
-      name="Select Occupation"
+      name="SelectOccupation"
       component={Occupation}
-      options={(/* { navigation } */) => ({
-        // headerBackground: () => <HeaderStyle />,
-        headerTitle: () => ( // App Logo
-          <Logo style={{ width: 200, alignSelf: 'center' }} />
-        ),
+      options={() => ({
+        ...TransitionPresets.ModalPresentationIOS,
       })}
     />
   </Stack.Navigator>
