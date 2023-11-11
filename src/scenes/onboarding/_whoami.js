@@ -1,45 +1,50 @@
 import React from 'react'
 import {
-  Surface, Text, Divider,
+  Surface, Text, Divider, useTheme,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import RadioButtonGroup from '../../components/core/RadioButtonGroup'
 
-import styles from './styles'
+import Styles from './Styles'
 
 const WhoAmI = ({
   onWhoAmIChanged, initialValue, disabled,
-}) => (
-  <Surface style={styles.card}>
+}) => {
+  const { fonts } = useTheme()
+  const styles = Styles(fonts)
 
-    <Text style={styles.question}>
-      What describes you best?
-    </Text>
-    <Divider style={styles.divider} />
-    <RadioButtonGroup
-      disabled={disabled}
-      reverse
-      items={[
-        {
-          id: 1,
-          text: 'I am a founder, looking for associates',
-          value: 'founder',
-          checked: initialValue === 'founder',
-        },
-        {
-          id: 2,
-          text: 'I want to be an associate of a business',
-          value: 'associate',
-          checked: initialValue === 'associate',
-        },
-      ]}
+  return (
+    <Surface style={styles.card}>
+
+      <Text style={styles.question}>
+        What describes you best?
+      </Text>
+      <Divider style={styles.divider} />
+      <RadioButtonGroup
+        disabled={disabled}
+        reverse
+        items={[
+          {
+            id: 1,
+            text: 'I am a founder, looking for associates',
+            value: 'founder',
+            checked: initialValue === 'founder',
+          },
+          {
+            id: 2,
+            text: 'I want to be an associate of a business',
+            value: 'associate',
+            checked: initialValue === 'associate',
+          },
+        ]}
       // textColor={colorScheme.text} // TODO: Move textColor within component (decide from there)
-      onChecked={(value) => {
-        onWhoAmIChanged(value)
-      }}
-    />
-  </Surface>
-)
+        onChecked={(value) => {
+          onWhoAmIChanged(value)
+        }}
+      />
+    </Surface>
+  )
+}
 
 WhoAmI.propTypes = {
   onWhoAmIChanged: PropTypes.func.isRequired,

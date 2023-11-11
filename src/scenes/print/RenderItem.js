@@ -2,25 +2,26 @@ import React from 'react'
 import {
   StyleSheet, View,
 } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import { fontSize } from '../../theme'
 
-const styles = StyleSheet.create({
+const Styles = (fonts) => StyleSheet.create({
   container: {
     paddingVertical: 5,
     paddingHorizontal: 5,
   },
   title: {
-    fontSize: fontSize.large,
+    fontSize: fonts.bodyLarge.fontSize,
   },
   body: {
-    fontSize: fontSize.small,
+    fontSize: fonts.bodyLarge.fontSize,
   },
 })
 
 export default function RenderItem(props) {
   const { item } = props
+  const { fonts } = useTheme()
+  const styles = Styles(fonts)
 
   return (
     <View

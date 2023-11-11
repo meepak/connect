@@ -1,16 +1,14 @@
 import React, {
-  useState, useContext, useLayoutEffect, // useRef,
+  useState, useContext, // useRef,
 } from 'react'
-import {
-  Alert,
-} from 'react-native'
+import { Alert } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Spinner from 'react-native-loading-spinner-overlay'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/core/Button'
 import { firestore } from '../../firebase'
-import { colors } from '../../theme'
 import { UserDataContext } from '../../context/UserDataContext'
 
 import Header from './__header'
@@ -26,12 +24,14 @@ import SelectEducation from './_education'
 import SelectOccupations from './_occupation'
 import SelectYesNo from './_yesno'
 
-import styles from './styles'
+import Styles from './Styles'
 
 // import mergeJsonObjects from '../../utils/functions'
 
 export default function Onboarding() {
+  const { colors, fonts } = useTheme()
   const { userData } = useContext(UserDataContext)
+  const styles = Styles(fonts)
 
   const [avatar, setAvatar] = useState(userData.avatar)
   const [fullName] = useState(userData.fullName)
@@ -274,7 +274,7 @@ export default function Onboarding() {
       </KeyboardAwareScrollView>
       <Spinner
         visible={spinner}
-        textStyle={{ color: colors.white }}
+        textStyle={{ color: colors.onBackground }}
         overlayColor="rgba(0,0,0,0.5)"
       />
     </ScreenTemplate>

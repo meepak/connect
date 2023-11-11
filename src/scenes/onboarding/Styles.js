@@ -1,9 +1,7 @@
-import {
-  StyleSheet,
-} from 'react-native'
-import { layout, fontSize } from '../../theme'
+import { StyleSheet } from 'react-native'
+import { layout } from '../../theme'
 
-const styles = StyleSheet.create({
+const Styles = (fonts) => StyleSheet.create({
   card: {
     margin: layout.marginLeft,
     padding: layout.marginLeft,
@@ -23,17 +21,17 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   headerTextGreeting: {
-    fontSize: fontSize.xLarge,
+    fontSize: fonts.titleLarge.fontSize,
   },
   headerTextName: {
-    fontSize: fontSize.xxLarge,
+    fontSize: fonts.titleLarge.fontSize,
     fontWeight: 'bold',
   },
   greetingNote: {
     marginLeft: layout.marginLeft,
     marginRight: layout.marginRight,
     marginBottom: layout.marginBottom,
-    fontSize: fontSize.large,
+    fontSize: fonts.bodyLarge.fontSize,
     // fontStyle: 'italic',
   },
   segmentedButtons: {
@@ -45,7 +43,7 @@ const styles = StyleSheet.create({
     marginLeft: layout.marginLeft,
     marginRight: layout.marginRight,
     marginBottom: layout.marginBottom,
-    fontSize: fontSize.large,
+    fontSize: fonts.bodyLarge.fontSize,
   },
   answer: {
     // borderBottomWidth: 1,
@@ -56,4 +54,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default styles
+export default Styles

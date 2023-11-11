@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import {
-  Surface, Text, Divider,
+  Surface, Text, Divider, useTheme,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import Button from '../../components/core/Button'
-import { colors } from '../../theme'
 
-import styles from './styles'
+import Styles from './Styles'
 
 // TODO -- geolocation autocomplete
 const SelectLocation = ({
   onBusinessLocationChanged, question, initialValue,
 }) => {
+  const { colors, fonts } = useTheme()
+  const styles = Styles(fonts)
   const [selectedAddress, setSelectedAddress] = useState(initialValue)
   const navigation = useNavigation()
   const route = useRoute()

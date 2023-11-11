@@ -15,11 +15,14 @@ const SelectLocation = () => {
   const navigation = useNavigation()
   const route = useRoute()
   const [title] = useState(route.params?.title || '')
+  // since I can't trigger search, not pre-populating search box for now
+  // const [search] = useState(route.params?.search || '')
   const inputRef = useRef(null)
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
+      headerTintColor: colors.onBackground,
       title,
     })
   }, [navigation, title])
@@ -100,7 +103,7 @@ const SelectLocation = () => {
     const main = rowData.structured_formatting.main_text
     const secondary = rowData.structured_formatting.secondary_text
     return (
-      <TouchableRipple rippleColor={colors.primaryContainer}>
+      <TouchableRipple rippleColor={colors.primary}>
         <View style={styles.row}>
           <Text style={styles.rowText1}>
             {main}

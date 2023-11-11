@@ -5,7 +5,7 @@ import {
   View, StyleSheet, ScrollView, RefreshControl,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { Surface, Text } from 'react-native-paper'
+import { Surface, Text, useTheme } from 'react-native-paper'
 import Dialog from 'react-native-dialog'
 import Spinner from 'react-native-loading-spinner-overlay'
 import {
@@ -17,25 +17,24 @@ import Button from '../../components/core/Button'
 // import Restart from '../../utils/Restart'
 import { firestore, auth } from '../../firebase'
 import { UserDataContext } from '../../context/UserDataContext'
-import { colors, fontSize } from '../../theme'
 import AvatarOfAuthUser from '../../components/AvatarOfAuthUser'
 import sendNotification from '../../utils/SendNotification'
 import TestFontsize from '../../components/TestFontsize'
 import ListItemConnection from '../../components/ListItemConnection'
 
-const styles = StyleSheet.create({
+const Styles = (colors, fonts) => StyleSheet.create({
   main: {
     flex: 1,
     width: '100%',
     marginBottom: 80,
   },
   title: {
-    fontSize: fontSize.xxxLarge,
+    fontSize: fonts.titleLarge.fontSize,
     marginBottom: 20,
     textAlign: 'center',
   },
   field: {
-    fontSize: fontSize.middle,
+    fontSize: fonts.bodyLarge.fontSize,
     textAlign: 'center',
   },
   avatar: {
@@ -49,9 +48,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   footerLink: {
-    color: colors.blueLight,
+    color: colors.primary,
     fontWeight: 'bold',
-    fontSize: fontSize.large,
+    fontSize: fonts.bodyLarge.fontSize,
   },
   content: {
     padding: 20,
@@ -63,8 +62,11 @@ const styles = StyleSheet.create({
 })
 
 export default function Manage() {
-  const { userData, setUserData } = useContext(UserDataContext)
   const navigation = useNavigation()
+  const { colors, fonts } = useTheme()
+  const styles = Styles(colors, fonts)
+
+  const { userData, setUserData } = useContext(UserDataContext)
   const [visible, setVisible] = useState(false)
   const [spinner, setSpinner] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
@@ -373,7 +375,6 @@ export default function Manage() {
         </Surface>
         <Button
           label="Open Modal"
-          color={colors.tertiary}
           onPress={() => {
             navigation.navigate('ModalStack', {
               screen: 'Post',
@@ -386,12 +387,10 @@ export default function Manage() {
         />
         <Button
           label="Account delete"
-          color={colors.secondary}
           onPress={showDialog}
         />
         <Button
           label="Send Notification"
-          color={colors.pink}
           onPress={() => onNotificationPress()}
           disable={!token}
         />
@@ -409,7 +408,7 @@ export default function Manage() {
       </Dialog.Container>
       <Spinner
         visible={spinner}
-        textStyle={{ color: colors.white }}
+        textStyle={{ color: colors.onBackground }}
         overlayColor="rgba(0,0,0,0.5)"
       />
     </ScreenTemplate>

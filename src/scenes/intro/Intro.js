@@ -5,46 +5,33 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 // import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
 import AppIntroSlider from 'react-native-app-intro-slider'
-import PropTypes from 'prop-types'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import { fontSize, colors } from '../../theme'
 import Logo from '../../components/core/Logo'
 
 // TODO get colors from theme
-const styles = StyleSheet.create({
+const Styles = (colors, fonts) => StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     padding: 10,
     justifyContent: 'center',
   },
-  titleStyle: {
-    padding: 10,
-    textAlign: 'center',
-    fontSize: fontSize.xLarge,
-    fontWeight: 'bold',
-  },
-  paragraphStyle: {
-    padding: 20,
-    textAlign: 'center',
-    fontSize: fontSize.small,
-  },
   introImageStyle: {
     width: 300,
     height: 300,
   },
   introTextStyle: {
-    fontSize: fontSize.middle,
+    fontSize: fonts.bodyLarge.fontSize,
     textAlign: 'center',
     marginBottom: 25,
     padding: 30,
   },
   introTitleStyle: {
-    fontSize: fontSize.xxxLarge,
+    fontSize: fonts.titleLarge.fontSize,
     textAlign: 'center',
     marginTop: 60,
     fontWeight: 'bold',
@@ -90,7 +77,7 @@ const styles = StyleSheet.create({
   },
   buttonSignUp: {
     color: colors.white,
-    fontSize: fontSize.large,
+    fontSize: fonts.bodyLarge.fontSize,
   },
   buttonSignInTouchable: {
     flexDirection: 'row',
@@ -106,11 +93,11 @@ const styles = StyleSheet.create({
   },
   buttonSignIn: {
     color: colors.primary,
-    fontSize: fontSize.large,
+    fontSize: fonts.bodyLarge.fontSize,
   },
   buttonLogin: {
     color: colors.primary,
-    fontSize: fontSize.large,
+    fontSize: fonts.bodyLarge.fontSize,
     fontWeight: 'bold',
   },
 
@@ -156,30 +143,11 @@ const slides = [
   },
 ]
 
-const RenderItem = ({ title, image, text }) => (
-  <View
-    style={{
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'space-around',
-      paddingBottom: 100,
-    }}
-  >
-    <Text style={[styles.introTitleStyle]}>{title}</Text>
-    <Image style={styles.introImageStyle} source={image} />
-    <Text style={[styles.introTextStyle]}>{text}</Text>
-  </View>
-)
-
-RenderItem.propTypes = {
-  title: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-}
-
 const Intro = () => {
   const navigation = useNavigation()
+  const { colors, fonts } = useTheme()
   const [isBeingTouhed, setIsBeingTouched] = useState(false)
+  const styles = Styles(colors, fonts)
 
   let slider = null
 
@@ -220,6 +188,21 @@ const Intro = () => {
     })
   }
 
+  const renderItem = (item) => (
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        paddingBottom: 100,
+      }}
+    >
+      <Text style={[styles.introTitleStyle]}>{item.title}</Text>
+      <Image style={styles.introImageStyle} source={item.image} />
+      <Text style={[styles.introTextStyle]}>{item.text}</Text>
+    </View>
+  )
+
   return (
     <ScreenTemplate
       onTouchStart={() => {
@@ -240,10 +223,7 @@ const Intro = () => {
         data={slides}
         renderItem={(param) => {
           const { item } = param
-          const modifiedItem = {
-            ...item,
-          }
-          return RenderItem(modifiedItem)
+          return renderItem(item)
         }}
         showSkipButton={false}
         showNextButton={false}

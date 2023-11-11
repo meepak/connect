@@ -4,53 +4,53 @@ import {
   StyleSheet,
 } from 'react-native'
 import {
-  Surface, Text,
+  Surface, Text, useTheme,
 } from 'react-native-paper'
 import {
   useNavigation,
   useRoute,
-  useFocusEffect,
+  useEffect,
 } from '@react-navigation/native'
-import { colors, fontSize } from 'theme'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/core/Button'
 import HomeTitleContext from '../../context/HomeTitleContext'
-
-const styles = StyleSheet.create({
-  content: {
-    padding: 20,
-    borderRadius: 5,
-    marginTop: 30,
-    marginLeft: 30,
-    marginRight: 30,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  main: {
-    flex: 1,
-    width: '100%',
-  },
-  title: {
-    fontSize: fontSize.xxxLarge,
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  field: {
-    fontSize: fontSize.middle,
-    textAlign: 'center',
-  },
-})
 
 export default function Detail() {
   const navigation = useNavigation()
   const route = useRoute()
   const { from, userData, title } = route.params
   const { setTitle } = useContext(HomeTitleContext)
+  const { colors, fonts } = useTheme()
 
-  useFocusEffect(() => {
+  const styles = StyleSheet.create({
+    content: {
+      padding: 20,
+      borderRadius: 5,
+      marginTop: 30,
+      marginLeft: 30,
+      marginRight: 30,
+    },
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    main: {
+      flex: 1,
+      width: '100%',
+    },
+    title: {
+      fontSize: fonts.headlineMedium.fontSize,
+      marginBottom: 20,
+      textAlign: 'center',
+    },
+    field: {
+      fontSize: fonts.bodyLarge.fontSize,
+      textAlign: 'center',
+    },
+  })
+
+  useEffect(() => {
     setTitle(title)
   })
 

@@ -1,10 +1,10 @@
 import React from 'react'
 import {
-  Surface, Text, Divider,
+  Surface, Text, Divider, useTheme,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import CheckboxGroup from '../../components/core/CheckboxGroup'
-import styles from './styles'
+import Styles from './Styles'
 
 const industries = [
   'Agriculture and Agribusiness',
@@ -21,26 +21,30 @@ const industries = [
 
 const SelectIndustries = ({
   maxSelect, onChecked, question, initialValues,
-}) => (
-  <Surface style={styles.card}>
-    <Text style={styles.question}>
-      {question || `Select up to ${maxSelect} related industries.`}
-    </Text>
-    <Divider style={styles.divider} />
-    <CheckboxGroup
-      items={industries.map((industry, index) => ({
-        id: index + 1,
-        text: industry,
-        value: industry,
-        checked: initialValues.includes(industry),
-      }))}
-      maxSelect={maxSelect}
-      onChecked={onChecked || (() => {})}
-      reverse
-      initialValues={initialValues}
-    />
-  </Surface>
-)
+}) => {
+  const { fonts } = useTheme()
+  const styles = Styles(fonts)
+  return (
+    <Surface style={styles.card}>
+      <Text style={styles.question}>
+        {question || `Select up to ${maxSelect} related industries.`}
+      </Text>
+      <Divider style={styles.divider} />
+      <CheckboxGroup
+        items={industries.map((industry, index) => ({
+          id: index + 1,
+          text: industry,
+          value: industry,
+          checked: initialValues.includes(industry),
+        }))}
+        maxSelect={maxSelect}
+        onChecked={onChecked || (() => {})}
+        reverse
+        initialValues={initialValues}
+      />
+    </Surface>
+  )
+}
 
 SelectIndustries.propTypes = {
   question: PropTypes.string,

@@ -1,4 +1,5 @@
 import React from 'react'
+import { StatusBar } from 'react-native'
 import {
   createDrawerNavigator,
 } from '@react-navigation/drawer'
@@ -18,6 +19,9 @@ const DrawerNavigator = () => {
         gestureEnabled: true,
         drawerStyle: {
           backgroundColor: colors.elevation.level3,
+          borderTopRightRadius: 20,
+          borderBottomRightRadius: 20,
+          marginTop: StatusBar.currentHeight,
         },
       }}
       initialRouteName="Find"

@@ -1,10 +1,10 @@
 import React from 'react'
 import {
-  Surface, Text, Divider,
+  Surface, Text, Divider, useTheme,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import RadioButtonGroup from '../../components/core/RadioButtonGroup'
-import styles from './styles'
+import Styles from './Styles'
 
 const educationLevels = [
   'None',
@@ -19,7 +19,10 @@ const educationLevels = [
 
 const SelectEducation = ({
   onEducationChanged, question, initialValue,
-}) => (
+}) => {
+  const { fonts } = useTheme()
+  const styles = Styles(fonts)
+  return (
   <Surface style={styles.card}>
 
     <Text style={styles.question}>
@@ -41,7 +44,7 @@ const SelectEducation = ({
       }}
     />
   </Surface>
-)
+)}
 
 SelectEducation.propTypes = {
   question: PropTypes.string,

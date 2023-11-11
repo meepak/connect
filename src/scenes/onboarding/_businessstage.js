@@ -1,12 +1,12 @@
 import React from 'react'
 import {
-  Surface, Text, Divider,
+  Surface, Text, Divider, useTheme,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import RadioButtonGroup from '../../components/core/RadioButtonGroup'
 import CheckboxGroup from '../../components/core/CheckboxGroup'
 
-import styles from './styles'
+import Styles from './Styles'
 
 const businessStages = [
   'Idea',
@@ -19,16 +19,19 @@ const businessStages = [
 
 const SelectBusinessStage = ({
   onBusinessStageChanged, question, allSelect, initialValues,
-}) => (
-  <Surface style={styles.card}>
+}) => {
+  const { fonts } = useTheme()
+  const styles = Styles(fonts)
+  return (
+    <Surface style={styles.card}>
 
-    <Text style={styles.question}>
-      {question || 'What stage is your business in?'}
-    </Text>
+      <Text style={styles.question}>
+        {question || 'What stage is your business in?'}
+      </Text>
 
-    <Divider style={styles.divider} />
+      <Divider style={styles.divider} />
 
-    {
+      {
   allSelect
     ? (
       <CheckboxGroup
@@ -60,8 +63,9 @@ const SelectBusinessStage = ({
       />
     )
     }
-  </Surface>
-)
+    </Surface>
+  )
+}
 
 SelectBusinessStage.propTypes = {
   question: PropTypes.string,

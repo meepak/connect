@@ -1,7 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message'
-import { fontSize, colors } from '../theme'
 
 const showToast = ({ title, body }) => {
   Toast.show({
@@ -28,18 +27,18 @@ const toastConfig = {
     // }
     <BaseToast
       {...props}
-      style={{ borderLeftColor: colors.primary }}
+      // style={{ borderLeftColor: colors.primary }}
       contentContainerStyle={{
         paddingHorizontal: 15,
         // backgroundColor: styles.backgroundColor,
       }}
       text1Style={{
-        fontSize: fontSize.middle,
+        // fontSize: fonts.bodyLarge.fontSize,
         fontWeight: '400',
         // color: styles.text1Color,
       }}
       text2Style={{
-        fontSize: fontSize.small,
+        // fontSize: fonts.bodyLarge.fontSize,
         fontWeight: '400',
         // color: styles.text2Color,
       }}

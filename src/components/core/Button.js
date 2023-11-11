@@ -2,36 +2,38 @@ import React from 'react'
 import {
   StyleSheet, TouchableOpacity, View,
 } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import { layout, fontSize, colors } from '../../theme'
-
-const styles = StyleSheet.create({
-  button: {
-    marginLeft: layout.marginLeft,
-    marginRight: layout.marginRight,
-    marginTop: layout.marginTop,
-    marginBottom: layout.marginBottom,
-    height: 48,
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    color: colors.white,
-    fontSize: fontSize.large,
-  },
-})
+import { layout } from '../../theme'
 
 export default function Button(props) {
   const {
-    label, onPress, color, disable,
+    label, onPress, disable,
   } = props
+  const { colors, fonts } = useTheme()
+
+  const styles = StyleSheet.create({
+    button: {
+      marginLeft: layout.marginLeft,
+      marginRight: layout.marginRight,
+      marginTop: layout.marginTop,
+      marginBottom: layout.marginBottom,
+      height: 48,
+      borderRadius: 5,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.primaryContainer,
+    },
+    buttonText: {
+      color: colors.onPrimaryContainer,
+      fontSize: fonts.bodyLarge.fontSize,
+    },
+  })
 
   if (disable) {
     return (
       <View
-        style={[styles.button, { backgroundColor: color, opacity: 0.3 }]}
+        style={[styles.button, { backgroundColor: colors.inversePrimary, opacity: 0.3 }]}
       >
         <Text style={styles.buttonText}>{label}</Text>
       </View>
@@ -40,7 +42,7 @@ export default function Button(props) {
 
   return (
     <TouchableOpacity
-      style={[styles.button, { backgroundColor: color }]}
+      style={styles.button}
       onPress={onPress}
     >
       <Text style={styles.buttonText}>{label}</Text>
@@ -51,7 +53,6 @@ export default function Button(props) {
 Button.propTypes = {
   label: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
-  color: PropTypes.string.isRequired,
   disable: PropTypes.bool,
 }
 

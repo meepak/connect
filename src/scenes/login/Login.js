@@ -4,7 +4,7 @@ import React, {
 import {
   Alert, View, StyleSheet, LogBox,
 } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { doc, getDoc } from 'firebase/firestore'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -15,11 +15,10 @@ import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/core/Button'
 import TextInputBox from '../../components/core/TextInputBox'
 import Logo from '../../components/core/Logo'
-import { colors, fontSize } from '../../theme'
 import { isValidEmail } from '../../utils/validation'
 // import { UserDataContext } from '../../context/UserDataContext'
 
-const styles = StyleSheet.create({
+const Styles = (colors, fonts) => StyleSheet.create({
   main: {
     flex: 1,
     width: '100%',
@@ -31,12 +30,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   footerText: {
-    fontSize: fontSize.large,
+    fontSize: fonts.bodyLarge.fontSize,
   },
   footerLink: {
-    color: colors.blueLight,
+    color: colors.primary,
     fontWeight: 'bold',
-    fontSize: fontSize.large,
+    fontSize: fonts.bodyLarge.fontSize,
   },
 })
 
@@ -46,12 +45,14 @@ LogBox.ignoreLogs(['Setting a timer'])
 
 // TODO -- THERE IS A BUG IN LOGIN WHERE AFTER REGISTRATION, IT DOESN'T LET USER LOGIN TILL APP IS RESTARTED
 export default function Login() {
+  const navigation = useNavigation()
+  const { colors, fonts } = useTheme()
   const [email, setEmail] = useState('meepak@gmail.com')
   const [emailError, setEmailError] = useState('')
   const [password, setPassword] = useState('qwerty')
   const [passwordError, setPasswordError] = useState('')
   const [spinner, setSpinner] = useState(false)
-  const navigation = useNavigation()
+  const styles = Styles(colors, fonts)
 
   const onFooterLinkPress = () => {
     navigation.navigate('Sign up')
@@ -61,10 +62,6 @@ export default function Login() {
     await sendEmailVerification(auth.currentUser)
     Alert.alert('Info', 'Email verification link sent.')
   }
-
-  // useEffect(() => {
-  //   console.log('Login screen')
-  // }, [])
 
   const onLoginPress = async () => {
     try {
@@ -142,18 +139,15 @@ export default function Login() {
             </View>
           ) : <></>}
         <TextInputBox
-          // ref={emailTextInput}
           icon="mail"
           autoFocus
-          // placeholder="E-mail"
-          label="E-mail"
+          label="Email"
           onChangeText={(text) => setEmail(text)}
           autoCapitalize="none"
           value={email}
           keyboardType="email-address"
           errorMessage={emailError}
           onEndEditing={() => {
-            // console.log('blurred email')
             let error = ''
             if (email !== '') {
               error = isValidEmail(email) ? '' : 'Invalid E-mail'
@@ -164,14 +158,12 @@ export default function Login() {
         <TextInputBox
           icon="lock"
           secureTextEntry
-          // placeholder="Password "
           label="Password"
           onChangeText={(text) => setPassword(text)}
           value={password}
           autoCapitalize="none"
           errorMessage={passwordError}
           onEndEditing={() => {
-            // console.log('blurred password')
             if (password !== '') {
               setPasswordError('')
             }
@@ -179,36 +171,37 @@ export default function Login() {
         />
         <Button
           label="Log in"
-          color={colors.primary}
           onPress={() => onLoginPress()}
         />
         <View style={styles.footerView}>
-          <Text style={styles.footerText}>Don&apos;t have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
+          <Text style={styles.footerText}>
+            Don&apos;t have an account?
+            <Text onPress={onFooterLinkPress} style={styles.footerLink}>
+              &nbsp;Sign up
+            </Text>
+          </Text>
           <Text>OR</Text>
         </View>
 
         <Button
           label="Sign in with LinkedIn"
-          color={colors.primary}
           onPress={() => {}}
         />
 
         <Button
           label="Sign in with Google"
-          color={colors.primary}
           onPress={() => {}}
         />
 
         <Button
           label="Sign in with Facebook"
-          color={colors.primary}
           onPress={() => {}}
         />
 
       </KeyboardAwareScrollView>
       <Spinner
         visible={spinner}
-        textStyle={{ color: colors.white }}
+        textStyle={{ color: colors.onBackground }}
         overlayColor="rgba(0,0,0,0.5)"
       />
     </ScreenTemplate>

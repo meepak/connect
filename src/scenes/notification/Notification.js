@@ -1,13 +1,12 @@
 import React, { useEffect, useContext } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
-import { fontSize } from 'theme'
 import { useNavigation } from '@react-navigation/native'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/core/Button'
 import { UserDataContext } from '../../context/UserDataContext'
 
-const styles = StyleSheet.create({
+const Styles = (fonts) => StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
@@ -15,16 +14,17 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   field: {
-    fontSize: fontSize.middle,
+    fontSize: fonts.bodyLarge.fontSize,
     textAlign: 'center',
   },
 })
 
 export default function Notification() {
-  const { colors } = useTheme()
+  const { colors, fonts } = useTheme()
   const navigation = useNavigation()
-  const { userData } = useContext(UserDataContext)
+  const styles = Styles(fonts)
 
+  const { userData } = useContext(UserDataContext)
   useEffect(() => {
     // console.log('Notification screen')
   }, [])

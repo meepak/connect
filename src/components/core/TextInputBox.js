@@ -30,7 +30,7 @@ const TextInputBox = React.forwardRef((props, ref) => {
     multiline,
     autoFillType, // textContentType, to allow autofilling by OS like OTP in sms
   } = props
-  const { colors } = useTheme()
+  const { colors, fonts } = useTheme()
   const [secureText, setSecureText] = useState(secureTextEntry)
 
   const styles = StyleSheet.create({
@@ -40,19 +40,19 @@ const TextInputBox = React.forwardRef((props, ref) => {
       marginTop: layout.marginTop,
       marginBottom: layout.marginBottom - 15,
       minHeight: 54,
-      paddingVertical: 10,
-      fontSize: 18,
+      paddingTop: 10,
+      fontSize: fonts.bodyLarge.fontSize,
       borderBottomWidth: 1,
       borderBottomColor: onBgColor ?? colors.onBackground,
     },
     helperText: {
-      marginLeft: 5,
+      marginLeft: 10,
     },
-
-    container: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginRight: 10,
+    // contentStyle: {
+    //   color: 'red',
+    // },
+    icon: {
+      top: 20,
     },
   })
 
@@ -67,7 +67,8 @@ const TextInputBox = React.forwardRef((props, ref) => {
         keyboardType={keyboardType}
         textContentType={autoFillType}
         multiline={multiline}
-        style={[styles.input]}
+        style={styles.input}
+        // contentStyle={styles.contentStyle}
         secureTextEntry={secureText}
         theme={{
           colors: {
@@ -88,6 +89,8 @@ const TextInputBox = React.forwardRef((props, ref) => {
         backgroundColor={bgColor ?? colors.background}
         placeholderTextColor={onBgColor ?? colors.onBackground}
         iconBackgroundColor={onBgColor ?? colors.onBackground}
+        selectionColor={colors.primaryContainer}
+        cursorColor={colors.primaryContainer}
         error={errorMessage !== ''}
         onFocus={() => {
           if (onFocus) {
@@ -102,6 +105,7 @@ const TextInputBox = React.forwardRef((props, ref) => {
           }
         }}
         // underlineStyle={{ borderWidth: 1, borderColor: colors.onBackground }}
+        // left={icon !== '' ? <LeftNode icon={icon} /> : null}
         left={icon !== ''
           ? (
             <TextInput.Icon
@@ -113,8 +117,10 @@ const TextInputBox = React.forwardRef((props, ref) => {
                 />
               )}
               forceTextInputFocus
+              style={styles.icon}
             />
-          ) : null}
+          )
+          : null}
         // eslint-disable-next-line no-nested-ternary
         right={secureTextEntry
           ? (
@@ -128,6 +134,7 @@ const TextInputBox = React.forwardRef((props, ref) => {
               )}
               onPress={() => setSecureText(!secureText)}
               forceTextInputFocus={false}
+              style={styles.icon}
             />
           ) : (rightIcon !== ''
             ? (
@@ -139,7 +146,8 @@ const TextInputBox = React.forwardRef((props, ref) => {
                     color={colors.primary}
                   />
                 )}
-                onPress={onFocus ? () => onFocus() : null}
+                forceTextInputFocus
+                style={styles.icon}
               />
             ) : null
           )}

@@ -10,7 +10,7 @@ import { Text, useTheme } from 'react-native-paper'
 import { useNavigation, useRoute, CommonActions } from '@react-navigation/native'
 import Autocomplete from 'react-native-autocomplete-input'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { layout, fontSize } from '../../theme'
+import { layout } from '../../theme'
 
 const loadOccupations = async () => {
   const occupationsJSON = await AsyncStorage.getItem('occupation')
@@ -18,10 +18,78 @@ const loadOccupations = async () => {
   return occupations
 }
 
+const Styles = (colors, fonts) => StyleSheet.create({
+  saveView: {
+    flex: 1,
+  },
+  label: {
+    margin: layout.marginLeft,
+  },
+  container: {
+    position: 'relative',
+    flex: 1,
+
+    // Android requires padding to avoid overlapping
+    // with content and autocomplete
+    paddingTop: layout.marginTop,
+    marginLeft: layout.marginLeft,
+    marginEnd: layout.marginRight,
+    backgroundColor: colors.surface,
+
+    // Make space for the default top bar
+    ...Platform.select({
+    // android: {
+    //   marginTop: 25,
+    // },
+      default: {
+        marginTop: 0,
+      },
+    }),
+  },
+  listContainer: {
+    backgroundColor: colors.surface,
+  },
+  itemText: {
+    fontSize: fonts.bodyLarge.fontSize,
+    // margin: 2,
+    paddingBottom: 5,
+    paddingLeft: 5,
+    paddingTop: 5,
+    backgroundColor: colors.surface,
+    color: colors.onSurface,
+  // backgroundColor: colors.blueLight,
+  },
+  // descriptionContainer: {
+  //   // `backgroundColor` needs to be set otherwise the
+  //   // autocomplete input will disappear on text input.
+  //   backgroundColor: '#F5FCFF',
+  //   marginTop: 8,
+  // },
+  infoText: {
+    textAlign: 'center',
+  },
+  autocompleteContainer: {
+  // Hack required to make the autocomplete
+  // work on Andrdoid
+    flex: 1,
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    zIndex: 1,
+  // padding: 5,
+  },
+  textInput: {
+    backgroundColor: colors.primary,
+    // color: colors.onPrimary,
+  },
+})
+
 const Occupation = () => {
-  const { colors } = useTheme()
+  const { colors, fonts } = useTheme()
   const navigation = useNavigation()
   const route = useRoute()
+  const styles = Styles(colors, fonts)
   const [title] = useState(route.params?.title || '')
 
   useLayoutEffect(() => {
@@ -30,73 +98,6 @@ const Occupation = () => {
       title,
     })
   }, [navigation, title])
-
-  const styles = StyleSheet.create({
-    saveView: {
-      flex: 1,
-    },
-    label: {
-      margin: layout.marginLeft,
-    },
-    container: {
-      position: 'relative',
-      flex: 1,
-
-      // Android requires padding to avoid overlapping
-      // with content and autocomplete
-      paddingTop: layout.marginTop,
-      marginLeft: layout.marginLeft,
-      marginEnd: layout.marginRight,
-      backgroundColor: colors.surface,
-
-      // Make space for the default top bar
-      ...Platform.select({
-      // android: {
-      //   marginTop: 25,
-      // },
-        default: {
-          marginTop: 0,
-        },
-      }),
-    },
-    listContainer: {
-      backgroundColor: colors.surface,
-    },
-    itemText: {
-      fontSize: fontSize.middle,
-      // margin: 2,
-      paddingBottom: 5,
-      paddingLeft: 5,
-      paddingTop: 5,
-      backgroundColor: colors.surface,
-      color: colors.onSurface,
-    // backgroundColor: colors.blueLight,
-    },
-    // descriptionContainer: {
-    //   // `backgroundColor` needs to be set otherwise the
-    //   // autocomplete input will disappear on text input.
-    //   backgroundColor: '#F5FCFF',
-    //   marginTop: 8,
-    // },
-    infoText: {
-      textAlign: 'center',
-    },
-    autocompleteContainer: {
-    // Hack required to make the autocomplete
-    // work on Andrdoid
-      flex: 1,
-      left: 0,
-      position: 'absolute',
-      right: 0,
-      top: 0,
-      zIndex: 1,
-    // padding: 5,
-    },
-    textInput: {
-      backgroundColor: colors.primary,
-      // color: colors.onPrimary,
-    },
-  })
 
   const handleSelect = (selectedOccupation) => {
     // pity navigation.goBack() can't include params

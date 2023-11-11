@@ -36,3 +36,11 @@ export const convertHexToRGBA = (hexCode, opacity = 1) => {
 
   return `rgba(${r},${g},${b},${op})`
 }
+
+// Doesn't seem to work as expected
+// To be tested later
+export async function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
+}

@@ -6,9 +6,9 @@ import { Animated, StyleSheet, View } from 'react-native'
 import PropTypes from 'prop-types'
 import Preload from '../../Preload'
 
-const AnimatedSplashScreen = ({
+function AnimatedSplashScreen({
   children, image, resizeMode, bgColor,
-}) => {
+}) {
   const animation = useMemo(() => new Animated.Value(1), [])
   const [isAppReady, setAppReady] = useState(false)
   const [isSplashAnimationComplete, setAnimationComplete] = useState(false)
@@ -74,8 +74,7 @@ const AnimatedSplashScreen = ({
             }}
             source={{ uri: image }}
             onLoadEnd={onImageLoaded}
-            fadeDuration={4000}
-          />
+            fadeDuration={4000} />
         </Animated.View>
       )}
     </View>

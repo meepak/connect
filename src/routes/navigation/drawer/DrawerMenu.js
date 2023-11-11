@@ -14,10 +14,9 @@ import {
 import { useNavigation } from '@react-navigation/native'
 import AvatarOfAuthUser from '../../../components/AvatarOfAuthUser'
 import { UserDataContext } from '../../../context/UserDataContext'
-import { fontSize } from '../../../theme'
 
 const DrawerMenu = (/* {navigation} */) => {
-  const { colors } = useTheme()
+  const { colors, fonts } = useTheme()
   const { userData } = useContext(UserDataContext)
   const navigation = useNavigation()
 
@@ -35,13 +34,13 @@ const DrawerMenu = (/* {navigation} */) => {
     name: {
       marginTop: 5,
       fontWeight: 'bold',
-      fontSize: fontSize.xxxLarge,
+      fontSize: fonts.titleLarge.fontSize,
       color: colors.onBackground,
       paddingHorizontal: 10,
     },
     link: {
       marginTop: 5,
-      fontSize: fontSize.middle,
+      fontSize: fonts.bodyLarge.fontSize,
       color: colors.onSurfaceVariant,
       paddingHorizontal: 10,
     },
@@ -127,8 +126,7 @@ const DrawerMenu = (/* {navigation} */) => {
           icon="gear"
           label="Settings"
           onPress={() => {
-            // Handle sign-out logic here
-            // console.log('lets not put signout at front screen')
+            // console.log('What will you have in settings?')
           }}
         />
       </Drawer.Section>

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   Alert, StyleSheet, View, Linking, useColorScheme,
 } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -13,37 +13,8 @@ import TextInputBox from '../../components/core/TextInputBox'
 import Button from '../../components/core/Button'
 import Logo from '../../components/core/Logo'
 import { firestore, auth } from '../../firebase'
-import { colors, fontSize } from '../../theme'
 import { eulaLink } from '../../config'
 import { isValidEmail } from '../../utils/validation'
-
-const styles = StyleSheet.create({
-  main: {
-    flex: 1,
-    width: '100%',
-  },
-  footerView: {
-    flex: 1,
-    alignItems: 'center',
-    marginBottom: 20,
-    marginTop: 20,
-  },
-  footerText: {
-    fontSize: fontSize.large,
-  },
-  footerLink: {
-    color: colors.blueLight,
-    fontWeight: 'bold',
-    fontSize: fontSize.large,
-  },
-  link: {
-    textAlign: 'center',
-  },
-  eulaLink: {
-    color: colors.blueLight,
-    fontSize: fontSize.middle,
-  },
-})
 
 export default function SignUp() {
   const [fullName, setFullName] = useState('')
@@ -56,17 +27,35 @@ export default function SignUp() {
   const [confirmPasswordError, setConfirmPasswordError] = useState('')
   const [spinner, setSpinner] = useState(false)
   const navigation = useNavigation()
-  const { scheme } = useColorScheme()
+  const { colors, fonts } = useTheme()
 
-  // TODO -- read from theme color instead of colors, and remove colors array
-  const isDark = scheme === 'dark'
-  const colorScheme = {
-    text: isDark ? colors.white : colors.primaryText,
-  }
-
-  useEffect(() => {
-    // console.log('Sign Up screen')
-  }, [])
+  const styles = StyleSheet.create({
+    main: {
+      flex: 1,
+      width: '100%',
+    },
+    footerView: {
+      flex: 1,
+      alignItems: 'center',
+      marginBottom: 20,
+      marginTop: 20,
+    },
+    footerText: {
+      fontSize: fonts.bodyLarge.fontSize,
+    },
+    footerLink: {
+      color: colors.primary,
+      fontWeight: 'bold',
+      fontSize: fonts.bodyLarge.fontSize,
+    },
+    link: {
+      textAlign: 'center',
+    },
+    eulaLink: {
+      color: colors.primary,
+      fontSize: fonts.bodyLarge.fontSize,
+    },
+  })
 
   const onFooterLinkPress = () => {
     navigation.navigate('Sign in')
@@ -162,9 +151,9 @@ export default function SignUp() {
           onPress={() => onRegisterPress()}
         />
         <View style={styles.footerView}>
-          <Text style={[styles.footerText, { color: colorScheme.text }]}>Already got an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Log in</Text></Text>
+          <Text style={styles.footerText}>Already got an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Log in</Text></Text>
         </View>
-        <Text style={[styles.link, { color: colorScheme.text }]} onPress={() => { Linking.openURL(eulaLink) }}>By signing up, you agree to our <Text style={styles.eulaLink}>Terms & Conditions.</Text></Text>
+        <Text style={styles.link} onPress={() => { Linking.openURL(eulaLink) }}>By signing up, you agree to our <Text style={styles.eulaLink}>Terms & Conditions.</Text></Text>
       </KeyboardAwareScrollView>
       <Spinner
         visible={spinner}

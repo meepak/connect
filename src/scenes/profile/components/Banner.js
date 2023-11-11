@@ -42,7 +42,7 @@ const Banner = ({
       right: 10,
       zIndex: 3,
       borderColor: colors.background,
-      borderWidth: 4,
+      borderWidth: 4, // match this with
       borderRadius: 100,
     },
     backButton: {
@@ -61,8 +61,8 @@ const Banner = ({
     },
     userTypeLabelContainer: {
       // top: -19,
-      borderTopWidth: 4,
-      borderBottomWidth: 4,
+      borderTopWidth: 3, // match this
+      borderBottomWidth: 3, // match this
       borderColor: colors.background,
       backgroundColor: colors.tertiaryContainer,
       paddingBottom: 3,

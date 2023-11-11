@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import {
-  Surface, Text, Divider, Chip,
+  Surface, Text, Divider, Chip, useTheme,
 } from 'react-native-paper'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import PropTypes from 'prop-types'
 import Button from '../../components/core/Button'
-import { colors } from '../../theme'
 
-import styles from './styles'
+import Styles from './Styles'
 
 const SelectOccupations = ({
   onOccupationsSelected, question, maxSelect, initialValues,
 }) => {
+  const { colors, fonts } = useTheme()
+  const styles = Styles(fonts)
   const [Occupations, setOccupations] = useState(initialValues)
   const navigation = useNavigation()
   const route = useRoute()

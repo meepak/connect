@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     paddingBottom: 1,
   },
   labelStyle: {
-    // fontSize: fontSize.middle,
+    // update if required
   },
 })
 

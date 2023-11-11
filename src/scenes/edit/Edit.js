@@ -19,44 +19,16 @@ import ScreenTemplate from '../../components/ScreenTemplate'
 import Button from '../../components/core/Button'
 import TextInputBox from '../../components/core/TextInputBox'
 import Checkbox from '../../components/core/Checkbox'
-import { fontSize } from '../../theme'
 import { UserDataContext } from '../../context/UserDataContext'
 import { showToast } from '../../utils/ShowToast'
 import AvatarOfAuthUser from '../../components/AvatarOfAuthUser'
 // import mergeJsonObjects from '../../utils/functions'
 
-const styles = StyleSheet.create({
-  progress: {
-    alignSelf: 'center',
-  },
-  main: {
-    flex: 1,
-    width: '100%',
-  },
-  title: {
-    fontSize: fontSize.xxxLarge,
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  field: {
-    fontSize: fontSize.middle,
-    textAlign: 'center',
-  },
-  avatar: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight,
-    alignSelf: 'center',
-  },
-  changePasswordContainer: {
-    paddingVertical: 30,
-    marginBottom: Platform.OS === 'android' ? 50 : 30,
-  },
-})
-
 export default function Edit() {
-  const { colors } = useTheme()
+  const { colors, fonts } = useTheme()
   const { userData } = useContext(UserDataContext)
   const navigation = useNavigation()
+
   const [fullName, setFullName] = useState(userData.fullName)
   const [phone, setFhone] = useState(userData.phone ?? '')
   const [isOnboarded, setisOnboarded] = useState(userData.isOnboarded)
@@ -66,13 +38,36 @@ export default function Edit() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [spinner, setSpinner] = useState(false)
 
-  // useEffect(() => {
-  //   console.log('Edit screen')
-  // }, [])
+  const styles = StyleSheet.create({
+    progress: {
+      alignSelf: 'center',
+    },
+    main: {
+      flex: 1,
+      width: '100%',
+    },
+    title: {
+      fontSize: fonts.titleMedium.fontSize,
+      marginBottom: 20,
+      textAlign: 'center',
+    },
+    field: {
+      fontSize: fonts.bodyLarge.fontSize,
+      textAlign: 'center',
+    },
+    avatar: {
+      flex: 1,
+      marginTop: StatusBar.currentHeight,
+      alignSelf: 'center',
+    },
+    changePasswordContainer: {
+      paddingVertical: 30,
+      marginBottom: Platform.OS === 'android' ? 50 : 30,
+    },
+  })
 
   const profileUpdate = async () => {
     try {
-      console.log('PROFILE UPDATING********************************')
       setSpinner(true)
       const data = {
         id: userData.id,

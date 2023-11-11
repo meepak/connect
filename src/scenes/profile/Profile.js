@@ -102,6 +102,7 @@ const Profile = () => {
     container: {
       flex: 1,
       marginTop: StatusBar.currentHeight,
+      borderRadius: 20,
       // position: 'relative', // Added for positioning the Avatar
     },
     scrollContent: {

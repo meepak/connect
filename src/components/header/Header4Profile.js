@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import {
-  View, Text, StyleSheet, Alert,
+  View, Text, StyleSheet, Alert, Keyboard,
 } from 'react-native'
 import { useTheme, IconButton, Button } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
@@ -12,35 +12,36 @@ const Header4Profile = ({
   const { colors, fonts } = useTheme()
   const navigation = useNavigation()
 
-  useEffect(
-    () => navigation.addListener('beforeRemove', (e) => {
-      if (!pendingChanges) return
-      const { action } = e.data
-      //   console.log(e.data)
+  useEffect(() => navigation.addListener('beforeRemove', (e) => {
+    if (Keyboard.isVisible()) {
+      Keyboard.dismiss()
+    }
+    if (!pendingChanges) return
+    const { action } = e.data
+    //   console.log(e.data)
 
-      e.preventDefault()
+    e.preventDefault()
 
-      // TODO check for actual unsaved changes
-      // https://reactnavigation.org/docs/preventing-going-back/
+    // TODO check for actual unsaved changes
+    // https://reactnavigation.org/docs/preventing-going-back/
 
-      Alert.alert(
-        'Discard changes?',
-        'You have unsaved changes. Are you sure to discard them and leave the screen?',
-        [
-          { text: "Don't leave", style: 'cancel', onPress: () => {} },
-          {
-            text: 'Discard',
-            style: 'destructive',
-            onPress: () => navigation.dispatch(action),
-          },
-        ],
+    Alert.alert(
+      'Discard changes?',
+      'You have unsaved changes. Are you sure to discard them and leave the screen?',
+      [
+        { text: "Don't leave", style: 'cancel', onPress: () => {} },
         {
-          userInterfaceStyle: 'dark',
+          text: 'Discard',
+          style: 'destructive',
+          onPress: () => navigation.dispatch(action),
         },
-      )
-    }),
-    [navigation],
-  )
+      ],
+      {
+        userInterfaceStyle: 'dark',
+      },
+    )
+  }),
+  [navigation])
 
   const styles = StyleSheet.create({
     header: {
@@ -57,15 +58,16 @@ const Header4Profile = ({
       height: 32,
       marginRight: 10,
       paddingVertical: 0,
-      backgroundColor: colors.primary,
-      color: colors.onPrimary,
+      backgroundColor: colors.primaryContainer,
+      color: colors.onPrimaryContainer,
+      iconColor: colors.onPrimaryContainer,
     },
     saveButtonLabel: {
       fontSize: fonts.bodyMedium.fontSize,
-      color: colors.onPrimary,
+      color: colors.onPrimaryContainer,
       lineHeight: 13,
       height: 12,
-      fontWeight: 'bold',
+      // fontWeight: 'bold',
     },
     headerTitle: {
       fontSize: fonts.headlineSmall.fontSize,
@@ -92,7 +94,7 @@ const Header4Profile = ({
             mode="outlined"
             style={styles.saveButton}
             icon="check"
-            textColor={colors.onPrimary}
+            textColor={colors.onPrimaryContainer}
           ><Text style={styles.saveButtonLabel}>Save</Text>
           </Button>
         )

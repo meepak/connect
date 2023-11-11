@@ -2,30 +2,25 @@ import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import { fontSize } from '../../theme'
 import Button from '../../components/core/Button'
 import { showToast } from '../../utils/ShowToast'
 import ShowSnackbar from '../../components/ShowSnackbar'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  field: {
-    fontSize: fontSize.middle,
-    textAlign: 'center',
-  },
-})
-
 export default function Follower() {
-  const { colors } = useTheme()
+  const { colors, fonts } = useTheme()
   const [visible, setVisible] = useState(false)
 
-  // useEffect(() => {
-  //   console.log('Follower screen')
-  // }, [])
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    field: {
+      fontSize: fonts.bodyLarge.middle,
+      textAlign: 'center',
+    },
+  })
 
   const onDismissSnackBar = () => setVisible(false)
 

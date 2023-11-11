@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Text, Surface, Button } from 'react-native-paper'
+import { Text, Surface, Button, useTheme } from 'react-native-paper'
 import { useRoute, useFocusEffect, useNavigation } from '@react-navigation/native'
-import { colors, fontSize, layout } from 'theme'
+import { layout } from 'theme'
 import moment from 'moment'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ScreenTemplate from '../../components/ScreenTemplate'
@@ -10,7 +10,7 @@ import HomeTitleContext from '../../context/HomeTitleContext'
 // import storage from '../../utils/Storage'
 // TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE
 
-const styles = StyleSheet.create({
+const Styles = (fonts) => StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
@@ -18,12 +18,12 @@ const styles = StyleSheet.create({
     margin: layout.marginLeft,
   },
   title: {
-    fontSize: fontSize.xLarge,
+    fontSize: fonts.titleLarge.fontSize,
     marginBottom: layout.margin,
     textAlign: 'center',
   },
   field: {
-    fontSize: fontSize.middle,
+    fontSize: fonts.bodyLarge.fontSize,
     textAlign: 'center',
   },
   button: {
@@ -32,16 +32,19 @@ const styles = StyleSheet.create({
     width: 250,
   },
   buttonLabel: {
-    fontSize: fontSize.xLarge,
+    fontSize: fonts.bodyLarge.fontSize,
   },
 })
 
 export default function Post() {
   const route = useRoute()
+  const { colors, fonts } = useTheme()
   const { data, from } = route.params
-  const [date, setDate] = useState('')
   const { setTitle } = useContext(HomeTitleContext)
   const navigation = useNavigation()
+  const styles = Styles(fonts)
+  const [date, setDate] = useState('')
+
   const key = 'date'
 
   const loadStorage = async () => {
@@ -57,7 +60,7 @@ export default function Post() {
   }
 
   const saveStorage = () => {
-    const today = moment().toString()
+    // const today = moment().toString()
     // storage.save({
     //   key: 'date',
     //   data: {

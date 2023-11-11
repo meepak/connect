@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import {
-  Surface, Text, Divider, SegmentedButtons,
+  Surface, Text, Divider, SegmentedButtons, useTheme,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import styles from './styles'
+import Styles from './Styles'
 
 const SelectOperationMode = ({
   onBusinessOperationModeChanged, question, initialValue,
 }) => {
+  const { fonts } = useTheme()
+  const styles = Styles(fonts)
   const [answer, setAnswer] = useState(initialValue)
   return (
     <Surface style={styles.card}>

@@ -247,6 +247,7 @@ export default function EditExperience() {
             value={location}
             onFocus={() => {
               navigation.navigate('SelectLocation', {
+                search: employerName ?? '',
                 title: employerName ? `Address of ${employerName}` : 'Employers address',
               })
             }}
