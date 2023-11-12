@@ -24,10 +24,10 @@ const DrawerNavigator = () => {
           marginTop: StatusBar.currentHeight,
         },
       }}
-      initialRouteName="Find"
+      initialRouteName="HOme"
       drawerContent={DrawerMenu}
     >
-      <Drawer.Screen name="Find" component={RootStack} />
+      <Drawer.Screen name="Home" component={RootStack} />
     </Drawer.Navigator>
   )
 }

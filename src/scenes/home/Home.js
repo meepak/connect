@@ -52,7 +52,7 @@ const styles = (colors = null) => StyleSheet.create({
   },
 })
 
-export default function Find() {
+export default function Home() {
   const navigation = useNavigation()
   const [loadingMoreData, setLoadingMoreData] = useState(false)
   const [dataItems, setDataItems] = useState([])

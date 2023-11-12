@@ -50,7 +50,7 @@ const styles = (colors = null) => StyleSheet.create({
   },
 })
 
-export default function FindScratch() {
+export default function HomeScratch() {
   const navigation = useNavigation()
   // const [token, setToken] = useState('')
   // const { userData } = useContext(UserDataContext)

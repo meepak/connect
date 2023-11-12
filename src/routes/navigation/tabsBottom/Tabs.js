@@ -4,7 +4,7 @@ import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navig
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons' // kinda like the material icons in tabss for now, will see later
 import { useTheme } from 'react-native-paper'
 
-import FindStack from '../stacks/FindStack'
+import HomeStack from '../stacks/HomeStack'
 import ManageStack from '../stacks/ManageStack'
 import ChatStack from '../stacks/ChatStack'
 
@@ -54,7 +54,7 @@ const TabNavigator = () => {
   // #endregion
 
   // material icons
-  const icons = { home: 'account-search', manage: 'account-group', chat: 'comment-processing' }
+  const icons = { home: 'home', manage: 'account-group', chat: 'comment-processing' }
   // ionic icons
   // const icons = { home: 'home', manage: 'people', chat: 'chatbox-ellipses' }
   const getTabBarIcon = (focused, tabName) => {
@@ -116,9 +116,9 @@ const TabNavigator = () => {
     >
       <Tab.Screen
         name="HomeTab"
-        component={FindStack}
+        component={HomeStack}
         options={{
-          tabBarLabel: 'Find',
+          tabBarLabel: 'Home',
           tabBarIcon: ({ focused }) => getTabBarIcon(focused, 'HomeTab'),
         }}
       />
