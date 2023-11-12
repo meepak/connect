@@ -24,7 +24,7 @@ const DrawerNavigator = () => {
           marginTop: StatusBar.currentHeight,
         },
       }}
-      initialRouteName="HOme"
+      initialRouteName="Home"
       drawerContent={DrawerMenu}
     >
       <Drawer.Screen name="Home" component={RootStack} />
