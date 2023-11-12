@@ -1,11 +1,12 @@
-import React from 'react'
-import { StyleSheet, SafeAreaView } from 'react-native'
+import React, { useEffect } from 'react'
+import { StyleSheet, SafeAreaView, Keyboard } from 'react-native'
 // import { SafeAreaView } from 'react-native-safe-area-context' // This suppose to work better when there is no header bar
 import { StatusBar } from 'expo-status-bar'
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import PropTypes from 'prop-types'
+import { useNavigation } from '@react-navigation/native'
 import LoadingScreen from './LoadingScreen'
 import ErrorScreen from './ErrorScreen'
 
@@ -22,6 +23,7 @@ const ScreenTemplate = (props) => {
   const {
     isLoading, isError, children, onTouchStart, onTouchEnd,
   } = props
+  const navigation = useNavigation()
 
   if (isError) {
     // console.log('Screen Template received IsError')
@@ -31,6 +33,14 @@ const ScreenTemplate = (props) => {
   if (isLoading) {
     return <LoadingScreen />
   }
+
+  // If keyboard was active in screen remove it
+  useEffect(() => navigation.addListener('beforeRemove', () => {
+    // TODO -- Probably don't need in iOS, test and put condition
+    if (Keyboard.isVisible()) {
+      Keyboard.dismiss()
+    }
+  }))
 
   return (
     <GestureHandlerRootView style={styles.container}>

@@ -135,7 +135,7 @@ export default function EditKeySummary() {
         {/* TODO replace this with FLATLIST for lazy loading */}
         <KeyboardAwareScrollView
           style={styles.content}
-          keyboardShouldPersistTaps="handled"
+          keyboardShouldPersistTaps="never"
         >
 
           <WhoAmI

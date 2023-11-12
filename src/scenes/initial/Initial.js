@@ -28,10 +28,10 @@ export default function Initial() {
     onAuthStateChanged(auth, (user) => {
       // console.log('Initial.js -- Auth state changed')
       if (user) {
-        // console.log('Initial.js -- received user data')
-        if (!user.emailVerified) {
-          Alert.alert('Error', 'Email verification required.') // To Do handle more gracefully
-        }
+        console.log('Initial.js -- received user data')
+        // if (!user.emailVerified) {
+        //   Alert.alert('Error', 'Email verification required.') // To Do handle more gracefully
+        // }
         const usersRef = doc(firestore, 'users', user.uid)
         const unsubscribe = onSnapshot(usersRef, (querySnapshot) => {
           // console.log('Initial.js -- snapshot fired', querySnapshot)

@@ -28,11 +28,17 @@ export default function EditExperience() {
 
   const [position, setPosition] = useState(userData.fullName)
   const [isCurrentJob, setIsCurrentJob] = useState(false)
+
   const [currentDate, setCurrentDate] = useState('')
-  const [startDate, setStartDate] = useState({ month: '', year: 0 })
-  const [endDate, setEndDate] = useState({ month: '', year: 0 })
+  const dateInit = { month: '', year: 0 }
+  const [startDate, setStartDate] = useState(dateInit)
+  const [endDate, setEndDate] = useState(dateInit)
+
   const [dateError, setDateError] = useState()
+
   const [location, setLocation] = useState()
+  const [clearLocation, setClearLocation] = useState(false)
+
   const [employerName, setEmployerName] = useState('')
   const [highlights, setHighlights] = useState()
 
@@ -74,10 +80,12 @@ export default function EditExperience() {
   }, [startDate, endDate])
 
   useEffect(() => {
-    if (route.params.selectedAddress) {
+    if (clearLocation) {
+      setLocation()
+    } else if (route.params.selectedAddress) {
       setLocation(route.params.selectedAddress)
     }
-  }, [route.params?.selectedAddress])
+  }, [route.params?.selectedAddress, clearLocation])
 
   useEffect(() => {
     if (endDateRef.current) {
@@ -154,7 +162,7 @@ export default function EditExperience() {
 
         <KeyboardAwareScrollView
           style={styles.content}
-          keyboardShouldPersistTaps="handled"
+          keyboardShouldPersistTaps="never"
         >
           <View style={styles.row}>
             <View style={{ width: '45%' }}>
@@ -162,13 +170,18 @@ export default function EditExperience() {
                 autoFocus
                 bgColor={colors.surface}
                 onBgColor={colors.onSurface}
-                placeholder="Month-Year"
+                placeholder=""
                 label="Start Date*"
-                value={(startDate.year > 0 && startDate.month) ? `${startDate.month}-${startDate.year}` : ' '}
+                value={(startDate.year > 0 && startDate.month) ? `${startDate.month}-${startDate.year}` : ''}
                 onFocus={() => {
+                  console.log('start date')
                   setDialogTitle('Start Date')
                   setCurrentDate('start')
                   showDialog()
+                }}
+                onClear={() => {
+                  setStartDate(dateInit)
+                  setEndDate(dateInit)
                 }}
                 showKeyboard={false}
                 errorMessage={dateError}
@@ -183,11 +196,16 @@ export default function EditExperience() {
                 onBgColor={colors.onSurface}
                 placeholder={isCurrentJob ? '' : 'Month-Year'}
                 label={isCurrentJob ? '' : 'End Date*'}
-                value={isCurrentJob ? 'Present' : ((endDate.year > 0 && endDate.month) ? `${endDate.month}-${endDate.year}` : ' ')}
+                // eslint-disable-next-line no-nested-ternary
+                value={isCurrentJob ? 'Present' : ((endDate.year > 0 && endDate.month) ? `${endDate.month}-${endDate.year}` : '')}
                 onFocus={() => {
                   setDialogTitle('End Date')
                   setCurrentDate('end')
                   showDialog()
+                }}
+                onClear={() => {
+                  setStartDate(dateInit)
+                  setEndDate(dateInit)
                 }}
                 showKeyboard={false}
                 errorMessage={dateError}
@@ -213,6 +231,7 @@ export default function EditExperience() {
             onChangeText={(text) => setPosition(text)}
             autoCapitalize="words"
             textContentType="telephoneNumber"
+            onClear={() => setPosition()}
           />
 
           <TextInputBox
@@ -223,9 +242,9 @@ export default function EditExperience() {
             placeholder="Your employer name (required)*"
             value={employerName}
             onChangeText={(text) => setEmployerName(text)}
-            multiline
           // onChangeText={(text) => setEmail(text)}
             autoCapitalize="words"
+            onClear={() => setEmployerName()}
           />
 
           <TextInputBox
@@ -250,6 +269,10 @@ export default function EditExperience() {
                 search: employerName ?? '',
                 title: employerName ? `Address of ${employerName}` : 'Employers address',
               })
+              setTimeout(() => setClearLocation(false), 100)
+            }}
+            onClear={() => {
+              setClearLocation(location.length > 0)
             }}
             multiline
             showKeyboard={false}

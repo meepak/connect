@@ -5,7 +5,6 @@ import {
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import Icon from './Icon'
-import { layout } from '../../theme'
 
 const TextInputBox = React.forwardRef((props, ref) => {
   const {
@@ -24,6 +23,7 @@ const TextInputBox = React.forwardRef((props, ref) => {
     icon,
     rightIcon,
     onFocus,
+    onClear, // if this is given, right x icon will be displayed to be handled accordingly
     showKeyboard,
     bgColor,
     onBgColor,
@@ -35,10 +35,6 @@ const TextInputBox = React.forwardRef((props, ref) => {
 
   const styles = StyleSheet.create({
     input: {
-      // marginLeft: layout.marginLeft,
-      // marginRight: layout.marginRight,
-      marginTop: layout.marginTop,
-      marginBottom: layout.marginBottom - 15,
       minHeight: 54,
       paddingTop: 10,
       fontSize: fonts.bodyLarge.fontSize,
@@ -70,6 +66,7 @@ const TextInputBox = React.forwardRef((props, ref) => {
         style={styles.input}
         // contentStyle={styles.contentStyle}
         secureTextEntry={secureText}
+        value={value}
         theme={{
           colors: {
             surfaceVariant: colors.background,
@@ -80,7 +77,6 @@ const TextInputBox = React.forwardRef((props, ref) => {
         onChangeText={onChangeText}
         onEndEditing={onEndEditing}
         onBlur={onBlur}
-        value={value}
         autoCapitalize={autoCapitalize}
         activeUnderlineColor={colors.primary}
         // underlineColor={onBgColor ?? colors.onBackground}
@@ -116,7 +112,7 @@ const TextInputBox = React.forwardRef((props, ref) => {
                   color={colors.primary}
                 />
               )}
-              forceTextInputFocus
+              forceTextInputFocus={false}
               style={styles.icon}
             />
           )
@@ -133,23 +129,40 @@ const TextInputBox = React.forwardRef((props, ref) => {
                 />
               )}
               onPress={() => setSecureText(!secureText)}
-              forceTextInputFocus={false}
+              forceTextInputFocus
               style={styles.icon}
             />
-          ) : (rightIcon !== ''
+          // eslint-disable-next-line no-nested-ternary
+          ) : (value.length > 0 && onClear
             ? (
               <TextInput.Icon
                 icon={() => (
                   <Icon
-                    name={rightIcon}
+                    name="x"
                     size={16}
                     color={colors.primary}
                   />
                 )}
-                forceTextInputFocus
+                onPress={() => onClear()}
+                forceTextInputFocus={false}
                 style={styles.icon}
               />
-            ) : null
+            )
+            : (rightIcon !== ''
+              ? (
+                <TextInput.Icon
+                  icon={() => (
+                    <Icon
+                      name={rightIcon}
+                      size={16}
+                      color={colors.primary}
+                    />
+                  )}
+                  forceTextInputFocus
+                  style={styles.icon}
+                />
+              )
+              : null)
           )}
       />
       <HelperText
@@ -179,6 +192,7 @@ TextInputBox.propTypes = {
   icon: PropTypes.string,
   rightIcon: PropTypes.string,
   onFocus: PropTypes.func,
+  onClear: PropTypes.func,
   showKeyboard: PropTypes.bool,
   bgColor: PropTypes.string,
   onBgColor: PropTypes.string,
@@ -200,6 +214,7 @@ TextInputBox.defaultProps = {
   icon: '',
   rightIcon: '',
   onFocus: null,
+  onClear: null,
   showKeyboard: true,
   bgColor: null,
   onBgColor: null,

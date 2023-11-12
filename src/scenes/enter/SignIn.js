@@ -2,40 +2,62 @@ import React, {
   useState, // useRef,
 } from 'react'
 import {
-  Alert, View, StyleSheet, LogBox,
+  View, StyleSheet, LogBox, StatusBar,
 } from 'react-native'
-import { Text, useTheme } from 'react-native-paper'
+import { Text, useTheme, Button } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { doc, getDoc } from 'firebase/firestore'
 import Spinner from 'react-native-loading-spinner-overlay'
 import { useNavigation } from '@react-navigation/native'
-import { signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
+import { signOut, signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
 import { firestore, auth } from '../../firebase'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import Button from '../../components/core/Button'
+// import Button from '../../components/core/Button'
 import TextInputBox from '../../components/core/TextInputBox'
-import Logo from '../../components/core/Logo'
+// import Logo from '../../components/core/Logo'
 import { isValidEmail } from '../../utils/validation'
 // import { UserDataContext } from '../../context/UserDataContext'
+import SocialButtons from './social'
+import TextAndLink from '../../components/TextAndLink'
 
 const Styles = (colors, fonts) => StyleSheet.create({
   main: {
     flex: 1,
     width: '100%',
+    marginTop: StatusBar.currentHeight,
+    backgroundColor: colors.background,
   },
-  footerView: {
-    flex: 1,
-    alignItems: 'center',
+  title: {
+    fontSize: fonts.displaySmall.fontSize,
+    marginLeft: 20,
+    marginTop: 40,
     marginBottom: 20,
-    marginTop: 20,
   },
-  footerText: {
+  submitButton: {
+    backgroundColor: colors.primaryContainer,
+    color: colors.onPrimaryContainer,
+    marginHorizontal: 40,
+  },
+  submitButtonText: {
+    color: colors.onPrimaryContainer,
+  },
+  text: {
     fontSize: fonts.bodyLarge.fontSize,
   },
-  footerLink: {
-    color: colors.primary,
-    fontWeight: 'bold',
-    fontSize: fonts.bodyLarge.fontSize,
+  socialButton: {
+    // backgroundColor: colors.primaryContainer,
+    color: colors.onPrimaryContainer,
+    marginHorizontal: 40,
+    marginBottom: 20,
+  },
+  socialButtonText: {
+    color: colors.onPrimaryContainer,
+  },
+  footer: {
+    marginBottom: 15,
+  },
+  verificatonView: {
+    marginHorizontal: 20,
   },
 })
 
@@ -47,20 +69,19 @@ LogBox.ignoreLogs(['Setting a timer'])
 export default function Login() {
   const navigation = useNavigation()
   const { colors, fonts } = useTheme()
-  const [email, setEmail] = useState('meepak@gmail.com')
+  const [email, setEmail] = useState()
   const [emailError, setEmailError] = useState('')
-  const [password, setPassword] = useState('qwerty')
+  const [password, setPassword] = useState()
   const [passwordError, setPasswordError] = useState('')
   const [spinner, setSpinner] = useState(false)
   const styles = Styles(colors, fonts)
 
-  const onFooterLinkPress = () => {
+  const gotoSignup = () => {
     navigation.navigate('Sign up')
   }
 
   const onSendVerificationLinkPress = async () => {
     await sendEmailVerification(auth.currentUser)
-    Alert.alert('Info', 'Email verification link sent.')
   }
 
   const onLoginPress = async () => {
@@ -90,6 +111,8 @@ export default function Login() {
       // valiation ends
 
       setSpinner(true)
+      // sign out and sign in again
+      signOut(auth)
       const response = await signInWithEmailAndPassword(auth, email, password)
       const { user } = response
       const usersRef = doc(firestore, 'users', user.uid)
@@ -126,17 +149,27 @@ export default function Login() {
     <ScreenTemplate>
       <KeyboardAwareScrollView
         style={styles.main}
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps="never"
         // enableOnAndroid
       >
-        <Logo />
+        <Text style={styles.title}>Sign in</Text>
 
         {auth.currentUser && !auth.currentUser.emailVerified
           ? (
-            <View style={styles.footerView}>
-              <Text style={styles.footerText}>Email Address is not verified.</Text>
-              <Text onPress={onSendVerificationLinkPress} style={styles.footerLink}>Send Verification Email</Text>
-            </View>
+            <>
+              <View style={styles.verificatonView}>
+                <Text style={styles.text}>Thank you for signing up!</Text>
+                <Text style={styles.text}>Verification email is sent to {auth.currentUser.email}</Text>
+                <Text style={styles.text}>Please follow the email to proceed.</Text>
+                <TextAndLink
+                  text="Can't find the email? Please check spam folders or"
+                  link="Resend Verification Email"
+                  onPress={() => onSendVerificationLinkPress()}
+                  marginTop={10}
+                  alignSelf="flex-start"
+                />
+              </View>
+            </>
           ) : <></>}
         <TextInputBox
           icon="mail"
@@ -154,6 +187,7 @@ export default function Login() {
             }
             setEmailError(error)
           }}
+          onClear={() => setEmail()}
         />
         <TextInputBox
           icon="lock"
@@ -169,34 +203,33 @@ export default function Login() {
             }
           }}
         />
+
+        <TextAndLink
+          text="Forgot password?"
+          link="Reset"
+          onPress={() => gotoSignup()}
+          marginTop={0}
+          marginBottom={30}
+        />
+
         <Button
-          label="Log in"
           onPress={() => onLoginPress()}
-        />
-        <View style={styles.footerView}>
-          <Text style={styles.footerText}>
-            Don&apos;t have an account?
-            <Text onPress={onFooterLinkPress} style={styles.footerLink}>
-              &nbsp;Sign up
-            </Text>
-          </Text>
-          <Text>OR</Text>
-        </View>
+          mode="contained"
+          style={styles.submitButton}
+          icon="rocket"
+          textColor={colors.onPrimaryContainer}
+        >
+          <Text style={styles.submitButtonText}>Log in</Text>
+        </Button>
 
-        <Button
-          label="Sign in with LinkedIn"
-          onPress={() => {}}
-        />
-
-        <Button
-          label="Sign in with Google"
-          onPress={() => {}}
+        <TextAndLink
+          text="Don&apos;t have an account?"
+          link="Sign up"
+          onPress={() => gotoSignup()}
+          marginTop={30}
         />
 
-        <Button
-          label="Sign in with Facebook"
-          onPress={() => {}}
-        />
+        <SocialButtons label="Sign in" />
 
       </KeyboardAwareScrollView>
       <Spinner

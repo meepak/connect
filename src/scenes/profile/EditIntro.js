@@ -26,7 +26,7 @@ export default function EditIntro() {
   const { colors, fonts } = useTheme()
 
   const { userData } = useContext(UserDataContext)
-  const [fullName, setFulName] = useState(userData.fullName)
+  const [fullName, setFullName] = useState(userData.fullName)
   const [fullNameError, setFullNameError] = useState('')
   const [nickName, setNickName] = useState('')
   const [nickNameError, setNickNameError] = useState('')
@@ -120,7 +120,7 @@ export default function EditIntro() {
         />
         <KeyboardAwareScrollView
           style={styles.content}
-          keyboardShouldPersistTaps="handled"
+          keyboardShouldPersistTaps="never"
         >
 
           <TextInputBox
@@ -136,7 +136,7 @@ export default function EditIntro() {
             errorMessage={fullNameError}
             onChangeText={(name) => {
               let error = ''
-              setFulName(name)
+              setFullName(name)
               error = !isValidName(name)
               error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
               setFullNameError(error)

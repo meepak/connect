@@ -8,6 +8,7 @@ import { Text, TouchableRipple, useTheme } from 'react-native-paper'
 import { CommonActions, useNavigation, useRoute } from '@react-navigation/native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import { layout } from '../../theme'
+import ScreenTemplate from '../../components/ScreenTemplate'
 
 // TODO -- geolocation autocomplete
 const SelectLocation = () => {
@@ -28,7 +29,7 @@ const SelectLocation = () => {
   }, [navigation, title])
 
   useEffect(() => {
-    const delay = Platform.OS === 'android' ? 100 : 0
+    const delay = Platform.OS === 'android' ? 100 : 500
     setTimeout(() => {
       if (inputRef.current) {
         inputRef.current.setAddressText('')
@@ -117,7 +118,7 @@ const SelectLocation = () => {
   }
 
   return (
-    <>
+    <ScreenTemplate>
       {
         title === ''
           ? <Text style={styles.label}>Please select location.</Text>
@@ -147,7 +148,7 @@ const SelectLocation = () => {
           language: 'en',
         }}
       />
-    </>
+    </ScreenTemplate>
   )
 }
 

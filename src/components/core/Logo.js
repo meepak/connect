@@ -3,7 +3,7 @@ import {
   Image, StyleSheet, useColorScheme,
 } from 'react-native'
 import PropTypes from 'prop-types'
-
+import imageAssets from '../../theme/images'
 const styles = StyleSheet.create({
   logo: {
     flex: 1,
@@ -22,8 +22,8 @@ export default function Logo({ style }) {
       style={newStyle} // Merge default styles with the provided style prop
       source={
         scheme === 'dark'
-          ? require('../../../assets/images/fa_white.png')
-          : require('../../../assets/images/fa_black.png')
+          ? imageAssets.logo_white
+          : imageAssets.logo_black
       }
     />
   )

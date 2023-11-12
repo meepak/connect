@@ -94,7 +94,7 @@ export default function EditExperiences() {
 
         <KeyboardAwareScrollView
           style={styles.content}
-          keyboardShouldPersistTaps="handled"
+          keyboardShouldPersistTaps="never"
         >
           {/* Empty space at bottom of page */}
           <View style={styles.footer} />

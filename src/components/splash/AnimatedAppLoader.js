@@ -5,18 +5,25 @@ import PropTypes from 'prop-types'
 import AnimatedSplashScreen from './AnimatedSplashScreen'
 
 const AnimatedAppLoader = ({
-  children, image, resizeMode, bgColor,
+  children, isDark, resizeMode, bgColor,
 }) => {
+  // console.log('In AnimatedAppLoader')
   const [isSplashReady, setSplashReady] = useState(false)
+  const splashImage = isDark
+    ? require('../../../assets/images/splash-black.png')
+    : require('../../../assets/images/splash-white.png')
   useEffect(() => {
     async function prepare() {
+      // console.log('In AnimatedAppLoader loading images')
       // I reckon I should pass this from local later on..
-      await Asset.fromURI(image).downloadAsync()
+      // await Asset.fromURI(image).downloadAsync()
+      // eslint-disable-next-line import/no-dynamic-require
+      await Asset.fromModule(splashImage)
       setSplashReady(true)
     }
 
     prepare()
-  }, [image])
+  }, [isDark])
 
   if (!isSplashReady) {
     return null
@@ -24,7 +31,7 @@ const AnimatedAppLoader = ({
 
   return (
     <AnimatedSplashScreen
-      image={image}
+      image={splashImage}
       resizeMode={resizeMode}
       bgColor={bgColor}
     >
@@ -36,10 +43,7 @@ const AnimatedAppLoader = ({
 AnimatedAppLoader.propTypes = {
   children: PropTypes.node.isRequired,
   // image can be string or number
-  image: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
+  isDark: PropTypes.bool.isRequired,
   resizeMode: PropTypes.string.isRequired,
   bgColor: PropTypes.string.isRequired,
 }

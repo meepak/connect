@@ -127,7 +127,7 @@ export default function Edit() {
     <ScreenTemplate>
       <KeyboardAwareScrollView
         style={styles.main}
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps="never"
         // enableOnAndroid
         stickyHeaderIndices={[0]} // IMPORTANT THIS WILL PROVIDE WITH STICKY HEADER EASILY
         stickyHeaderHiddenOnScroll // IMPORTANT THIS WILL PROVIDE WITH STICKY HEADER EASILY

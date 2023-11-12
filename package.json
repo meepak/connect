@@ -29,12 +29,12 @@
     "expo-asset": "~8.10.1",
     "expo-constants": "^14.4.2",
     "expo-font": "~11.4.0",
-    "expo-haptics": "^12.6.0",
+    "expo-haptics": "~12.4.0",
     "expo-image-manipulator": "~11.3.0",
     "expo-image-picker": "~14.3.2",
-    "expo-linear-gradient": "^12.5.0",
+    "expo-linear-gradient": "~12.3.0",
     "expo-notifications": "~0.20.1",
-    "expo-splash-screen": "^0.22.0",
+    "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "expo-system-ui": "~2.4.0",
     "expo-updates": "~0.18.17",
@@ -64,6 +64,7 @@
     "react-native-tab-view": "^3.1.1",
     "react-native-toast-message": "^2.1.5",
     "react-native-vector-icons": "^9.2.0",
+    "react-native-webview": "^13.6.2",
     "react-native-wheel-picker-expo": "^0.5.4"
   },
   "resolutions": {

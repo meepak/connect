@@ -39,7 +39,7 @@ const Profile = () => {
   } = route.params
   const { userData } = useContext(UserDataContext)
 
-  const [bannerImage, setBannerImage] = useState(userBannerImage?.uri ? userBannerImage.uri : null)
+  const [bannerImage, setBannerImage] = useState(userBannerImage?.uri ? userBannerImage : null)
   const [spinner, setSpinner] = useState(false)
   const [showAddSectionMenu, setShowAddSectionMenu] = useState(false)
 
@@ -122,14 +122,6 @@ const Profile = () => {
 
   })
 
-  useEffect(() => {
-    if (showAddSectionMenu) {
-      console.log('opening the menu...')
-    } else {
-      console.log('menu is being closed...')
-    }
-  }, [showAddSectionMenu])
-
   return (
     <ScreenTemplate>
       <View style={styles.container}>
@@ -143,7 +135,7 @@ const Profile = () => {
             // TODO: Convert this to flatlist for performance
             <KeyboardAwareScrollView
               style={styles.scrollContent}
-              keyboardShouldPersistTaps="handled"
+              keyboardShouldPersistTaps="never"
               stickyHeaderIndices={[0]}
               stickyHeaderHiddenOnScroll
             >

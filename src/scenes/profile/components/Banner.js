@@ -10,9 +10,7 @@ import AvatarOfAuthUser from '../../../components/AvatarOfAuthUser'
 import PencilIconButton from '../../../components/PencilIconButton'
 import ImageSelectAndUpload from '../../../utils/ImageSelectAndUpload'
 import { convertHexToRGBA } from '../../../utils/functions'
-
-// TODO find better default bannner Image
-const defaultBannerImage = { uri: 'https://images.pexels.com/photos/818261/pexels-photo-818261.jpeg?auto=compress&cs=tinysrgb&w=400' }
+import imageAssets from '../../../theme/images'
 
 const Banner = ({
   editMode,
@@ -26,7 +24,7 @@ const Banner = ({
 }) => {
   const { colors, fonts } = useTheme()
   const navigation = useNavigation()
-  const finalBannerImage = { uri: bannerImage ?? defaultBannerImage }
+  const finalBannerImage = bannerImage || imageAssets.default_banner
 
   const styles = StyleSheet.create({
     banner: {
@@ -121,12 +119,17 @@ const Banner = ({
 
 Banner.propTypes = {
   editMode: PropTypes.bool.isRequired,
-  bannerImage: PropTypes.string.isRequired,
+  bannerImage: PropTypes.string,
   userId: PropTypes.string.isRequired,
-  userAvatar: PropTypes.string.isRequired,
+  userAvatar: PropTypes.string,
   userFullName: PropTypes.string.isRequired,
   onBanerEdited: PropTypes.func.isRequired,
   onAvatarEdited: PropTypes.func.isRequired,
+}
+
+Banner.defaultProps = {
+  bannerImage: null,
+  userAvatar: null,
 }
 
 export default Banner

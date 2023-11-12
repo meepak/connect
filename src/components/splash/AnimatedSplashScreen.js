@@ -9,12 +9,15 @@ import Preload from '../../Preload'
 function AnimatedSplashScreen({
   children, image, resizeMode, bgColor,
 }) {
+  // console.log('In AnimatedSplashScreen')
   const animation = useMemo(() => new Animated.Value(1), [])
   const [isAppReady, setAppReady] = useState(false)
   const [isSplashAnimationComplete, setAnimationComplete] = useState(false)
 
   useEffect(() => {
+    // console.log('In AnimatedSplashScreen, is App ready????')
     if (isAppReady) {
+      // console.log('In AnimatedSplashScreen, yes app is ready and its starting animation now??')
       Animated.timing(animation, {
         toValue: 0,
         duration: 1000,
@@ -28,7 +31,7 @@ function AnimatedSplashScreen({
       await SplashScreen.hideAsync()
       // Load stuff
       await Preload()
-      await Promise.all([])
+      // await Promise.all([])
     } catch (e) {
       // handle errors
       console.log(`APP PRELOADING ERROR - ${e}`)
@@ -72,9 +75,10 @@ function AnimatedSplashScreen({
                 },
               ],
             }}
-            source={{ uri: image }}
+            source={image}
             onLoadEnd={onImageLoaded}
-            fadeDuration={4000} />
+            fadeDuration={4000}
+          />
         </Animated.View>
       )}
     </View>

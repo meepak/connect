@@ -217,7 +217,7 @@ const Chat = () => {
   return (
     <ScreenTemplate>
       <GiftedChat
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps="never"
         messages={messages}
         text={cText}
         onInputTextChanged={setcText}

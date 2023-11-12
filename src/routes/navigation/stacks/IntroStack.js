@@ -2,7 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import Intro from '../../../scenes/intro'
-import LoginStack from './LoginStack'
+import EnterStack from './EnterStack'
 
 const Stack = createStackNavigator()
 
@@ -14,8 +14,8 @@ const IntroStack = () => (
     />
 
     <Stack.Screen
-      name="LoginStack"
-      component={LoginStack}
+      name="EnterStack"
+      component={EnterStack}
     />
   </Stack.Navigator>
 )

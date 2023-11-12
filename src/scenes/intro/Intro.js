@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native'
 import AppIntroSlider from 'react-native-app-intro-slider'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import Logo from '../../components/core/Logo'
+import imageAssets from '../../theme/images'
 
 // TODO get colors from theme
 const Styles = (colors, fonts) => StyleSheet.create({
@@ -123,19 +124,19 @@ const slides = [
     key: 's1',
     title: 'DISCOVER',
     text: 'Discovery is the first step to innovation and success. Embrace the journey of finding new opportunities.',
-    image: require('../../../assets/images/discover.png'),
+    image: imageAssets.intro1,
   },
   {
     key: 's2',
     title: 'CONNECT',
     text: 'In the world of business, finding the right associate can be the key to unlocking your full potential.',
-    image: require('../../../assets/images/connection.png'),
+    image: imageAssets.intro2,
   },
   {
     key: 's3',
     title: 'THRIVE',
     text: 'Discover, Connect, and watch your business thrive with the perfect partner by your side.',
-    image: require('../../../assets/images/thrive.png'),
+    image: imageAssets.intro3,
     // image: {
     //   uri:
     //         'https://raw.githubusercontent.com/AboutReact/sampleresource/master/intro_discount.png',
@@ -177,13 +178,13 @@ const Intro = () => {
   [])
 
   const onDone = () => {
-    navigation.navigate('LoginStack', {
+    navigation.navigate('EnterStack', {
       screen: 'Sign up',
     })
   }
 
   const onSkip = () => {
-    navigation.navigate('LoginStack', {
+    navigation.navigate('EnterStack', {
       screen: 'Sign in',
     })
   }

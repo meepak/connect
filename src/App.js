@@ -49,9 +49,10 @@ const App = () => {
   // console.log(image)
   // rendering
   // if (!didLoad) return <LoadingScreen />
+  // console.log('App.js loaded')
   return (
     <AnimatedAppLoader
-      image={isDark ? Constants.expoConfig.splash.imageBlack : Constants.expoConfig.splash.imageWhite}
+      isDark={isDark}
       // image={Constants.expoConfig.splash.imageSvg}
       // image={image}
       resizeMode={Constants.expoConfig.splash.resizeMode || 'contain'}

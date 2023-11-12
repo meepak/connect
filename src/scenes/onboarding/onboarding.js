@@ -95,7 +95,7 @@ export default function Onboarding() {
     <ScreenTemplate>
       <KeyboardAwareScrollView
         style={styles.main}
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps="never"
         // enableOnAndroid
       >
 
