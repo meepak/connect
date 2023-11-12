@@ -9,14 +9,19 @@ import Styles from './Styles'
 const operationModes = ['Investor', 'Active partner', 'Advisory partner']
 
 const SelectPartnerTypes = ({
-  onPartnerTypesChanged, question, initialValues,
+  onPartnerTypesChanged, question, initialValues, error, onLayout,
 }) => {
-  const { fonts } = useTheme()
-  const styles = Styles(fonts)
+  const { colors, fonts } = useTheme()
+  const styles = Styles(colors, fonts)
   return (
-    <Surface style={styles.card}>
+    <Surface style={styles.card} onLayout={onLayout}>
       <Text style={styles.question}>
         {question || 'What type of partner(s) are you looking for?'}
+        {
+        error
+          ? <Text style={styles.error}> *Required</Text>
+          : null
+        }
       </Text>
 
       <Divider style={styles.divider} />
@@ -43,11 +48,14 @@ SelectPartnerTypes.propTypes = {
   question: PropTypes.string,
   onPartnerTypesChanged: PropTypes.func.isRequired,
   initialValues: PropTypes.arrayOf(PropTypes.string),
+  error: PropTypes.bool,
+  onLayout: PropTypes.func.isRequired,
 }
 
 SelectPartnerTypes.defaultProps = {
   question: null,
   initialValues: [],
+  error: false,
 }
 
 export default SelectPartnerTypes

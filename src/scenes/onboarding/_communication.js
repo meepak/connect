@@ -9,14 +9,19 @@ import Styles from './Styles'
 const CommunicationPreferences = ['Chat', 'Email', 'Phone call', 'Online meeting', 'In-person meeting']
 
 const SelectCommunicationPreference = ({
-  onCommunicationPreferenceChanged, initialValues,
+  onCommunicationPreferenceChanged, initialValues, error, onLayout,
 }) => {
-  const { fonts } = useTheme()
-  const styles = Styles(fonts)
+  const { colors, fonts } = useTheme()
+  const styles = Styles(colors, fonts)
   return (
-    <Surface style={styles.card}>
+    <Surface style={styles.card} onLayout={onLayout}>
       <Text style={styles.question}>
         How do you prefer to communicate?
+        {
+        error
+          ? <Text style={styles.error}> *Required</Text>
+          : null
+        }
       </Text>
       <Divider style={styles.divider} />
       <CheckboxGroup
@@ -39,10 +44,13 @@ const SelectCommunicationPreference = ({
 SelectCommunicationPreference.propTypes = {
   onCommunicationPreferenceChanged: PropTypes.func.isRequired,
   initialValues: PropTypes.arrayOf(PropTypes.string),
+  error: PropTypes.bool,
+  onLayout: PropTypes.func.isRequired,
 }
 
 SelectCommunicationPreference.defaultProps = {
   initialValues: [],
+  error: false,
 }
 
 export default SelectCommunicationPreference

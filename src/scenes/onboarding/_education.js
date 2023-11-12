@@ -18,43 +18,52 @@ const educationLevels = [
 ]
 
 const SelectEducation = ({
-  onEducationChanged, question, initialValue,
+  onEducationChanged, question, initialValue, error, onLayout,
 }) => {
-  const { fonts } = useTheme()
-  const styles = Styles(fonts)
+  const { colors, fonts } = useTheme()
+  const styles = Styles(colors, fonts)
   return (
-  <Surface style={styles.card}>
+    <Surface style={styles.card} onLayout={onLayout}>
 
-    <Text style={styles.question}>
-      { question || 'What is the minimum education level you seek in a partner?' }
-    </Text>
+      <Text style={styles.question}>
+        { question || 'What is the minimum education level you seek in a partner?' }
+        {
+        error
+          ? <Text style={styles.error}> *Required</Text>
+          : null
+        }
+      </Text>
 
-    <Divider style={styles.divider} />
+      <Divider style={styles.divider} />
 
-    <RadioButtonGroup
-      reverse
-      items={educationLevels.map((stage, index) => ({
-        id: index + 1,
-        text: stage,
-        value: stage,
-        checked: initialValue === stage,
-      }))}
-      onChecked={(value) => {
-        onEducationChanged(value)
-      }}
-    />
-  </Surface>
-)}
+      <RadioButtonGroup
+        reverse
+        items={educationLevels.map((stage, index) => ({
+          id: index + 1,
+          text: stage,
+          value: stage,
+          checked: initialValue === stage,
+        }))}
+        onChecked={(value) => {
+          onEducationChanged(value)
+        }}
+      />
+    </Surface>
+  )
+}
 
 SelectEducation.propTypes = {
   question: PropTypes.string,
   onEducationChanged: PropTypes.func.isRequired,
   initialValue: PropTypes.string,
+  error: PropTypes.bool,
+  onLayout: PropTypes.func.isRequired,
 }
 
 SelectEducation.defaultProps = {
   question: null,
   initialValue: '',
+  error: false,
 }
 
 export default SelectEducation

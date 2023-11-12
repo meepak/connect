@@ -95,6 +95,7 @@ const Occupation = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
+      headerTintColor: colors.onBackground,
       title,
     })
   }, [navigation, title])

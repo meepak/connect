@@ -4,7 +4,7 @@ import React, {
 import {
   StyleSheet, View, Platform,
 } from 'react-native'
-import { Text, TouchableRipple, useTheme } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 import { CommonActions, useNavigation, useRoute } from '@react-navigation/native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import { layout } from '../../theme'
@@ -104,16 +104,14 @@ const SelectLocation = () => {
     const main = rowData.structured_formatting.main_text
     const secondary = rowData.structured_formatting.secondary_text
     return (
-      <TouchableRipple rippleColor={colors.primary}>
-        <View style={styles.row}>
-          <Text style={styles.rowText1}>
-            {main}
-          </Text>
-          <Text style={styles.rowText2}>
-            {secondary}
-          </Text>
-        </View>
-      </TouchableRipple>
+      <View style={styles.row}>
+        <Text style={styles.rowText1}>
+          {main}
+        </Text>
+        <Text style={styles.rowText2}>
+          {secondary}
+        </Text>
+      </View>
     )
   }
 

@@ -40,7 +40,7 @@ const ScreenTemplate = (props) => {
     if (Keyboard.isVisible()) {
       Keyboard.dismiss()
     }
-  }))
+  }), [navigation])
 
   return (
     <GestureHandlerRootView style={styles.container}>

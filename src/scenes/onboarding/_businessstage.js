@@ -18,15 +18,20 @@ const businessStages = [
 ]
 
 const SelectBusinessStage = ({
-  onBusinessStageChanged, question, allSelect, initialValues,
+  onBusinessStageChanged, question, allSelect, initialValues, error, onLayout,
 }) => {
-  const { fonts } = useTheme()
-  const styles = Styles(fonts)
+  const { colors, fonts } = useTheme()
+  const styles = Styles(colors, fonts)
   return (
-    <Surface style={styles.card}>
+    <Surface style={styles.card} onLayout={onLayout}>
 
       <Text style={styles.question}>
         {question || 'What stage is your business in?'}
+        {
+        error
+          ? <Text style={styles.error}> *Required</Text>
+          : null
+        }
       </Text>
 
       <Divider style={styles.divider} />
@@ -72,12 +77,15 @@ SelectBusinessStage.propTypes = {
   allSelect: PropTypes.bool,
   onBusinessStageChanged: PropTypes.func.isRequired,
   initialValues: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
+  error: PropTypes.bool,
+  onLayout: PropTypes.func.isRequired,
 }
 
 SelectBusinessStage.defaultProps = {
   question: null,
   allSelect: false,
   initialValues: null,
+  error: false,
 }
 
 export default SelectBusinessStage

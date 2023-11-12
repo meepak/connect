@@ -11,7 +11,7 @@ const PencilIconButton = ({
   return (
     <IconButton
       icon="pencil"
-      size={20}
+      size={22}
       iconColor={colors.onBackground}
       style={{
         position: 'absolute',
@@ -19,8 +19,8 @@ const PencilIconButton = ({
         right,
         backgroundColor,
         borderRadius: 20,
-        width: 30,
-        height: 30,
+        width: 33,
+        height: 33,
       }}
       onPress={onPress}
     />

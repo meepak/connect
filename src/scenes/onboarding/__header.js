@@ -12,8 +12,8 @@ import Styles from './Styles'
 const ScreenHeader = ({
   fullName, onAvatarChanged,
 }) => {
-  const { fonts } = useTheme()
-  const styles = Styles(fonts)
+  const { colors, fonts } = useTheme()
+  const styles = Styles(colors, fonts)
   return (
     <>
       <View style={styles.headerContainer}>

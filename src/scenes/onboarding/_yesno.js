@@ -6,16 +6,21 @@ import PropTypes from 'prop-types'
 import Styles from './Styles'
 
 const SelectYesNo = ({
-  OnYesNoSelected, question, initialValue,
+  OnYesNoSelected, question, initialValue, error, onLayout,
 }) => {
-  const { fonts } = useTheme()
-  const styles = Styles(fonts)
+  const { colors, fonts } = useTheme()
+  const styles = Styles(colors, fonts)
   const [answer, setAnswer] = useState(initialValue)
   return (
-    <Surface style={styles.card}>
+    <Surface style={styles.card} onLayout={onLayout}>
 
       <Text style={styles.question}>
         {question}
+        {
+        error
+          ? <Text style={styles.error}> *Required</Text>
+          : null
+        }
       </Text>
 
       <Divider style={styles.divider} />
@@ -51,10 +56,13 @@ SelectYesNo.propTypes = {
   question: PropTypes.string.isRequired,
   OnYesNoSelected: PropTypes.func.isRequired,
   initialValue: PropTypes.string,
+  error: PropTypes.bool,
+  onLayout: PropTypes.func.isRequired,
 }
 
 SelectYesNo.defaultProps = {
   initialValue: null,
+  error: false,
 }
 
 export default SelectYesNo

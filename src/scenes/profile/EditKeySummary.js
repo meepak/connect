@@ -54,7 +54,7 @@ export default function EditKeySummary() {
   const [workArrangementPreference, setWorkArrangementPreference] = useState(userData.workArrangementPreference ?? '')
   const [communicationPreference, setCommunicationPreference] = useState(userData.communicationPreference ?? '')
   const [partnerTypes, setPartnerTypes] = useState(userData.partnerTypes ?? [])
-  const [education, setEducation] = useState(userData.education ?? [])
+  const [education, setEducation] = useState(userData.education ?? '')
   const [occupations, setOccupations] = useState(userData.occupations ?? [])
   const [ndaSign, setNdaSign] = useState(userData.ndaSign ?? '')
   const [requireBackgroundCheck, setRequireBackgroundCheck] = useState(userData.requireBackgroundCheck ?? '')

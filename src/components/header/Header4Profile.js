@@ -13,9 +13,9 @@ const Header4Profile = ({
   const navigation = useNavigation()
 
   useEffect(() => navigation.addListener('beforeRemove', (e) => {
-    if (Keyboard.isVisible()) {
-      Keyboard.dismiss()
-    }
+    // if (Keyboard.isVisible()) { // covered in ScreenTemplate ??
+    //   Keyboard.dismiss()
+    // }
     if (!pendingChanges) return
     const { action } = e.data
     //   console.log(e.data)

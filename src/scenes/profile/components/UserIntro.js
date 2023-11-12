@@ -41,6 +41,7 @@ const UserIntro = (
         ? (
           <PencilIconButton
             right={-10}
+            bgColor={colors.background}
             onPress={() => {
               navigation.navigate('ProfileStack', {
                 screen: 'EditIntro',

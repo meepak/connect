@@ -8,16 +8,21 @@ import RadioButtonGroup from '../../components/core/RadioButtonGroup'
 import Styles from './Styles'
 
 const WhoAmI = ({
-  onWhoAmIChanged, initialValue, disabled,
+  onWhoAmIChanged, initialValue, disabled, error, onLayout,
 }) => {
-  const { fonts } = useTheme()
-  const styles = Styles(fonts)
+  const { colors, fonts } = useTheme()
+  const styles = Styles(colors, fonts)
 
   return (
-    <Surface style={styles.card}>
+    <Surface style={styles.card} onLayout={onLayout}>
 
       <Text style={styles.question}>
         What describes you best?
+        {
+        error
+          ? <Text style={styles.error}> *Required</Text>
+          : null
+        }
       </Text>
       <Divider style={styles.divider} />
       <RadioButtonGroup
@@ -50,11 +55,14 @@ WhoAmI.propTypes = {
   onWhoAmIChanged: PropTypes.func.isRequired,
   initialValue: PropTypes.string,
   disabled: PropTypes.bool,
+  error: PropTypes.bool,
+  onLayout: PropTypes.func.isRequired,
 }
 
 WhoAmI.defaultProps = {
   initialValue: '',
   disabled: false,
+  error: false,
 }
 
 export default WhoAmI

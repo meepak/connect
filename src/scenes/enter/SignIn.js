@@ -216,10 +216,10 @@ export default function Login() {
           onPress={() => onLoginPress()}
           mode="contained"
           style={styles.submitButton}
-          icon="rocket"
+          icon="sign-in"
           textColor={colors.onPrimaryContainer}
         >
-          <Text style={styles.submitButtonText}>Log in</Text>
+          <Text style={styles.submitButtonText}>Sign in</Text>
         </Button>
 
         <TextAndLink

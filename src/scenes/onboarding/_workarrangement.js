@@ -6,16 +6,21 @@ import PropTypes from 'prop-types'
 import Styles from './Styles'
 
 const SelectWorkArrangementPreference = ({
-  onWorkArrangementPreferenceChanged, initialValue,
+  onWorkArrangementPreferenceChanged, initialValue, error, onLayout,
 }) => {
-  const { fonts } = useTheme()
-  const styles = Styles(fonts)
+  const { colors, fonts } = useTheme()
+  const styles = Styles(colors, fonts)
   const [answer, setAnswer] = useState(initialValue)
 
   return (
-    <Surface style={styles.card}>
+    <Surface style={styles.card} onLayout={onLayout}>
       <Text style={styles.question}>
         How do you prefer to work?
+        {
+        error
+          ? <Text style={styles.error}> *Required</Text>
+          : null
+        }
       </Text>
 
       <Divider style={styles.divider} />
@@ -49,10 +54,13 @@ const SelectWorkArrangementPreference = ({
 SelectWorkArrangementPreference.propTypes = {
   onWorkArrangementPreferenceChanged: PropTypes.func.isRequired,
   initialValue: PropTypes.string,
+  error: PropTypes.bool,
+  onLayout: PropTypes.func.isRequired,
 }
 
 SelectWorkArrangementPreference.defaultProps = {
   initialValue: '',
+  error: false,
 }
 
 export default SelectWorkArrangementPreference

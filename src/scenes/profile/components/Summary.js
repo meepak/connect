@@ -30,6 +30,7 @@ const Summary = (
             <PencilIconButton
               top={-10}
               right={-10}
+              bgColor={colors.surface}
               onPress={() => {
                 navigation.navigate('EditKeySummary', {
                   screen: 'EditKeySummary',

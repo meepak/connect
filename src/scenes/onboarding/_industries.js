@@ -20,14 +20,19 @@ const industries = [
 ]
 
 const SelectIndustries = ({
-  maxSelect, onChecked, question, initialValues,
+  maxSelect, onChecked, question, initialValues, error, onLayout,
 }) => {
-  const { fonts } = useTheme()
-  const styles = Styles(fonts)
+  const { colors, fonts } = useTheme()
+  const styles = Styles(colors, fonts)
   return (
-    <Surface style={styles.card}>
+    <Surface style={styles.card} onLayout={onLayout}>
       <Text style={styles.question}>
         {question || `Select up to ${maxSelect} related industries.`}
+        {
+        error
+          ? <Text style={styles.error}> *Required</Text>
+          : null
+        }
       </Text>
       <Divider style={styles.divider} />
       <CheckboxGroup
@@ -51,11 +56,14 @@ SelectIndustries.propTypes = {
   maxSelect: PropTypes.number.isRequired,
   onChecked: PropTypes.func.isRequired,
   initialValues: PropTypes.arrayOf(PropTypes.string),
+  error: PropTypes.bool,
+  onLayout: PropTypes.func.isRequired,
 }
 
 SelectIndustries.defaultProps = {
   question: null,
   initialValues: [],
+  error: false,
 }
 
 export default SelectIndustries

@@ -1,13 +1,13 @@
 import React, {
-  useState, useContext, // useRef,
+  useState, useContext, useRef,
 } from 'react'
-import { Alert } from 'react-native'
-import { useTheme } from 'react-native-paper'
+import { Alert, ScrollView } from 'react-native'
+import { useTheme, Button, Text } from 'react-native-paper'
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Spinner from 'react-native-loading-spinner-overlay'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import Button from '../../components/core/Button'
+// import Button from '../../components/core/Button'
 import { firestore } from '../../firebase'
 import { UserDataContext } from '../../context/UserDataContext'
 
@@ -29,31 +29,156 @@ import Styles from './Styles'
 // import mergeJsonObjects from '../../utils/functions'
 
 export default function Onboarding() {
-  const { colors, fonts } = useTheme()
+  const ref = useRef(null)
   const { userData } = useContext(UserDataContext)
-  const styles = Styles(fonts)
+  const { colors, fonts } = useTheme()
+  const styles = Styles(colors, fonts)
 
   const [avatar, setAvatar] = useState(userData.avatar)
   const [fullName] = useState(userData.fullName)
   const [phone] = useState(userData.phone ?? '')
   const [spinner, setSpinner] = useState(false)
+
   // Onboarding data
   const [whoAmI, setWhoAmI] = useState(userData.whoAmI ?? '')
-  const [industries, setIndustries] = useState(userData.industries ?? [])
-  const [businessStage, setBusinessStage] = useState(userData.businessStage ?? '')
-  const [operationMode, setOperationMode] = useState(userData.operationMode ?? '')
-  const [location, setLocation] = useState(userData.location ?? '')
-  const [workArrangementPreference, setWorkArrangementPreference] = useState(userData.workArrangementPreference ?? '')
-  const [communicationPreference, setCommunicationPreference] = useState(userData.communicationPreference ?? '')
-  const [partnerTypes, setPartnerTypes] = useState(userData.partnerTypes ?? [])
-  const [education, setEducation] = useState(userData.education ?? [])
-  const [occupations, setOccupations] = useState(userData.occupations ?? [])
-  const [ndaSign, setNdaSign] = useState(userData.ndaSign ?? '')
-  const [requireBackgroundCheck, setRequireBackgroundCheck] = useState(userData.requireBackgroundCheck ?? '')
-  const [agreesBackgroundCheck, setAgreesBackgroundCheck] = useState(userData.agreesBackgroundCheck ?? '')
+  const [whoAmIError, setWhoAmIError] = useState(false)
 
+  const [industries, setIndustries] = useState(userData.industries ?? [])
+  const [industriesError, setIndustriesError] = useState(false)
+
+  const [businessStage, setBusinessStage] = useState(userData.businessStage ?? '')
+  const [businessStageError, setBusinessStageError] = useState(false)
+
+  const [operationMode, setOperationMode] = useState(userData.operationMode ?? '')
+  const [operationModeError, setOperationModeError] = useState(false)
+
+  const [location, setLocation] = useState(userData.location ?? '')
+  const [locationError, setLocationError] = useState(false)
+
+  const [workArrangementPreference, setWorkArrangementPreference] = useState(userData.workArrangementPreference ?? '')
+  const [workArrangementPreferenceError, setWorkArrangementPreferenceError] = useState(false)
+
+  const [communicationPreference, setCommunicationPreference] = useState(userData.communicationPreference ?? [])
+  const [communicationPreferenceError, setCommunicationPreferenceError] = useState(false)
+
+  const [partnerTypes, setPartnerTypes] = useState(userData.partnerTypes ?? [])
+  const [partnerTypesError, setPartnerTypesError] = useState(false)
+
+  const [education, setEducation] = useState(userData.education ?? '')
+  const [educationError, setEducationError] = useState(false)
+
+  const [occupations, setOccupations] = useState(userData.occupations ?? [])
+  const [occupationError, setOccupationError] = useState(false)
+
+  const [ndaSign, setNdaSign] = useState(userData.ndaSign ?? '')
+  const [ndaSignError, setNdaSignError] = useState(false)
+
+  const [requireBackgroundCheck, setRequireBackgroundCheck] = useState(userData.requireBackgroundCheck ?? '')
+  const [requireBackgroundCheckError, setRequireBackgroundCheckError] = useState(false)
+
+  const [agreesBackgroundCheck, setAgreesBackgroundCheck] = useState(userData.agreesBackgroundCheck ?? '')
+  const [agreeBackgroundCheckError, setAgreesBackgroundCheckError] = useState(false)
+
+  const [coordinates, setCoordinates] = useState([])
+  const validate = () => {
+    setWhoAmIError(false)
+    if (whoAmI.length === 0) {
+      setWhoAmIError(true)
+      return false
+    }
+    setIndustriesError(false)
+    if (industries.length === 0) {
+      setIndustriesError(true)
+      ref.current.scrollTo({ x: 10, y: coordinates.industries, animated: true })
+      return false
+    }
+    setBusinessStageError(false)
+    if (businessStage.length === 0) {
+      setBusinessStageError(true)
+      ref.current.scrollTo({ x: 10, y: coordinates.businessStage, animated: true })
+      return false
+    }
+
+    setOperationModeError(false)
+    if (operationMode.length === 0) {
+      setOperationModeError(true)
+      ref.current.scrollTo({ x: 10, y: coordinates.operationMode, animated: true })
+      return false
+    }
+
+    setLocationError(false)
+    if (location.length === 0) {
+      setLocationError(true)
+      ref.current.scrollTo({ x: 10, y: coordinates.location, animated: true })
+      return false
+    }
+
+    setWorkArrangementPreferenceError(false)
+    if (workArrangementPreference.length === 0) {
+      setWorkArrangementPreferenceError(true)
+      ref.current.scrollTo({ x: 10, y: coordinates.workArrangementPreference, animated: true })
+      return false
+    }
+
+    setCommunicationPreferenceError(false)
+    if (communicationPreference.length === 0) {
+      setCommunicationPreferenceError(true)
+      ref.current.scrollTo({ x: 10, y: coordinates.communicationPreference, animated: true })
+      return false
+    }
+
+    setPartnerTypesError(false)
+    if (partnerTypes.length === 0) {
+      setPartnerTypesError(true)
+      ref.current.scrollTo({ x: 10, y: coordinates.partnerTypes, animated: true })
+      return false
+    }
+
+    setEducationError(false)
+    if (education.length === 0) {
+      setEducationError(true)
+      ref.current.scrollTo({ x: 10, y: coordinates.education, animated: true })
+      return false
+    }
+
+    setOccupationError(false)
+    console.log('hello ', occupations, coordinates.occupations)
+    if (occupations.length === 0) {
+      setOccupationError(true)
+      ref.current.scrollTo({ x: 10, y: coordinates.occupations, animated: true })
+      return false
+    }
+
+    setNdaSignError(false)
+    if (ndaSign.length === 0) {
+      setNdaSignError(true)
+      ref.current.scrollTo({ x: 10, y: coordinates.ndaSign, animated: true })
+      return false
+    }
+
+    setRequireBackgroundCheckError(false)
+    if (requireBackgroundCheck.length === 0) {
+      setRequireBackgroundCheckError(true)
+      ref.current.scrollTo({ x: 10, y: coordinates.requireBackgroundCheck, animated: true })
+      return false
+    }
+
+    setAgreesBackgroundCheckError(false)
+    if (agreesBackgroundCheck.length === 0) {
+      setAgreesBackgroundCheckError(true)
+      ref.current.scrollTo({ x: 10, y: coordinates.agreesBackgroundCheck, animated: true })
+      return false
+    }
+
+    // all good
+    return true
+  }
   const profileUpdate = async () => {
     setSpinner(true)
+    if (!validate()) {
+      setSpinner(false)
+      return
+    }
     try {
       const data = {
         id: userData.id,
@@ -93,10 +218,10 @@ export default function Onboarding() {
 
   return (
     <ScreenTemplate>
-      <KeyboardAwareScrollView
+      <ScrollView
         style={styles.main}
         keyboardShouldPersistTaps="never"
-        // enableOnAndroid
+        ref={ref}
       >
 
         <Header
@@ -106,7 +231,9 @@ export default function Onboarding() {
 
         <WhoAmI
           onWhoAmIChanged={(item) => setWhoAmI(item)}
-          initialValue={userData.whoAmI}
+          initialValue={whoAmI}
+          error={whoAmIError}
+          onLayout={(event) => setCoordinates({ ...coordinates, whoAmI: event.nativeEvent.layout.y })}
         />
 
         {whoAmI === 'founder'
@@ -114,69 +241,93 @@ export default function Onboarding() {
             <>
               <SelectIndustries
                 maxSelect={3}
-                initialValues={userData.industries}
+                initialValues={industries}
                 onChecked={(values) => {
                   setIndustries(values)
                 }}
+                error={industriesError}
+                onLayout={(event) => setCoordinates({ ...coordinates, industries: event.nativeEvent.layout.y })}
               />
 
               <SelectBusinessStage
-                initialValues={userData.businessStage}
+                initialValues={businessStage}
                 onBusinessStageChanged={(item) => { setBusinessStage(item) }}
+                error={businessStageError}
+                onLayout={(event) => setCoordinates({ ...coordinates, businessStage: event.nativeEvent.layout.y })}
               />
 
               <SelectOperationMode
-                initialValue={userData.operationMode}
+                initialValue={operationMode}
                 onBusinessOperationModeChanged={(item) => { setOperationMode(item) }}
+                error={operationModeError}
+                onLayout={(event) => setCoordinates({ ...coordinates, operationMode: event.nativeEvent.layout.y })}
               />
 
               <SelectLocation
-                initialValue={userData.location}
+                initialValue={location}
                 onBusinessLocationChanged={(item) => { setLocation(item) }}
+                error={locationError}
+                onLayout={(event) => setCoordinates({ ...coordinates, location: event.nativeEvent.layout.y })}
               />
 
               <SelectWorkArrangementPreference
-                initialValue={userData.workArrangementPreference}
+                initialValue={workArrangementPreference}
                 onWorkArrangementPreferenceChanged={(item) => { setWorkArrangementPreference(item) }}
+                error={workArrangementPreferenceError}
+                onLayout={(event) => setCoordinates({ ...coordinates, workArrangementPreference: event.nativeEvent.layout.y })}
               />
 
               <SelectCommunicationPreference
-                initialValues={userData.communicationPreference}
+                initialValues={communicationPreference}
                 onCommunicationPreferenceChanged={(item) => { setCommunicationPreference(item) }}
+                error={communicationPreferenceError}
+                onLayout={(event) => setCoordinates({ ...coordinates, communicationPreference: event.nativeEvent.layout.y })}
               />
 
               <SelectPartnerTypes
-                initialValues={userData.partnerTypes}
+                initialValues={partnerTypes}
                 onPartnerTypesChanged={(item) => { setPartnerTypes(item) }}
+                error={partnerTypesError}
+                onLayout={(event) => setCoordinates({ ...coordinates, partnerTypes: event.nativeEvent.layout.y })}
               />
 
               <SelectOccupations
-                initialValues={userData.occupations}
+                initialValues={occupations}
                 question="Do you have any preferences on occupational skills background of your partner?"
                 onOccupationsSelected={(items) => { setOccupations(items) }}
+                error={occupationError}
+                onLayout={(event) => setCoordinates({ ...coordinates, occupations: event.nativeEvent.layout.y })}
               />
 
               <SelectEducation
-                initialValue={userData.education}
+                initialValue={education}
                 onEducationChanged={(item) => { setEducation(item) }}
+                error={educationError}
+                onLayout={(event) => setCoordinates({ ...coordinates, education: event.nativeEvent.layout.y })}
               />
 
               <SelectYesNo
-                initialValue={userData.ndaSign}
+                initialValue={ndaSign}
                 OnYesNoSelected={(item) => { setNdaSign(item) }}
                 question="Will you ask to sign NDA?"
+                error={ndaSignError}
+                onLayout={(event) => setCoordinates({ ...coordinates, ndaSign: event.nativeEvent.layout.y })}
               />
 
               <SelectYesNo
-                initialValue={userData.requireBackgroundCheck}
+                initialValue={requireBackgroundCheck}
                 OnYesNoSelected={(item) => { setRequireBackgroundCheck(item) }}
                 question="Will you ask for references & background check?"
+                error={requireBackgroundCheckError}
+                onLayout={(event) => setCoordinates({ ...coordinates, requireBackgroundCheck: event.nativeEvent.layout.y })}
               />
 
               <SelectYesNo
-                initialValue={userData.agreesBackgroundCheck}
+                initialValue={agreesBackgroundCheck}
                 OnYesNoSelected={(item) => { setAgreesBackgroundCheck(item) }}
                 question="If requested, will you provide references & consent to background check?"
+                error={agreeBackgroundCheckError}
+                onLayout={(event) => setCoordinates({ ...coordinates, agreesBackgroundCheck: event.nativeEvent.layout.y })}
               />
 
             </>
@@ -187,72 +338,101 @@ export default function Onboarding() {
             <>
               <SelectIndustries
                 maxSelect={5}
-                initialValues={userData.industries}
+                initialValues={industries}
                 question="Select up to 5 industries you are interested in."
                 onChecked={(values) => {
                   setIndustries(values)
                 }}
+                error={industriesError}
+                onLayout={(event) => setCoordinates({ ...coordinates, industries: event.nativeEvent.layout.y })}
               />
 
               <SelectBusinessStage
                 allSelect
-                initialValues={userData.businessStage}
+                initialValues={businessStage}
                 question="What stage of business are you most interested in?"
                 onBusinessStageChanged={(item) => { setBusinessStage(item) }}
+                error={businessStageError}
+                onLayout={(event) => setCoordinates({ ...coordinates, businessStage: event.nativeEvent.layout.y })}
               />
 
               <SelectOperationMode
-                initialValue={userData.operationMode}
+                initialValue={operationMode}
                 question="Do you prefer business that operates online and/or offline?"
                 onBusinessOperationModeChanged={(item) => { setOperationMode(item) }}
+                error={operationModeError}
+                onLayout={(event) => setCoordinates({ ...coordinates, operationMode: event.nativeEvent.layout.y })}
               />
 
               <SelectPartnerTypes
-                initialValues={userData.partnerTypes}
+                initialValues={partnerTypes}
                 question="What kind of role are you looking to take on?"
                 onPartnerTypesChanged={(item) => { setPartnerTypes(item) }}
+                error={partnerTypesError}
+                onLayout={(event) => setCoordinates({ ...coordinates, partnerTypes: event.nativeEvent.layout.y })}
               />
 
               <SelectWorkArrangementPreference
-                initialValue={userData.workArrangementPreference}
+                initialValue={workArrangementPreference}
                 onWorkArrangementPreferenceChanged={(item) => { setWorkArrangementPreference(item) }}
+                error={workArrangementPreferenceError}
+                onLayout={(event) => setCoordinates({ ...coordinates, workArrangementPreference: event.nativeEvent.layout.y })}
+              />
+
+              <SelectCommunicationPreference
+                initialValues={communicationPreference}
+                onCommunicationPreferenceChanged={(item) => { setCommunicationPreference(item) }}
+                error={communicationPreferenceError}
+                onLayout={(event) => setCoordinates({ ...coordinates, communicationPreference: event.nativeEvent.layout.y })}
               />
 
               <SelectLocation
-                initialValue={userData.location}
+                initialValue={location}
                 question="Do you have specific preference on business location? If so, select city/country."
                 onBusinessLocationChanged={(item) => { setLocation(item) }}
+                error={locationError}
+                onLayout={(event) => setCoordinates({ ...coordinates, location: event.nativeEvent.layout.y })}
               />
 
               <SelectOccupations
-                initialValues={userData.occupations}
+                initialValues={occupations}
                 question="Select your occupational skills background."
                 maxSelect={5}
                 onOccupationsSelected={(items) => { setOccupations(items) }}
+                error={occupationError}
+                onLayout={(event) => setCoordinates({ ...coordinates, occupations: event.nativeEvent.layout.y })}
               />
 
               <SelectEducation
-                initialValue={userData.education}
+                initialValue={education}
                 question="What is your highest educational qualification?"
                 onEducationChanged={(item) => { setEducation(item) }}
+                error={educationError}
+                onLayout={(event) => setCoordinates({ ...coordinates, education: event.nativeEvent.layout.y })}
               />
 
               <SelectYesNo
-                initialValue={userData.requireBackgroundCheck}
+                initialValue={requireBackgroundCheck}
                 OnYesNoSelected={(item) => { setRequireBackgroundCheck(item) }}
                 question="Will you ask for references & background check?"
+                error={requireBackgroundCheckError}
+                onLayout={(event) => setCoordinates({ ...coordinates, requireBackgroundCheck: event.nativeEvent.layout.y })}
               />
 
               <SelectYesNo
-                initialValue={userData.ndaSign}
+                initialValue={ndaSign}
                 OnYesNoSelected={(item) => { setNdaSign(item) }}
                 question="If requested, will you sign NDA?"
+                error={ndaSignError}
+                onLayout={(event) => setCoordinates({ ...coordinates, ndaSign: event.nativeEvent.layout.y })}
               />
 
               <SelectYesNo
-                initialValue={userData.agreesBackgroundCheck}
+                initialValue={agreesBackgroundCheck}
                 OnYesNoSelected={(item) => { setAgreesBackgroundCheck(item) }}
                 question="If requested, will you provide references & consent to background check?"
+                error={agreeBackgroundCheckError}
+                onLayout={(event) => setCoordinates({ ...coordinates, agreesBackgroundCheck: event.nativeEvent.layout.y })}
               />
 
             </>
@@ -260,18 +440,16 @@ export default function Onboarding() {
           : <></>}
 
         <Button
-          label="Let's Go!"
-          color={colors.primary}
-          onPress={profileUpdate}
-        />
-        {/* <Button
-          label="Simulate Error"
-          color={colors.secondary}
-          onPress={() => {
-            block1.current.scrollIntoView({ behavior: 'smooth' })
-          }}
-        /> // tried with forward ref, didn't work, retry again */}
-      </KeyboardAwareScrollView>
+          onPress={() => profileUpdate()}
+          mode="contained"
+          style={styles.submitButton}
+          icon="rocket"
+          textColor={colors.onPrimaryContainer}
+        >
+          <Text style={styles.submitButtonText}>Let&apos;s Go!</Text>
+        </Button>
+
+      </ScrollView>
       <Spinner
         visible={spinner}
         textStyle={{ color: colors.onBackground }}

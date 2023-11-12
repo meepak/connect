@@ -200,7 +200,7 @@ const SignUp = () => {
           onPress={() => onRegisterPress()}
           mode="contained"
           style={styles.submitButton}
-          icon="rocket"
+          icon="diff-added"
           textColor={colors.onPrimaryContainer}
         >
           <Text style={styles.submitButtonText}>Create account</Text>
@@ -208,7 +208,7 @@ const SignUp = () => {
 
         <TextAndLink
           text="Already got an account?"
-          link="Log in"
+          link="Sign in"
           onPress={() => gotoSignin()}
           marginTop={30}
           marginBottom={30}
