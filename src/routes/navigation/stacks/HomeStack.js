@@ -1,63 +1,38 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useTheme } from 'react-native-paper'
-import { createStackNavigator } from '@react-navigation/stack'
-import HomeTitleContext from '../../../context/HomeTitleContext'
-// import { lightProps, darkProps } from '../../navigationProps'
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import HeaderStyle from '../../../components/header/HeaderStyle'
-import Header from '../../../components/header/Header'
 
 import Home from '../../../scenes/home'
 import Detail from '../../../scenes/detail'
-// import Profile from '../../../scenes/profile'
+import Search from '../../../scenes/search'
 
 const Stack = createStackNavigator()
 
 const HomeStack = () => {
   const { colors } = useTheme()
-  // const navigationProps = scheme === 'dark' ? darkProps : lightProps
-  const [title, setTitle] = useState('default title')
   return (
-    <HomeTitleContext.Provider
-      value={{
-        title,
-        setTitle,
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardOverlayEnabled: false,
       }}
     >
-      <HomeTitleContext.Consumer>
-        {(ctx) => (
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Home"
-              component={Home}
-              options={(/* { navigation } */) => ({
-                headerBackground: () => <HeaderStyle />,
-                headerTitle: () => (
-                  <Header />
-                ),
-              })}
-            />
-            {/* <Stack.Screen
-              name="Profile"
-              component={Profile}
-              options={{
-                title: ctx.title,
-                headerBackground: () => <HeaderStyle />,
-              }}
-            /> */}
-            <Stack.Screen
-              name="Detail"
-              component={Detail}
-              options={{
-                title: ctx.title,
-                headerBackground: () => <HeaderStyle />,
-                headerTintColor: colors.onBackground,
+      <Stack.Screen
+        name="Home"
+        component={Home}
+      />
 
-              }}
-            />
-          </Stack.Navigator>
-        )}
-      </HomeTitleContext.Consumer>
-    </HomeTitleContext.Provider>
+      <Stack.Screen
+        name="Detail"
+        component={Detail}
+        options={{
+          headerBackground: () => <HeaderStyle />,
+          headerTintColor: colors.onBackground,
+
+        }}
+      />
+    </Stack.Navigator>
   )
 }
 

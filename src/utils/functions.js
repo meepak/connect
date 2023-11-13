@@ -18,6 +18,7 @@ export const mergeJsonObjects = (obj1, obj2) => {
 }
 
 export const convertHexToRGBA = (hexCode, opacity = 1) => {
+  if (hexCode === undefined || hexCode === null) return null
   let hex = hexCode.replace('#', '')
 
   if (hex.length === 3) {

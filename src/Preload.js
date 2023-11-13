@@ -50,5 +50,5 @@ export default async function Preload() {
   // if imageAssets can't be resolved due to key, do object.vaues(imageAssets)
   await storeData()
   // additional simulated delay
-  await new Promise((resolve) => setTimeout(resolve, 5000))
+  await new Promise((resolve) => setTimeout(resolve, 2000))
 }

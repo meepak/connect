@@ -1,5 +1,5 @@
 import React, {
-  useContext, useEffect, useState,
+  useContext, useState,
 } from 'react'
 import {
   Alert, View, StyleSheet, StatusBar,

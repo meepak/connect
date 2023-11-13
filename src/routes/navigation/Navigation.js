@@ -8,7 +8,7 @@ import { toastConfig } from '../../utils/ShowToast'
 import { auth } from '../../firebase'
 import IntroStack from './stacks/IntroStack'
 import OnboardingStack from './stacks/OnboardingStack'
-import DrawerNavigator from './drawer'
+import RootStack from './stacks/RootStack'
 
 export default function Navigation() {
   const { userData } = useContext(UserDataContext)
@@ -17,7 +17,7 @@ export default function Navigation() {
   const getMainComponent = () => {
     if (auth.currentUser && auth.currentUser.emailVerified && userData) {
       console.log('NAVIGATION userData is on boarded??', userData.isOnboarded)
-      return userData.isOnboarded ? <DrawerNavigator /> : <OnboardingStack />
+      return userData.isOnboarded ? <RootStack /> : <OnboardingStack />
     }
     return <IntroStack />
   }

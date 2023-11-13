@@ -107,6 +107,8 @@ export default function EditKeySummary() {
     } catch (e) {
       // TODO: navigate to error screen, log errors for later debugging
       Alert.alert('Error', e.message)
+
+      setSpinner(false)
     }
 
     setSpinner(false)

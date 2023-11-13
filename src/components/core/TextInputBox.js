@@ -63,6 +63,7 @@ const TextInputBox = React.forwardRef((props, ref) => {
         keyboardType={keyboardType}
         textContentType={autoFillType}
         multiline={multiline}
+        verticalAlign="bottom"
         style={styles.input}
         // contentStyle={styles.contentStyle}
         secureTextEntry={secureText}
@@ -84,7 +85,6 @@ const TextInputBox = React.forwardRef((props, ref) => {
         textColor={onBgColor ?? colors.onBackground}
         backgroundColor={bgColor ?? colors.background}
         placeholderTextColor={onBgColor ?? colors.onBackground}
-        iconBackgroundColor={onBgColor ?? colors.onBackground}
         selectionColor={colors.primaryContainer}
         cursorColor={colors.primaryContainer}
         error={errorMessage !== ''}
@@ -148,8 +148,9 @@ const TextInputBox = React.forwardRef((props, ref) => {
                 style={styles.icon}
               />
             )
-            : (rightIcon !== ''
-              ? (
+            : (rightIcon === ''
+              ? null
+              : (
                 <TextInput.Icon
                   icon={() => (
                     <Icon
@@ -161,8 +162,7 @@ const TextInputBox = React.forwardRef((props, ref) => {
                   forceTextInputFocus
                   style={styles.icon}
                 />
-              )
-              : null)
+              ))
           )}
       />
       <HelperText

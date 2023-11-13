@@ -2,24 +2,78 @@ import React, {
   useState, useCallback, useEffect, useContext,
 } from 'react'
 import {
-  ActivityIndicator, StyleSheet, View, FlatList,
+  ActivityIndicator, StyleSheet, View, FlatList, StatusBar, ScrollView,
 } from 'react-native'
-import { Button, Text, useTheme } from 'react-native-paper'
+import {
+  Badge,
+  IconButton, Text, useTheme,
+} from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 
 import {
   collection, addDoc, query, orderBy, where, getDocs, limit, startAfter, serverTimestamp, doc, updateDoc,
 } from 'firebase/firestore'
 import Spinner from 'react-native-loading-spinner-overlay'
+import { KeyboardAwareScrollView, KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import { firestore } from '../../firebase'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import ListItemUser from '../../components/ListItemUser'
 import { UserDataContext } from '../../context/UserDataContext'
+import AvatarOfAuthUser from '../../components/AvatarOfAuthUser'
+import Button from '../../components/core/Button'
+import generateDummyData from './DummyData'
 
-const styles = (colors = null) => StyleSheet.create({
-  main: {
+const Styles = (colors, fonts) => StyleSheet.create({
+  scrollContentView: {
     flex: 1,
+    marginTop: StatusBar.currentHeight,
+  },
+  headerContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginLeft: 10,
+    marginTop: 5,
+    // borderWidth: 1,
+    // borderColor: 'red',
+    zIndex: 1,
+  },
+  iconsRow: {
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    alignSelf: 'flex-end',
+  },
+  badge: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+  hi: {
+    marginLeft: 20,
+    marginVertical: 5,
+    fontSize: fonts.headlineLarge.fontSize,
+    fontWeight: 700,
+  },
+
+  searchButton: {
     width: '100%',
+    backgroundColor: colors.secondaryContainer,
+    color: colors.onSecondaryContainer,
+    borderRadius: 7,
+    textAlign: 'left',
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
+  searchButtonText: {
+    color: colors.onSecondaryContainer,
+    alignSelf: 'flex-start',
   },
   title: {
     fontSize: 18,
@@ -42,13 +96,15 @@ const styles = (colors = null) => StyleSheet.create({
     bottom: 0,
   },
   appBar: {
-    backgroundColor: colors.elevation.level3,
+    backgroundColor: colors.background,
     color: colors.onBackground,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 10,
+    // paddingRight: 20,
     paddingBottom: 10,
     zIndex: 99,
-    height: 50,
+    height: 75,
+    borderWidth: 1,
+    borderColor: 'red',
   },
 })
 
@@ -56,7 +112,8 @@ export default function Home() {
   const navigation = useNavigation()
   const [loadingMoreData, setLoadingMoreData] = useState(false)
   const [dataItems, setDataItems] = useState([])
-  const { colors } = useTheme()
+  const { colors, fonts } = useTheme()
+  const styles = Styles(colors, fonts)
   const { userData } = useContext(UserDataContext)
   const [spinner, setSpinner] = useState(false)
   const [lastFetchedData, setLastFetchedData] = useState(null)
@@ -134,7 +191,11 @@ export default function Home() {
     if (dataItems.length > 0) {
       setDataItems((prevDataItems) => [...prevDataItems, ...newDataItems])
     } else {
-      setDataItems(newDataItems)
+      // append with dummy data
+      const dummyItems = generateDummyData(1, 100)
+      // console.log(dummyItems)
+      // setDataItems(newDataItems)
+      setDataItems(() => [...newDataItems, ...dummyItems])
     }
     setSpinner(false)
   }
@@ -216,35 +277,108 @@ export default function Home() {
       fetchData()
       setLoadingMoreData(false)
     }
-    // setSpinner(false)
+    setSpinner(false)
   }, [])
+
+  const openSettings = () => {
+    // console.log(`Lets go to notification window -- ${tempNotificationSimulation}`)
+    navigation.navigate('NotificationStack', {
+      screen: 'Connect',
+    })
+  }
+
+  const openNotifications = () => {
+    // console.log(`Lets go to notification window -- ${tempNotificationSimulation}`)
+    navigation.navigate('NotificationStack', {
+      screen: 'Connect',
+    })
+  }
+
+  const openSearch = () => {
+    // console.log(`Lets go to notification window -- ${tempNotificationSimulation}`)
+    navigation.navigate('SearchStack', {
+      screen: 'Search',
+    })
+  }
+
+  const openProfile = () => {
+    // console.log('Lets go to profile')
+    navigation.navigate('ProfileStack', {
+      screen: 'Profile',
+      params: { // userId, userFullName, userAvatar, userBannerImage,
+        userId: userData.id,
+        userFullName: userData.fullName,
+        userAvatar: userData.avatar,
+        userBannerImage: { uri: userData.bannerImage },
+      },
+    })
+  }
+
+  const renderHeader = () => (
+    <>
+      <View style={styles.headerContainer}>
+        <AvatarOfAuthUser
+          size={45}
+          onPress={() => openProfile()}
+        />
+        <IconButton
+          icon="gear"
+          color={colors.onBackground}
+          size={24}
+          onPress={() => openSettings()}
+        />
+      </View>
+      <Text style={styles.hi}>Hi {userData.fullName.split(' ')[0]}</Text>
+
+      <Button
+        onPress={() => openSearch()}
+        mode="contained"
+        style={styles.searchButton}
+        icon="search"
+        iconSize={18}
+        label="&nbsp;&nbsp;Search"
+        backgroundColor={colors.elevation.level3}
+        color={colors.onSecondaryContainer}
+        alignLabel="flex-start"
+        fontSize={fonts.bodyLarge.fontSize}
+        marginHorizontal={10}
+        marginVertical={5}
+      />
+
+      <View style={styles.appBar}>
+        <Text style={styles.title}>Matches based on your preferences.</Text>
+        <Text style={styles.resultCount}>{dataItems.length} results.</Text>
+      </View>
+    </>
+  )
 
   return (
     <ScreenTemplate>
-      {!spinner
-        ? (
-          <>
-            <View style={styles(colors).appBar}>
-              <Text style={styles.title}>Matches based on your preferences.</Text>
-              <Text style={styles.resultCount}>{dataItems.length} results.</Text>
-            </View>
-            <FlatList
-              data={dataItems}
-              renderItem={renderItem}
-              ListFooterComponent={renderSpinner}
-              keyExtractor={(item) => item.key}
+      <View style={styles.scrollContentView}>
+        {/* <KeyboardAwareScrollView
+         style={styles.scrollContentView}
+         keyboardShouldPersistTaps="never"
+         stickyHeaderIndices={[1, 0]}
+         stickyHeaderHiddenOnScroll
+         > */}
+
+        <KeyboardAwareFlatList
+          data={dataItems}
+          renderItem={renderItem}
+          ListHeaderComponent={renderHeader}
+          ListFooterComponent={renderSpinner}
+          keyExtractor={(item) => item.key}
               // onEndReached={onLoadingMoreData}
-              onEndReachedThreshold={0}
-              refreshing={loadingMoreData}
-            />
-          </>
-        )
-        : null}
-      <Spinner
+          onEndReachedThreshold={0}
+          refreshing={loadingMoreData}
+        />
+        {/* </KeyboardAwareScrollView> */}
+        {/* <Spinner
         visible={spinner}
         textStyle={{ color: colors.onSurface }}
         overlayColor="rgba(0,0,0,0.5)"
-      />
+      /> */}
+      </View>
     </ScreenTemplate>
   )
 }

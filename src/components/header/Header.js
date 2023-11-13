@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import {
   StyleSheet,
   View,
@@ -13,10 +13,12 @@ import {
 import { useNavigation } from '@react-navigation/native'
 // import { TouchableOpacity } from 'react-native-gesture-handler'
 import AvatarOfAuthUser from '../AvatarOfAuthUser'
+import { UserDataContext } from '../../context/UserDataContext'
 
 export default function Header() {
   const navigation = useNavigation()
   const { colors } = useTheme()
+  const { userData } = useContext(UserDataContext)
 
   // This is temporary measure and actual notification will come from expo-notification package
   const [tempNotificationSimulation, setTempNotificationSimulation] = useState(0)
@@ -53,6 +55,19 @@ export default function Header() {
     })
   }
 
+  const openProfile = () => {
+    // console.log('Lets go to profile')
+    navigation.navigate('ProfileStack', {
+      screen: 'Profile',
+      params: { // userId, userFullName, userAvatar, userBannerImage,
+        userId: userData.id,
+        userFullName: userData.fullName,
+        userAvatar: userData.avatar,
+        userBannerImage: { uri: userData.bannerImage },
+      },
+    })
+  }
+
   return (
     <View style={styles.headerContainer}>
       {/* <TouchableOpacity // DOESN'T WORK IN IOS
@@ -60,7 +75,7 @@ export default function Header() {
           top: 10, bottom: 10, left: 10, right: 10,
         }}
       > */}
-      <AvatarOfAuthUser size="small" onPress={() => navigation.openDrawer()} />
+      <AvatarOfAuthUser size="small" onPress={() => openProfile()} />
       {/* </TouchableOpacity> */}
       <Button
         title="Search"

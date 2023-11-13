@@ -19,20 +19,22 @@ const TabNavigator = () => {
 
   const opacity = new Animated.Value(1)
   const keyboardWillShow = () => {
+    console.log('keyboardWillShow')
     Animated.timing(opacity, {
       toValue: 0, // Adjust this value to the height you want to move the tab bar
       duration: 10, // Animation duration in milliseconds
       easing: Easing.linear,
-      useNativeDriver: false, // Required when using position and bottom properties
+      useNativeDriver: true, // Required when using position and bottom properties
     }).start()
   }
 
   const keyboardWillHide = () => {
+    console.log('keyboardWillHide')
     Animated.timing(opacity, {
       toValue: 1, // Move the tab bar back to its original position
       duration: 10,
       easing: Easing.linear,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start()
   }
 
@@ -42,14 +44,11 @@ const TabNavigator = () => {
 
     // returned function will be called on component unmount
     return () => {
+      console.log('tabbars returning')
       keyboardWillShowListener.remove()
       keyboardWillHideListener.remove()
     }
   }, [])
-
-  const animatedStyles = {
-    opacity,
-  }
 
   // #endregion
 
@@ -83,35 +82,19 @@ const TabNavigator = () => {
 
   return (
     <Tab.Navigator
-      // defaultScreenOptions={{
-        // headerShown: false,
-        // headerTransparent: true,
-      // }}
-      screenOptions={(/* { route } */) => ({
+      screenOptions={() => ({
         headerShown: false,
-        // cardOverlayEnabled: false,
         gestureEnabled: true,
-        // tabBarActiveTintColor: colors.primary,
-        // tabBarInactiveTintColor: colors.gray,
-        // tabBarActiveBackgroundColor: colors.secondary,
-        // tabBarInactiveBackgroundColor: bgColor,
-        // tabBarStyle: {
-        //   borderTopColor: contrastColor,
-        // },
       })}
-      // sceneAnimationEnabled
-      // sceneAnimationType="opacity"
       keyboardHidesNavigationBar
       initialRouteName="HomeTab"
-      // theme={{colors: {secondaryContainer: 'yellow'}}}
       barStyle={[{
-        // backgroundColor: '#694fad',
         position: 'absolute',
         bottom: -10,
         marginTop: 20,
         justifyContent: 'center',
         height: 80,
-      }, // animatedStyles,
+      },
       ]}
     >
       <Tab.Screen
@@ -122,20 +105,13 @@ const TabNavigator = () => {
           tabBarIcon: ({ focused }) => getTabBarIcon(focused, 'HomeTab'),
         }}
       />
-      {/* <Tab.Screen
-        name="ProfileTab"
-        component={ManageStack}
-        options={{
-          tabBarLabel: 'Manage',
-          tabBarIcon: () => <Icon name="account-details" color={colors.onSurface} size={size} />,
-        }}
-      /> */}
       <Tab.Screen
         name="ManageTab"
         component={ManageStack}
         options={{
           tabBarLabel: 'Manage',
           tabBarIcon: ({ focused }) => getTabBarIcon(focused, 'ManageTab'),
+          tabBarBadge: 2,
           keyboardHidesNavigationBar: true,
         }}
       />
@@ -145,7 +121,7 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: 'Chat',
           tabBarIcon: ({ focused }) => getTabBarIcon(focused, 'ChatTab'),
-          tabBarBadge: 3,
+          tabBarBadge: 10,
           keyboardHidesNavigationBar: true,
         }}
       />

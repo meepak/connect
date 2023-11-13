@@ -9,6 +9,9 @@ import ModalStack from './ModalStack'
 import ProfileStack from './ProfileStack'
 import ChatStack from './ChatStack'
 import NotificationStack from './NotificationStack'
+import SearchStack from './SearchStack'
+// import HomeStack from './HomeStack'
+// import ManageStack from './ManageStack'
 // import { firestore } from '../../../firebase'
 // import { UserDataContext } from '../../../context/UserDataContext'
 // import { expoProjectId } from '../../../config'
@@ -88,24 +91,48 @@ export default function RootStack() {
           headerShown: false,
           gestureEnabled: true,
           cardOverlayEnabled: false,
-          ...TransitionPresets.SlideFromRightIOS,
           headerTitle: '',
           headerTintColor: colors.onBackground,
         }}
       >
+        {/* We should be able to access this through Tab Navigator, get rid of all redundant navigations */}
         <Stack.Screen
           name="ProfileStack"
           component={ProfileStack}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+
+        <Stack.Screen
+          name="SearchStack"
+          component={SearchStack}
+          options={{
+            gestureEnabled: false,
+            ...TransitionPresets.FadeFromBottomAndroid,
+            // ...TransitionPresets.ModalPresentationIOS,
+            // ...TransitionPresets.RevealFromBottomAndroid,
+          }}
+        />
+
+        {/* <Stack.Screen
+          name="HomeStack"
+          component={HomeStack}
+        />
+
+        <Stack.Screen
+          name="ManageStack"
+          component={ManageStack}
+        /> */}
+
+        <Stack.Screen
+          name="ChatStack"
+          component={ChatStack}
         />
 
         <Stack.Screen
           name="NotificationStack"
           component={NotificationStack}
-        />
-
-        <Stack.Screen
-          name="ChatStack"
-          component={ChatStack}
         />
 
       </Stack.Group>

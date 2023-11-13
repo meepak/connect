@@ -77,8 +77,9 @@ export default function Detail() {
         </Surface>
         <Button
           label={`Back to ${from}`}
-          color={colors.primary}
+          color={colors.onPrimary}
           onPress={() => navigation.goBack()}
+          backgroundColor={colors.primary}
         />
       </ScrollView>
     </ScreenTemplate>

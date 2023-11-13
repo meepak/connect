@@ -21,7 +21,7 @@ const Buttons = (
   const { colors, fonts } = useTheme()
   const [connectionStatus, setConnectionStatus] = useState([])
   const { userData } = useContext(UserDataContext)
-  const [spinner, setSpinner] = useState(true)
+  const [spinner, setSpinner] = useState(false)
 
   async function fetchConnection() {
     const docSnap = await getDoc(doc(firestore, 'users', userData.id, 'connection', userId))

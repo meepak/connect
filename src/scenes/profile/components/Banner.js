@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  View, Text, ImageBackground, StyleSheet,
+  View, Text, ImageBackground, StyleSheet, Image as ImageNative,
 } from 'react-native'
 import { IconButton, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
@@ -119,7 +119,7 @@ const Banner = ({
 
 Banner.propTypes = {
   editMode: PropTypes.bool.isRequired,
-  bannerImage: PropTypes.string,
+  bannerImage: ImageNative.propTypes.source,
   userId: PropTypes.string.isRequired,
   userAvatar: PropTypes.string,
   userFullName: PropTypes.string.isRequired,

@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet } from 'react-native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
-import { UserDataContext } from '../context/UserDataContext'
+import { UserDataContext } from '../../context/UserDataContext'
 
 const styles = StyleSheet.create({
   container: {

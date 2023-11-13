@@ -356,7 +356,8 @@ export default function Manage() {
         <Text style={styles.title}>{userData.email}</Text>
         <Button
           label="Edit"
-          color={colors.primary}
+          backgroundColor={colors.primary}
+          color={colors.onPrimary}
           onPress={goDetail}
         />
         <TestFontsize />
@@ -374,6 +375,8 @@ export default function Manage() {
             ) : null}
         </Surface>
         <Button
+          backgroundColor={colors.primary}
+          color={colors.onPrimary}
           label="Open Modal"
           onPress={() => {
             navigation.navigate('ModalStack', {
@@ -386,10 +389,14 @@ export default function Manage() {
           }}
         />
         <Button
+          backgroundColor={colors.primary}
+          color={colors.onPrimary}
           label="Account delete"
           onPress={showDialog}
         />
         <Button
+          backgroundColor={colors.primary}
+          color={colors.onPrimary}
           label="Send Notification"
           onPress={() => onNotificationPress()}
           disable={!token}
