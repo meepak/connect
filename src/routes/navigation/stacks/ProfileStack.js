@@ -61,23 +61,25 @@ const ProfileStack = () => (
       }}
     />
 
-    <Stack.Screen
-      name="SelectLocation"
-      component={SelectLocation}
-      options={{
-        headerShown: true,
+    <Stack.Group
+      screenOptions={{
+        presentation: 'modal',
+        headerShown: false,
+        gestureEnabled: false,
+        cardOverlayEnabled: false,
         ...TransitionPresets.ModalPresentationIOS,
       }}
-    />
+    >
+      <Stack.Screen
+        name="SelectLocation"
+        component={SelectLocation}
+      />
+      <Stack.Screen
+        name="SelectOccupation"
+        component={Occupation}
+      />
 
-    <Stack.Screen
-      name="SelectOccupation"
-      component={Occupation}
-      options={{
-        headerShown: true,
-        ...TransitionPresets.ModalPresentationIOS,
-      }}
-    />
+    </Stack.Group>
 
   </Stack.Navigator>
 )

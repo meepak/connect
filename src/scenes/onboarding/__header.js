@@ -18,7 +18,7 @@ const ScreenHeader = ({
     <>
       <View style={styles.headerContainer}>
         <AvatarOfAuthUser
-          size="large"
+          size={80}
           onEdited={(item) => onAvatarChanged(item)}
         />
         <View style={styles.headerContent}>

@@ -190,10 +190,11 @@ const SignUp = () => {
         />
 
         <TextAndLink
-          text="By signing up, you agree to our"
+          texts={['By signing up, you agree to our']}
           link="Terms and Conditions."
           onPress={() => setShowTnc(true)}
           marginTop={0}
+          marginBottom={25}
         />
 
         <Button
@@ -207,11 +208,11 @@ const SignUp = () => {
         </Button>
 
         <TextAndLink
-          text="Already got an account?"
+          texts={['Already signed up?']}
           link="Sign in"
           onPress={() => gotoSignin()}
-          marginTop={30}
-          marginBottom={30}
+          marginTop={25}
+          marginBottom={25}
         />
 
         <SocialButtons label="Sign up" />

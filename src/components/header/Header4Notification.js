@@ -13,7 +13,7 @@ export default function Header4Notification() {
       justifyContent: 'flex-end', // Change this to 'flex-end' to align the IconButton component to the right
       width: '100%',
       color: colors.onBackground,
-      marginEnd: 20,
+      // marginEnd: 10,
     },
   })
 

@@ -36,7 +36,7 @@ const generateDummyData = (startIndex, itemCount) => {
     const banner = bannerImages[Math.floor(Math.random() * bannerImages.length)]
 
     const userItem = {
-      key: index,
+      key: `ss${index}`,
       name,
       image,
       banner,

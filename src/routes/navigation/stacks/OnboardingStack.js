@@ -21,16 +21,24 @@ const OnboardingStack = () => (
     <Stack.Screen
       name="SelectLocation"
       component={SelectLocation}
-      options={() => ({
-        ...TransitionPresets.ModalPresentationIOS,
-      })}
+      options={{
+        presentation: 'modal',
+        headerShown: false,
+        gestureEnabled: false,
+        cardOverlayEnabled: false,
+        ...TransitionPresets.ScaleFromCenterAndroid,
+      }}
     />
     <Stack.Screen
       name="SelectOccupation"
       component={Occupation}
-      options={() => ({
-        ...TransitionPresets.ModalPresentationIOS,
-      })}
+      options={{
+        presentation: 'modal',
+        headerShown: false,
+        gestureEnabled: false,
+        cardOverlayEnabled: false,
+        ...TransitionPresets.ScaleFromCenterAndroid,
+      }}
     />
   </Stack.Navigator>
 )

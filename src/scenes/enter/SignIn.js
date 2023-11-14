@@ -69,9 +69,9 @@ LogBox.ignoreLogs(['Setting a timer'])
 export default function Login() {
   const navigation = useNavigation()
   const { colors, fonts } = useTheme()
-  const [email, setEmail] = useState('k@k.com')
+  const [email, setEmail] = useState(auth.currentUser ? '' : 'k@k.com')
   const [emailError, setEmailError] = useState('')
-  const [password, setPassword] = useState('kkkkkk')
+  const [password, setPassword] = useState(auth.currentUser ? '' : 'kkkkkk')
   const [passwordError, setPasswordError] = useState('')
   const [spinner, setSpinner] = useState(false)
   const styles = Styles(colors, fonts)
@@ -158,14 +158,19 @@ export default function Login() {
           ? (
             <>
               <View style={styles.verificatonView}>
-                <Text style={styles.text}>Thank you for signing up!</Text>
-                <Text style={styles.text}>Verification email is sent to {auth.currentUser.email}</Text>
-                <Text style={styles.text}>Please follow the email to proceed.</Text>
                 <TextAndLink
-                  text="Can't find the email? Please check spam folders or"
+                  texts={[
+                    'Thanks for signing up!',
+                    `Verification email sent to ${auth.currentUser.email}.`,
+                    'Follow instructions to verify and log in.',
+                    'Can\'t find the email?',
+                    'Please check spam folders.',
+                  ]}
                   link="Resend Verification Email"
                   onPress={() => onSendVerificationLinkPress()}
                   marginTop={10}
+                  marginBottom={10}
+                  marginHorizontal={10}
                   alignSelf="flex-start"
                 />
               </View>
@@ -205,11 +210,11 @@ export default function Login() {
         />
 
         <TextAndLink
-          text="Forgot password?"
+          texts={['Forgot password?']}
           link="Reset"
           onPress={() => gotoSignup()}
           marginTop={0}
-          marginBottom={30}
+          marginBottom={20}
         />
 
         <Button
@@ -223,10 +228,11 @@ export default function Login() {
         </Button>
 
         <TextAndLink
-          text="Don&apos;t have an account?"
+          texts={['Don\'t have an account?']}
           link="Sign up"
           onPress={() => gotoSignup()}
-          marginTop={30}
+          marginTop={20}
+          marginBottom={30}
         />
 
         <SocialButtons label="Sign in" />

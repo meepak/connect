@@ -10,6 +10,7 @@ import ProfileStack from './ProfileStack'
 import ChatStack from './ChatStack'
 import NotificationStack from './NotificationStack'
 import SearchStack from './SearchStack'
+import SettingsStack from './SettingsStack'
 // import HomeStack from './HomeStack'
 // import ManageStack from './ManageStack'
 // import { firestore } from '../../../firebase'
@@ -104,17 +105,6 @@ export default function RootStack() {
           }}
         />
 
-        <Stack.Screen
-          name="SearchStack"
-          component={SearchStack}
-          options={{
-            gestureEnabled: false,
-            ...TransitionPresets.FadeFromBottomAndroid,
-            // ...TransitionPresets.ModalPresentationIOS,
-            // ...TransitionPresets.RevealFromBottomAndroid,
-          }}
-        />
-
         {/* <Stack.Screen
           name="HomeStack"
           component={HomeStack}
@@ -130,22 +120,31 @@ export default function RootStack() {
           component={ChatStack}
         />
 
-        <Stack.Screen
-          name="NotificationStack"
-          component={NotificationStack}
-        />
-
       </Stack.Group>
 
       <Stack.Group
         screenOptions={{
           presentation: 'modal',
           headerShown: false,
-          gestureEnabled: true,
+          gestureEnabled: false,
           cardOverlayEnabled: false,
           ...TransitionPresets.ModalPresentationIOS,
         }}
       >
+        <Stack.Screen
+          name="SearchStack"
+          component={SearchStack}
+        />
+        <Stack.Screen
+          name="NotificationStack"
+          component={NotificationStack}
+        />
+
+        <Stack.Screen
+          name="SettingsStack"
+          component={SettingsStack}
+        />
+
         <Stack.Screen
           name="ModalStack"
           component={ModalStack}

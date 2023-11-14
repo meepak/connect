@@ -2,19 +2,17 @@ import React, {
   useState, useCallback, useEffect, useContext,
 } from 'react'
 import {
-  ActivityIndicator, StyleSheet, View, FlatList, StatusBar, ScrollView,
+  ActivityIndicator, StyleSheet, View, StatusBar, Platform,
 } from 'react-native'
 import {
-  Badge,
   IconButton, Text, useTheme,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 
 import {
-  collection, addDoc, query, orderBy, where, getDocs, limit, startAfter, serverTimestamp, doc, updateDoc,
+  collection, query, orderBy, where, getDocs, limit, serverTimestamp, doc, updateDoc,
 } from 'firebase/firestore'
-import Spinner from 'react-native-loading-spinner-overlay'
-import { KeyboardAwareScrollView, KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import { firestore } from '../../firebase'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import ListItemUser from '../../components/ListItemUser'
@@ -22,11 +20,12 @@ import { UserDataContext } from '../../context/UserDataContext'
 import AvatarOfAuthUser from '../../components/AvatarOfAuthUser'
 import Button from '../../components/core/Button'
 import generateDummyData from './DummyData'
+import SquareMenu from './heading/SquareMenu'
 
 const Styles = (colors, fonts) => StyleSheet.create({
   scrollContentView: {
     flex: 1,
-    marginTop: StatusBar.currentHeight,
+    marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   headerContainer: {
     flex: 1,
@@ -35,10 +34,8 @@ const Styles = (colors, fonts) => StyleSheet.create({
 
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginLeft: 10,
+    marginLeft: 12,
     marginTop: 5,
-    // borderWidth: 1,
-    // borderColor: 'red',
     zIndex: 1,
   },
   iconsRow: {
@@ -48,11 +45,6 @@ const Styles = (colors, fonts) => StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     alignSelf: 'flex-end',
-  },
-  badge: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
   },
   hi: {
     marginLeft: 20,
@@ -70,11 +62,14 @@ const Styles = (colors, fonts) => StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
+    shadowColor: colors.shadow,
   },
   searchButtonText: {
     color: colors.onSecondaryContainer,
     alignSelf: 'flex-start',
   },
+
+  // ************
   title: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -89,23 +84,6 @@ const Styles = (colors, fonts) => StyleSheet.create({
   spinnerView: {
     paddingVertical: 20,
   },
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0,
-  },
-  appBar: {
-    backgroundColor: colors.background,
-    color: colors.onBackground,
-    paddingLeft: 10,
-    // paddingRight: 20,
-    paddingBottom: 10,
-    zIndex: 99,
-    height: 75,
-    borderWidth: 1,
-    borderColor: 'red',
-  },
 })
 
 export default function Home() {
@@ -116,7 +94,7 @@ export default function Home() {
   const styles = Styles(colors, fonts)
   const { userData } = useContext(UserDataContext)
   const [spinner, setSpinner] = useState(false)
-  const [lastFetchedData, setLastFetchedData] = useState(null)
+  // const [lastFetchedData, setLastFetchedData] = useState(null)
 
   // Define the data generation function
   const fetchPotentialMatches = async (itemCount = 15) => {
@@ -192,10 +170,11 @@ export default function Home() {
       setDataItems((prevDataItems) => [...prevDataItems, ...newDataItems])
     } else {
       // append with dummy data
-      const dummyItems = generateDummyData(1, 100)
+      const dummyItems = generateDummyData(1, 10)
       // console.log(dummyItems)
       // setDataItems(newDataItems)
-      setDataItems(() => [...newDataItems, ...dummyItems])
+      // setDataItems(() => [{ key: 'header' }, ...newDataItems, ...dummyItems])
+      setDataItems(() => [{ key: 'header' }, ...newDataItems, ...dummyItems])
     }
     setSpinner(false)
   }
@@ -232,39 +211,43 @@ export default function Home() {
   // useEffect(() => { console.log('dataItems', dataItems) }, [dataItems])
 
   const renderItem = useCallback(({ item }) => (
-    <ListItemUser
-      name={item.name}
-      image={item.image}
-      occupation={item.occupation}
-      industry={item.industry}
-      location={item.location}
-      rate={item.rate}
-      isPromoted={item.isPromoted}
-      viewedAt={item.viewedAt ?? null}
-      onPress={() => {
-        const viewedAt = serverTimestamp()
-        // save user is viewed
-        const docRef = doc(firestore, `/users/${userData.id}/potential_matches/${item.key}`)
-        // update dataItems for this item
-        const updatedDataItems = ((prevDataItems) => prevDataItems.map((dataItem) => (dataItem.key === item.key ? { ...dataItem, viewedAt } : dataItem)))
-        // console.log('updated dataItems', updatedDataItems)
-        setDataItems((prevDataItems) => updatedDataItems(prevDataItems))
-        updateDoc(docRef, {
-          viewedAt: serverTimestamp(),
-        })
-        console.log('going to profile')
-        navigation.navigate('ProfileStack', {
-          screen: 'Profile',
-          params: {
-            userId: item.key,
-            userFullName: item.name,
-            userAvatar: item.image,
-            userBannerImage: item.banner,
-            // from: 'Find screen',
-          },
-        })
-      }}
-    />
+    item.key === 'header'
+      ? <SquareMenu />
+      : (
+        <ListItemUser
+          name={item.name}
+          image={item.image}
+          occupation={item.occupation}
+          industry={item.industry}
+          location={item.location}
+          rate={item.rate}
+          isPromoted={item.isPromoted}
+          viewedAt={item.viewedAt ?? null}
+          onPress={() => {
+            const viewedAt = serverTimestamp()
+            // save user is viewed
+            const docRef = doc(firestore, `/users/${userData.id}/potential_matches/${item.key}`)
+            // update dataItems for this item
+            const updatedDataItems = ((prevDataItems) => prevDataItems.map((dataItem) => (dataItem.key === item.key ? { ...dataItem, viewedAt } : dataItem)))
+            // console.log('updated dataItems', updatedDataItems)
+            setDataItems((prevDataItems) => updatedDataItems(prevDataItems))
+            updateDoc(docRef, {
+              viewedAt: serverTimestamp(),
+            })
+            console.log('going to profile')
+            navigation.navigate('ProfileStack', {
+              screen: 'Profile',
+              params: {
+                userId: item.key,
+                userFullName: item.name,
+                userAvatar: item.image,
+                userBannerImage: item.banner,
+                // from: 'Find screen',
+              },
+            })
+          }}
+        />
+      )
 
   ),
   [])
@@ -282,8 +265,8 @@ export default function Home() {
 
   const openSettings = () => {
     // console.log(`Lets go to notification window -- ${tempNotificationSimulation}`)
-    navigation.navigate('NotificationStack', {
-      screen: 'Connect',
+    navigation.navigate('SettingsStack', {
+      screen: 'Settings',
     })
   }
 
@@ -345,23 +328,15 @@ export default function Home() {
         marginVertical={5}
       />
 
-      <View style={styles.appBar}>
-        <Text style={styles.title}>Matches based on your preferences.</Text>
-        <Text style={styles.resultCount}>{dataItems.length} results.</Text>
-      </View>
+      {/* <SquareMenu /> */}
+      {/* <Text style={styles.title}>Matches based on your preferences.</Text>
+        <Text style={styles.resultCount}>{dataItems.length} results.</Text> */}
     </>
   )
 
   return (
     <ScreenTemplate>
       <View style={styles.scrollContentView}>
-        {/* <KeyboardAwareScrollView
-         style={styles.scrollContentView}
-         keyboardShouldPersistTaps="never"
-         stickyHeaderIndices={[1, 0]}
-         stickyHeaderHiddenOnScroll
-         > */}
-
         <KeyboardAwareFlatList
           data={dataItems}
           renderItem={renderItem}
@@ -371,8 +346,10 @@ export default function Home() {
               // onEndReached={onLoadingMoreData}
           onEndReachedThreshold={0}
           refreshing={loadingMoreData}
+          stickyHeaderIndices={dataItems.length > 0 ? [1] : [0]}
+          // StickyHeaderComponent={}
+          // style={{borderWidth: 1, borderColor: 'red'}}
         />
-        {/* </KeyboardAwareScrollView> */}
         {/* <Spinner
         visible={spinner}
         textStyle={{ color: colors.onSurface }}

@@ -17,38 +17,38 @@ const TabNavigator = () => {
 
   // #region Trying to solve the issue of keyboard pushing tabs in android
 
-  const opacity = new Animated.Value(1)
-  const keyboardWillShow = () => {
-    console.log('keyboardWillShow')
-    Animated.timing(opacity, {
-      toValue: 0, // Adjust this value to the height you want to move the tab bar
-      duration: 10, // Animation duration in milliseconds
-      easing: Easing.linear,
-      useNativeDriver: true, // Required when using position and bottom properties
-    }).start()
-  }
+  // const opacity = new Animated.Value(1)
+  // const keyboardWillShow = () => {
+  //   console.log('keyboardWillShow')
+  //   Animated.timing(opacity, {
+  //     toValue: 0, // Adjust this value to the height you want to move the tab bar
+  //     duration: 10, // Animation duration in milliseconds
+  //     easing: Easing.linear,
+  //     useNativeDriver: true, // Required when using position and bottom properties
+  //   }).start()
+  // }
 
-  const keyboardWillHide = () => {
-    console.log('keyboardWillHide')
-    Animated.timing(opacity, {
-      toValue: 1, // Move the tab bar back to its original position
-      duration: 10,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start()
-  }
+  // const keyboardWillHide = () => {
+  //   console.log('keyboardWillHide')
+  //   Animated.timing(opacity, {
+  //     toValue: 1, // Move the tab bar back to its original position
+  //     duration: 10,
+  //     easing: Easing.linear,
+  //     useNativeDriver: true,
+  //   }).start()
+  // }
 
-  useEffect(() => {
-    const keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', keyboardWillShow)
-    const keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', keyboardWillHide)
+  // useEffect(() => {
+  //   const keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', keyboardWillShow)
+  //   const keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', keyboardWillHide)
 
-    // returned function will be called on component unmount
-    return () => {
-      console.log('tabbars returning')
-      keyboardWillShowListener.remove()
-      keyboardWillHideListener.remove()
-    }
-  }, [])
+  //   // returned function will be called on component unmount
+  //   return () => {
+  //     console.log('tabbars returning')
+  //     keyboardWillShowListener.remove()
+  //     keyboardWillHideListener.remove()
+  //   }
+  // }, [])
 
   // #endregion
 
