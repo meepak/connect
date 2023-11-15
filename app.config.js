@@ -8,4 +8,13 @@ export default ({ config }) => ({
     resizeMode: 'contain',
     // backgroundColor: '#f00',
   },
+  // plugins: [
+  //   [
+  //     '@react-native-voice/voice',
+  //     {
+  //       microphonePermission: 'Allow (PRODUCT_NAME) to access your microphone',
+  //       speechRecogntionPermission: 'Allow (PRODUCT_NAME) to securely recognize user speech',
+  //     },
+  //   ],
+  // ],
 })

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   StyleSheet, View, Pressable, Dimensions,
 } from 'react-native'
@@ -9,7 +9,8 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { convertHexToRGBA } from '../../../utils/functions'
 
 const Styles = (colors, fonts) => {
-  const onBgColor = convertHexToRGBA(colors.onBackground, 0.7)
+  const onBgColor = convertHexToRGBA(colors.onBackground, 0.9)
+  const outlineCustom = convertHexToRGBA(colors.outline, 0.9)
 
   return StyleSheet.create({
     foundation: {
@@ -17,31 +18,35 @@ const Styles = (colors, fonts) => {
     },
     squareMenuContainer: {
       marginTop: 10,
-      backgroundColor: colors.elevation.level1,
+      backgroundColor: colors.elevation.level2,
       color: colors.onBackground,
-      elevation: 3,
+      elevation: 4,
       borderTopRightRadius: 30,
       borderTopLeftRadius: 30,
       flex: 1,
-      flexDirection: 'row',
       flexWrap: 'nowrap',
       alignItems: 'center',
       justifyContent: 'flex-start',
       width: Dimensions.get('window').width,
-      minHeight: 88,
+    //   minHeight: 85,
+      paddingTop: 15,
+      paddingBottom: 15,
       overflow: 'hidden',
       zIndex: 99,
     },
     squareMenu: {
-      minHeight: 60,
       borderWidth: 1,
-      backgroundColor: colors.elevation.level5,
-      borderColor: convertHexToRGBA(colors.outlineVariant, 0.9),
+      backgroundColor: colors.elevation.level2,
+      borderColor: convertHexToRGBA(colors.outlineVariant, 0.5),
       borderRadius: 10,
+      padding: 7,
       width: 'auto',
     },
     squareMenuPressed: {
-      backgroundColor: colors.elevation.level5,
+      backgroundColor: convertHexToRGBA(colors.surfaceVariant, 0.5),
+      borderColor: convertHexToRGBA(colors.outlineVariant, 0.9),
+      borderBottomWidth: 0,
+      elevation: 5,
     },
     squareMenuContentRow: {
       flex: 1,
@@ -51,9 +56,13 @@ const Styles = (colors, fonts) => {
       justifyContent: 'space-between',
       paddingHorizontal: 7,
     },
-    smallText: { color: onBgColor, fontSize: fonts.bodySmall.fontSize },
-    largeText: { color: onBgColor, fontSize: fonts.headlineSmall.fontSize },
-    iconStyle: { color: onBgColor },
+    smallText: { color: outlineCustom, fontSize: fonts.bodySmall.fontSize },
+    smallTextActive: { color: onBgColor, fontSize: fonts.bodySmall.fontSize },
+    largeText: { color: outlineCustom, fontSize: fonts.headlineSmall.fontSize },
+    largeTextActive: { color: onBgColor, fontSize: fonts.headlineSmall.fontSize },
+    iconStyleActive: { color: onBgColor },
+    iconStyle: { color: outlineCustom },
+    listTitle: { color: onBgColor, fontSize: fonts.bodySmall.fontSize },
   })
 }
 
@@ -65,9 +74,13 @@ const MenuItem = ({
     squareMenuPressed,
     squareMenuContentRow,
     iconStyle,
+    iconStyleActive,
     smallText,
+    smallTextActive,
     largeText,
+    largeTextActive,
   } = styles
+
   return (
     <Pressable
       style={({ pressed }) => [
@@ -78,15 +91,15 @@ const MenuItem = ({
       onPress={onPress}
     >
       <View style={squareMenuContentRow}>
-        <Text style={largeText}>{count}</Text>
+        <Text style={isSelected ? largeTextActive : largeText}>{count}</Text>
         <MatIcon
           name={icon}
           size={28}
-          style={iconStyle}
+          style={isSelected ? iconStyleActive : iconStyle}
         />
       </View>
       <View style={squareMenuContentRow}>
-        <Text style={smallText}>{text}</Text>
+        <Text style={isSelected ? smallTextActive : smallText}>{text}</Text>
       </View>
     </Pressable>
   )
@@ -143,6 +156,9 @@ const SquareMenu = React.forwardRef((props, ref) => {
             marginRight={5}
           />
         </ScrollView>
+        {/* <View style={{paddingtop: 10, alignSelf: 'flex-start'}}>
+          <Text style={styles.listTitle}>Showing 20/99 new matches.</Text>
+        </View> */}
       </View>
     </View>
   )

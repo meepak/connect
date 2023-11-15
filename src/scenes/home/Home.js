@@ -28,7 +28,6 @@ const Styles = (colors, fonts) => StyleSheet.create({
     marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   headerContainer: {
-    flex: 1,
     flexDirection: 'row',
     flexWrap: 'nowrap',
 
@@ -320,12 +319,13 @@ export default function Home() {
         icon="search"
         iconSize={18}
         label="&nbsp;&nbsp;Search"
-        backgroundColor={colors.elevation.level3}
+        backgroundColor={colors.elevation.level1}
         color={colors.onSecondaryContainer}
         alignLabel="flex-start"
         fontSize={fonts.bodyLarge.fontSize}
         marginHorizontal={10}
         marginVertical={5}
+        elevation={2}
       />
 
       {/* <SquareMenu /> */}
@@ -342,6 +342,8 @@ export default function Home() {
           renderItem={renderItem}
           ListHeaderComponent={renderHeader}
           ListFooterComponent={renderSpinner}
+          contentContainerStyle={styles.contentContainer}
+          // ListEmptyComponent={}
           keyExtractor={(item) => item.key}
               // onEndReached={onLoadingMoreData}
           onEndReachedThreshold={0}

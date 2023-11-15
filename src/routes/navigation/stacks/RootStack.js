@@ -128,7 +128,7 @@ export default function RootStack() {
           headerShown: false,
           gestureEnabled: false,
           cardOverlayEnabled: false,
-          ...TransitionPresets.ModalPresentationIOS,
+          ...TransitionPresets.ModalTransition,
         }}
       >
         <Stack.Screen
