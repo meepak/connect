@@ -4,6 +4,7 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import imageAssets from '../../theme/images'
+
 const styles = StyleSheet.create({
   logo: {
     flex: 1,

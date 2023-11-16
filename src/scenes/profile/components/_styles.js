@@ -1,21 +1,21 @@
 import { StyleSheet } from 'react-native'
 
-const Styles = (colors, fonts) => StyleSheet.create({
+const Styles = (colors) => StyleSheet.create({
   sectionHeading: {
     color: colors.onBackground,
-    fontSize: fonts.headlineSmall.fontSize,
+    // fontSize: fonts.headlineSmall.fontSize,
     fontWeight: '600',
     textTransform: 'capitalize',
   },
   sectionSubHeading: {
     color: colors.onBackground,
-    fontSize: fonts.titleMedium.fontSize,
+    // fontSize: fonts.titleMedium.fontSize,
     fontWeight: 'bold',
     textTransform: 'capitalize',
   },
   sectionContent: {
     color: colors.onBackground,
-    fontSize: fonts.titleMedium.fontSize,
+    // fontSize: fonts.titleMedium.fontSize,
     // fontWeight: 'bold',
     textTransform: 'capitalize',
   },
@@ -33,14 +33,14 @@ const Styles = (colors, fonts) => StyleSheet.create({
   list: {
     paddingTop: 20,
     marginLeft: 10,
-    fontSize: fonts.titleMedium.fontSize,
+    // fontSize: fonts.titleMedium.fontSize,
   },
   listItem: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   listItemText: {
-    fontSize: fonts.titleMedium.fontSize,
+    // fontSize: fonts.titleMedium.fontSize,
     color: colors.onBackground,
   },
 })

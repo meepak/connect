@@ -1,3 +1,28 @@
+import { NativeModules } from 'react-native'
+
+export const getSystemLocale = () => {
+  let locale
+  // iOS
+  if (
+    NativeModules.SettingsManager
+    && NativeModules.SettingsManager.settings
+    && NativeModules.SettingsManager.settings.AppleLanguages
+  ) {
+    // eslint-disable-next-line prefer-destructuring
+    locale = NativeModules.SettingsManager.settings.AppleLanguages[0]
+    // Android
+  } else if (NativeModules.I18nManager) {
+    locale = NativeModules.I18nManager.localeIdentifier
+  }
+
+  if (typeof locale === 'undefined') {
+    console.log('Couldnt get locale')
+    return 'en'
+  }
+
+  return locale
+}
+
 // const getKilobyteSize = ({ str }) => {
 //   const byteLength = new Blob([str]).size
 //   const kilobytes = (byteLength / 1024).toFixed(2)

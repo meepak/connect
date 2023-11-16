@@ -11,9 +11,10 @@ import { useNavigation, useRoute, CommonActions } from '@react-navigation/native
 import Autocomplete from 'react-native-autocomplete-input'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { layout } from '../../theme'
+import { OCCUPATIONS_KEY } from '../../Preload'
 
 const loadOccupations = async () => {
-  const occupationsJSON = await AsyncStorage.getItem('occupation')
+  const occupationsJSON = await AsyncStorage.getItem(OCCUPATIONS_KEY)
   const occupations = JSON.parse(occupationsJSON)
   return occupations
 }

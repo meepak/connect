@@ -57,10 +57,10 @@ const Buttons = (
     connectButton: {
       backgroundColor: colors.primaryContainer,
     },
-    connectLabel: {
-      color: colors.onPrimaryContainer,
-      fontSize: fonts.titleLarge.fontSize,
-    },
+    // connectLabel: {
+    //   color: colors.onPrimaryContainer,
+    //   // fontSize: fonts.titleLarge.fontSize,
+    // },
   })
 
   return (

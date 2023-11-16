@@ -26,7 +26,7 @@ function AnimatedSplashScreen({
     }
   }, [isAppReady])
 
-  const onImageLoaded = useCallback(async () => {
+  const onSplashImageLoaded = useCallback(async () => {
     try {
       await SplashScreen.hideAsync()
       // Load stuff
@@ -76,7 +76,7 @@ function AnimatedSplashScreen({
               ],
             }}
             source={image}
-            onLoadEnd={onImageLoaded}
+            onLoadEnd={onSplashImageLoaded}
             fadeDuration={4000}
           />
         </Animated.View>

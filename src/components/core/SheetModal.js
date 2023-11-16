@@ -39,7 +39,7 @@ const SheetModal = React.forwardRef(({ children, snapsAt, onDismiss }, ref) => {
     <BottomSheetModal
       ref={ref}
       snapPoints={snapPoints}
-      topInset={+StatusBar.currentHeight}
+      // topInset={+StatusBar.currentHeight} // since this only works in android, do not rely on it, use inset provided by safe area view
       enablePanDownToClose
       enableDismissOnClose
       onDismiss={onDismiss}

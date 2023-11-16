@@ -45,7 +45,9 @@ const getIconSize = (size) => {
 }
 
 // TODO implement onError, return error within onEdited
-const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
+const AvatarOfAuthUser = ({
+  rounded, size, onEdited, onPress,
+}) => {
   const { colors } = useTheme()
   const iconSize = getIconSize(size)
   const { userData } = useContext(UserDataContext)
@@ -72,7 +74,7 @@ const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
 
       <Avatar
         size={size}
-        rounded
+        rounded={rounded}
         fullName={userData.fullName ?? null}
         url={avatar ?? null}
         onPress={() => {
@@ -116,6 +118,7 @@ const AvatarOfAuthUser = ({ size, onEdited, onPress }) => {
 }
 
 AvatarOfAuthUser.propTypes = {
+  rounded: PropTypes.bool,
   size: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -125,6 +128,7 @@ AvatarOfAuthUser.propTypes = {
 }
 
 AvatarOfAuthUser.defaultProps = {
+  rounded: true,
   onEdited: null,
   onPress: null,
 }

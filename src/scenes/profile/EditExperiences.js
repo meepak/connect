@@ -1,24 +1,22 @@
 import React, {
-  useState, useContext, useCallback, useRef,
+  useContext,
 } from 'react'
 import {
-  View, StyleSheet, StatusBar, SafeAreaView, Pressable,
+  View, StyleSheet, SafeAreaView,
 } from 'react-native'
 import {
-  Text, useTheme, IconButton,
+  useTheme,
 } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { useRoute, useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 
 // import { TouchableOpacity } from 'react-native-gesture-handler'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import TextInputBox from '../../components/core/TextInputBox'
 // import storage from '../../utils/Storage'
 // TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE
 import { UserDataContext } from '../../context/UserDataContext'
 // import { isValidName, isValidLength } from '../../utils/validation'
 import Header4Profile from '../../components/header/Header4Profile'
-import SheetModal from '../../components/core/SheetModal'
 import IconLink from '../../components/core/IconLink'
 
 export default function EditExperiences() {
@@ -40,7 +38,6 @@ export default function EditExperiences() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      marginTop: StatusBar.currentHeight,
     },
     content: {
       flex: 1,

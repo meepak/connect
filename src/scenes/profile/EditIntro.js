@@ -2,7 +2,7 @@ import React, {
   useState, useContext, useCallback, useRef,
 } from 'react'
 import {
-  View, StyleSheet, StatusBar, Keyboard,
+  View, StyleSheet, Keyboard,
 } from 'react-native'
 import {
   Text, useTheme,
@@ -47,17 +47,17 @@ export default function EditIntro() {
     if (Keyboard.isVisible) {
       Keyboard.dismiss()
     }
-    bottomSheetRef.current?.present()
+    if (bottomSheetRef && bottomSheetRef.current) {
+      bottomSheetRef.current.present()
+    }
   }, [])
   // #endregion
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      marginTop: StatusBar.currentHeight,
     },
     h1: {
-      fontSize: fonts.headlineMedium.fontSize,
       fontWeight: '600',
       marginLeft: 15,
       marginRight: 'auto',
@@ -252,7 +252,7 @@ export default function EditIntro() {
             showKeyboard={false}
           />
 
-          <Text style={styles.h1}>Contact Info</Text>
+          <Text style={styles.h1} variant="headlineMedium">Contact Info</Text>
           <View style={styles.row}>
             <Text style={styles.label}>Email</Text>
             <Text style={styles.value}>{userData.email} </Text>

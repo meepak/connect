@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {
-  View, StatusBar, StyleSheet,
+  View, StyleSheet,
 } from 'react-native'
 import { Text, useTheme, Button } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -21,7 +21,6 @@ const Styles = (colors, fonts) => StyleSheet.create({
   main: {
     flex: 1,
     width: '100%',
-    marginTop: StatusBar.currentHeight,
     backgroundColor: colors.background,
   },
   title: {

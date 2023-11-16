@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import {
-  Alert, View, StyleSheet, StatusBar, Platform,
+  Alert, View, StyleSheet, Platform,
 } from 'react-native'
 import {
   Text, useTheme,
@@ -57,7 +57,6 @@ export default function Edit() {
     },
     avatar: {
       flex: 1,
-      marginTop: StatusBar.currentHeight,
       alignSelf: 'center',
     },
     changePasswordContainer: {

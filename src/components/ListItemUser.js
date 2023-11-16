@@ -23,6 +23,7 @@ const ListItemUser = ({
       // shadowOpacity: 0.2,
       // shadowRadius: 4,
       marginTop: 15,
+      borderRadius: 5,
     },
     Image: {
       alignSelf: 'flex-start',
@@ -70,14 +71,13 @@ const ListItemUser = ({
       rippleColor="rgba(0, 0, 0, .32)"
     >
       <View style={styles.container}>
-        <Avatar fullName={name} url={image} style={styles.Image} width={55} height={55} rounded={false} />
+        <Avatar fullName={name} url={image} style={styles.Image} width={55} height={55} rounded={false}  />
         <View style={styles.Info}>
           <Text style={styles.Title}>{name}</Text>
           <Text style={styles.Company}>{industry}</Text>
           <Text style={styles.Location}>{location}</Text>
           <Text style={styles.Rate}>{occupation}</Text>
           {isPromoted && <Text style={styles.Promoted}>Promoted</Text>}
-          <Divider />
         </View>
       </View>
     </TouchableRipple>

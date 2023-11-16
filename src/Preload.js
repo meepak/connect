@@ -10,11 +10,11 @@ import jsonData from '../assets/data/occupations.json'
 *
 * This will be executed during splash screen display
 */
+export const OCCUPATIONS_KEY = 'CONNECT411_OCCUPATIONS'
 const storeData = async () => {
   try {
-    const key = 'occupation'
     // Check if the data already exists in AsyncStorage
-    const existingData = await AsyncStorage.getItem(key)
+    const existingData = await AsyncStorage.getItem(OCCUPATIONS_KEY)
 
     if (existingData === null) {
       // TODO PRE-CLEAN UP THE JSON FILE TO AVOID DELAYED LOAD TIME
@@ -34,7 +34,7 @@ const storeData = async () => {
       // Data doesn't exist, so store it
       const jsonStr = JSON.stringify(sortedJsonData)
       // console.log(jsonStr)
-      await AsyncStorage.setItem(key, jsonStr)
+      await AsyncStorage.setItem(OCCUPATIONS_KEY, jsonStr)
       // console.log('Occupation Data stored successfully')
     } else {
       // console.log('Occupation Data already exists in AsyncStorage')

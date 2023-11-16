@@ -70,7 +70,6 @@ const Banner = ({
     },
     userTypeLabel: {
       color: colors.onTertiaryContainer,
-      fontSize: fonts.titleMedium.fontSize,
       fontWeight: 'bold',
     },
   })
@@ -106,7 +105,7 @@ const Banner = ({
           : <></>}
       </ImageBackground>
       <View style={styles.userTypeLabelContainer}>
-        <Text style={styles.userTypeLabel}>{editMode ? 'Searching for Associates' : 'Open for opportunity'}</Text>
+        <Text style={styles.userTypeLabel} variant="titleMedium">{editMode ? 'Searching for Associates' : 'Open for opportunity'}</Text>
       </View>
       <View style={styles.avatarContainer}>
         {editMode

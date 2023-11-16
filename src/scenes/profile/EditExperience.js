@@ -2,7 +2,7 @@ import React, {
   useState, useContext, useEffect, useRef,
 } from 'react'
 import {
-  View, StyleSheet, StatusBar, SafeAreaView,
+  View, StyleSheet,
 } from 'react-native'
 import {
   useTheme, SegmentedButtons, Text,
@@ -103,7 +103,6 @@ export default function EditExperience() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      marginTop: StatusBar.currentHeight,
     },
     content: {
       flex: 1,
@@ -139,7 +138,7 @@ export default function EditExperience() {
   */
   return (
     <ScreenTemplate>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <Header4Profile
           title="Add Experience"
           pendingChanges={pendingChanges}
@@ -320,7 +319,7 @@ export default function EditExperience() {
           initialYear={currentDate === 'start' ? startDate.year : endDate.year}
           onChange={(val) => setDate(val)}
         />
-      </SafeAreaView>
+      </View>
     </ScreenTemplate>
   )
 }

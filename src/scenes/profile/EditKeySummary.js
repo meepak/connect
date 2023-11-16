@@ -2,7 +2,7 @@ import React, {
   useState, useContext, // useLayoutEffect, // useRef,
 } from 'react'
 import {
-  Alert, StatusBar, SafeAreaView, StyleSheet, View,
+  Alert, StyleSheet, View,
 } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
@@ -63,7 +63,6 @@ export default function EditKeySummary() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      marginTop: StatusBar.currentHeight,
     },
     content: {
       zIndex: 1,

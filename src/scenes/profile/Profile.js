@@ -2,7 +2,7 @@ import React, {
   useContext, useState,
 } from 'react'
 import {
-  Alert, View, StyleSheet, StatusBar,
+  Alert, View, StyleSheet,
 } from 'react-native'
 import {
   Text, useTheme, Button,
@@ -101,7 +101,6 @@ const Profile = () => {
     ...Styles(colors, fonts),
     container: {
       flex: 1,
-      marginTop: StatusBar.currentHeight,
       borderRadius: 20,
       // position: 'relative', // Added for positioning the Avatar
     },
