@@ -12,12 +12,8 @@ import { useNavigation } from '@react-navigation/native'
 // import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import { UserDataContext } from '../../../context/UserDataContext'
 import AvatarOfAuthUser from '../../../components/AvatarOfAuthUser'
-import Button from '../../../components/core/Button'
 
-const Styles = (colors) => StyleSheet.create({
-  header: {
-    marginBottom: 10,
-  },
+const Styles = () => StyleSheet.create({
   headerIcons: {
     flexDirection: 'row',
     flexWrap: 'nowrap',
@@ -33,28 +29,14 @@ const Styles = (colors) => StyleSheet.create({
     fontWeight: 700,
   },
 
-  searchButton: {
-    width: '100%',
-    borderRadius: 7,
-    textAlign: 'left',
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    shadowColor: colors.shadow,
-  },
 })
 
 const Header = () => {
   const navigation = useNavigation()
-  const { colors, fonts } = useTheme()
+  const { colors } = useTheme()
   const styles = Styles(colors)
   const { userData } = useContext(UserDataContext)
 
-  const openSettings = () => {
-    navigation.navigate('SettingsStack', {
-      screen: 'Settings',
-    })
-  }
 
   const openSearch = () => {
     navigation.navigate('SearchStack', {
@@ -82,29 +64,12 @@ const Header = () => {
           onPress={() => openProfile()}
         />
         <IconButton
-          icon="gear"
+          icon="search"
           color={colors.onBackground}
           size={24}
-          onPress={() => openSettings()}
+          onPress={() => openSearch()}
         />
       </View>
-      <Text style={styles.hi} variant="headlineLarge">Hi {userData.fullName.split(' ')[0]}</Text>
-
-      <Button
-        onPress={() => openSearch()}
-        mode="contained"
-        style={styles.searchButton}
-        icon="search"
-        iconSize={18}
-        label="&nbsp;&nbsp;Search"
-        backgroundColor={colors.surfaceDisabled}
-        color={colors.onSurfaceDisabled}
-        alignLabel="flex-start"
-        fontSize={fonts.bodyLarge.fontSize}
-        // marginHorizontal={10}
-        marginVertical={5}
-        elevation={2}
-      />
 
       {/* <SquareMenu /> */}
       {/* <Text style={styles.title}>Matches based on your preferences.</Text>

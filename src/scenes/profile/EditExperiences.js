@@ -70,7 +70,7 @@ export default function EditExperiences() {
     <ScreenTemplate>
       <SafeAreaView style={styles.container}>
         <Header4Profile
-          icon="arrow-left"
+          icon="chevron-left"
           title="Edit Experiences"
         />
         <IconLink

@@ -31,7 +31,7 @@ const Header = () => {
   return (
     <View style={styles.headerContent}>
       <IconButton
-        icon="arrow-left"
+        icon="chevron-left"
         color={colors.onBackground}
         size={24}
         onPress={() => navigation.goBack()}

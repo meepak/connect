@@ -11,31 +11,31 @@ const Stack = createStackNavigator()
 const ManageStack = () => {
   const { colors } = useTheme()
   return (
-    <Stack.Navigator>
-
-      <Stack.Group>
-
-        <Stack.Screen
-          name="Manage"
-          component={Manage}
-          options={(/* { navigation } */) => ({
-            headerBackground: () => <HeaderStyle />,
-            headerTitle: () => (
-              <Header />
-            ),
-          })}
-        />
-        <Stack.Screen
-          name="Edit"
-          component={Edit}
-          options={() => ({
-            headerBackground: () => <HeaderStyle />,
-            headerTintColor: colors.onBackground,
-            headerBackTitleVisible: false,
-          })}
-        />
-
-      </Stack.Group>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardOverlayEnabled: false,
+      }}
+    >
+      <Stack.Screen
+        name="Manage"
+        component={Manage}
+        options={(/* { navigation } */) => ({
+          // headerBackground: () => <HeaderStyle />,
+          // headerTitle: () => (
+          //   <Header />
+          // ),
+        })}
+      />
+      <Stack.Screen
+        name="Edit"
+        component={Edit}
+        options={() => ({
+          headerBackground: () => <HeaderStyle />,
+          headerTintColor: colors.onBackground,
+          headerBackTitleVisible: false,
+        })}
+      />
 
     </Stack.Navigator>
   )

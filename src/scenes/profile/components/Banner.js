@@ -83,7 +83,7 @@ const Banner = ({
     <View style={styles.banner}>
       <ImageBackground source={finalBannerImage} style={styles.bannerImage}>
         <IconButton
-          icon="arrow-left"
+          icon="chevron-left"
           size={25}
           iconColor={colors.onBackground}
           style={styles.backButton}

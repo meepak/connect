@@ -112,7 +112,6 @@ const TabNavigator = () => {
           tabBarLabel: 'Manage',
           tabBarIcon: ({ focused }) => getTabBarIcon(focused, 'ManageTab'),
           tabBarBadge: 2,
-          keyboardHidesNavigationBar: true,
         }}
       />
       <Tab.Screen
@@ -122,7 +121,6 @@ const TabNavigator = () => {
           tabBarLabel: 'Chat',
           tabBarIcon: ({ focused }) => getTabBarIcon(focused, 'ChatTab'),
           tabBarBadge: 10,
-          keyboardHidesNavigationBar: true,
         }}
       />
     </Tab.Navigator>

@@ -106,7 +106,7 @@ export default function Search() {
           onClearIconPress={() => {
             Keyboard.dismiss()
           }}
-          icon={{ source: 'arrow-left', direction: 'auto' }}
+          icon={{ source: 'chevron-left', direction: 'auto' }}
           style={styles.searchbar}
           // voice search is a least priority as OS keyboard provides that feature
           // traileringIcon={() => (

@@ -19,7 +19,7 @@ const Styles = (colors, fonts) => {
     },
     squareMenuContainer: {
       // marginTop: 10,
-      backgroundColor: colors.elevation.level2,
+      backgroundColor: colors.elevation.level5,
       color: colors.onBackground,
       elevation: 4,
       borderTopRightRadius: 30,
@@ -36,7 +36,7 @@ const Styles = (colors, fonts) => {
     },
     squareMenu: {
       borderWidth: 1,
-      backgroundColor: colors.elevation.level2,
+      backgroundColor: colors.elevation.level5,
       borderColor: convertHexToRGBA(colors.outlineVariant, 0.5),
       borderRadius: 10,
       padding: 7,
