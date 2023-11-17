@@ -51,8 +51,8 @@ const SheetModal = React.forwardRef(({ children, snapsAt, onDismiss }, ref) => {
           disappearsOnIndex={-1}
         />
       )}
-      backgroundStyle={{ backgroundColor: colors.surfaceContainerHigh, borderRadius: 40 }}
-      handleIndicatorStyle={{ width: '15%', height: 7, backgroundColor: colors.surfaceTint }}
+      backgroundStyle={{ backgroundColor: colors.elevation.level5, borderRadius: 40 }}
+      handleIndicatorStyle={{ width: '15%', height: 7, backgroundColor: colors.surfaceDisabled }}
     >
       {children}
     </BottomSheetModal>

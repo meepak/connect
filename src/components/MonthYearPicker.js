@@ -5,6 +5,7 @@ import {
 } from 'react-native-paper'
 import WheelPickerExpo from 'react-native-wheel-picker-expo'
 import PropTypes from 'prop-types'
+import Color from 'color'
 
 function MonthYearPicker({
   visible,
@@ -24,6 +25,7 @@ function MonthYearPicker({
   let currentMonthIndex = months.indexOf(initialMonth) >= 0 ? months.indexOf(initialMonth) : (nowMonth - 1)
 
   const { colors, fonts } = useTheme()
+  console.log(colors)
   const pageWidth = Dimensions.get('window').width
   const eachWheelWidth = (pageWidth / 2) * 0.6
   const eachWheelHeight = Dimensions.get('window').height / 4
@@ -94,7 +96,7 @@ function MonthYearPicker({
       <Dialog.Content>
         <View style={styles.content}>
           <WheelPickerExpo
-            backgroundColor={colors.elevation.level3}
+            backgroundColor={Color(colors.elevation.level3).hex()}
             height={eachWheelHeight}
             width={eachWheelWidth}
             initialSelectedIndex={currentMonthIndex}
@@ -102,7 +104,7 @@ function MonthYearPicker({
             onChange={(item) => handleChange({ month: item })}
           />
           <WheelPickerExpo
-            backgroundColor={colors.elevation.level3}
+            backgroundColor={Color(colors.elevation.level3).hex()}
             height={eachWheelHeight}
             width={eachWheelWidth}
             initialSelectedIndex={currentYearIndex}
