@@ -79,25 +79,41 @@ const Display = () => {
           preferences.useCustomColor
             ? (
               <>
-                <Button
-                  visible={false}
-                  onPress={() => setMenuVisible(true)}
-                  mode="outlined"
-                  style={{
-                    backgroundColor: preferences.themeCustomColor,
-                  }}
+                <View style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  flexWrap: 'nowrap',
+                  justifyContent: 'space-between',
+                  marginBottom: 5,
+                  marginTop: 10,
+                }}
                 >
-                  <Text
-                    style={{ color: colors.inverseBackground }}
-                    variant="bodyMedium"
-                  >
-                    Select Color
+                  <Text variant="bodyLarge">
+                    Select custom color
                   </Text>
-                </Button>
+                  <Button
+                    visible={false}
+                    width={50}
+                    height={35}
+                    onPress={() => setMenuVisible(true)}
+                    mode="outlined"
+                    style={{
+                      backgroundColor: preferences.themeCustomColor,
+                    }}
+                  >
+                    <Text
+                      style={{ color: colors.inverseBackground }}
+                      variant="bodyMedium"
+                    >
+                      {' '}
+                    </Text>
+                  </Button>
+                </View>
                 <Menu
                   visible={menuVisible}
                   onDismiss={() => setMenuVisible(false)}
-                  anchor={{ x: 0, y: StatusBar.currentHeight ?? 0 }}
+                  anchor={{ x: 5, y: StatusBar.currentHeight ?? 5 }}
                 >
                   {CUSTOM_COLOR_PALETTE.map((color) => (
                     <Menu.Item
@@ -114,10 +130,7 @@ const Display = () => {
               </>
             )
             : <></>
-        }
-        <Text variant="bodySmall">
-          {/* Member since {userData.createdAtLocale} */}
-        </Text>
+          }
       </Card.Content>
     </Card>
   )
