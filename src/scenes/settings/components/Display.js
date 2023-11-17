@@ -1,13 +1,17 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
+import { View, StatusBar } from 'react-native'
 import {
-  Text, Card, useTheme, SegmentedButtons,
+  Text, Card, useTheme, SegmentedButtons, Switch, Button, Menu,
 } from 'react-native-paper'
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Constants from 'expo-constants'
 import PreferencesContext from '../../../context/PreferencesContext'
 
 const Display = () => {
+  const CUSTOM_COLOR_PALETTE = Constants.expoConfig.display.palette
   const { colors } = useTheme()
   const preferences = useContext(PreferencesContext)
+  const [menuVisible, setMenuVisible] = useState(false)
 
   return (
     <Card
@@ -49,9 +53,68 @@ const Display = () => {
             },
           ]}
         />
-        <Text variant="bodyMedium">
-          {/* {userData.email} */}
-        </Text>
+        <View style={{
+          flex: 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+          flexWrap: 'nowrap',
+          justifyContent: 'space-between',
+          marginBottom: 5,
+          marginTop: 10,
+        }}
+        >
+          <Text variant="bodyLarge">
+            Use custom color
+          </Text>
+          <Switch
+            value={preferences.useCustomColor}
+            onValueChange={(value) => {
+              preferences.setThemeCustomColor(value ? CUSTOM_COLOR_PALETTE[5] : '')
+            }}
+            color={colors.tertiary}
+          />
+        </View>
+
+        {
+          preferences.useCustomColor
+            ? (
+              <>
+                <Button
+                  visible={false}
+                  onPress={() => setMenuVisible(true)}
+                  mode="outlined"
+                  style={{
+                    backgroundColor: preferences.themeCustomColor,
+                  }}
+                >
+                  <Text
+                    style={{ color: colors.inverseBackground }}
+                    variant="bodyMedium"
+                  >
+                    Select Color
+                  </Text>
+                </Button>
+                <Menu
+                  visible={menuVisible}
+                  onDismiss={() => setMenuVisible(false)}
+                  anchor={{ x: 0, y: StatusBar.currentHeight ?? 0 }}
+                >
+                  {CUSTOM_COLOR_PALETTE.map((color) => (
+                    <Menu.Item
+                      key={color}
+                      style={{ backgroundColor: color }}
+                      onPress={() => {
+                        setMenuVisible(false)
+                        preferences.setThemeCustomColor(color)
+                      }}
+                      title={color}
+                    />
+                  ))}
+                </Menu>
+              </>
+            )
+            : <></>
+        }
         <Text variant="bodySmall">
           {/* Member since {userData.createdAtLocale} */}
         </Text>

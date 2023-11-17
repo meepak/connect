@@ -9,12 +9,13 @@ import {
 import { Text, useTheme } from 'react-native-paper'
 import { useNavigation, useRoute, CommonActions } from '@react-navigation/native'
 import Autocomplete from 'react-native-autocomplete-input'
+import Constants from 'expo-constants'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { layout } from '../../theme'
-import { OCCUPATIONS_KEY } from '../../Preload'
 
 const loadOccupations = async () => {
-  const occupationsJSON = await AsyncStorage.getItem(OCCUPATIONS_KEY)
+  const occupationsKey = Constants.expoConfig.asyncStorage.key.occupations
+  const occupationsJSON = await AsyncStorage.getItem(occupationsKey)
   const occupations = JSON.parse(occupationsJSON)
   return occupations
 }

@@ -1,3 +1,4 @@
+import Constants from 'expo-constants'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import imageAssets from './theme/images'
 import jsonData from '../assets/data/occupations.json'
@@ -10,11 +11,12 @@ import jsonData from '../assets/data/occupations.json'
 *
 * This will be executed during splash screen display
 */
-export const OCCUPATIONS_KEY = 'CONNECT411_OCCUPATIONS'
+
 const storeData = async () => {
   try {
     // Check if the data already exists in AsyncStorage
-    const existingData = await AsyncStorage.getItem(OCCUPATIONS_KEY)
+    const occupationsKey = Constants.expoConfig.asyncStorage.key.occupations
+    const existingData = await AsyncStorage.getItem(occupationsKey)
 
     if (existingData === null) {
       // TODO PRE-CLEAN UP THE JSON FILE TO AVOID DELAYED LOAD TIME
@@ -34,7 +36,7 @@ const storeData = async () => {
       // Data doesn't exist, so store it
       const jsonStr = JSON.stringify(sortedJsonData)
       // console.log(jsonStr)
-      await AsyncStorage.setItem(OCCUPATIONS_KEY, jsonStr)
+      await AsyncStorage.setItem(occupationsKey, jsonStr)
       // console.log('Occupation Data stored successfully')
     } else {
       // console.log('Occupation Data already exists in AsyncStorage')

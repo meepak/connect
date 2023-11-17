@@ -14,12 +14,12 @@ import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 
 import { Provider } from 'jotai'
 import 'utils/ignore'
+import Constants from 'expo-constants'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import * as SystemUI from 'expo-system-ui'
 import * as SplashScreen from 'expo-splash-screen'
-import Constants from 'expo-constants'
 
 import { UserDataContextProvider } from './context/UserDataContext'
 import PreferencesContext from './context/PreferencesContext'
@@ -27,6 +27,7 @@ import PreferencesContext from './context/PreferencesContext'
 import Icon from './components/core/Icon'
 import AnimatedAppLoader from './components/splash/AnimatedAppLoader'
 import Route from './Route'
+import { hexThemeFromColor, prepareThemes } from './theme/custom'
 
 // const isHermes = () => !!global.HermesInternal
 
@@ -35,30 +36,30 @@ SplashScreen.preventAutoHideAsync().catch(() => {
   /* reloading the app might trigger some race conditions, ignore them */
 })
 
-const PREFERENCES_KEY = 'CONNECT411_PREFERENCES'
-
 const App = () => {
   const systemTheme = useColorScheme()
   const [themePreference, setThemePreference] = React.useState('system')
+  const [themeCustomColor, setThemeCustomColor] = React.useState('')
+
+  const [isDark, setIsDark] = React.useState(systemTheme === 'dark')
+  const [useCustomColor, setUseCustomColor] = React.useState(false)
+
+  const PREFERENCES_KEY = Constants.expoConfig.asyncStorage.key.preferences
+  const CUSTOM_COLOR_PALETTE = Constants.expoConfig.display.palette
 
   const isDarkMode = (themePref) => {
-    if (!themePref) {
+    if (!themePref || !['dark', 'light'].includes(themePref)) {
       return systemTheme === 'dark'
     }
-    if (themePref === 'system') {
-      return systemTheme === 'dark'
-    } if (themePref === 'dark') {
-      return true
-    }
-    return false
+    return (themePref === 'dark')
   }
-  const [isDark, setIsDark] = React.useState(systemTheme === 'dark')
 
   React.useEffect(() => {
     const restorePrefs = async () => {
       try {
         const prefString = await AsyncStorage.getItem(PREFERENCES_KEY)
         const preferences = JSON.parse(prefString || '')
+        // console.log('restoring preferences', preferences)
         if (preferences) {
           setIsDark(() => isDarkMode(preferences.themePreference))
         }
@@ -73,6 +74,7 @@ const App = () => {
   React.useEffect(() => {
     const savePrefs = async () => {
       try {
+        // console.log('saving preferences', themePreference, themeCustomColor)
         await AsyncStorage.setItem(
           PREFERENCES_KEY,
           JSON.stringify({
@@ -86,7 +88,7 @@ const App = () => {
     }
 
     savePrefs()
-  }, [themePreference])
+  }, [themePreference, themeCustomColor])
 
   // Preferences context parameter
   // would have ben need if I was able to define
@@ -94,15 +96,26 @@ const App = () => {
   // but it seems I can't
   const preferences = React.useMemo(
     () => ({
-      themePreference,
-      isDark,
       setThemePreference: (themePref) => {
         // console.log('setting themePreference', themePref)
         setIsDark(() => isDarkMode(themePref))
-        setThemePreference(themePref)
+        setThemePreference(() => themePref)
       },
+      setThemeCustomColor: (customColor) => {
+        if (CUSTOM_COLOR_PALETTE.includes(customColor)) {
+          setUseCustomColor(() => true)
+          setThemeCustomColor(() => customColor)
+        } else {
+          setUseCustomColor(() => false)
+          setThemeCustomColor('')
+        }
+      },
+      themePreference,
+      themeCustomColor,
+      isDark,
+      useCustomColor,
     }),
-    [themePreference],
+    [themePreference, themeCustomColor],
   )
 
   const { adaptedTheme } = adaptNavigationTheme(isDark
@@ -110,10 +123,38 @@ const App = () => {
     : { reactNavigationDark: NavigationDarkTheme })
 
   const md3Theme = isDark ? MD3DarkTheme : MD3LightTheme
-
   const { theme: m3Theme } = useMaterial3Theme() // do i even need this???
 
-  const paperTheme = { ...adaptedTheme, ...md3Theme, colors: isDark ? m3Theme.dark : m3Theme.light }
+  const resultTheme = useCustomColor
+    ? (() => {
+      const customBaseTheme = hexThemeFromColor(themeCustomColor, isDark ? 'dark' : 'light')
+      const customTheme = prepareThemes(customBaseTheme)
+      const customColors = isDark ? customTheme.dark : customTheme.light
+      return {
+        ...adaptedTheme,
+        ...md3Theme,
+        colors: {
+          // ...m3,
+          ...customColors,
+        },
+      }
+    }
+    )
+    : (() => {
+      const m3 = isDark ? m3Theme.dark : m3Theme.light
+      return {
+        ...adaptedTheme,
+        ...md3Theme,
+        colors: {
+          ...m3,
+        },
+      }
+    }
+    )
+
+  const paperTheme = resultTheme()
+
+  // console.log('paper Theme', paperTheme)
 
   // solution to white flash for android while keyboard appears
   SystemUI.setBackgroundColorAsync(paperTheme.colors.background)

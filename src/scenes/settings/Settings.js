@@ -65,6 +65,7 @@ export default function Settings() {
   const { colors } = useTheme()
   const styles = Styles(colors)
 
+
   return (
     <ScreenTemplate>
       <Header />

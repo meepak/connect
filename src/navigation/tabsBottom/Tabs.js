@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Keyboard, Animated, Easing } from 'react-native'
+// import { Keyboard, Animated, Easing } from 'react-native'
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons' // kinda like the material icons in tabss for now, will see later
 import { useTheme } from 'react-native-paper'

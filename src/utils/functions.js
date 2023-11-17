@@ -42,8 +42,13 @@ export const mergeJsonObjects = (obj1, obj2) => {
   return result
 }
 
+// This function can be a risk for untested input
 export const convertHexToRGBA = (hexCode, opacity = 1) => {
-  if (hexCode === undefined || hexCode === null) return null
+  if (hexCode == null) return null
+  if (hexCode.includes('rgba')) return hexCode
+  if (hexCode.includes('rgb')) return hexCode.replace('rgb', 'rgba').replace(')', `,${opacity})`)
+  if (!hexCode.includes('#')) return null
+
   let hex = hexCode.replace('#', '')
 
   if (hex.length === 3) {
@@ -55,11 +60,9 @@ export const convertHexToRGBA = (hexCode, opacity = 1) => {
   const b = parseInt(hex.substring(4, 6), 16)
 
   /* Backward compatibility for whole number based opacity values. */
-  let op = opacity
-  if (opacity > 1 && opacity <= 100) {
-    op = opacity / 100
-  }
+  const op = opacity > 1 && opacity <= 100 ? opacity / 100 : opacity
 
+  // console.log(hexCode, `rgba(${r},${g},${b},${op})`)
   return `rgba(${r},${g},${b},${op})`
 }
 
