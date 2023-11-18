@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import imageAssets from './theme/images'
+import { preloadImages } from './theme/images'
 import jsonData from '../assets/data/occupations.json'
 import { ASYNC_STORAGE_KEY } from './utils/constants'
 
@@ -48,8 +48,8 @@ const storeData = async () => {
 
 export default async function Preload() {
   // Load your data here
-  await Promise.all(imageAssets)
-  // if imageAssets can't be resolved due to key, do object.vaues(imageAssets)
+  await Promise.all(preloadImages())
+
   await storeData()
   // additional simulated delay
   await new Promise((resolve) => setTimeout(resolve, 2000))

@@ -17,7 +17,7 @@ const Account = () => {
 
   // will need more work regarding unsubscribing from snapshot
   const onSignOutPress = () => {
-    console.log('onSignOutPress')
+    // console.log('onSignOutPress')
     signOut(auth)
       .then(() => {
         setUserData('')
@@ -35,7 +35,7 @@ const Account = () => {
         userId: userData.id,
         userFullName: userData.fullName,
         userAvatar: userData.avatar,
-        userBannerImage: { uri: userData.bannerImage },
+        userBannerImage: userData.bannerImage,
       },
     })
   }

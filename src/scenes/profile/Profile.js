@@ -1,5 +1,5 @@
 import React, {
-  useContext, useState,
+  useContext, useEffect, useState,
 } from 'react'
 import {
   Alert, View, StyleSheet,
@@ -38,14 +38,20 @@ const Profile = () => {
     userId, userFullName, userAvatar, userBannerImage,
   } = route.params
   const { userData } = useContext(UserDataContext)
+  const [bannerImage, setBannerImage] = useState(userBannerImage)
 
-  const [bannerImage, setBannerImage] = useState(userBannerImage?.uri ? userBannerImage : null)
   const [spinner] = useState(false)
   const [showAddSectionMenu, setShowAddSectionMenu] = useState(false)
 
   // TODO find more secure way to verify editMode, probably validate userId through auth token
   const editMode = userId === userData.id
   // console.log(`editing ;${editMode}`)
+
+  useEffect(() => {
+    if (editMode) {
+      setBannerImage(userData.bannerImage)
+    }
+  }, [userData.bannerImage])
 
   // TODO organize this as utility functions
   const profileUpdate = async (data) => {
@@ -58,6 +64,7 @@ const Profile = () => {
       //   phone,
       //   isOnboarded,
       // }
+      // console.log('profile update with', data)
       const usersRef = doc(firestore, 'users', userData.id)
       updateDoc(usersRef, data).then(() => {
         // const updatedUserData = mergeJsonObjects(userData, data)
@@ -65,36 +72,31 @@ const Profile = () => {
       }).catch((error) => {
         Alert.alert('Error during profile update', error)
       })
-
-      // update userdata context
     } catch (e) {
       Alert.alert('Error', e.message)
     }
   }
 
-  const onBanerEdited = (image) => {
+  const onImageUpated = (image, name) => {
     if (image === null || image === undefined) {
       return
     }
-    setBannerImage(image)
-    // save to db?
-    profileUpdate({ bannerImage: image })
+    profileUpdate({ [name]: image })
       .then(() => {
-      // setBannerSpinner(false)
+        // console.log('profile updated')
+        // console.log('triggering setupdate automatically through subscriptionn??')
       })
       .catch((error) => {
-        Alert.alert('Error during profile update', error)
+        Alert.alert(`Error during ${name} update`, error)
       })
   }
 
+  const onBanerEdited = (image) => {
+    onImageUpated(image, 'bannerImage')
+  }
+
   const onAvatarEdited = (image) => {
-    profileUpdate({ avatar: image })
-      .then(() => {
-        // console.log('Avatar updated in db')
-      })
-      .catch((error) => {
-        Alert.alert('Error during profile update', error)
-      })
+    onImageUpated(image, 'avatar')
   }
 
   const styles = StyleSheet.create({

@@ -173,7 +173,7 @@ export default function EditExperience() {
                 label="Start Date*"
                 value={(startDate.year > 0 && startDate.month) ? `${startDate.month}-${startDate.year}` : ''}
                 onFocus={() => {
-                  console.log('start date')
+                  // console.log('start date')
                   setDialogTitle('Start Date')
                   setCurrentDate('start')
                   showDialog()

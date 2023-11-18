@@ -30,13 +30,16 @@ export const getSystemLocale = () => {
 // }
 
 // function to merge two JSON objects
-export const mergeJsonObjects = (obj1, obj2) => {
-  const result = { ...obj1 }
-  Object.keys(obj2).forEach((key) => {
-    if (typeof obj2[key] === 'object' && !Array.isArray(obj2[key])) {
-      result[key] = mergeJsonObjects(obj1[key] || {}, obj2[key])
+// newObject overrides oldObject's value if the key matches
+// else they gets merged
+export const mergeJsonObjects = (oldObject, newObject) => {
+  if (!newObject) return oldObject
+  const result = { ...oldObject }
+  Object.keys(newObject).forEach((key) => {
+    if (typeof newObject[key] === 'object' && !Array.isArray(newObject[key])) {
+      result[key] = mergeJsonObjects(oldObject[key] || {}, newObject[key])
     } else {
-      result[key] = obj2[key]
+      result[key] = newObject[key]
     }
   })
   return result

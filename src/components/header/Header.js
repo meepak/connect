@@ -63,7 +63,7 @@ export default function Header() {
         userId: userData.id,
         userFullName: userData.fullName,
         userAvatar: userData.avatar,
-        userBannerImage: { uri: userData.bannerImage },
+        userBannerImage: userData.bannerImage,
       },
     })
   }

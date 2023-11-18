@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  View, Text, ImageBackground, StyleSheet, Image as ImageNative,
+  View, Text, ImageBackground, StyleSheet,
 } from 'react-native'
 import { IconButton, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
@@ -24,7 +24,7 @@ const Banner = ({
 }) => {
   const { colors } = useTheme()
   const navigation = useNavigation()
-  const finalBannerImage = bannerImage || imageAssets.default_banner
+  const finalBannerImage = bannerImage || imageAssets.default_banner.localUri
 
   const styles = StyleSheet.create({
     banner: {
@@ -33,6 +33,7 @@ const Banner = ({
     bannerImage: {
       resizeMode: 'cover',
       height: 140,
+      backgroundColor: colors.secondaryContainer,
     },
     avatarContainer: {
       position: 'absolute',
@@ -81,7 +82,8 @@ const Banner = ({
 
   return (
     <View style={styles.banner}>
-      <ImageBackground source={finalBannerImage} style={styles.bannerImage}>
+      {/* Not sure imagebackground can use localUri if available so not taking any chances */}
+      <ImageBackground source={{ uri: finalBannerImage ?? null }} style={styles.bannerImage}>
         <IconButton
           icon="chevron-left"
           size={25}
@@ -118,7 +120,7 @@ const Banner = ({
 
 Banner.propTypes = {
   editMode: PropTypes.bool.isRequired,
-  bannerImage: ImageNative.propTypes.source,
+  bannerImage: PropTypes.string,
   userId: PropTypes.string.isRequired,
   userAvatar: PropTypes.string,
   userFullName: PropTypes.string.isRequired,

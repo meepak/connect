@@ -40,7 +40,7 @@ function extractInitials(fullName) {
 const Avatar = ({
   rounded, size, width, height, style, fullName, url, onPress, children,
 }) => {
-  if (url) {
+  if (url && typeof url === 'string') {
     return (
       <SystemAvatar
         source={{ uri: url }}

@@ -90,11 +90,11 @@ const Chat = () => {
   useLayoutEffect(() => {
     // setIsLoading(true)
 
-    console.log(JSON.stringify(messages))
+    // console.log(JSON.stringify(messages))
     let unsubscribe
     fetchChatGroup()
       .then((chatGroupId) => {
-        console.log(`got the chat group id ${chatGroupId}`)
+        // console.log(`got the chat group id ${chatGroupId}`)
         setCurrentChatGroupId(chatGroupId)
         const chatMessagesRef = collection(firestore, `/chats/${chatGroupId}/messages`)
         // This is returning all the records of chat every time, why??

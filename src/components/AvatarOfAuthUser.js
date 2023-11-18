@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   View, StyleSheet,
 } from 'react-native'
@@ -7,6 +7,7 @@ import {
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import { Avatar as SystemAvatar } from '@rneui/themed'
+import { Asset } from 'expo-asset'
 import Avatar from './core/Avatar'
 import { UserDataContext } from '../context/UserDataContext'
 import ImageSelectAndUpload from '../utils/ImageSelectAndUpload'
@@ -54,14 +55,18 @@ const AvatarOfAuthUser = ({
   const [progress, setProgress] = useState('')
   const [avatar, setAvatar] = useState(userData.avatar ?? null)
 
+  useEffect(() => {
+    setAvatar(userData.avatar)
+  }, [userData.avatar])
+
   const handleAvatarUpdated = (updatedAvatar) => {
     if (updatedAvatar) {
-      setAvatar(updatedAvatar)
       if (onEdited) {
         onEdited(updatedAvatar)
       }
     }
   }
+
   return (
     <View>
       {progress

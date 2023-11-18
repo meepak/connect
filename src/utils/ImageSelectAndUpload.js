@@ -52,6 +52,7 @@ const ImageSelectAndUpload = async ({
           getDownloadURL(uploadTask.snapshot.ref)
             .then((downloadURL) => {
               setProgress('')
+              console.log('upload finished...')
               onFinished(downloadURL)
             })
             .catch((error) => {
