@@ -11,7 +11,7 @@ import {
 const Fab = () => {
   const [toggleStackOnLongPress, setToggleStackOnLongPress] = React.useState(false)
   const [open, setOpen] = React.useState(false)
-  const [visible, setVisible] = useState(false)
+  const [visible] = useState(false)
   return (
     <Portal>
       <FAB.Group

@@ -21,6 +21,7 @@ const images = {
 // image preloading
 // const imageAssets = Object.keys(images).map((key) => Asset.fromModule(images[key])) // images[key]).downloadAsync() if images was url
 
+// This is not working when doing eas update, TODO check
 const imageAssets = {}
 Object.keys(images).forEach((key) => {
   imageAssets[key] = Asset.fromModule(images[key])

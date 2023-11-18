@@ -11,11 +11,6 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo-sm.png",
-    // "splash": {
-    //   // "image": "./assets/images/splash-new.png",
-    //   "image": "./assets/images/splash-new-dark.png",
-    //   "resizeMode": "cover"
-    // },
     "updates": {
       "enabled": true,
       "fallbackToCacheTimeout": 10000,
@@ -39,7 +34,7 @@
       "buildNumber": "1.0.0",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Use the photo library to change your avatar.",
-        "NSMicrophoneUsageDescription": "Allow microphone use to voice type"
+        // "NSMicrophoneUsageDescription": "Allow microphone use to voice type"
       },
       "userInterfaceStyle": "automatic"
     },
@@ -48,9 +43,9 @@
       "versionCode": 1,
       "userInterfaceStyle": "automatic",
       "permissions": [
-        "VIBRATE",
-        "CAMERA",
-        "RECORD_AUDIO"
+        // "VIBRATE",
+        // "CAMERA",
+        // "RECORD_AUDIO"
       ],
       "softwareKeyboardLayoutMode": "resize"
     },

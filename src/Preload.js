@@ -1,7 +1,7 @@
-import Constants from 'expo-constants'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import imageAssets from './theme/images'
 import jsonData from '../assets/data/occupations.json'
+import { ASYNC_STORAGE_KEY } from './utils/constants'
 
 /*
 * Things that needs pre-loading for app operation
@@ -15,7 +15,7 @@ import jsonData from '../assets/data/occupations.json'
 const storeData = async () => {
   try {
     // Check if the data already exists in AsyncStorage
-    const occupationsKey = Constants.expoConfig.asyncStorage.key.occupations
+    const occupationsKey = ASYNC_STORAGE_KEY.Occupations
     const existingData = await AsyncStorage.getItem(occupationsKey)
 
     if (existingData === null) {

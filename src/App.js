@@ -28,6 +28,7 @@ import Icon from './components/core/Icon'
 import AnimatedAppLoader from './components/splash/AnimatedAppLoader'
 import Route from './Route'
 import { hexThemeFromColor, prepareThemes } from './theme/custom'
+import { ASYNC_STORAGE_KEY, DISPLAY } from './utils/constants'
 
 // const isHermes = () => !!global.HermesInternal
 
@@ -44,8 +45,8 @@ const App = () => {
   const [isDark, setIsDark] = React.useState(systemTheme === 'dark')
   const [useCustomColor, setUseCustomColor] = React.useState(false)
 
-  const PREFERENCES_KEY = Constants.expoConfig.asyncStorage.key.preferences
-  const CUSTOM_COLOR_PALETTE = Constants.expoConfig.display.palette
+  const PREFERENCES_KEY = ASYNC_STORAGE_KEY.Preferences
+  const CUSTOM_COLOR_PALETTE = DISPLAY.Palette
 
   const isDarkMode = (themePref) => {
     if (!themePref || !['dark', 'light'].includes(themePref)) {

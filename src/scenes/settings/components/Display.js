@@ -4,11 +4,11 @@ import {
   Text, Card, useTheme, SegmentedButtons, Switch, Button, Menu,
 } from 'react-native-paper'
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import Constants from 'expo-constants'
+import { DISPLAY } from '../../../utils/constants'
 import PreferencesContext from '../../../context/PreferencesContext'
 
 const Display = () => {
-  const CUSTOM_COLOR_PALETTE = Constants.expoConfig.display.palette
+  const CUSTOM_COLOR_PALETTE = DISPLAY.Palette
   const { colors } = useTheme()
   const preferences = useContext(PreferencesContext)
   const [menuVisible, setMenuVisible] = useState(false)
