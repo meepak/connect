@@ -81,7 +81,6 @@ const Header = () => {
     })
   }
 
-
   const openChat = () => {
     navigation.navigate('ChatStack', {
       screen: 'ChatTabs',
@@ -133,10 +132,6 @@ const Header = () => {
         marginVertical={5}
         elevation={2}
       />
-
-      {/* <SquareMenu /> */}
-      {/* <Text style={styles.title}>Matches based on your preferences.</Text>
-        <Text style={styles.resultCount}>{dataItems.length} results.</Text> */}
     </View>
   )
 }

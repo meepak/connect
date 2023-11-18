@@ -8,7 +8,7 @@ import {
 import Avatar from './core/Avatar'
 
 const ListItemChat = ({
-  name, industry, location, occupation, isPromoted, image, onPress,
+  name, location, image, onPress,
 }) => {
   const { colors } = useTheme()
 

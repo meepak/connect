@@ -8,7 +8,7 @@ import { useTheme } from 'react-native-paper'
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Spinner from 'react-native-loading-spinner-overlay'
-import { useRoute, useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import { firestore } from '../../firebase'
 import { UserDataContext } from '../../context/UserDataContext'
@@ -36,12 +36,10 @@ import SelectYesNo from '../onboarding/_yesno'
 // SOME OF THE STUFF IS ALREADY ASKED IN INTRO SO FOCUS ON REFINING ONBOARDING QUESTION ONLY
 export default function EditKeySummary() {
   const { userData } = useContext(UserDataContext)
-  const { fonts, colors } = useTheme()
-  const route = useRoute()
-  const { data, from } = route.params
+  const { colors } = useTheme()
   const navigation = useNavigation()
 
-  const [avatar, setAvatar] = useState(userData.avatar)
+  const [avatar] = useState(userData.avatar)
   const [fullName] = useState(userData.fullName)
   const [phone] = useState(userData.phone ?? '')
   const [spinner, setSpinner] = useState(false)

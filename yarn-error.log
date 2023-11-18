@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/bin/node /usr/share/yarn/bin/yarn.js add react-native-safe-area-context~
+  /usr/bin/node /usr/share/yarn/bin/yarn.js add Color
 
 PATH: 
   /home/dpk/anaconda3/bin:/home/dpk/anaconda3/condabin:/usr/bin:/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/react-native-safe-area-context~: Not found
+  Error: https://registry.yarnpkg.com/Color: Not found
       at params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66145:18)
       at self.callback (/usr/share/yarn/lib/cli.js:140890:22)
       at Request.emit (node:events:514:28)

@@ -311,15 +311,15 @@ View new notifications.
 View past notificatons..
 Open, mark as read, delete or remind later action kn each notification
 Type of notifications --
-- New potential matches
-- Connect Requests accepted/received
-- KYC Requests / done
-- NDA Requests / signed
-- New message received in chat
-- Connected User profile update
-- NDA/Background Check due date reminders
-- Scheduled Meeting reminder in chat
-- Note reminder set by yourself to you to take some action
+- New potential matches **see in home page
+- Connect Requests accepted/received **go to connection mgt page
+- KYC Requests / done **go to kyc page
+- NDA Requests / signed **go to NDA page
+- New message received in chat **go to chat
+- Connected User profile update **view profile
+- NDA/Background Check due date reminders **go to nda/kyc page
+- Scheduled Meeting reminder --no action
+- Note reminder set by yourself to you to take some action --no action
 
 PROFILE SECTION
 View peoples  profile & see all shared info
@@ -429,8 +429,13 @@ Search Bar: Enables users to search for specific profiles or content easily.
 Summary of Important Information and Notifications:
 
 Display crucial information and notifications, 
+>>  Notification Types: Categorize by type (matches, connection requests, KYC requests, NDA requests, messages, etc.).
 
 accepted/declined connection requests, 
+>> Someone sent a connection request, invitations
+>> Some one accepted the connection request
+>> Someone declined the connection request
+
 and upcoming events or reminders.
 such as new potential matches, 
 

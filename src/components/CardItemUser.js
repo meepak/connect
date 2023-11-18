@@ -1,15 +1,14 @@
 /* eslint-disable react/prop-types */
 // To be decided on the user object will pass through to here
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import {
-  Text, Divider, TouchableRipple, useTheme, Card,
+  Text, useTheme, Card,
 } from 'react-native-paper'
-import Avatar from './core/Avatar'
 import imageAssets from '../theme/images'
 
 const CardItemUser = ({
-  name, industry, location, occupation, isPromoted, image, onPress, viewedAt,
+  name, industry, location, occupation, image, onPress, viewedAt,
 }) => {
   const { colors } = useTheme()
   // console.log(`${name} is viewed at ${viewedAt}`)
@@ -65,8 +64,6 @@ const CardItemUser = ({
     },
   })
 
-
-
   //   <TouchableRipple
   //     onPress={() => {
   //       // console.log('Pressed but onPress not yet handled.')
@@ -90,7 +87,7 @@ const CardItemUser = ({
 
   return (
     <Card style={styles.card} mode="elevated" onPress={onPress}>
-      <Card.Cover source={image ? { uri: image } : imageAssets.default_banner} style={{height: 50, width: 50}} />
+      <Card.Cover source={image ? { uri: image } : imageAssets.default_banner} style={{ height: 50, width: 50 }} />
       <Card.Title title={name} subtitle={occupation} />
       <Card.Content>
         <Text style={styles.Title}>{name}</Text>

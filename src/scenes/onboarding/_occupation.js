@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import Styles from './Styles'
 
 const SelectOccupations = ({
-  onOccupationsSelected, question, maxSelect, initialValues, error, onLayout,
+  onOccupationsSelected, question, initialValues, error, onLayout,
 }) => {
   const { colors, fonts } = useTheme()
   const styles = Styles(colors, fonts)
@@ -73,7 +73,6 @@ const SelectOccupations = ({
 
 SelectOccupations.propTypes = {
   question: PropTypes.string,
-  maxSelect: PropTypes.number,
   onOccupationsSelected: PropTypes.func.isRequired,
   initialValues: PropTypes.arrayOf(PropTypes.string),
   error: PropTypes.bool,
@@ -82,7 +81,6 @@ SelectOccupations.propTypes = {
 
 SelectOccupations.defaultProps = {
   question: null,
-  maxSelect: 5,
   initialValues: [],
   error: false,
 }

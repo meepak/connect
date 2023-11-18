@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { View, StatusBar } from 'react-native'
 import {
   Text, Card, useTheme, SegmentedButtons, Switch, Button, Menu,

@@ -4,7 +4,7 @@ import { useTheme } from 'react-native-paper'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import * as Notifications from 'expo-notifications'
 
-import TabNavigator from '../tabsBottom/Tabs'
+// import TabNavigator from '../tabsBottom/Tabs'
 import ModalStack from './ModalStack'
 import ProfileStack from './ProfileStack'
 import ChatStack from './ChatStack'

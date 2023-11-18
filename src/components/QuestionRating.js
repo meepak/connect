@@ -1,13 +1,14 @@
 import React from 'react'
 import { AirbnbRating } from 'react-native-ratings'
 // import Slider from '@react-native-community/slider'
-import { colors } from '../theme'
+// import { colors } from '../theme'
 
 // const ratingCompleted = (rating) => {
 //   console.log(`Rating is: ${rating}`)
 // }
 
-export default function QuestionRating() {
+export default function QuestionRating(colors) {
+  const { primary, tertiary } = colors
   return (
     <AirbnbRating
       count={3}
@@ -16,8 +17,8 @@ export default function QuestionRating() {
       size={25}
       style={{ paddingVertical: 20 }}
       showRating
-      selectedColor={colors.primary}
-      reviewColor={colors.tertiary}
+      selectedColor={primary}
+      reviewColor={tertiary}
     />
 
   // <Slider

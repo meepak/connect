@@ -40,7 +40,7 @@ const Profile = () => {
   const { userData } = useContext(UserDataContext)
 
   const [bannerImage, setBannerImage] = useState(userBannerImage?.uri ? userBannerImage : null)
-  const [spinner, setSpinner] = useState(false)
+  const [spinner] = useState(false)
   const [showAddSectionMenu, setShowAddSectionMenu] = useState(false)
 
   // TODO find more secure way to verify editMode, probably validate userId through auth token

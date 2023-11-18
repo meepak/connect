@@ -18,7 +18,7 @@ const Experience = (
 ) => {
   const { colors, fonts } = useTheme()
   const navigation = useNavigation()
-  const { userData, setUserData } = useContext(UserDataContext)
+  const { userData } = useContext(UserDataContext)
 
   const styles = StyleSheet.create({
     ...Styles(colors, fonts),

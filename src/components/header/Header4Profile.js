@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import {
-  View, Text, StyleSheet, Alert, Keyboard,
+  View, Text, StyleSheet, Alert,
 } from 'react-native'
 import { useTheme, IconButton, Button } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'

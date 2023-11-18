@@ -5,6 +5,7 @@ import {
   StyleSheet, View,
 } from 'react-native'
 import {
+  // eslint-disable-next-line no-unused-vars
   IconButton, Text, useTheme,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
@@ -34,10 +35,8 @@ const Styles = () => StyleSheet.create({
 const Header = () => {
   const navigation = useNavigation()
   const { colors } = useTheme()
-  const styles = Styles(colors)
+  const styles = Styles()
   const { userData } = useContext(UserDataContext)
-
-
   const openSearch = () => {
     navigation.navigate('SearchStack', {
       screen: 'Search',
@@ -70,10 +69,6 @@ const Header = () => {
           onPress={() => openSearch()}
         />
       </View>
-
-      {/* <SquareMenu /> */}
-      {/* <Text style={styles.title}>Matches based on your preferences.</Text>
-        <Text style={styles.resultCount}>{dataItems.length} results.</Text> */}
     </View>
   )
 }

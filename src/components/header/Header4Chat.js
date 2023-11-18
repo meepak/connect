@@ -12,7 +12,7 @@ export default function Header4Chat() {
   const { colors, fonts } = useTheme()
   const route = useRoute()
   const {
-    userId, userFullName,
+    userFullName,
   } = route.params
 
   const styles = StyleSheet.create({

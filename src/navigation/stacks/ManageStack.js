@@ -2,7 +2,7 @@ import React from 'react'
 import { useTheme } from 'react-native-paper'
 import { createStackNavigator } from '@react-navigation/stack'
 import HeaderStyle from '../../components/header/HeaderStyle'
-import Header from '../../components/header/Header'
+// import Header from '../../components/header/Header'
 import Manage from '../../scenes/manage'
 import Edit from '../../scenes/edit'
 

@@ -17,7 +17,7 @@ const SheetModal = React.forwardRef(({ children, snapsAt, onDismiss }, ref) => {
 
   // #region callbacks
   // if necessary pass this through props later
-  const handleChange = useCallback((index) => {
+  const handleChange = useCallback(() => {
     // eslint-disable-next-line no-console
     // console.log('index', index)
   }, [])

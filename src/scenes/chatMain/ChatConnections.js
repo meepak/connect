@@ -1,5 +1,5 @@
 import React, {
-  useState, useCallback, useContext, useEffect, useLayoutEffect,
+  useState, useCallback, useContext, useLayoutEffect,
 } from 'react'
 import {
   ScrollView, StyleSheet, RefreshControl,
@@ -8,7 +8,7 @@ import { Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import {
-  doc, deleteDoc, onSnapshot, collection, query, where, getDocs, setDoc, serverTimestamp, updateDoc,
+  collection, query, where, getDocs,
 } from 'firebase/firestore'
 import { firestore } from '../../firebase'
 import { UserDataContext } from '../../context/UserDataContext'

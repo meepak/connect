@@ -17,7 +17,7 @@ const ChatStack = () => {
         headerBackground: () => <HeaderStyle />,
         headerTitle: () => (
           <Header />
-        )
+        ),
       })}
     >
 

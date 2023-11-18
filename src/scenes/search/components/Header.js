@@ -1,4 +1,6 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import React, {
+  forwardRef, useEffect, useImperativeHandle, useRef,
+} from 'react'
 import {
   StyleSheet, View, Platform, Keyboard,
 } from 'react-native'

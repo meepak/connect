@@ -8,7 +8,7 @@ import {
   Text, useTheme,
 } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { useRoute, useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 
 import ScreenTemplate from '../../components/ScreenTemplate'
 import TextInputBox from '../../components/core/TextInputBox'
@@ -20,25 +20,23 @@ import Header4Profile from '../../components/header/Header4Profile'
 import SheetModal from '../../components/core/SheetModal'
 
 export default function EditIntro() {
-  const route = useRoute()
-  const { data, from } = route.params
   const navigation = useNavigation()
-  const { colors, fonts } = useTheme()
+  const { colors } = useTheme()
 
   const { userData } = useContext(UserDataContext)
   const [fullName, setFullName] = useState(userData.fullName)
   const [fullNameError, setFullNameError] = useState('')
   const [nickName, setNickName] = useState('')
   const [nickNameError, setNickNameError] = useState('')
-  const [pronouns, setPronouns] = useState('')
+  const [pronouns] = useState('')
   const [headLine, setHeadLine] = useState('')
-  const [occupation, setOccupation] = useState('')
+  const [occupation] = useState('')
   const [headLineError, setHeadLineError] = useState('')
-  const [industries, setIndustries] = useState('')
-  const [location, setLocation] = useState('')
-  const [mobile, setMobile] = useState('')
-  const [website, setWebsite] = useState('')
-  const [linkedIn, setLinkedIn] = useState('')
+  const [industries] = useState('')
+  const [location] = useState('')
+  const [mobile] = useState('')
+  const [website] = useState('')
+  const [linkedIn] = useState('')
 
   // refs
   const bottomSheetRef = useRef(null)

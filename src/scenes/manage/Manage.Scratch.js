@@ -9,7 +9,7 @@ import { Surface, Text, useTheme } from 'react-native-paper'
 import Dialog from 'react-native-dialog'
 import Spinner from 'react-native-loading-spinner-overlay'
 import {
-  doc, deleteDoc, onSnapshot, collection, query, where, getDocs, setDoc, serverTimestamp, updateDoc,
+  doc, deleteDoc, onSnapshot, collection, query, where, getDocs, serverTimestamp, updateDoc,
 } from 'firebase/firestore'
 import { signOut, deleteUser } from 'firebase/auth'
 import ScreenTemplate from '../../components/ScreenTemplate'
@@ -82,7 +82,7 @@ export default function Manage() {
   }, [])
 
   const onNotificationPress = async () => {
-    const res = await sendNotification({
+    /* const res = */ await sendNotification({
       title: 'Hello',
       body: 'This is some something 👋',
       data: 'something data',
@@ -101,7 +101,7 @@ export default function Manage() {
         setUserData('')
         // Restart() // do not restart, just go back to pre login page
       })
-      .catch((error) => {
+      .catch(() => {
         // console.log(`on sign out press - ${error.message}`)
       })
   }
@@ -128,10 +128,10 @@ export default function Manage() {
           .then(() => {
             // console.log('user deleted')
           })
-          .catch((error) => {
+          .catch(() => {
             // console.log(error.message)
           })
-      }).catch((error) => {
+      }).catch(() => {
         setSpinner(false)
         // console.log(error)
       })

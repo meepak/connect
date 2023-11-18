@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Text, Surface, Button, useTheme } from 'react-native-paper'
+import {
+  Text, Surface, Button, useTheme,
+} from 'react-native-paper'
 import { useRoute, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { layout } from 'theme'
-import moment from 'moment'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import HomeTitleContext from '../../context/HomeTitleContext'
 // import storage from '../../utils/Storage'
@@ -43,20 +43,20 @@ export default function Post() {
   const { setTitle } = useContext(HomeTitleContext)
   const navigation = useNavigation()
   const styles = Styles(fonts)
-  const [date, setDate] = useState('')
+  // const [date, setDate] = useState('')
 
-  const key = 'date'
+  // const key = 'date'
 
   const loadStorage = async () => {
-    try {
-      const result = await AsyncStorage.getItem(key)
-      const dt = JSON.parse(result)
-      // console.log(`loaded ${dt.date}`)
-      setDate(dt)
-    } catch (e) {
-      const result = { date: 'no data' }
-      setDate(result)
-    }
+    // try {
+    //   const result = await AsyncStorage.getItem(key)
+    //   const dt = JSON.parse(result)
+    //   // console.log(`loaded ${dt.date}`)
+    //   setDate(dt)
+    // } catch (e) {
+    //   const result = { date: 'no data' }
+    //   setDate(result)
+    // }
   }
 
   const saveStorage = () => {

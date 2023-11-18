@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 import React, {
-  useState, useContext, useLayoutEffect, useCallback, useEffect,
+  useState, useContext, useLayoutEffect, useCallback,
 } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 import { View, Platform } from 'react-native'
 import {
-  collection, addDoc, query, setDoc, getDocs, getDoc, orderBy, where, limit, onSnapshot, serverTimestamp, // limit,
+  collection, addDoc, query, getDocs, orderBy, where, limit, onSnapshot, serverTimestamp, // limit,
 } from 'firebase/firestore'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Divider, useTheme } from 'react-native-paper'

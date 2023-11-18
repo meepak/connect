@@ -1,14 +1,14 @@
-import React from 'react';
+import React from 'react'
 import {
   StyleSheet, View, Text, TouchableOpacity,
-} from 'react-native';
-import { useTheme } from 'react-native-paper';
-import PropTypes from 'prop-types';
+} from 'react-native'
+import { useTheme } from 'react-native-paper'
+import PropTypes from 'prop-types'
 
 const TextAndLink = ({
   texts, link, onPress, marginTop, marginBottom, marginHorizontal, alignSelf, textAlign, lineHeight,
 }) => {
-  const { colors, fonts } = useTheme();
+  const { colors, fonts } = useTheme()
   const styles = StyleSheet.create({
     linkView: {
       width: '100%',
@@ -35,7 +35,7 @@ const TextAndLink = ({
       textAlign,
       lineHeight,
     },
-  });
+  })
 
   return (
     <View style={styles.linkView}>
@@ -49,8 +49,8 @@ const TextAndLink = ({
         <Text style={styles.link}>{link}</Text>
       </TouchableOpacity>
     </View>
-  );
-};
+  )
+}
 
 TextAndLink.propTypes = {
   texts: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -62,7 +62,7 @@ TextAndLink.propTypes = {
   alignSelf: PropTypes.oneOf(['center', 'flex-start', 'flex-end', 'stretch', 'baseline']),
   textAlign: PropTypes.oneOf(['auto', 'left', 'right', 'center', 'justify']),
   lineHeight: PropTypes.number,
-};
+}
 
 TextAndLink.defaultProps = {
   marginTop: 20,
@@ -71,6 +71,6 @@ TextAndLink.defaultProps = {
   alignSelf: 'center',
   textAlign: 'auto',
   lineHeight: 24,
-};
+}
 
-export default TextAndLink;
+export default TextAndLink

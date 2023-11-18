@@ -22,7 +22,7 @@ const Banner = ({
   onAvatarEdited,
 
 }) => {
-  const { colors, fonts } = useTheme()
+  const { colors } = useTheme()
   const navigation = useNavigation()
   const finalBannerImage = bannerImage || imageAssets.default_banner
 

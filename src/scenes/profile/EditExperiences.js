@@ -23,9 +23,9 @@ export default function EditExperiences() {
   // const route = useRoute()
   // const { data, from } = route.params
   const navigation = useNavigation()
-  const { colors, fonts } = useTheme()
+  const { colors } = useTheme()
 
-  const { userData, setUserData } = useContext(UserDataContext)
+  const { userData } = useContext(UserDataContext)
   // const [fullName, setFulName] = useState(userData.fullName)
   // const [fullNameError, setFullNameError] = useState('')
 
