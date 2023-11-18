@@ -1,5 +1,5 @@
 import React, {
-  useState, useCallback, useContext, useEffect,
+  useState, useCallback, useContext, useEffect, useLayoutEffect,
 } from 'react'
 import {
   ScrollView, StyleSheet, RefreshControl,
@@ -134,7 +134,7 @@ export default function ChatConnections() {
 
   ))
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setSpinner(true)
     fetchConnection()
   }, [refreshing])

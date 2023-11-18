@@ -2,10 +2,10 @@ import React, {
   useState, useCallback, useEffect, useContext,
 } from 'react'
 import {
-  ActivityIndicator, StyleSheet, View, FlatList,
+  ActivityIndicator, StyleSheet, View, FlatList, Alert,
 } from 'react-native'
 import {
-  Divider, useTheme,
+  Divider, FAB, Portal, useTheme,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 
@@ -76,6 +76,9 @@ export default function Home() {
   const styles = Styles(colors, fonts)
   const { userData } = useContext(UserDataContext)
   const [spinner, setSpinner] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const [toggleStackOnLongPress, setToggleStackOnLongPress] = React.useState(false)
+  const [open, setOpen] = React.useState(false)
   // const [lastFetchedData, setLastFetchedData] = useState(null)
 
   // Define the data generation function
@@ -251,7 +254,7 @@ export default function Home() {
           ListHeaderComponent={<Header />}
           ListFooterComponent={renderSpinner}
           ItemSeparatorComponent={<Divider />}
-          contentContainerStyle={styles.contentContainer}
+          // contentContainerStyle={styles.contentContainer}
           showsVerticalScrollIndicator={false}
           // ListEmptyComponent={}
           keyExtractor={(item) => item.key}
@@ -270,6 +273,52 @@ export default function Home() {
         textStyle={{ color: colors.onSurface }}
         overlayColor="rgba(0,0,0,0.5)"
       /> */}
+        <Portal>
+          <FAB.Group
+            open={open}
+            icon={open ? 'calendar' : 'plus'}
+            toggleStackOnLongPress={toggleStackOnLongPress}
+            actions={[
+              { icon: 'plus', onPress: () => {} },
+              { icon: 'star', label: 'Star', onPress: () => {} },
+              { icon: 'person', label: 'person', onPress: () => {} },
+              {
+                icon: 'bell',
+                label: 'Remind',
+                onPress: () => {},
+                size: 'small', // 'medium'
+              },
+              {
+                icon: toggleStackOnLongPress
+                  ? 'gesture-tap'
+                  : 'eye',
+                label: toggleStackOnLongPress
+                  ? 'Toggle on Press'
+                  : 'Toggle on Long Press',
+                onPress: () => {
+                  setToggleStackOnLongPress(!toggleStackOnLongPress)
+                },
+              },
+            ]}
+            enableLongPressWhenStackOpened
+            onStateChange={(sopen) => setOpen(sopen)}
+            onPress={() => {
+              if (toggleStackOnLongPress) {
+                Alert.alert('Fab is Pressed')
+              // do something on press when the speed dial is closed
+              } else if (open) {
+                Alert.alert('Fab is Pressed')
+              }
+            }}
+            onLongPress={() => {
+              if (!toggleStackOnLongPress || open) {
+                Alert.alert('Fab is Long Pressed')
+                // do something if the speed dial is open
+              }
+            }}
+            visible={visible}
+          />
+        </Portal>
       </View>
     </ScreenTemplate>
   )

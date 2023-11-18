@@ -1,14 +1,15 @@
 import React, { useMemo, useCallback } from 'react'
-import { StatusBar } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import {
   BottomSheetModal,
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet'
 import PropTypes from 'prop-types'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const SheetModal = React.forwardRef(({ children, snapsAt, onDismiss }, ref) => {
   const { colors } = useTheme()
+  const insets = useSafeAreaInsets()
   // refs
   //   const bottomSheetRef = useRef(null)
   // variables, TODO pass this as props
@@ -39,7 +40,7 @@ const SheetModal = React.forwardRef(({ children, snapsAt, onDismiss }, ref) => {
     <BottomSheetModal
       ref={ref}
       snapPoints={snapPoints}
-      // topInset={+StatusBar.currentHeight} // since this only works in android, do not rely on it, use inset provided by safe area view
+      topInset={+insets.top} // since this only works in android, do not rely on it, use inset provided by safe area view
       enablePanDownToClose
       enableDismissOnClose
       onDismiss={onDismiss}

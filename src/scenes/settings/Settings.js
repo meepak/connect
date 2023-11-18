@@ -1,118 +1,41 @@
 import React from 'react'
-import {
-  StyleSheet, View,
-} from 'react-native'
-import { Text, useTheme } from 'react-native-paper'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import ScreenTemplate from '../../components/ScreenTemplate'
+import { View } from 'react-native'
+import { Text } from 'react-native-paper'
+import ModalTemplate from '../../components/ModalTemplate'
 import Header from './components/Header'
 import Account from './components/Account'
 import Display from './components/Display'
 import Temp from './components/Template'
 
-const Styles = (colors) => StyleSheet.create({
-  empty: {
-    paddingVertical: 20,
-  },
-  footer: {
-    marginBottom: 15,
-  },
-  pageTitle: {
-    // flex:1,
-    backgroundColor: colors.elevation.level3,
-    height: 50,
-    width: '100%',
-    // borderWidth: 1,
-    // borderColor: 'red',
-  },
-  titleText: {
-    top: -12,
-    left: 20,
-  },
-  content: {
-    left: 0,
-    width: '100%',
-    height: '100%',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    backgroundColor: colors.background,
-    elevation: -5,
-    // borderWidth: 1,
-    // borderColor: colors.surface,
-    // shadowColor: colors.onBackground,
-    // shadowOffset: { width: -10, height: -10 },
-    // shadowOpacity: 0.7,
-    // shadowRadius: 5,
-    // elevation: 5,
-    zIndex: 3,
-    // elevation: 3,
-  },
-  scrollView: {
-    paddingHorizontal: 22,
-    paddingVertical: 40,
-  },
-  foundation: {
-    backgroundColor: colors.elevation.level3,
-  },
-
-  spinnerView: {
-    paddingVertical: 20,
-  },
-
-})
-
-export default function Settings() {
-  const { colors } = useTheme()
-  const styles = Styles(colors)
-
-
+const Settings = () => {
+  const marginVertical = 20
   return (
-    <ScreenTemplate>
-      <Header />
-      <View style={{ flex: 1 }}>
-        <View style={styles.pageTitle}>
-          <Text style={styles.titleText} variant="headlineLarge">Settings</Text>
-        </View>
-        <View style={styles.foundation}>
-          <View style={styles.content}>
-            <KeyboardAwareScrollView
-              style={styles.scrollView}
-              // overScrollMode="always"
-              showsVerticalScrollIndicator={false}
-              // pagingEnabled
-            >
-              <Account />
-              <View style={styles.empty} />
-              <Display />
-              <View style={styles.empty} />
-              <Temp id={1} />
-              <View style={styles.empty} />
-              <Temp id={2} />
-              <View style={styles.empty} />
-              <Temp id={3} />
-              <View style={styles.empty} />
-              <Temp id={4} />
-              <View style={styles.empty} />
-              <Temp id={5} />
-              <View style={styles.empty} />
-              <Temp id={6} />
-              <Temp id={7} />
-              {/*
-              TODO -- THE FOOTER ISSUE SEEMS TO BE EVERY WHERE ,
-                      FIX IT AN ALSO ADD THE FADE IN EFFECT
-                      AT TOP AND BOTTOM IF POSSIBLE
-              */}
-              <View style={styles.footer} />
-            </KeyboardAwareScrollView>
-
-          </View>
-        </View>
-      </View>
-      {/* <Spinner
-        visible={spinner}
-        textStyle={{ color: colors.onSurface }}
-        overlayColor="rgba(0,0,0,0.5)"
-      /> */}
-    </ScreenTemplate>
+    <ModalTemplate
+      header={<Header />}
+      subHeader={<Text style={{ top: -12, left: 20 }} variant="headlineLarge">Settings</Text>}
+      content={(
+        <>
+          <Account />
+          <View style={{ marginVertical }} />
+          <Display />
+          <View style={{ marginVertical }} />
+          <Temp id={1} />
+          <View style={{ marginVertical }} />
+          <Temp id={2} />
+          <View style={{ marginVertical }} />
+          <Temp id={3} />
+          <View style={{ marginVertical }} />
+          <Temp id={4} />
+          <View style={{ marginVertical }} />
+          <Temp id={5} />
+          <View style={{ marginVertical }} />
+          <Temp id={6} />
+          <View style={{ marginVertical }} />
+          <Temp id={7} />
+        </>
+      )}
+    />
   )
 }
+
+export default Settings

@@ -25,7 +25,6 @@ function MonthYearPicker({
   let currentMonthIndex = months.indexOf(initialMonth) >= 0 ? months.indexOf(initialMonth) : (nowMonth - 1)
 
   const { colors, fonts } = useTheme()
-  console.log(colors)
   const pageWidth = Dimensions.get('window').width
   const eachWheelWidth = (pageWidth / 2) * 0.6
   const eachWheelHeight = Dimensions.get('window').height / 4

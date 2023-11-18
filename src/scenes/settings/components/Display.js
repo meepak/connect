@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { View, StatusBar } from 'react-native'
 import {
   Text, Card, useTheme, SegmentedButtons, Switch, Button, Menu,
@@ -69,7 +69,7 @@ const Display = () => {
           <Switch
             value={preferences.useCustomColor}
             onValueChange={(value) => {
-              preferences.setThemeCustomColor(value ? CUSTOM_COLOR_PALETTE[5] : '')
+              preferences.setUseCustomColor(value)
             }}
             color={colors.tertiary}
           />

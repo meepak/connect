@@ -2,7 +2,6 @@ import React from 'react'
 import { useTheme } from 'react-native-paper'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import Chat from '../../scenes/chat'
-import { ChatRecent } from '../../scenes/chatMain'
 import HeaderStyle from '../../components/header/HeaderStyle'
 import Header4Chat from '../../components/header/Header4Chat'
 import { ChatTabs } from '../tabsTop'
@@ -18,13 +17,13 @@ const ChatStack = () => {
         headerBackground: () => <HeaderStyle />,
         headerTitle: () => (
           <Header />
-        ),
+        )
       })}
     >
 
       <Stack.Group
         screenOptions={(/* { navigation } */) => ({
-          headerBackground: () => <HeaderStyle />,
+          // headerBackground: () => <HeaderStyle />,
           // headerTintColor: colors.onBackground,
           // headerBackTitleVisible: false,
           // headerBackTitleStyle: {
@@ -37,11 +36,6 @@ const ChatStack = () => {
         <Stack.Screen
           name="ChatTabs"
           component={ChatTabs}
-        />
-
-        <Stack.Screen
-          name="ChatRecent"
-          component={ChatRecent}
         />
 
         <Stack.Screen

@@ -27,6 +27,13 @@ const Styles = (colors) => StyleSheet.create({
     marginLeft: 12,
     // marginTop: 5, // probably put it back for android only
   },
+  rightIcons: {
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
   hi: {
     marginLeft: 20,
     marginVertical: 5,
@@ -74,6 +81,19 @@ const Header = () => {
     })
   }
 
+
+  const openChat = () => {
+    navigation.navigate('ChatStack', {
+      screen: 'ChatTabs',
+      params: { // userId, userFullName, userAvatar, userBannerImage,
+        userId: userData.id,
+        userFullName: userData.fullName,
+        userAvatar: userData.avatar,
+        userBannerImage: { uri: userData.bannerImage },
+      },
+    })
+  }
+
   return (
     <View style={styles.header}>
       <View style={styles.headerIcons}>
@@ -81,12 +101,20 @@ const Header = () => {
           size={45}
           onPress={() => openProfile()}
         />
-        <IconButton
-          icon="gear"
-          color={colors.onBackground}
-          size={24}
-          onPress={() => openSettings()}
-        />
+        <View style={styles.rightIcons}>
+          <IconButton
+            icon="gear"
+            color={colors.onBackground}
+            size={24}
+            onPress={() => openSettings()}
+          />
+          <IconButton
+            icon="comment-discussion"
+            color={colors.onBackground}
+            size={24}
+            onPress={() => openChat()}
+          />
+        </View>
       </View>
       <Text style={styles.hi} variant="headlineLarge">Hi {userData.fullName.split(' ')[0]}</Text>
 

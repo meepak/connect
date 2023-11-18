@@ -101,21 +101,19 @@ const App = () => {
         setIsDark(() => isDarkMode(themePref))
         setThemePreference(() => themePref)
       },
-      setThemeCustomColor: (customColor) => {
-        if (CUSTOM_COLOR_PALETTE.includes(customColor)) {
-          setUseCustomColor(() => true)
-          setThemeCustomColor(() => customColor)
-        } else {
-          setUseCustomColor(() => false)
-          setThemeCustomColor('')
+      setUseCustomColor: (value) => {
+        if (value && !CUSTOM_COLOR_PALETTE.includes(themeCustomColor)) {
+          setThemeCustomColor(CUSTOM_COLOR_PALETTE[7]) // set default color
         }
+        setUseCustomColor(() => value)
       },
+      useCustomColor,
+      setThemeCustomColor,
       themePreference,
       themeCustomColor,
       isDark,
-      useCustomColor,
     }),
-    [themePreference, themeCustomColor],
+    [themePreference, themeCustomColor, useCustomColor],
   )
 
   const { adaptedTheme } = adaptNavigationTheme(isDark

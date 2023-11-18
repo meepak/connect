@@ -1,8 +1,7 @@
 import React, { useEffect, useContext } from 'react'
 import { StyleSheet, Keyboard } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context' // This suppose to work better when there is no header bar
+import { useSafeAreaInsets } from 'react-native-safe-area-context' // This suppose to work better when there is no header bar
 import { StatusBar } from 'expo-status-bar'
-
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import PropTypes from 'prop-types'
@@ -26,6 +25,7 @@ const ScreenTemplate = (props) => {
   } = props
   const navigation = useNavigation()
   const preferences = useContext(PreferencesContext)
+  const insets = useSafeAreaInsets()
 
   if (isError) {
     // console.log('Screen Template received IsError')
@@ -45,14 +45,12 @@ const ScreenTemplate = (props) => {
   }), [navigation])
 
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <BottomSheetModalProvider>
-        <SafeAreaView style={styles.container} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-          <StatusBar style={preferences.isDark ? 'light' : 'dark'} />
-          { children }
-        </SafeAreaView>
-      </BottomSheetModalProvider>
-    </GestureHandlerRootView>
+    <BottomSheetModalProvider>
+      <GestureHandlerRootView style={[styles.container, { paddingTop: insets.top }]} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+        <StatusBar style={preferences.isDark ? 'light' : 'dark'} />
+        { children }
+      </GestureHandlerRootView>
+    </BottomSheetModalProvider>
   )
 }
 

@@ -2,7 +2,7 @@ import React, {
   useState, useCallback,
 } from 'react'
 import {
-  ScrollView, StyleSheet, RefreshControl,
+  StyleSheet, RefreshControl, FlatList,
 } from 'react-native'
 import { Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
@@ -42,8 +42,9 @@ export default function ChatRecent() {
     }, 2000)
   }, [])
 
-  const indexArray = new Array(Math.round(Math.random() * 10)).fill('')
-  function generateRandomName() {
+  const indexArray = new Array(Math.round(Math.random() * 10)).fill('').map((_, index) => ({ index }))
+
+  const generateRandomName = () => {
     // Create a list of first names and last names.
     const firstNames = ['Alice', 'Bob', 'Carol', 'Dave', 'Eve', 'Frank', 'George', 'Hannah', 'Isaac', 'Jack', 'Kate']
     const lastNames = ['Smith', 'Jones', 'Williams', 'Brown', 'Johnson', 'Davis', 'Miller', 'Wilson', 'Taylor', 'Anderson', 'Thomas']
@@ -64,48 +65,55 @@ export default function ChatRecent() {
     'https://images.pexels.com/photos/3797438/pexels-photo-3797438.jpeg?auto=compress&cs=tinysrgb&w=1600',
   ]
 
+  const generateRandomData = useCallback((index) => {
+    const name = generateRandomName()
+    const image = index % 2 === 0 ? images[index / 2] : null
+    return { name, image }
+  }, [])
+
+  const renderItem = useCallback(({ item }) => {
+    const { name, image } = generateRandomData(item.index)
+    return (
+      <ListItemChat
+        key={item.index + 1}
+        name={name}
+        image={image}
+        occupation="Full Stack Engineer - Frontend Focus"
+        industry="Jeeve Solutions Australia"
+        location="Australia (Remote)"
+        rate="A$100/hr-A$110/hr"
+        isPromoted
+        onPress={() => {
+        // console.log('going to chat')
+          navigation.navigate('ChatStack', {
+            screen: 'Chat',
+            params: {
+              userId: 1,
+              userFullName: name,
+            // userAvatar: image,
+            // userBannerImage: banner,
+            // from: 'Find screen',
+            },
+          })
+        }}
+      />
+    )
+  },
+  [])
+  const keyExtractor = useCallback((item) => item.index.toString(), [])
   return (
     <ScreenTemplate>
       <Text style={styles.Title}>Continue chatting...</Text>
       <Text style={styles.ResultCount}>Let&apos;s chat!!.</Text>
-      <ScrollView
-        style={styles.main}
+      <FlatList
+        data={indexArray}
+        renderItem={renderItem}
+        // contentContainerStyle={styles.main}
+        keyExtractor={keyExtractor}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-      >
-        {indexArray.map((_, index) => {
-          const name = generateRandomName()
-          const image = index % 2 === 0 ? images[index / 2] : null
-          return (
-            <ListItemChat
-          // eslint-disable-next-line react/no-array-index-key
-              key={index + 1}
-              name={name}
-              image={image}
-              occupation="Full Stack Engineer - Frontend Focus"
-              industry="Jeeve Solutions Australia"
-              location="Australia (Remote)"
-              rate="A$100/hr-A$110/hr"
-              isPromoted
-              onPress={() => {
-                // console.log('going to chat')
-                navigation.navigate('ChatStack', {
-                  screen: 'Chat',
-                  params: {
-                    userId: 1,
-                    userFullName: name,
-                    // userAvatar: image,
-                    // userBannerImage: banner,
-                    // from: 'Find screen',
-                  },
-                })
-              }}
-            />
-
-          )
-        })}
-      </ScrollView>
+            }
+      />
     </ScreenTemplate>
   )
 }

@@ -50,7 +50,7 @@ const TermsAndCondition = ({ show, onClose }) => {
                 </html`
 
   return (
-    <SheetModal ref={tncSheetRef} snapsAt={['75%']} onDismiss={handleDismiss}>
+    <SheetModal ref={tncSheetRef} snapsAt={['50%', '75%', '100%']} onDismiss={handleDismiss}>
       <View style={{
         flexDirection: 'row',
         alignItems: 'center',

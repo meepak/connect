@@ -11,6 +11,7 @@ import ChatStack from './ChatStack'
 import NotificationStack from './NotificationStack'
 import SearchStack from './SearchStack'
 import SettingsStack from './SettingsStack'
+import HomeStack from './HomeStack'
 // import HomeStack from './HomeStack'
 // import ManageStack from './ManageStack'
 
@@ -78,9 +79,14 @@ export default function RootStack() {
         cardOverlayEnabled: false,
       }}
     >
-      <Stack.Screen
+      {/* <Stack.Screen
         name="HomeRoot"
         component={TabNavigator}
+      /> */}
+
+      <Stack.Screen
+        name="HomeStack"
+        component={HomeStack}
       />
 
       <Stack.Group
@@ -93,6 +99,15 @@ export default function RootStack() {
           headerTintColor: colors.onBackground,
         }}
       >
+        <Stack.Screen
+          name="ChatStack"
+          component={ChatStack}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+            gestureDirection: 'horizontal-inverted',
+          }}
+        />
+
         {/* We should be able to access this through Tab Navigator, get rid of all redundant navigations */}
         <Stack.Screen
           name="ProfileStack"
@@ -111,11 +126,6 @@ export default function RootStack() {
           name="ManageStack"
           component={ManageStack}
         /> */}
-
-        <Stack.Screen
-          name="ChatStack"
-          component={ChatStack}
-        />
 
       </Stack.Group>
 

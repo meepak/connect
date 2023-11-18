@@ -30,46 +30,34 @@ const ProfileStack = () => (
       }}
     />
 
-    <Stack.Screen
-      name="EditIntro"
-      component={EditIntro}
-      options={{
-        ...TransitionPresets.SlideFromRightIOS,
-      }}
-    />
-
-    <Stack.Screen
-      name="EditKeySummary"
-      component={EditKeySummary}
-      options={{
-        ...TransitionPresets.SlideFromRightIOS,
-      }}
-    />
-
-    <Stack.Screen
-      name="EditExperiences"
-      component={EditExperiences}
-      options={{
-        ...TransitionPresets.SlideFromRightIOS,
-      }}
-    />
-    <Stack.Screen
-      name="EditExperience"
-      component={EditExperience}
-      options={{
-        ...TransitionPresets.ModalPresentationIOS,
-      }}
-    />
-
     <Stack.Group
       screenOptions={{
         presentation: 'modal',
         headerShown: false,
         gestureEnabled: false,
         cardOverlayEnabled: false,
-        ...TransitionPresets.ModalPresentationIOS,
+        ...TransitionPresets.ModalSlideFromBottomIOS,
       }}
     >
+      <Stack.Screen
+        name="EditIntro"
+        component={EditIntro}
+      />
+
+      <Stack.Screen
+        name="EditKeySummary"
+        component={EditKeySummary}
+      />
+
+      <Stack.Screen
+        name="EditExperiences"
+        component={EditExperiences}
+      />
+      <Stack.Screen
+        name="EditExperience"
+        component={EditExperience}
+      />
+
       <Stack.Screen
         name="SelectLocation"
         component={SelectLocation}
