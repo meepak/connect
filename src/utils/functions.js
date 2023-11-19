@@ -69,6 +69,29 @@ export const convertHexToRGBA = (hexCode, opacity = 1) => {
   return `rgba(${r},${g},${b},${op})`
 }
 
+/**
+ * Test cases
+ * console.log(splitName("Joe Blogg")); // { firstName: 'Joe', lastName: 'Blogg' }
+ * console.log(splitName("Joe Harshad Blog")); // { firstName: 'Joe', lastName: 'Harshad Blog' }
+ * console.log(splitName("Joe Harshad Bahadur Blog")); // { firstName: 'Joe Harshad', lastName: 'Bahadur Blog' }
+ * console.log(splitName("Joe Harshad Chand Bahadur Blog")); // { firstName: 'Joe Harshad', lastName: 'Chand Bahadur Blog' }
+ */
+export const splitName = (fullName) => {
+  // Split the full name into an array of names
+  const names = fullName.split(' ')
+
+  // Determine the index to split the names into first and last
+  const splitIndex = Math.ceil(names.length / 2)
+
+  // Join the names up to the split index as the first name
+  const firstName = names.slice(0, splitIndex).join(' ')
+
+  // Join the names from the split index as the last name
+  const lastName = names.slice(splitIndex).join(' ')
+
+  return { firstName, lastName }
+}
+
 // Doesn't seem to work as expected
 // To be tested later
 export async function sleep(ms) {

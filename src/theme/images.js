@@ -2,7 +2,7 @@ import {
   Asset,
 } from 'expo-asset'
 
-export const images = {
+export const appImages = {
   default_banner: require('../../assets/images/default-banner.png'),
   logo_black: require('../../assets/images/fa_black.png'),
   logo_white: require('../../assets/images/fa_white.png'),
@@ -11,6 +11,22 @@ export const images = {
   intro3: require('../../assets/images/thrive.png'),
   // test_remote_image: require('https://findassociate.com/mahatau.png'),
 }
+
+// For mocking purpose used in generateMockData, will be removed before release
+export const mockImages = [
+  'https://images.pexels.com/photos/2218786/pexels-photo-2218786.jpeg?auto=compress&cs=tinysrgb&w=200&dpr=1',
+  'https://images.pexels.com/photos/2906635/pexels-photo-2906635.jpeg?auto=compress&cs=tinysrgb&w=200',
+  'https://images.pexels.com/photos/989200/pexels-photo-989200.jpeg?auto=compress&cs=tinysrgb&w=200',
+  'https://images.pexels.com/photos/1804514/pexels-photo-1804514.jpeg?auto=compress&cs=tinysrgb&w=200',
+  'https://images.pexels.com/photos/3797438/pexels-photo-3797438.jpeg?auto=compress&cs=tinysrgb&w=1600',
+]
+
+export const mockBannerImages = [
+  'https://images.pexels.com/photos/818261/pexels-photo-818261.jpeg?auto=compress&cs=tinysrgb&w=400',
+  'https://images.freeimages.com/variants/k1wQB7egQotJ7Hr3ZBPP1S5c/f4a36f6589a0e50e702740b15352bc00e4bfaf6f58bd4db850e167794d05993d?fmt=webp&w=550',
+  'https://images.freeimages.com/variants/YSotMxjHEvoFiBGaZkkJv5K8/f4a36f6589a0e50e702740b15352bc00e4bfaf6f58bd4db850e167794d05993d?fmt=webp&w=500',
+  'https://images.freeimages.com/images/large-previews/e78/family-1421593.jpg?fmt=webp&w=550',
+]
 
 /**
  * It may not make lots of sense but it may provide benefit
@@ -35,7 +51,7 @@ export const images = {
  * my understanding was wrong
  */
 export async function preloadImages() {
-  return Object.values(images).map((image) => Asset.fromModule(image).downloadAsync())
+  return [...Object.values(appImages), ...mockImages, ...mockBannerImages].map((image) => Asset.fromModule(image).downloadAsync())
 }
 
 /**
@@ -49,7 +65,7 @@ export async function preloadImages() {
  *
  * ** imageAssets.key
  */
-const imageAssets = Object.entries(images).reduce((acc, [key, value]) => {
+const imageAssets = Object.entries(appImages).reduce((acc, [key, value]) => {
   acc[key] = Asset.fromModule(value)
   return acc
 }, {})

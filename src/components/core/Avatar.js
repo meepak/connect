@@ -36,7 +36,7 @@ function extractInitials(fullName) {
   return initials
 }
 
-// TODO implement onError, return error within onEdited
+// TODO implement this using AvatarImage & AvatarText from react-native-paper
 const Avatar = ({
   rounded, size, width, height, style, fullName, url, onPress, children,
 }) => {

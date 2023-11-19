@@ -1,7 +1,7 @@
-import images from './images'
+// import images from './images'
 import layout from './layout'
 
 export {
-  images,
+  // images,
   layout,
 }

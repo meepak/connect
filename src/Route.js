@@ -38,28 +38,31 @@ const Route = () => {
             }
 
             const newAvatar = Asset.fromModule(newUserData.avatar)
-
-            if (newAvatar.localUri !== null && newAvatar.localUri !== userData.avatar) {
+            if (newAvatar.localUri !== userData.avatar) {
+              if (newAvatar.localUri !== null) {
               // console.log('Avatar is already cached:', newAvatar)
-              updatedData = { ...updatedData, avatar: newAvatar.localUri }
-            } else {
-              Asset.fromModule(newUserData.avatar).downloadAsync().then((aValue) => {
+                updatedData = { ...updatedData, avatar: newAvatar.localUri }
+              } else {
+                newAvatar.downloadAsync().then((aValue) => {
                 // update state once this is ready
-                setUserData((adata) => ({ ...adata, avatar: aValue.localUri }))
+                  setUserData((adata) => ({ ...adata, avatar: aValue.localUri }))
                 // console.log('Avatar is now cached:', newAvatar)
-              })
+                })
+              }
             }
 
             const newBannerImage = Asset.fromModule(newUserData.bannerImage)
-            if (newBannerImage.localUri !== null && newBannerImage.localUri !== userData.bannerImage) {
+            if (newBannerImage.localUri !== userData.bannerImage) {
+              if (newBannerImage.localUri !== null) {
               // console.log('Banner is already cached:', newBannerImage)
-              updatedData = { ...updatedData, bannerImage: newBannerImage.localUri }
-            } else {
-              Asset.fromModule(newUserData.bannerImage).downloadAsync().then((bValue) => {
+                updatedData = { ...updatedData, bannerImage: newBannerImage.localUri }
+              } else {
+                newBannerImage.downloadAsync().then((bValue) => {
                 // update state once this is ready
-                setUserData((bdata) => ({ ...bdata, bannerImage: bValue.localUri }))
+                  setUserData((bdata) => ({ ...bdata, bannerImage: bValue.localUri }))
                 // console.log('bannerImage is now cached:', newBannerImage)
-              })
+                })
+              }
             }
 
             // console.log(newUserData)

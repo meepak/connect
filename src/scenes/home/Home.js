@@ -13,10 +13,10 @@ import { useNavigation } from '@react-navigation/native'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import ListItemUser from '../../components/ListItemUser'
 import { UserDataContext } from '../../context/UserDataContext'
-import generateDummyData from './DummyData'
-import SquareMenu from './components/SquareMenu'
+import generateMockData from './util/mockData'
 import Header from './components/Header'
-import { fetchPotentialMatches, viewProfile } from './util'
+import PotentialMatchesHeader from './components/PotentialMatchesHeader'
+import { fetchPotentialMatches, viewProfile } from './util/db'
 
 export default function Home() {
   const navigation = useNavigation()
@@ -32,8 +32,8 @@ export default function Home() {
       setDataItems((prevDataItems) => [...prevDataItems, ...newDataItems])
     } else {
       // append with dummy data
-      const dummyItems = generateDummyData(1, 10)
-      setDataItems(() => [{ key: 'Header' }, ...newDataItems, ...dummyItems])
+      const mockItems = generateMockData(1, 10)
+      setDataItems(() => [{ key: 'Header' }, ...newDataItems, ...mockItems])
     }
     // setSpinner(false)
   }
@@ -70,7 +70,7 @@ export default function Home() {
 
   const renderItem = useCallback(({ item }) => (
     item.key === 'Header'
-      ? <SquareMenu />
+      ? <PotentialMatchesHeader />
       : (
         <ListItemUser // List is better than card here
           name={item.name}
@@ -116,6 +116,7 @@ export default function Home() {
           onEndReachedThreshold={0}
           refreshing={loadingMoreData}
           stickyHeaderIndices={dataItems.length > 2 ? [1] : [0]}
+          // StickyHeaderComponent={PotentialMatchesHeader}
         />
         {/* <Spinner
         visible={spinner}

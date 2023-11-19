@@ -18,6 +18,7 @@ const Button = (props) => {
     icon,
     marginHorizontal,
     marginVertical,
+    paddingHorizontal,
     iconSize,
   } = props
 
@@ -27,7 +28,7 @@ const Button = (props) => {
       // borderRadius: 7,
       alignItems: alignLabel,
       justifyContent: 'center',
-      paddingHorizontal: 15,
+      paddingHorizontal,
       backgroundColor,
       marginHorizontal,
       marginVertical,
@@ -97,6 +98,7 @@ Button.propTypes = {
   alignLabel: PropTypes.string,
   icon: PropTypes.string,
   marginHorizontal: PropTypes.number,
+  paddingHorizontal: PropTypes.number,
   marginVertical: PropTypes.number,
 }
 
@@ -106,6 +108,7 @@ Button.defaultProps = {
   iconSize: 18,
   alignLabel: 'left',
   marginHorizontal: 0,
+  paddingHorizontal: 15,
   marginVertical: 0,
   fontSize: 14,
   backgroundColor: '#FF0000',
