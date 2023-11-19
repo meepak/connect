@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native-paper'
-import ModalTemplate from '../../components/modal-template'
+import ModalTemplate from '../../components/templates/modal-template'
 import Header from './components/header'
 import Recent from './components/recent'
 import Temp from './components/template'

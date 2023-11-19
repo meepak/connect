@@ -8,7 +8,7 @@ import { Text, useTheme } from 'react-native-paper'
 import { CommonActions, useNavigation, useRoute } from '@react-navigation/native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import { layout } from '../../theme'
-import ScreenTemplate from '../../components/screen-template'
+import ScreenTemplate from '../../components/templates/screen-template'
 
 // TODO -- geolocation autocomplete
 const SelectLocation = () => {

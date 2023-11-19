@@ -6,9 +6,9 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
-import PreferencesContext from '../context/preferences-context'
-import LoadingScreen from './loading-screen'
-import ErrorScreen from './error-screen'
+import PreferencesContext from '../../context/preferences-context'
+import LoadingScreen from '../loading-screen'
+import ErrorScreen from '../error-screen'
 
 const styles = StyleSheet.create({
   container: {

@@ -1,11 +1,12 @@
 import React from 'react'
 import { Text } from 'react-native-paper'
-import ModalTemplate from '../../../components/modal-template'
+import ModalTemplate from '../../../components/templates/modal-template'
 import Temp from '../components/template'
+import Header from '../components/header'
 
 const ManageInvitations = () => (
   <ModalTemplate
-    header={<></>}
+    header={<Header />}
     subHeader={<Text style={{ top: -7, left: 20 }} variant="headlineSmall">Manage Invitations</Text>}
     content={(
       <>

@@ -9,7 +9,7 @@ import {
 } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import ScreenTemplate from '../../components/screen-template'
+import ScreenTemplate from '../../components/templates/screen-template'
 import TextInputBox from '../../components/core/text-input-box'
 import { UserDataContext } from '../../context/user-data-context'
 // import { isValidName, isValidLength } from '../../utils/validation'

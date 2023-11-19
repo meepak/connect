@@ -8,12 +8,14 @@ import PropTypes from 'prop-types'
 import ScreenTemplate from './screen-template'
 
 const Styles = (colors) => StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
   footer: {
     paddingBottom: 30,
   },
   pageTitle: {
-    // flex:1,
-    backgroundColor: colors.elevation.level3,
     height: 50,
     width: '100%',
   },
@@ -27,19 +29,15 @@ const Styles = (colors) => StyleSheet.create({
     height: '100%',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    backgroundColor: colors.background,
     elevation: -5,
     zIndex: 3,
+    backgroundColor: colors.elevation.level3,
   },
   scrollView: {
     paddingHorizontal: 22,
     paddingTop: 40,
     paddingBottom: 90,
   },
-  foundation: {
-    backgroundColor: colors.elevation.level3,
-  },
-
   spinnerView: {
     paddingVertical: 20,
   },
@@ -48,30 +46,36 @@ const Styles = (colors) => StyleSheet.create({
 
 const ModalTemplate = (props) => {
   const {
-    header, subHeader, content,
+    header, subHeader, content, noScrollView,
   } = props
   const { colors } = useTheme()
   const styles = Styles(colors)
 
+  const ContainerView = noScrollView ? View : KeyboardAwareScrollView
+
   return (
     <ScreenTemplate>
-      {header}
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
+        {header}
         <View style={styles.pageTitle}>
           {subHeader}
         </View>
-        <View style={styles.foundation}>
-          <View style={styles.content}>
-            <KeyboardAwareScrollView
-              contentContainerStyle={styles.scrollView}
+        <View style={styles.content}>
+          { noScrollView
+            ? (
+              <View style={{ ...styles.scrollView, flex: 1 }}>
+                {content}
+              </View>
+            )
+            : (
+              <KeyboardAwareScrollView
+                contentContainerStyle={styles.scrollView}
               // overScrollMode="always"
-              showsVerticalScrollIndicator={false}
-              // pagingEnabled
-            >
-              {content}
-            </KeyboardAwareScrollView>
-
-          </View>
+                showsVerticalScrollIndicator={false}
+              >
+                {content}
+              </KeyboardAwareScrollView>
+            )}
         </View>
       </View>
       {/* <Spinner
@@ -87,10 +91,12 @@ ModalTemplate.propTypes = {
   header: PropTypes.node.isRequired,
   subHeader: PropTypes.node,
   content: PropTypes.node.isRequired,
+  noScrollView: PropTypes.bool,
 }
 
 ModalTemplate.defaultProps = {
   subHeader: null,
+  noScrollView: false,
 }
 
 export default ModalTemplate

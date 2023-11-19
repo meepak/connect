@@ -36,7 +36,7 @@ const NotificationSummary = (props) => {
     },
     leftIcon: {
       marginRight: 5,
-      marginLeft: -12,
+      marginLeft: -8,
       marginTop: -12,
 
     },

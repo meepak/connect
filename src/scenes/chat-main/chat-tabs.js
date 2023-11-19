@@ -1,0 +1,40 @@
+import * as React from 'react'
+import { useWindowDimensions } from 'react-native'
+import { Text } from 'react-native-paper'
+import { TabView, SceneMap } from 'react-native-tab-view'
+import { ChatRecent, ChatConnections } from '.'
+import ModalTemplate from '../../components/templates/modal-template'
+import Header from './components/header'
+
+const renderScene = SceneMap({
+  recent: ChatRecent,
+  connections: ChatConnections,
+})
+
+const ChatTabs = () => {
+  const layout = useWindowDimensions()
+
+  const [index, setIndex] = React.useState(0)
+  const [routes] = React.useState([
+    { key: 'recent', title: 'Recent' },
+    { key: 'connections', title: 'Connections' },
+  ])
+
+  return (
+    <ModalTemplate
+      noScrollView
+      header={<Header />}
+      subHeader={<Text style={{ top: -12, left: 20 }} variant="headlineMedium">Chat</Text>}
+      content={(
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{ width: layout.width }}
+          // style={{backgroundColor: 'green'}}
+        />
+)}
+    />
+  )
+}
+export default ChatTabs

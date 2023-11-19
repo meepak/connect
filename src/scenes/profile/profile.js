@@ -24,7 +24,7 @@ import AddSectionMenu from './components/sheets/add-section-menu'
 
 // Temporary measure to get user id of logged in user to test banner upload
 import { UserDataContext } from '../../context/user-data-context'
-import ScreenTemplate from '../../components/screen-template'
+import ScreenTemplate from '../../components/templates/screen-template'
 import Experience from './components/experience'
 import Volunteer from './components/volunteer'
 import Education from './components/education'
@@ -103,7 +103,6 @@ const Profile = () => {
     ...Styles(colors, fonts),
     container: {
       flex: 1,
-      borderRadius: 20,
       // position: 'relative', // Added for positioning the Avatar
     },
     scrollContent: {

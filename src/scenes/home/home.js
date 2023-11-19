@@ -5,12 +5,12 @@ import {
   ActivityIndicator, View, FlatList,
 } from 'react-native'
 import {
-  Divider,
+  Divider, Text,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 
 // import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
-import ScreenTemplate from '../../components/screen-template'
+import ScreenTemplate from '../../components/templates/screen-template'
 import ListItemUser from '../../components/list-item-user'
 import { UserDataContext } from '../../context/user-data-context'
 import generateMockData from './util/mock-data'
@@ -23,7 +23,7 @@ export default function Home() {
   const [loadingMoreData, setLoadingMoreData] = useState(false)
   const [dataItems, setDataItems] = useState([])
   const { userData } = useContext(UserDataContext)
-  // const [currentCount, setCurrentCount] = useState(20)
+  const [currentCount, setCurrentCount] = useState(40)
   // const [spinner, setSpinner] = useState(false)
   // const [lastFetchedData, setLastFetchedData] = useState(null)
 
@@ -69,24 +69,25 @@ export default function Home() {
     }
   }
 
-  const renderItem = useCallback(({ item }) => (
-    item.key === 'Header'
-      ? <PotentialMatchesHeader currentCount={20} totalCount={200} />
-      : (
-        <ListItemUser // List is better than card here
-          name={item.name}
-          image={item.image}
-          occupation={item.occupation}
-          industry={item.industry}
-          location={item.location}
-          rate={item.rate}
-          isPromoted={item.isPromoted}
-          viewedAt={item.viewedAt ?? null}
-          onPress={() => viewProfile(userData.id, item, setDataItems, navigation)}
-        />
-      )
+  const renderItem = useCallback(({ item }) => {
+    if (item.key === 'Header') {
+      return <PotentialMatchesHeader currentCount={currentCount} totalCount={200} />
+    }
 
-  ),
+    return (
+      <ListItemUser // List is better than card here
+        name={item.name}
+        image={item.image}
+        occupation={item.occupation}
+        industry={item.industry}
+        location={item.location}
+        rate={item.rate}
+        isPromoted={item.isPromoted}
+        viewedAt={item.viewedAt ?? null}
+        onPress={() => viewProfile(userData.id, item, setDataItems, navigation)}
+      />
+    )
+  },
   [])
 
   // like constructor to load data
@@ -101,6 +102,7 @@ export default function Home() {
   }, [])
 
   const handleNotificationIconPress = (value) => {
+    setCurrentCount((count) => count + 10)
     let screen
     switch (value) {
       case 'connect':
@@ -122,13 +124,17 @@ export default function Home() {
     })
   }
 
+  const renderHeader = () => (
+    <Header handleNotificationIconPress={(value) => handleNotificationIconPress(value)} />
+  )
+
   return (
     <ScreenTemplate>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, marginTop: 7 }}>
         <FlatList
           data={dataItems}
           renderItem={renderItem}
-          ListHeaderComponent={<Header handleNotificationIconPress={(value) => handleNotificationIconPress(value)} />}
+          ListHeaderComponent={renderHeader}
           ListFooterComponent={renderSpinner}
           ItemSeparatorComponent={<Divider />}
           // contentContainerStyle={styles.contentContainer}
@@ -138,14 +144,9 @@ export default function Home() {
               // onEndReached={onLoadingMoreData}
           onEndReachedThreshold={0}
           refreshing={loadingMoreData}
-          stickyHeaderIndices={dataItems.length > 2 ? [1] : [0]}
+          stickyHeaderIndices={dataItems.length > 1 ? [1] : [0]}
           // StickyHeaderComponent={PotentialMatchesHeader}
         />
-        {/* <Spinner
-        visible={spinner}
-        textStyle={{ color: colors.onSurface }}
-        overlayColor="rgba(0,0,0,0.5)"
-      /> */}
       </View>
     </ScreenTemplate>
   )

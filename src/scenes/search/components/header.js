@@ -4,16 +4,12 @@ import React, {
 import {
   StyleSheet, View, Platform, Keyboard,
 } from 'react-native'
-import {
-  useTheme, Searchbar,
-} from 'react-native-paper'
+import { Searchbar, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
 
-const Styles = (colors) => StyleSheet.create({
+const styles = StyleSheet.create({
   headerContent: {
-    backgroundColor: colors.elevation.level3, // colors.elevation.level3,
-    // flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
@@ -27,9 +23,8 @@ const Styles = (colors) => StyleSheet.create({
 })
 
 const Header = forwardRef(({ searchQuery, onSearchQueryChange }, ref) => {
-  const navigation = useNavigation()
   const { colors } = useTheme()
-  const styles = Styles(colors)
+  const navigation = useNavigation()
   // const searchBoxWidth = Dimensions.get('window').width - 150
   // const [searchQuery, setSearchQuery] = useState('')
   const inputRef = useRef(null)
@@ -59,7 +54,7 @@ const Header = forwardRef(({ searchQuery, onSearchQueryChange }, ref) => {
           Keyboard.dismiss()
         }}
         icon={{ source: 'chevron-left', direction: 'auto' }}
-        style={styles.searchbar}
+        style={{ ...styles.searchbar, backgroundColor: colors.transparent }}
         // voice search is a least priority as OS keyboard provides that feature
         // traileringIcon={() => (
         //   <MatIcon

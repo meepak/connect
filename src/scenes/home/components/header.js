@@ -1,18 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   StyleSheet, View,
 } from 'react-native'
 import {
-  useTheme,
+  useTheme, Text,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
+import { UserDataContext } from '../../../context/user-data-context'
 import Button from '../../../components/core/button'
-import HeaderBar from './header-bar'
-import NotificationSummaries from './notification-summary/notification-summaries'
+import NotificationSummaries from './notification-summary'
 
 const Styles = () => StyleSheet.create({
   headerContainer: {
-    marginTop: 7,
+    paddingBottom: 25,
   },
   searchButton: {
     width: '100%',
@@ -21,6 +21,11 @@ const Styles = () => StyleSheet.create({
   searchBarContainer: {
     marginTop: 10,
   },
+  hi: {
+    marginTop: 22,
+    marginHorizontal: 15,
+    fontWeight: 700,
+  },
 })
 
 // eslint-disable-next-line react/prop-types
@@ -28,6 +33,7 @@ const Header = ({ handleNotificationIconPress }) => {
   const { colors, fonts } = useTheme()
   const styles = Styles()
   const navigation = useNavigation()
+  const { userData } = useContext(UserDataContext)
 
   const openSearch = () => {
     navigation.navigate('SearchStack', {
@@ -37,7 +43,7 @@ const Header = ({ handleNotificationIconPress }) => {
 
   return (
     <View style={styles.headerContainer}>
-      <HeaderBar onBgColor={colors.onBackground} />
+      <Text style={styles.hi} variant="headlineLarge">Hi {userData.fullName.split(' ')[0]}</Text>
       <View style={styles.searchBarContainer}>
         <Button
           onPress={() => openSearch()}

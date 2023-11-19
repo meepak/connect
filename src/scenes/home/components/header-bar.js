@@ -5,10 +5,9 @@ import {
   StyleSheet, View,
 } from 'react-native'
 import {
-  IconButton, Text,
+  IconButton, useTheme,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
-import PropTypes from 'prop-types'
 
 import { UserDataContext } from '../../../context/user-data-context'
 import AvatarOfAuthUser from '../../../components/avatar-of-auth-user'
@@ -32,19 +31,16 @@ const Styles = (onBgColor) => StyleSheet.create({
   rightIcon: {
     marginTop: 0,
     marginRight: 0,
-    marginLeft: 10,
+    marginLeft: 11,
     backgroundColor: convertHexToRGBA(onBgColor, 0.1),
-  },
-  hi: {
-    marginTop: 22,
-    marginHorizontal: 15,
-    fontWeight: 700,
   },
 
 })
 
-const HeaderBar = ({ onBgColor }) => {
+const HeaderBar = () => {
   const navigation = useNavigation()
+  const { colors } = useTheme()
+  const onBgColor = colors.onBackground
   const { userData } = useContext(UserDataContext)
   const styles = Styles(onBgColor)
 
@@ -79,37 +75,30 @@ const HeaderBar = ({ onBgColor }) => {
   }
 
   return (
-    <>
-      <View style={styles.headerIcons}>
-        <AvatarOfAuthUser
-          size={42}
-          onPress={() => openProfile()}
+    <View style={styles.headerIcons}>
+      <AvatarOfAuthUser
+        size={42}
+        onPress={() => openProfile()}
+      />
+      <View style={styles.rightIcons}>
+        <IconButton
+          style={styles.rightIcon}
+          icon="gear"
+          iconColor={onBgColor}
+          size={18}
+          onPress={() => openSettings()}
         />
-        <View style={styles.rightIcons}>
-          <IconButton
-            style={styles.rightIcon}
-            icon="gear"
-            iconColor={onBgColor}
-            size={18}
-            onPress={() => openSettings()}
-          />
-          <IconButton
-            style={styles.rightIcon}
-            icon="comment-discussion"
-            iconColor={onBgColor}
-            size={18}
-            onPress={() => openChat()}
-          />
-        </View>
+        <IconButton
+          style={styles.rightIcon}
+          icon="comment-discussion"
+          iconColor={onBgColor}
+          size={18}
+          onPress={() => openChat()}
+        />
       </View>
-      <Text style={styles.hi} variant="headlineLarge">Hi {userData.fullName.split(' ')[0]}</Text>
-    </>
+    </View>
 
   )
-}
-
-HeaderBar.propTypes = {
-  onBgColor: PropTypes.string.isRequired,
 }
 
 export default HeaderBar

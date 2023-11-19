@@ -10,12 +10,12 @@ import Spinner from 'react-native-loading-spinner-overlay'
 import {
   collection, query, where, getDocs,
 } from 'firebase/firestore'
-import { firestore } from '../../firebase'
-import { UserDataContext } from '../../context/user-data-context'
+import { firestore } from '../../../firebase'
+import { UserDataContext } from '../../../context/user-data-context'
 
-import ScreenTemplate from '../../components/screen-template'
+import ScreenTemplate from '../../../components/templates/screen-template'
 // import { UserDataContext } from '../../context/user-data-context'
-import ListItemChat from '../../components/list-item-chat'
+import ListItemChat from '../../../components/list-item-chat'
 
 const styles = StyleSheet.create({
   main: {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native-paper'
-import ModalTemplate from '../../components/modal-template'
+import ModalTemplate from '../../components/templates/modal-template'
 import Header from './components/header'
 import Account from './components/account'
 import Display from './components/display'
@@ -12,7 +12,7 @@ const Settings = () => {
   return (
     <ModalTemplate
       header={<Header />}
-      subHeader={<Text style={{ top: -12, left: 20 }} variant="headlineLarge">Settings</Text>}
+      subHeader={<Text style={{ top: -12, left: 20 }} variant="headlineMedium">Settings</Text>}
       content={(
         <>
           <Account />
