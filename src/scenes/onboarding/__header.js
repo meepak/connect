@@ -6,8 +6,8 @@ import {
   Text, useTheme,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import AvatarOfAuthUser from '../../components/AvatarOfAuthUser'
-import Styles from './Styles'
+import AvatarOfAuthUser from '../../components/avatar-of-auth-user'
+import Styles from './styles'
 
 const ScreenHeader = ({
   fullName, onAvatarChanged,

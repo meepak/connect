@@ -5,7 +5,7 @@ import {
 import { useNavigation, useRoute } from '@react-navigation/native'
 import PropTypes from 'prop-types'
 
-import Styles from './Styles'
+import Styles from './styles'
 
 const SelectOccupations = ({
   onOccupationsSelected, question, initialValues, error, onLayout,

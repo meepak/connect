@@ -9,8 +9,8 @@ import { Text, useTheme } from 'react-native-paper'
 // import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
 import AppIntroSlider from 'react-native-app-intro-slider'
-import ScreenTemplate from '../../components/ScreenTemplate'
-import Logo from '../../components/core/Logo'
+import ScreenTemplate from '../../components/screen-template'
+import Logo from '../../components/core/logo'
 import imageAssets from '../../theme/images'
 
 // TODO get colors from theme

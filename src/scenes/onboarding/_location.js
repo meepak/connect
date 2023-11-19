@@ -4,9 +4,9 @@ import {
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import { useNavigation, useRoute } from '@react-navigation/native'
-// import Button from '../../components/core/Button'
+// import Button from '../../components/core/button'
 
-import Styles from './Styles'
+import Styles from './styles'
 
 // TODO -- geolocation autocomplete
 const SelectLocation = ({
