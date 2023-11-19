@@ -52,6 +52,10 @@ const ModalTemplate = (props) => {
   const styles = Styles(colors)
 
   const ContainerView = noScrollView ? View : KeyboardAwareScrollView
+  const ContainerStyle = noScrollView ? { ...styles.scrollView, flex: 1 } : styles.scrollView
+  const ContainerProps = noScrollView
+    ? { style: ContainerStyle }
+    : { contentContainerStyle: ContainerStyle, showsVerticalScrollIndicator: false }
 
   return (
     <ScreenTemplate>
@@ -61,28 +65,11 @@ const ModalTemplate = (props) => {
           {subHeader}
         </View>
         <View style={styles.content}>
-          { noScrollView
-            ? (
-              <View style={{ ...styles.scrollView, flex: 1 }}>
-                {content}
-              </View>
-            )
-            : (
-              <KeyboardAwareScrollView
-                contentContainerStyle={styles.scrollView}
-              // overScrollMode="always"
-                showsVerticalScrollIndicator={false}
-              >
-                {content}
-              </KeyboardAwareScrollView>
-            )}
+          <ContainerView {...ContainerProps}>
+            {content}
+          </ContainerView>
         </View>
       </View>
-      {/* <Spinner
-        visible={spinner}
-        textStyle={{ color: colors.onSurface }}
-        overlayColor="rgba(0,0,0,0.5)"
-      /> */}
     </ScreenTemplate>
   )
 }
