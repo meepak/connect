@@ -66,8 +66,8 @@ LogBox.ignoreLogs(['Setting a timer'])
 
 // TODO -- THERE IS A BUG IN LOGIN WHERE AFTER REGISTRATION, IT DOESN'T LET USER LOGIN TILL APP IS RESTARTED
 export default function Login() {
-  const tempTestUser = '' // k@k.com
-  const temptTestPass = '' // kkkkkk
+  const tempTestUser = 'k@k.com'
+  const temptTestPass = 'kkkkkk'
 
   const navigation = useNavigation()
   const { colors, fonts } = useTheme()

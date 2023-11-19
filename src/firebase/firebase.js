@@ -12,7 +12,7 @@ import { firebaseKey } from '../config'
 const app = initializeApp(firebaseKey)
 
 const localhost = process.env.EXPO_PUBLIC_FIREBASE_EMULATOR_IP
-const useEmulator = false //process.env.EXPO_PUBLIC_USE_FIREBASE_EMULATOR
+const useEmulator = process.env.EXPO_PUBLIC_USE_FIREBASE_EMULATOR
 const authPort = process.env.EXPO_PUBLIC_FIREBASE_EMULATOR_AUTH_PORT
 const firestorePort = process.env.EXPO_PUBLIC_FIREBASE_EMULATOR_FIRESTORE_PORT
 const storagePort = process.env.EXPO_PUBLIC_FIREBASE_EMULATOR_STORAGE_PORT
