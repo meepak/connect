@@ -9,14 +9,9 @@ const SearchStack = () => (
 
   <Stack.Navigator
     screenOptions={{
-      // presentation: 'modal',
-      cardOverlayEnabled: false,
       headerShown: false,
-      gestureEnabled: false,
-      cardStyle: { flex: 1 },
     }}
   >
-
     <Stack.Screen
       name="Search"
       component={Search}

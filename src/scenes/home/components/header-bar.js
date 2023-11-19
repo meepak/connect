@@ -90,14 +90,14 @@ const HeaderBar = ({ onBgColor }) => {
             style={styles.rightIcon}
             icon="gear"
             iconColor={onBgColor}
-            size={24}
+            size={18}
             onPress={() => openSettings()}
           />
           <IconButton
             style={styles.rightIcon}
             icon="comment-discussion"
             iconColor={onBgColor}
-            size={24}
+            size={18}
             onPress={() => openChat()}
           />
         </View>

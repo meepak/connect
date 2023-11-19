@@ -1,19 +1,13 @@
-import React from 'react' // , { useContext, useEffect }
-// import { Platform } from 'react-native'
-import { useTheme } from 'react-native-paper'
+import React from 'react'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import * as Notifications from 'expo-notifications'
 
-// import TabNavigator from '../tabsBottom/Tabs'
-import ModalStack from './modal-stack'
 import ProfileStack from './profile-stack'
 import ChatStack from './chat-stack'
-import NotificationStack from './notification-stack'
 import SearchStack from './search-stack'
 import SettingsStack from './settings-stack'
 import HomeStack from './home-stack'
-// import HomeStack from './HomeStack'
-// import ManageStack from './ManageStack'
+import ManageStack from './manage-stack'
 
 const Stack = createStackNavigator()
 
@@ -26,7 +20,6 @@ Notifications.setNotificationHandler({
 })
 
 export default function RootStack() {
-  const { colors } = useTheme()
   // const { userData } = useContext(UserDataContext)
   // const isIos = Platform.OS === 'ios'
 
@@ -79,10 +72,6 @@ export default function RootStack() {
         cardOverlayEnabled: false,
       }}
     >
-      {/* <Stack.Screen
-        name="HomeRoot"
-        component={TabNavigator}
-      /> */}
 
       <Stack.Screen
         name="HomeStack"
@@ -96,7 +85,6 @@ export default function RootStack() {
           gestureEnabled: true,
           cardOverlayEnabled: false,
           headerTitle: '',
-          headerTintColor: colors.onBackground,
         }}
       >
         <Stack.Screen
@@ -108,7 +96,6 @@ export default function RootStack() {
           }}
         />
 
-        {/* We should be able to access this through Tab Navigator, get rid of all redundant navigations */}
         <Stack.Screen
           name="ProfileStack"
           component={ProfileStack}
@@ -116,16 +103,6 @@ export default function RootStack() {
             ...TransitionPresets.SlideFromRightIOS,
           }}
         />
-
-        {/* <Stack.Screen
-          name="HomeStack"
-          component={HomeStack}
-        />
-
-        <Stack.Screen
-          name="ManageStack"
-          component={ManageStack}
-        /> */}
 
       </Stack.Group>
 
@@ -142,10 +119,6 @@ export default function RootStack() {
           name="SearchStack"
           component={SearchStack}
         />
-        <Stack.Screen
-          name="NotificationStack"
-          component={NotificationStack}
-        />
 
         <Stack.Screen
           name="SettingsStack"
@@ -153,9 +126,10 @@ export default function RootStack() {
         />
 
         <Stack.Screen
-          name="ModalStack"
-          component={ModalStack}
+          name="ManageStack"
+          component={ManageStack}
         />
+
       </Stack.Group>
     </Stack.Navigator>
   )

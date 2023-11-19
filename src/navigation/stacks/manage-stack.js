@@ -1,44 +1,55 @@
 import React from 'react'
-import { useTheme } from 'react-native-paper'
-import { createStackNavigator } from '@react-navigation/stack'
-import HeaderStyle from '../../components/header/header-style'
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 // import Header from '../../components/header/Header'
 import Manage from '../../scenes/manage'
-import Edit from '../../scenes/edit'
+import { ManageBackgroundCheck, ManageInvitations, ManageNda } from '../../scenes/manage/section'
 
 const Stack = createStackNavigator()
 
-const ManageStack = () => {
-  const { colors } = useTheme()
-  return (
-    <Stack.Navigator
+const ManageStack = () => (
+  <Stack.Navigator
+    screenOptions={{
+      presentation: 'modal',
+      headerShown: false,
+      gestureEnabled: false, // can't override
+      cardStyle: { flex: 1 },
+    }}
+  >
+
+    <Stack.Screen
+      name="Manage"
+      component={Manage} // not sure how this will be used, will see
+      options={{
+        ...TransitionPresets.SlideFromRightIOS,
+      }}
+    />
+
+    <Stack.Group
       screenOptions={{
+        presentation: 'modal',
         headerShown: false,
+        gestureEnabled: false, // can't override
         cardOverlayEnabled: false,
+        ...TransitionPresets.ModalSlideFromBottomIOS, // only applies if I am coming from manage sreen,
       }}
     >
+
       <Stack.Screen
-        name="Manage"
-        component={Manage}
-        options={(/* { navigation } */) => ({
-          // headerBackground: () => <HeaderStyle />,
-          // headerTitle: () => (
-          //   <Header />
-          // ),
-        })}
-      />
-      <Stack.Screen
-        name="Edit"
-        component={Edit}
-        options={() => ({
-          headerBackground: () => <HeaderStyle />,
-          headerTintColor: colors.onBackground,
-          headerBackTitleVisible: false,
-        })}
+        name="ManageInvitations"
+        component={ManageInvitations}
       />
 
-    </Stack.Navigator>
-  )
-}
+      <Stack.Screen
+        name="ManageBackgroundCheck"
+        component={ManageBackgroundCheck}
+      />
+
+      <Stack.Screen
+        name="ManageNda"
+        component={ManageNda}
+      />
+    </Stack.Group>
+  </Stack.Navigator>
+)
 
 export default ManageStack

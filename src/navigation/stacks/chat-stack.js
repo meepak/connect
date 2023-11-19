@@ -4,7 +4,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import Chat from '../../scenes/chat'
 import HeaderStyle from '../../components/header/header-style'
 import Header4Chat from '../../components/header/header-4-chat'
-import { ChatTabs } from '../tabs-top'
+import ChatTabs from '../tabs-top'
 import Header from '../../components/header/header'
 
 const Stack = createStackNavigator()
@@ -36,6 +36,10 @@ const ChatStack = () => {
         <Stack.Screen
           name="ChatTabs"
           component={ChatTabs}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+            gestureDirection: 'horizontal-inverted',
+          }}
         />
 
         <Stack.Screen

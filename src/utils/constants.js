@@ -4,7 +4,6 @@ export const ASYNC_STORAGE_KEY = {
 }
 
 export const DISPLAY = {
-  BottomTabsHeight: 80,
   Palette: [
     '#FBC02D',
     '#FFA000',

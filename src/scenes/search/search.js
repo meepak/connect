@@ -2,9 +2,9 @@ import React, { useRef, useState } from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native-paper'
 import ModalTemplate from '../../components/modal-template'
-import Header from './components/Header'
-import Recent from './components/Recent'
-import Temp from './components/Template'
+import Header from './components/header'
+import Recent from './components/recent'
+import Temp from './components/template'
 
 const Settings = () => {
   const paddingVertical = 20

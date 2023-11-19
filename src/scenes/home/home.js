@@ -17,14 +17,12 @@ import generateMockData from './util/mock-data'
 import Header from './components/header'
 import PotentialMatchesHeader from './components/potential-matches-header'
 import { fetchPotentialMatches, viewProfile } from './util/db'
-import ConnectionNotification from '../../sheets/notification/connection'
 
 export default function Home() {
   const navigation = useNavigation()
   const [loadingMoreData, setLoadingMoreData] = useState(false)
   const [dataItems, setDataItems] = useState([])
   const { userData } = useContext(UserDataContext)
-  const [showConnectionNotifications, setShowConnectionNotifications] = useState(false)
   // const [currentCount, setCurrentCount] = useState(20)
   // const [spinner, setSpinner] = useState(false)
   // const [lastFetchedData, setLastFetchedData] = useState(null)
@@ -103,11 +101,25 @@ export default function Home() {
   }, [])
 
   const handleNotificationIconPress = (value) => {
-    if (value === 'connect') {
-      setShowConnectionNotifications(true)
-    } else {
-      console.log('Yet to be implemented')
+    let screen
+    switch (value) {
+      case 'connect':
+        screen = 'ManageInvitations'
+        break
+      case 'nda':
+        screen = 'ManageNda'
+        break
+      case 'bgCheck':
+        screen = 'ManageBackgroundCheck'
+        break
+      default:
+        return
     }
+    console.log(value, screen)
+
+    navigation.navigate('ManageStack', {
+      screen,
+    })
   }
 
   return (
@@ -135,7 +147,6 @@ export default function Home() {
         overlayColor="rgba(0,0,0,0.5)"
       /> */}
       </View>
-      <ConnectionNotification show={showConnectionNotifications} onClose={() => setShowConnectionNotifications(false)} />
     </ScreenTemplate>
   )
 }

@@ -17,7 +17,7 @@ const ProfileStack = () => (
     screenOptions={{
       presentation: 'modal',
       headerShown: false,
-      gestureEnabled: false,
+      gestureEnabled: false, // can't override
       cardStyle: { flex: 1 },
     }}
   >
@@ -34,7 +34,7 @@ const ProfileStack = () => (
       screenOptions={{
         presentation: 'modal',
         headerShown: false,
-        gestureEnabled: false,
+        gestureEnabled: false, // can't override
         cardOverlayEnabled: false,
         ...TransitionPresets.ModalSlideFromBottomIOS,
       }}
