@@ -1,8 +1,8 @@
 import React from 'react'
 import {
-  View, Text, ImageBackground, StyleSheet,
+  View, ImageBackground, StyleSheet,
 } from 'react-native'
-import { IconButton, useTheme } from 'react-native-paper'
+import { Text, IconButton, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
 import Avatar from '../../../components/core/avatar'

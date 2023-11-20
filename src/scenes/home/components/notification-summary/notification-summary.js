@@ -32,12 +32,13 @@ const NotificationSummary = (props) => {
       alignItems: 'flex-start',
     },
     header: {
-      flexDirection: 'row',
-    },
-    leftIcon: {
-      marginRight: 5,
       marginLeft: -8,
       marginTop: -12,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+    },
+    leftIcon: {
 
     },
     notificationTypeIcon: {
@@ -54,6 +55,7 @@ const NotificationSummary = (props) => {
     },
     // renderitem
     block: {
+      paddingVertical: 7,
       paddingHorizontal: 10,
       flexDirection: 'row',
       alignItems: 'center',
@@ -147,9 +149,8 @@ const NotificationSummary = (props) => {
             onPress={onIconPress || null}
           />
         </View>
-        <Text style={styles.title} variant="bodyMedium">{title}</Text>
+        <Text style={styles.title} variant="bodyLarge">{title}</Text>
       </View>
-
       <FlatList
         data={dataItems.content}
         renderItem={renderItem}

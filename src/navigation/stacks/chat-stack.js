@@ -3,7 +3,7 @@ import { useTheme } from 'react-native-paper'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import Chat from '../../scenes/chat'
 import ChatTabs from '../../scenes/chat-main/chat-tabs'
-import Header4Chat from '../../components/header/header-4-chat'
+import { HeaderChat } from '../../components/header'
 
 const Stack = createStackNavigator()
 
@@ -12,7 +12,6 @@ const ChatStack = () => {
   return (
     <Stack.Navigator
       screenOptions={() => ({
-        headerShown: false,
       })}
     >
 
@@ -22,6 +21,7 @@ const ChatStack = () => {
           name="ChatTabs"
           component={ChatTabs}
           options={{
+            headerShown: false,
             ...TransitionPresets.SlideFromRightIOS,
             gestureDirection: 'horizontal-inverted',
           }}
@@ -31,13 +31,14 @@ const ChatStack = () => {
           name="Chat"
           component={Chat}
           options={() => ({
+            headerShown: true,
             headerTintColor: colors.onBackground,
             headerBackTitleVisible: false,
             headerBackTitleStyle: {
               color: colors.onBackground,
             },
             headerTitle: () => (
-              <Header4Chat />
+              <HeaderChat />
             ),
             ...TransitionPresets.SlideFromRightIOS,
           })}

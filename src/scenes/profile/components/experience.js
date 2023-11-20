@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import {
-  View, Text, StyleSheet,
+  View, StyleSheet,
 } from 'react-native'
-import { Surface, useTheme } from 'react-native-paper'
+import { Text, Surface, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
 import Icon from '../../../components/core/icon'

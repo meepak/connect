@@ -1,8 +1,8 @@
 import React from 'react'
 import {
-  View, Text, StyleSheet,
+  View, StyleSheet,
 } from 'react-native'
-import { useTheme } from 'react-native-paper'
+import { useTheme, Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
 import PencilIconButton from '../../../components/pencil-icon-button'
@@ -31,11 +31,11 @@ const UserIntro = (
   return (
     <View style={styles.userIntro}>
       <View style={styles.userIntroContent}>
-        <Text style={styles.sectionHeading}>{userFullName} asfdvxczvasdds asdfasfdasfdsafdsasdfasfdasfdsafds</Text>
-        <Text style={styles.sectionSubHeading}>Chief Digital Transformation Officer and something else and more</Text>
+        <Text style={styles.sectionHeading} variant="titleLarge">{userFullName}</Text>
+        <Text style={styles.sectionSubHeading} variant="titleMedium">Chief Digital Transformation Officer</Text>
         {/* Location */}
         <View style={{ marginVertical: 20 }} />
-        <Text style={styles.sectionContent}>Seacombe Gardens - 5047, South Australia, Australia</Text>
+        <Text style={styles.sectionContent} variant="bodyMedium">Seacombe Gardens - 5047, South Australia, Australia</Text>
       </View>
       {editMode
         ? (

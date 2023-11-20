@@ -1,6 +1,5 @@
 import React from 'react'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
-// import Header from '../../components/header/Header'
 import Manage from '../../scenes/manage'
 import { ManageBackgroundCheck, ManageInvitations, ManageNda } from '../../scenes/manage/section'
 

@@ -16,7 +16,7 @@ import TextInputBox from '../../components/core/text-input-box'
 // TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE
 import { UserDataContext } from '../../context/user-data-context'
 import { isValidName, isValidLength } from '../../utils/validation'
-import Header4Profile from '../../components/header/header-4-profile'
+import { HeaderProfile } from '../../components/header'
 import SheetModal from '../../components/core/sheet-modal'
 
 export default function EditIntro() {
@@ -100,7 +100,7 @@ export default function EditIntro() {
   return (
     <ScreenTemplate>
       <View style={styles.container}>
-        <Header4Profile
+        <HeaderProfile
           title="Edit Intro"
           changed
           onSave={() => {

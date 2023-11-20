@@ -1,8 +1,8 @@
 import React from 'react'
 import {
-  View, Text, StyleSheet,
+  View, StyleSheet,
 } from 'react-native'
-import { Surface, useTheme } from 'react-native-paper'
+import { Surface, useTheme, Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
 import Icon from '../../../components/core/icon'
@@ -24,7 +24,7 @@ const Summary = (
   return (
     <Surface style={styles.surfaceView}>
       <View style={styles.row}>
-        <Text style={styles.sectionHeading}>Summary</Text>
+        <Text style={styles.sectionHeading} variant="titleLarge">Summary</Text>
         {editMode
           ? (
             <PencilIconButton

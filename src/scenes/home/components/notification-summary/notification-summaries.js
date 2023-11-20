@@ -23,23 +23,34 @@
  */
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Divider, Text } from 'react-native-paper'
+import {
+  Divider, IconButton, Text, useTheme,
+} from 'react-native-paper'
+import { useNavigation } from '@react-navigation/native'
 import generateMockData from '../../util/mock-data'
 import NotificationSummary from './notification-summary'
+import { convertHexToRGBA } from '../../../../utils/functions'
 
-const Styles = () => StyleSheet.create({
+const Styles = (colors) => StyleSheet.create({
   container: {
     marginTop: 30,
     paddingHorizontal: 15,
     // marginHorizontal: 15,
   },
   header: {
+    marginTop: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'baseline',
   },
   content: {
-    marginTop: 20,
+    marginTop: 10,
+  },
+  rightIcon: {
+    marginTop: 0,
+    marginRight: -5,
+    marginLeft: 18,
+    backgroundColor: convertHexToRGBA(colors.onBackground, 0.1),
   },
 })
 
@@ -92,15 +103,28 @@ const getBgCheckUpdates = () => {
 
 // eslint-disable-next-line react/prop-types
 const NotificationSummaries = ({ handleIconPress }) => {
-  // const { colors } = useTheme()
-  const styles = Styles()
+  const navigation = useNavigation()
+  const { colors } = useTheme()
+  const styles = Styles(colors)
+
+  // Manage everything?? How
+  const openManage = () => {
+    navigation.navigate('ManageStack', {
+      screen: 'Manage',
+    })
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text variant="titleLarge">Notifications</Text>
-        {/* <Text style={{ textDecorationLine: 'underline' }} color={colors.onBackground}>
-          View all
-        </Text> */}
+        <IconButton
+          style={styles.rightIcon}
+          icon="kebab-horizontal"
+          iconColor={colors.onBackground}
+          size={18}
+          onPress={() => openManage()}
+        />
       </View>
       <View style={styles.content}>
         <Divider />

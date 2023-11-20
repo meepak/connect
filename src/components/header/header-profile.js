@@ -6,7 +6,7 @@ import { useTheme, IconButton, Button } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
 
-const Header4Profile = ({
+const HeaderProfile = ({
   icon, title, pendingChanges, onSave,
 }) => {
   const { colors, fonts } = useTheme()
@@ -103,17 +103,17 @@ const Header4Profile = ({
   )
 }
 
-Header4Profile.propTypes = {
+HeaderProfile.propTypes = {
   title: PropTypes.string.isRequired,
   onSave: PropTypes.func,
   pendingChanges: PropTypes.bool,
   icon: PropTypes.string,
 }
 
-Header4Profile.defaultProps = {
+HeaderProfile.defaultProps = {
   onSave: null,
   pendingChanges: false,
   icon: 'x',
 }
 
-export default Header4Profile
+export default HeaderProfile

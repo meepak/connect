@@ -8,7 +8,6 @@ import EditExperiences from '../../scenes/profile/edit-experiences'
 import EditExperience from '../../scenes/profile/edit-experience'
 import SelectLocation from '../../scenes/location'
 import Occupation from '../../scenes/occupation'
-// import HeaderStyle from '../../../components/header/header-style'
 
 const Stack = createStackNavigator()
 

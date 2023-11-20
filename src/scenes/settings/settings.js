@@ -6,6 +6,7 @@ import Header from './components/header'
 import Account from './components/account'
 import Display from './components/display'
 import Temp from './components/template'
+import Reset from './components/reset'
 
 const Settings = () => {
   const marginVertical = 20
@@ -18,6 +19,8 @@ const Settings = () => {
           <Account />
           <View style={{ marginVertical }} />
           <Display />
+          <View style={{ marginVertical }} />
+          <Reset />
           <View style={{ marginVertical }} />
           <Temp id={1} />
           <View style={{ marginVertical }} />

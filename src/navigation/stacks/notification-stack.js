@@ -1,9 +1,8 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { useTheme } from 'react-native-paper'
-import HeaderStyle from '../../components/header/header-style'
 import Notification from '../../scenes/notification/notification'
-import Header4Notification from '../../components/header/header-4-notification'
+import { HeaderStyle, HeaderNotification } from '../../components/header'
 
 const Stack = createStackNavigator()
 
@@ -23,7 +22,7 @@ const NotificationStack = () => {
             },
             headerBackground: () => <HeaderStyle />,
             headerTitle: () => (
-              <Header4Notification />
+              <HeaderNotification />
             ),
           })}
         />

@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { useTheme } from 'react-native-paper'
 import HomeTitleContext from '../../context/home-title-context'
 
-import HeaderStyle from '../../components/header/header-style'
+import { HeaderStyle } from '../../components/header'
 import Post from '../../scenes/post'
 import Print from '../../scenes/print'
 

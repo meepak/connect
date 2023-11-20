@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native'
 import ScreenTemplate from '../../components/templates/screen-template'
 import { firestore } from '../../firebase'
 import { UserDataContext } from '../../context/user-data-context'
-import Header4Profile from '../../components/header/header-4-profile'
+import { HeaderProfile } from '../../components/header'
 
 import WhoAmI from '../onboarding/_who-am-i'
 import SelectIndustries from '../onboarding/_industries'
@@ -114,7 +114,7 @@ export default function EditKeySummary() {
   return (
     <ScreenTemplate>
       <View style={styles.container}>
-        <Header4Profile
+        <HeaderProfile
           title="Edit Key Summary"
           changed
           onSave={() => {

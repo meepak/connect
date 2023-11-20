@@ -2,7 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { useTheme } from 'react-native-paper'
 import Home from '../../scenes/home'
-import Header from '../../components/header/header'
+import { HeaderHome } from '../../components/header'
 
 const Stack = createStackNavigator()
 
@@ -26,7 +26,7 @@ const HomeStack = () => {
           },
           headerStyle: { height: 42 },
           headerTitle: () => (
-            <Header />
+            <HeaderHome />
           ),
           // ...TransitionPresets.SlideFromRightIOS,
         })}

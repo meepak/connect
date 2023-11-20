@@ -8,7 +8,7 @@ import {
 import { useRoute } from '@react-navigation/native'
 // import AvatarOfAuthUser from './avatar-of-auth-user'
 
-export default function Header4Chat() {
+export default function HeaderChat() {
   const { colors, fonts } = useTheme()
   const route = useRoute()
   const {

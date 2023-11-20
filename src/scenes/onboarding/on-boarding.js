@@ -142,7 +142,6 @@ export default function OnBoarding() {
     }
 
     setOccupationError(false)
-    console.log('hello ', occupations, coordinates.occupations)
     if (occupations.length === 0) {
       setOccupationError(true)
       ref.current.scrollTo({ x: 10, y: coordinates.occupations, animated: true })

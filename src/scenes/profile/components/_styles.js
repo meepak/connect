@@ -3,8 +3,7 @@ import { StyleSheet } from 'react-native'
 const Styles = (colors) => StyleSheet.create({
   sectionHeading: {
     color: colors.onBackground,
-    // fontSize: fonts.headlineSmall.fontSize,
-    fontWeight: '600',
+    fontWeight: 700,
     textTransform: 'capitalize',
   },
   sectionSubHeading: {

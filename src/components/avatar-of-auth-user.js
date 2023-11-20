@@ -69,13 +69,13 @@ const AvatarOfAuthUser = ({
 
   return (
     <View>
-      {progress
+      {/* {progress
         ? (
           <View style={[styles.progressView, { backgroundColor: colors.background }]}>
             <Text style={[styles.progressText, { fontSize: iconSize, color: colors.primary }]}>{progress}</Text>
           </View>
         )
-        : <></>}
+        : <></>} */}
 
       <Avatar
         size={size}

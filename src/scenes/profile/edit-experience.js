@@ -13,7 +13,7 @@ import ScreenTemplate from '../../components/templates/screen-template'
 import TextInputBox from '../../components/core/text-input-box'
 import { UserDataContext } from '../../context/user-data-context'
 // import { isValidName, isValidLength } from '../../utils/validation'
-import Header4Profile from '../../components/header/header-4-profile'
+import { HeaderProfile } from '../../components/header'
 import MonthYearPicker from '../../components/month-year-picker'
 import Checkbox from '../../components/core/checkbox'
 
@@ -139,7 +139,7 @@ export default function EditExperience() {
   return (
     <ScreenTemplate>
       <View style={styles.container}>
-        <Header4Profile
+        <HeaderProfile
           title="Add Experience"
           pendingChanges={pendingChanges}
           onSave={() => {

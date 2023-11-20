@@ -16,7 +16,7 @@ import ScreenTemplate from '../../components/templates/screen-template'
 // TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE
 import { UserDataContext } from '../../context/user-data-context'
 // import { isValidName, isValidLength } from '../../utils/validation'
-import Header4Profile from '../../components/header/header-4-profile'
+import { HeaderProfile } from '../../components/header'
 import IconLink from '../../components/core/icon-link'
 
 export default function EditExperiences() {
@@ -69,7 +69,7 @@ export default function EditExperiences() {
   return (
     <ScreenTemplate>
       <SafeAreaView style={styles.container}>
-        <Header4Profile
+        <HeaderProfile
           icon="chevron-left"
           title="Edit Experiences"
         />

@@ -1,54 +1,51 @@
-import React, {
-  useContext,
-} from 'react'
+import React, { useContext } from 'react'
 import {
-  StyleSheet, View,
+  StyleSheet,
+  View,
 } from 'react-native'
 import {
-  IconButton, useTheme,
+  IconButton,
+  useTheme,
 } from 'react-native-paper'
+
 import { useNavigation } from '@react-navigation/native'
+// import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import AvatarOfAuthUser from '../avatar-of-auth-user'
+import { UserDataContext } from '../../context/user-data-context'
 
-import { UserDataContext } from '../../../context/user-data-context'
-import AvatarOfAuthUser from '../../../components/avatar-of-auth-user'
-import { convertHexToRGBA } from '../../../utils/functions'
+import { convertHexToRGBA } from '../../utils/functions'
 
-const Styles = (onBgColor) => StyleSheet.create({
-  headerIcons: {
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    marginHorizontal: 12,
-  },
-  rightIcons: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-end',
-    alignSelf: 'flex-start',
-  },
-  rightIcon: {
-    marginTop: 0,
-    marginRight: 0,
-    marginLeft: 11,
-    backgroundColor: convertHexToRGBA(onBgColor, 0.1),
-  },
-
-})
-
-const HeaderBar = () => {
+const HeaderHome = () => {
   const navigation = useNavigation()
   const { colors } = useTheme()
   const onBgColor = colors.onBackground
   const { userData } = useContext(UserDataContext)
-  const styles = Styles(onBgColor)
+  const insets = useSafeAreaInsets()
 
-  const openSettings = () => {
-    navigation.navigate('SettingsStack', {
-      screen: 'Settings',
-    })
-  }
+  const styles = StyleSheet.create({
+    container: {
+      top: insets.top,
+      width: '100%',
+      paddingBottom: 5,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    rightIcons: {
+      flexDirection: 'row',
+      flexWrap: 'nowrap',
+      alignItems: 'center',
+      alignSelf: 'flex-end',
+    },
+    rightIcon: {
+      marginTop: 0,
+      marginRight: -5,
+      marginLeft: 18,
+      backgroundColor: convertHexToRGBA(colors.onBackground, 0.1),
+    },
+
+  })
 
   const openProfile = () => {
     navigation.navigate('ProfileStack', {
@@ -74,12 +71,20 @@ const HeaderBar = () => {
     })
   }
 
+  const openSettings = () => {
+    navigation.navigate('SettingsStack', {
+      screen: 'Settings',
+    })
+  }
+
   return (
-    <View style={styles.headerIcons}>
-      <AvatarOfAuthUser
-        size={42}
-        onPress={() => openProfile()}
-      />
+    <View style={styles.container}>
+      <View style={styles.leftIcon}>
+        <AvatarOfAuthUser
+          size={42}
+          onPress={() => openProfile()}
+        />
+      </View>
       <View style={styles.rightIcons}>
         <IconButton
           style={styles.rightIcon}
@@ -101,4 +106,4 @@ const HeaderBar = () => {
   )
 }
 
-export default HeaderBar
+export default HeaderHome

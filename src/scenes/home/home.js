@@ -5,7 +5,7 @@ import {
   ActivityIndicator, View, FlatList,
 } from 'react-native'
 import {
-  Divider, Text,
+  Divider,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 
