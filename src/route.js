@@ -122,6 +122,7 @@ const Route = () => {
       if (Object.keys(updatedData).length > 0) {
         return updatedData
       }
+      return null
     }
 
     const handleSnapshot = (querySnapshot) => {

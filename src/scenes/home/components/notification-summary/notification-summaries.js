@@ -34,14 +34,15 @@ import { convertHexToRGBA } from '../../../../utils/functions'
 const Styles = (colors) => StyleSheet.create({
   container: {
     marginTop: 30,
-    paddingHorizontal: 15,
+    // paddingHorizontal: 15,
     // marginHorizontal: 15,
   },
   header: {
     marginTop: 5,
+    paddingHorizontal: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'baseline',
+    alignItems: 'center', // lol make it baseline and it will crash in iOS without a hint
   },
   content: {
     marginTop: 10,
@@ -129,16 +130,19 @@ const NotificationSummaries = ({ handleIconPress }) => {
       <View style={styles.content}>
         <Divider />
         <NotificationSummary
+          index={1}
           onIconPress={() => handleIconPress('connect')}
           {...getConnectionRequestUpdates()}
         />
         <Divider />
         <NotificationSummary
+          index={2}
           onIconPress={() => handleIconPress('nda')}
           {...getNdaUpdates()}
         />
         <Divider />
         <NotificationSummary
+          index={3}
           onIconPress={() => handleIconPress('bgCheck')}
           {...getBgCheckUpdates()}
         />

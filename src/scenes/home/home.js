@@ -92,7 +92,6 @@ export default function Home() {
 
   // like constructor to load data
   useEffect(() => {
-    // console.log(`loading data, current dataItems length is: ${dataItems.length}`)
     // setSpinner(true)
     if (dataItems.length === 0) {
       fetchData()

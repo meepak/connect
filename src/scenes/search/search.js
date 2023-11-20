@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react'
 import { View } from 'react-native'
-import { Text } from 'react-native-paper'
 import ModalTemplate from '../../components/templates/modal-template'
 import Header from './components/header'
 import Recent from './components/recent'
 import Temp from './components/template'
+import SearchOptions from './components/sub-header'
 
 const Settings = () => {
   const paddingVertical = 20
@@ -21,7 +21,8 @@ const Settings = () => {
   return (
     <ModalTemplate
       header={<Header ref={ref} searchQuery={searchQuery} onSearchQueryChange={(value) => setSearchQueryValue(value)} />}
-      subHeader={<Text style={{ top: -7, left: 20 }} variant="headlineSmall">Option: Everywhere</Text>}
+      subHeader={<SearchOptions />}
+      // subHeader={<Text style={{ top: -7, left: 20 }} variant="headlineSmall">Option: Everywhere</Text>}
       content={(
         <>
           <Recent onSelected={(value) => setSearchQueryValue(value)} />

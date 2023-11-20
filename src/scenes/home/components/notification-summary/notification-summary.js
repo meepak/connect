@@ -19,10 +19,13 @@ import Avatar from '../../../../components/core/avatar'
 
 const NotificationSummary = (props) => {
   const {
-    icon, title, dataItems, onIconPress,
+    icon, title, dataItems, onIconPress, index,
   } = props
   const { colors } = useTheme()
   const navigation = useNavigation()
+  const bgColor = index && index % 2 === 0
+    ? colors.primaryContainer
+    : colors.tertiaryContainer
 
   const styles = StyleSheet.create({
     container: {
@@ -30,8 +33,10 @@ const NotificationSummary = (props) => {
       paddingVertical: 15,
       flexDirection: 'column',
       alignItems: 'flex-start',
+      backgroundColor: convertHexToRGBA(bgColor, 0.04),
     },
     header: {
+      paddingHorizontal: 15,
       marginLeft: -8,
       marginTop: -12,
       flexDirection: 'row',
@@ -48,15 +53,15 @@ const NotificationSummary = (props) => {
       backgroundColor: convertHexToRGBA(colors.onBackground, 0.1),
     },
     title: {
+      paddingLeft: 5,
     },
     scrollView: {
-      marginVertical: 5,
       paddingLeft: 20,
     },
     // renderitem
     block: {
-      paddingVertical: 7,
-      paddingHorizontal: 10,
+      paddingVertical: 11,
+      paddingHorizontal: 12,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'flex-start',

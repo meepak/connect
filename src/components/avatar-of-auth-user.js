@@ -1,39 +1,38 @@
 import React, { useContext, useEffect, useState } from 'react'
 import {
-  View, StyleSheet,
+  View,
 } from 'react-native'
 import {
-  Text, useTheme,
+  useTheme,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import { Avatar as SystemAvatar } from '@rneui/themed'
-import { Asset } from 'expo-asset'
 import Avatar from './core/avatar'
 import { UserDataContext } from '../context/user-data-context'
 import ImageSelectAndUpload from '../utils/image-select-and-upload'
 
-const styles = StyleSheet.create({
-  progressView: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    zIndex: 1,
-  },
-  progressText: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    fontWeight: 'bold',
-  },
-})
+// const styles = StyleSheet.create({
+//   progressView: {
+//     position: 'absolute',
+//     top: 0,
+//     left: 0,
+//     right: 0,
+//     bottom: 0,
+//     textAlign: 'center',
+//     textAlignVertical: 'center',
+//     zIndex: 1,
+//   },
+//   progressText: {
+//     position: 'absolute',
+//     top: 0,
+//     left: 0,
+//     right: 0,
+//     bottom: 0,
+//     textAlign: 'center',
+//     textAlignVertical: 'center',
+//     fontWeight: 'bold',
+//   },
+// })
 
 const getIconSize = (size) => {
   const sizeMap = {
@@ -52,7 +51,7 @@ const AvatarOfAuthUser = ({
   const { colors } = useTheme()
   const iconSize = getIconSize(size)
   const { userData } = useContext(UserDataContext)
-  const [progress, setProgress] = useState('')
+  const [setProgress] = useState('')
   const [avatar, setAvatar] = useState(userData.avatar ?? null)
 
   useEffect(() => {

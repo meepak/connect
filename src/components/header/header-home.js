@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import {
   StyleSheet,
   View,
+  Platform,
 } from 'react-native'
 import {
   IconButton,
@@ -25,12 +26,13 @@ const HeaderHome = () => {
 
   const styles = StyleSheet.create({
     container: {
-      top: insets.top,
+      top: Platform.OS === 'android' ? insets.top : 30,
       width: '100%',
       paddingBottom: 5,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
+      height: 55,
     },
     rightIcons: {
       flexDirection: 'row',
