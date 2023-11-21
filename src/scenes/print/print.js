@@ -3,7 +3,7 @@ import {
   StyleSheet, ScrollView,
 } from 'react-native'
 import axios from 'axios'
-import ScreenTemplate from '../../components/templates/screen-template'
+import { ScreenTemplate } from '../../components/templates'
 import RenderItem from './render-item'
 import { layout } from '../../theme'
 

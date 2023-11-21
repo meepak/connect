@@ -7,7 +7,7 @@ import {
 import PropTypes from 'prop-types'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-const SheetModal = React.forwardRef(({ children, snapsAt, onDismiss }, ref) => {
+const SheetModal = React.forwardRef(({ children, snapsAt, onDismiss, allowSwipeToClose }, ref) => {
   const { colors } = useTheme()
   const insets = useSafeAreaInsets()
   // refs
@@ -41,7 +41,7 @@ const SheetModal = React.forwardRef(({ children, snapsAt, onDismiss }, ref) => {
       ref={ref}
       snapPoints={snapPoints}
       topInset={+insets.top} // since this only works in android, do not rely on it, use inset provided by safe area view
-      enablePanDownToClose
+      enablePanDownToClose={allowSwipeToClose}
       enableDismissOnClose
       onDismiss={onDismiss}
       onChange={handleChange}
@@ -64,11 +64,13 @@ SheetModal.propTypes = {
   children: PropTypes.node.isRequired,
   snapsAt: PropTypes.arrayOf(PropTypes.string),
   onDismiss: PropTypes.func,
+  allowSwipeToClose: PropTypes.bool,
 }
 
 SheetModal.defaultProps = {
   snapsAt: ['25%', '50%', '75%', '100%'],
   onDismiss: null,
+  allowSwipeToClose: true,
 }
 
 export default SheetModal

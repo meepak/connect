@@ -10,7 +10,7 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation } from '@react-navigation/native'
 
-import ScreenTemplate from '../../components/templates/screen-template'
+import { ScreenTemplate } from '../../components/templates'
 import TextInputBox from '../../components/core/text-input-box'
 // import storage from '../../utils/Storage'
 // TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE

@@ -11,7 +11,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useNavigation } from '@react-navigation/native'
 
 // import { TouchableOpacity } from 'react-native-gesture-handler'
-import ScreenTemplate from '../../components/templates/screen-template'
+import { ScreenTemplate } from '../../components/templates'
 // import storage from '../../utils/Storage'
 // TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE
 import { UserDataContext } from '../../context/user-data-context'

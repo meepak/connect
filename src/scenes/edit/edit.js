@@ -15,7 +15,7 @@ import {
 } from 'firebase/auth'
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { firestore, auth } from '../../firebase'
-import ScreenTemplate from '../../components/templates/screen-template'
+import { ScreenTemplate } from '../../components/templates'
 import Button from '../../components/core/button'
 import TextInputBox from '../../components/core/text-input-box'
 import Checkbox from '../../components/core/checkbox'

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
-import ScreenTemplate from '../../components/screen-template'
+import { ScreenTemplate } from '../../components/templates'
 import Button from '../../components/core/button'
 import { showToast } from '../../utils/show-toast'
 import ShowSnackbar from '../../components/show-snack-bar'

@@ -18,7 +18,7 @@ import {
 } from './input-toolbar'
 import { UserDataContext } from '../../context/user-data-context'
 import { firestore } from '../../firebase'
-import ScreenTemplate from '../../components/templates/screen-template'
+import { ScreenTemplate } from '../../components/templates'
 
 // import SlackMessage from './SlackMessage'
 

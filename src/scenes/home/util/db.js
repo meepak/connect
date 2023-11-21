@@ -71,6 +71,7 @@ export const fetchPotentialMatches = async (userId, itemCount = 15) => {
   return finalUsers
 }
 
+// TOD --- THIS DOESN'T LOOOK RIGHT AT ALL, RECHECK
 export const viewProfile = (currentUserId, item, setDataItems, navigation) => {
   const viewedAt = serverTimestamp()
   // save user is viewed

@@ -20,6 +20,7 @@ const Banner = ({
   userFullName,
   onBanerEdited,
   onAvatarEdited,
+  showBackButton,
 
 }) => {
   const { colors } = useTheme()
@@ -84,13 +85,17 @@ const Banner = ({
     <View style={styles.banner}>
       {/* Not sure imagebackground can use localUri if available so not taking any chances */}
       <ImageBackground source={{ uri: finalBannerImage ?? null }} style={styles.bannerImage}>
-        <IconButton
-          icon="chevron-left"
-          size={25}
-          iconColor={colors.onBackground}
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        />
+        {showBackButton
+          ? (
+            <IconButton
+              icon="chevron-left"
+              size={25}
+              iconColor={colors.onBackground}
+              style={styles.backButton}
+              onPress={() => navigation.goBack()}
+            />
+          )
+          : <></>}
         {editMode
           ? (
             <PencilIconButton
@@ -126,11 +131,13 @@ Banner.propTypes = {
   userFullName: PropTypes.string.isRequired,
   onBanerEdited: PropTypes.func.isRequired,
   onAvatarEdited: PropTypes.func.isRequired,
+  showBackButton: PropTypes.bool,
 }
 
 Banner.defaultProps = {
   bannerImage: null,
   userAvatar: null,
+  showBackButton: true,
 }
 
 export default Banner

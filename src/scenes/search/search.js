@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { View } from 'react-native'
-import ModalTemplate from '../../components/templates/modal-template'
+import { ModalTemplate } from '../../components/templates'
 import Header from './components/header'
 import Recent from './components/recent'
 import Temp from './components/template'

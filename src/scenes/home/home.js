@@ -10,7 +10,7 @@ import {
 import { useNavigation } from '@react-navigation/native'
 
 // import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
-import ScreenTemplate from '../../components/templates/screen-template'
+import { ScreenTemplate } from '../../components/templates'
 import ListItemUser from '../../components/list-item-user'
 import { UserDataContext } from '../../context/user-data-context'
 import generateMockData from './util/mock-data'

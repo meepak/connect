@@ -12,7 +12,7 @@ import {
   doc, deleteDoc, onSnapshot, collection, query, where, getDocs, serverTimestamp, updateDoc,
 } from 'firebase/firestore'
 import { signOut, deleteUser } from 'firebase/auth'
-import ScreenTemplate from '../../components/screen-template'
+import { ScreenTemplate } from '../../components/templates'
 import Button from '../../components/core/button'
 // import Restart from '../../utils/Restart'
 import { firestore, auth } from '../../firebase'

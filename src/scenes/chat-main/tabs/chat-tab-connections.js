@@ -13,7 +13,7 @@ import {
 import { firestore } from '../../../firebase'
 import { UserDataContext } from '../../../context/user-data-context'
 
-import ScreenTemplate from '../../../components/templates/screen-template'
+import { ScreenTemplate } from '../../../components/templates'
 // import { UserDataContext } from '../../context/user-data-context'
 import ListItemChat from '../../../components/list-item-chat'
 

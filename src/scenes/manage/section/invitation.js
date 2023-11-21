@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text } from 'react-native-paper'
-import ModalTemplate from '../../../components/templates/modal-template'
+import { ModalTemplate } from '../../../components/templates'
 import Temp from '../components/template'
 import Header from '../components/header'
 

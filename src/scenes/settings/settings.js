@@ -1,12 +1,13 @@
 import React from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native-paper'
-import ModalTemplate from '../../components/templates/modal-template'
+import { ModalTemplate } from '../../components/templates'
 import Header from './components/header'
 import Account from './components/account'
 import Display from './components/display'
 import Temp from './components/template'
 import Reset from './components/reset'
+import Privacy from './components/privacy'
 
 const Settings = () => {
   const marginVertical = 20
@@ -22,7 +23,7 @@ const Settings = () => {
           <View style={{ marginVertical }} />
           <Reset />
           <View style={{ marginVertical }} />
-          <Temp id={1} />
+          <Privacy />
           <View style={{ marginVertical }} />
           <Temp id={2} />
           <View style={{ marginVertical }} />
