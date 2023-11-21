@@ -17,9 +17,9 @@ const Account = () => {
 
   // will need more work regarding unsubscribing from snapshot
   const onSignOutPress = () => {
-    // console.log('onSignOutPress')
     signOut(auth)
       .then(() => {
+        // console.log('onSignOutPress')
         setUserData('')
         // Restart() // do not restart, just go back to pre login page
       })

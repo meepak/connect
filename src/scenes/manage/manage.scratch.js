@@ -300,7 +300,7 @@ export default function Manage() {
         const data = querySnapshot.data()
         setToken(data)
       } else {
-        // console.log('No such document!')
+        console.log('No such document!')
       }
     })
     return () => tokenListner()

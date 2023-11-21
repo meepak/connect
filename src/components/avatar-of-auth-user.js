@@ -51,7 +51,7 @@ const AvatarOfAuthUser = ({
   const { colors } = useTheme()
   const iconSize = getIconSize(size)
   const { userData } = useContext(UserDataContext)
-  const [setProgress] = useState('')
+  // const [setProgress] = useState('')
   const [avatar, setAvatar] = useState(userData.avatar ?? null)
 
   useEffect(() => {
@@ -83,11 +83,14 @@ const AvatarOfAuthUser = ({
         url={avatar ?? null}
         onPress={() => {
           if (onEdited) {
-            ImageSelectAndUpload({ userId: userData.id, setProgress, onFinished: handleAvatarUpdated })
+            ImageSelectAndUpload({ userId: userData.id, onFinished: handleAvatarUpdated })
           } else if (onPress) {
             onPress()
           }
           // onEdited ? ImageChoiceAndUpload() : (onPress ? onPress() : () => {})
+        }}
+        style={{
+          backgroundColor: colors.background,
         }}
       >
         {onEdited
@@ -111,7 +114,7 @@ const AvatarOfAuthUser = ({
                 // right: 7,
               }}
               onPress={() => (
-                ImageSelectAndUpload({ userId: userData.id, setProgress, onFinished: handleAvatarUpdated })
+                ImageSelectAndUpload({ userId: userData.id, onFinished: handleAvatarUpdated })
               )}
             />
           )

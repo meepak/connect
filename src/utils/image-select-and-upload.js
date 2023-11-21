@@ -7,7 +7,7 @@ import * as ImageManipulator from 'expo-image-manipulator'
 import { storage } from '../firebase'
 
 const ImageSelectAndUpload = async ({
-  userId, setProgress, onFinished, resizeWidth, imageCompression,
+  userId, /* setProgress, */ onFinished, resizeWidth, imageCompression,
 }) => {
   try {
     if (Platform.OS === 'ios') {
@@ -42,8 +42,8 @@ const ImageSelectAndUpload = async ({
       uploadTask.on(
         'state_changed',
         (snapshot) => {
-          const progressVar = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          setProgress(`${parseInt(progressVar, 10)}%`)
+          // const progressVar = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          // setProgress(`${parseInt(progressVar, 10)}%`)
         },
         (error) => {
           throw error
@@ -51,8 +51,8 @@ const ImageSelectAndUpload = async ({
         () => {
           getDownloadURL(uploadTask.snapshot.ref)
             .then((downloadURL) => {
-              setProgress('')
-              console.log('upload finished...')
+              // setProgress('')
+              // console.log('upload finished...')
               onFinished(downloadURL)
             })
             .catch((error) => {

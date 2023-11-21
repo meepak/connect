@@ -109,7 +109,7 @@ const Banner = ({
               bgAlpha={0.5}
               onPress={() => {
                 ImageSelectAndUpload({
-                  userId, setProgress: setUploadProgress, onFinished: onBanerEdited, resizeWidth: 800, imageCompression: 1,
+                  userId, onFinished: onBanerEdited, resizeWidth: 800, imageCompression: 1,
                 })
               }}
             />
