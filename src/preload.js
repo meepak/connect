@@ -49,10 +49,7 @@ const storeData = async () => {
 export default async function Preload() {
   // Load your data here
   await Promise.all(preloadImages())
-  console.log('image preloading complete')
   await storeData()
-  console.log('storing data complete')
   // additional simulated delay
-  await new Promise((resolve) => setTimeout(resolve, 7000))
-  console.log('simulated delay complete')
+  await new Promise((resolve) => setTimeout(resolve, 2000))
 }
