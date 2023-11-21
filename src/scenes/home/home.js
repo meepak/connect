@@ -16,7 +16,8 @@ import { UserDataContext } from '../../context/user-data-context'
 import generateMockData from './util/mock-data'
 import Header from './components/header'
 import PotentialMatchesHeader from './components/potential-matches-header'
-import { fetchPotentialMatches, viewProfile } from './util/db'
+import ProfileSheet from '../profile/profile-sheet'
+import { fetchPotentialMatches } from './util/db'
 
 export default function Home() {
   const navigation = useNavigation()
@@ -26,6 +27,10 @@ export default function Home() {
   const [currentCount, setCurrentCount] = useState(40)
   // const [spinner, setSpinner] = useState(false)
   // const [lastFetchedData, setLastFetchedData] = useState(null)
+  const [viewUser, setViewUser] = useState({
+    key: '', name: '', image: '', banner: '',
+  })
+  const [showProfileSheet, setShowProfileSheet] = useState(false)
 
   const fetchData = async () => {
     const newDataItems = await fetchPotentialMatches(userData.id, 10)
@@ -69,23 +74,30 @@ export default function Home() {
     }
   }
 
+  const openProfile = (item) => {
+    setViewUser(item)
+    setShowProfileSheet(true)
+  }
+
   const renderItem = useCallback(({ item }) => {
     if (item.key === 'Header') {
       return <PotentialMatchesHeader currentCount={currentCount} totalCount={200} />
     }
 
     return (
-      <ListItemUser // List is better than card here
-        name={item.name}
-        image={item.image}
-        occupation={item.occupation}
-        industry={item.industry}
-        location={item.location}
-        rate={item.rate}
-        isPromoted={item.isPromoted}
-        viewedAt={item.viewedAt ?? null}
-        onPress={() => viewProfile(userData.id, item, setDataItems, navigation)}
-      />
+      <>
+        <ListItemUser // List is better than card here
+          name={item.name}
+          image={item.image}
+          occupation={item.occupation}
+          industry={item.industry}
+          location={item.location}
+          rate={item.rate}
+          isPromoted={item.isPromoted}
+          viewedAt={item.viewedAt ?? null}
+          onPress={() => openProfile(item)}
+        />
+      </>
     )
   },
   [])
@@ -124,7 +136,10 @@ export default function Home() {
   }
 
   const renderHeader = () => (
-    <Header handleNotificationIconPress={(value) => handleNotificationIconPress(value)} />
+    <Header
+      handleNotificationIconPress={(value) => handleNotificationIconPress(value)}
+      handleProfilePress={(item) => openProfile(item)}
+    />
   )
 
   return (
@@ -147,6 +162,7 @@ export default function Home() {
           // StickyHeaderComponent={PotentialMatchesHeader}
         />
       </View>
+      <ProfileSheet show={showProfileSheet} onClose={() => { setShowProfileSheet(false) }} user={viewUser} />
     </ScreenTemplate>
   )
 }

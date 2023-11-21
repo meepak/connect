@@ -63,7 +63,8 @@ export async function preloadImages() {
  * just to make life ittle easier by allowing to do equivalent
  * using
  *
- * ** imageAssets.key
+ * ** imageAssets.key for image source
+ * ** imageAssets.key.localUri for actual uri
  */
 const imageAssets = Object.entries(appImages).reduce((acc, [key, value]) => {
   acc[key] = Asset.fromModule(value)

@@ -13,16 +13,14 @@ import {
   useTheme,
 } from 'react-native-paper'
 // import PropTypes from 'prop-types'
-import { useNavigation } from '@react-navigation/native'
 import { convertHexToRGBA, splitName } from '../../../../utils/functions'
 import Avatar from '../../../../components/core/avatar'
 
 const NotificationSummary = (props) => {
   const {
-    icon, title, dataItems, onIconPress, index,
+    icon, title, dataItems, onIconPress, index, onProfilePress,
   } = props
   const { colors } = useTheme()
-  const navigation = useNavigation()
   const bgColor = index && index % 2 === 0
     ? colors.primaryContainer
     : colors.tertiaryContainer
@@ -96,15 +94,16 @@ const NotificationSummary = (props) => {
   }
 
   const openProfile = (item) => {
-    navigation.navigate('ProfileStack', {
-      screen: 'Profile',
-      params: { // userId, userFullName, userAvatar, userBannerImage,
-        userId: item.key,
-        userFullName: item.name,
-        userAvatar: item.image,
-        userBannerImage: item.banner,
-      },
-    })
+    onProfilePress(item)
+    // navigation.navigate('ProfileStack', {
+    //   screen: 'Profile',
+    //   params: { // userId, userFullName, userAvatar, userBannerImage,
+    //     userId: item.key,
+    //     userFullName: item.name,
+    //     userAvatar: item.image,
+    //     userBannerImage: item.banner,
+    //   },
+    // })
   }
 
   const navigate = (item) => {

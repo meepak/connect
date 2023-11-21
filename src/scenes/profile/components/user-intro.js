@@ -12,6 +12,7 @@ const UserIntro = (
   {
     editMode,
     userFullName,
+    sheetMode,
   },
 ) => {
   const { colors, fonts } = useTheme()
@@ -31,7 +32,9 @@ const UserIntro = (
   return (
     <View style={styles.userIntro}>
       <View style={styles.userIntroContent}>
-        <Text style={styles.sectionHeading} variant="titleLarge">{userFullName}</Text>
+        {sheetMode
+          ? <></>
+          : <Text style={styles.sectionHeading} variant="titleLarge">{userFullName}</Text>}
         <Text style={styles.sectionSubHeading} variant="titleMedium">Chief Digital Transformation Officer</Text>
         {/* Location */}
         <View style={{ marginVertical: 20 }} />
@@ -61,6 +64,11 @@ const UserIntro = (
 UserIntro.propTypes = {
   editMode: PropTypes.bool.isRequired,
   userFullName: PropTypes.string.isRequired,
+  sheetMode: PropTypes.bool,
+}
+
+UserIntro.defaultProps = {
+  sheetMode: false,
 }
 
 export default UserIntro

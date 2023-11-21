@@ -27,15 +27,15 @@ const Styles = (colors) => StyleSheet.create({
     left: 0,
     width: '100%',
     height: '100%',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     elevation: -5,
     zIndex: 3,
     backgroundColor: colors.elevation.level3,
   },
   scrollView: {
     paddingHorizontal: 22,
-    paddingTop: 40,
+    paddingTop: 30,
     paddingBottom: 90,
   },
   spinnerView: {

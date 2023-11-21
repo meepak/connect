@@ -85,23 +85,28 @@ const Experience = (
               </View>
             </>
           )
-          : (
-            <IconLink
-              marginLeft={-10}
-              icon="plus-circle"
-              text="Add Work Experience"
-              color={colors.primary}
-              onPress={() => {
-                navigation.navigate('EditExperience', {
-                  screen: 'EditExperience',
-                  params: {
-                    data: userData,
-                    from: 'My Profilie',
-                  },
-                })
-              }}
-            />
-          )
+          : <></>
+        }
+      {
+          editMode
+            ? (
+              <IconLink
+                marginLeft={-10}
+                icon="plus-circle"
+                text="Add Work Experience"
+                color={colors.primary}
+                onPress={() => {
+                  navigation.navigate('EditExperience', {
+                    screen: 'EditExperience',
+                    params: {
+                      data: userData,
+                      from: 'My Profilie',
+                    },
+                  })
+                }}
+              />
+            )
+            : <></>
         }
     </Surface>
   )

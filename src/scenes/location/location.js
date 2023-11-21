@@ -7,7 +7,7 @@ import {
 import { Text, useTheme } from 'react-native-paper'
 import { CommonActions, useNavigation, useRoute } from '@react-navigation/native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
-import { layout } from '../../theme'
+import layout from '../../theme'
 import { ScreenTemplate } from '../../components/templates'
 
 // TODO -- geolocation autocomplete

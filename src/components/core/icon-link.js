@@ -16,7 +16,6 @@ const IconLink = ({
       justifyContent: 'flex-start',
     },
     iconLinkLabel: {
-      fontSize: 18, // TODO: all font sizes, lineheight must be set in theme param
       color,
       marginLeft: -7,
     },
@@ -25,8 +24,8 @@ const IconLink = ({
   return (
     <TouchableOpacity onPress={() => onPress()}>
       <View style={styles.iconLink}>
-        <IconButton icon={icon} size={20} iconColor={color} />
-        <Text style={styles.iconLinkLabel}>{text}</Text>
+        <IconButton icon={icon} size={18} iconColor={color} />
+        <Text style={styles.iconLinkLabel} variant="bodyLarge">{text}</Text>
       </View>
     </TouchableOpacity>
   )

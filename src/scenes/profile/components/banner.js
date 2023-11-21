@@ -20,7 +20,7 @@ const Banner = ({
   userFullName,
   onBanerEdited,
   onAvatarEdited,
-  showBackButton,
+  sheetMode,
 
 }) => {
   const { colors } = useTheme()
@@ -31,10 +31,15 @@ const Banner = ({
     banner: {
       height: 185,
     },
-    bannerImage: {
+    bannerImageContainer: {
       resizeMode: 'cover',
       height: 140,
-      backgroundColor: colors.secondaryContainer,
+      // backgroundColor: (sheetMode && finalBannerImage) ? colors.transparent : colors.background,
+      backgroundColor: colors.background,
+    },
+    bannerImage: {
+      // borderTopRightRadius: sheetMode ? 30 : 0,
+      // borderTopLeftRadius: sheetMode ? 30 : 0,
     },
     avatarContainer: {
       position: 'absolute',
@@ -84,9 +89,10 @@ const Banner = ({
   return (
     <View style={styles.banner}>
       {/* Not sure imagebackground can use localUri if available so not taking any chances */}
-      <ImageBackground source={{ uri: finalBannerImage ?? null }} style={styles.bannerImage}>
-        {showBackButton
-          ? (
+      <ImageBackground source={{ uri: finalBannerImage ?? null }} style={styles.bannerImageContainer} imageStyle={styles.bannerImage}>
+        {sheetMode
+          ? <></>
+          : (
             <IconButton
               icon="chevron-left"
               size={25}
@@ -94,8 +100,7 @@ const Banner = ({
               style={styles.backButton}
               onPress={() => navigation.goBack()}
             />
-          )
-          : <></>}
+          )}
         {editMode
           ? (
             <PencilIconButton
@@ -131,13 +136,13 @@ Banner.propTypes = {
   userFullName: PropTypes.string.isRequired,
   onBanerEdited: PropTypes.func.isRequired,
   onAvatarEdited: PropTypes.func.isRequired,
-  showBackButton: PropTypes.bool,
+  sheetMode: PropTypes.bool,
 }
 
 Banner.defaultProps = {
   bannerImage: null,
   userAvatar: null,
-  showBackButton: true,
+  sheetMode: false,
 }
 
 export default Banner

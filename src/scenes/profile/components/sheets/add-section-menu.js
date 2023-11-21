@@ -56,7 +56,7 @@ const AddSectionMenu = ({ show, onClose }) => {
     }, 100)
   }
   return (
-    <SheetModal ref={addSectionSheetRef} snapsAt={['40%']} onDismiss={handleDismiss}>
+    <SheetModal ref={addSectionSheetRef} snapsAt={['40%']} onDismiss={handleDismiss} title="Add new section">
       <View style={{ marginHorizontal: 40, marginVertical: 20 }}>
         <IconLink
           marginLeft={-10}

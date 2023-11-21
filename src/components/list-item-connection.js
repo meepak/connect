@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native'
 import {
   Text, Divider, useTheme, IconButton,
 } from 'react-native-paper'
-import Avatar from './core/Avatar'
+import Avatar from './core/avatar'
 
 const ListItemConnection = ({
   name, industry, location, /* occupation, isPromoted */ image, date, onYes, onNo,

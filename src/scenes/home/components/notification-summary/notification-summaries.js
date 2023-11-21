@@ -42,7 +42,7 @@ const Styles = (colors) => StyleSheet.create({
     paddingHorizontal: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center', // lol make it baseline and it will crash in iOS without a hint
+    alignItems: 'center', // lolmake it baseline and it will crash in iOS without a hint
   },
   content: {
     marginTop: 10,
@@ -103,7 +103,7 @@ const getBgCheckUpdates = () => {
 }
 
 // eslint-disable-next-line react/prop-types
-const NotificationSummaries = ({ handleIconPress }) => {
+const NotificationSummaries = ({ handleIconPress, handleProfilePress }) => {
   const navigation = useNavigation()
   const { colors } = useTheme()
   const styles = Styles(colors)
@@ -132,18 +132,21 @@ const NotificationSummaries = ({ handleIconPress }) => {
         <NotificationSummary
           index={1}
           onIconPress={() => handleIconPress('connect')}
+          onProfilePress={(item) => handleProfilePress(item)}
           {...getConnectionRequestUpdates()}
         />
         <Divider />
         <NotificationSummary
           index={2}
           onIconPress={() => handleIconPress('nda')}
+          onProfilePress={(item) => handleProfilePress(item)}
           {...getNdaUpdates()}
         />
         <Divider />
         <NotificationSummary
           index={3}
           onIconPress={() => handleIconPress('bgCheck')}
+          onProfilePress={(item) => handleProfilePress(item)}
           {...getBgCheckUpdates()}
         />
         <Divider />

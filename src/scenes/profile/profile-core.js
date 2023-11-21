@@ -14,6 +14,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import {
   doc, updateDoc,
 } from 'firebase/firestore'
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { firestore } from '../../firebase'
 
 import Styles from './components/_styles'
@@ -33,7 +34,7 @@ import Languages from './components/languages'
 
 // eslint-disable-next-line react/prop-types
 const ProfileCore = ({
-  userId, userFullName, userAvatar, userBannerImage, showBackButton,
+  userId, userFullName, userAvatar, userBannerImage, sheetMode,
 }) => {
   const { colors, fonts } = useTheme()
   const { userData } = useContext(UserDataContext)
@@ -44,7 +45,7 @@ const ProfileCore = ({
 
   // TODO find more secure way to verify editMode, probably validate userId through auth token
   // TODO RESTORE TEMP showBackButton CHANGE & use proper way
-  const editMode = (showBackButton === false) ? false : userId === userData.id
+  const editMode = (sheetMode === true) ? false : userId === userData.id
   // console.log(`editing ;${editMode}`)
 
   useEffect(() => {
@@ -103,6 +104,7 @@ const ProfileCore = ({
     ...Styles(colors, fonts),
     container: {
       flex: 1,
+      backgroundColor: colors.background,
       // position: 'relative', // Added for positioning the Avatar
     },
     scrollContent: {
@@ -122,55 +124,51 @@ const ProfileCore = ({
 
   })
 
+  const ProfileScrollView = sheetMode ? BottomSheetScrollView : KeyboardAwareScrollView
+
   return (
     <View style={styles.container}>
-      <Spinner
-        visible={spinner}
-        textStyle={{ color: colors.onSurface }}
-        overlayColor="rgba(0,0,0,0.5)"
-      />
-      {spinner
-        ? null : (
-      // TODO: Convert this to flatlist for performance
-          <KeyboardAwareScrollView
-            style={styles.scrollContent}
-            keyboardShouldPersistTaps="never"
-            stickyHeaderIndices={[0]}
-            stickyHeaderHiddenOnScroll
-          >
+      <ProfileScrollView
+        style={styles.scrollContent}
+        keyboardShouldPersistTaps="never"
+        stickyHeaderIndices={[0]}
+        stickyHeaderHiddenOnScroll
+        showsVerticalScrollIndicator={false}
+      >
+        <Banner
+          editMode={editMode}
+          bannerImage={bannerImage}
+          userId={userId}
+          userAvatar={userAvatar}
+          userFullName={userFullName}
+          onBanerEdited={onBanerEdited}
+          onAvatarEdited={onAvatarEdited}
+          sheetMode={sheetMode}
+        />
 
-            <Banner
-              editMode={editMode}
-              bannerImage={bannerImage}
-              userId={userId}
-              userAvatar={userAvatar}
-              userFullName={userFullName}
-              onBanerEdited={onBanerEdited}
-              onAvatarEdited={onAvatarEdited}
-              showBackButton={showBackButton}
-            />
+        <UserIntro
+          editMode={editMode}
+          userFullName={userFullName}
+          sheetMode={sheetMode}
+        />
 
-            <UserIntro
-              editMode={editMode}
-              userFullName={userFullName}
-            />
-
-            {
-                /* Section to show connection
+        {/* Section to show connection
                 request and other buttons */
               }
-            <Buttons
-              editMode={editMode}
-              userId={userId}
-            />
+        <Buttons
+          editMode={editMode}
+          userId={userId}
+        />
 
-            <Summary editMode={editMode} />
+        <Summary editMode={editMode} />
 
-            {/* Section up to here can be displayed
+        {/* Section up to here can be displayed
               just based on onboarding info
               From here on, let user select which section they want to add
               Display the following button at the end of the added section
               Till all available sections are covered */}
+        {editMode
+          ? (
             <Button
               onPress={() => setShowAddSectionMenu(true)}
               mode="outlined"
@@ -180,23 +178,30 @@ const ProfileCore = ({
             >
               <Text style={styles.addSectionLabel}>Add more sections</Text>
             </Button>
+          )
+          : <></>}
 
-            <Experience editMode={editMode} />
+        <Experience editMode={editMode} />
 
-            <Volunteer editMode={editMode} />
+        <Volunteer editMode={editMode} />
 
-            <Education editMode={editMode} />
+        <Education editMode={editMode} />
 
-            <Licenses editMode={editMode} />
+        <Licenses editMode={editMode} />
 
-            <Languages editMode={editMode} />
+        <Languages editMode={editMode} />
 
-            {/* To be decided on Interest, References, Business documents, etc.. */}
+        {/* To be decided on Interest, References, Business documents, etc.. */}
 
-            <View style={styles.footer} />
-          </KeyboardAwareScrollView>
-        ) }
-      <AddSectionMenu show={showAddSectionMenu} onClose={() => { setShowAddSectionMenu(false) }} />
+        <View style={styles.footer} />
+        <AddSectionMenu show={showAddSectionMenu} onClose={() => { setShowAddSectionMenu(false) }} />
+      </ProfileScrollView>
+
+      <Spinner
+        visible={spinner}
+        textStyle={{ color: colors.onSurface }}
+        overlayColor="rgba(0,0,0,0.5)"
+      />
     </View>
   )
 }
