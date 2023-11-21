@@ -10,7 +10,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo-sm.png",
+    "icon": "./assets/images/fa_black.png",
     "updates": {
       "enabled": true,
       "fallbackToCacheTimeout": 10000,
@@ -36,7 +36,17 @@
         "NSPhotoLibraryUsageDescription": "Use the photo library to change your avatar.",
         // "NSMicrophoneUsageDescription": "Allow microphone use to voice type"
       },
-      "userInterfaceStyle": "automatic"
+      "userInterfaceStyle": "automatic",
+      "splash": {
+        "image": "./assets/images/splash-white.png",
+        "backgroundColor": "#FFFFFF",
+        "resizeMode": "cover",
+        "dark": {
+          "image": "./assets/images/splash-black.png",
+          "backgroundColor": "#000000",
+          "resizeMode": "cover"
+        }
+      }
     },
     "android": {
       "package": "connect.firebase",
@@ -47,18 +57,29 @@
         // "CAMERA",
         // "RECORD_AUDIO"
       ],
-      "softwareKeyboardLayoutMode": "resize"
+      "softwareKeyboardLayoutMode": "resize",
+      "splash": {
+        "image": "./assets/images/splash-white.png",
+        "backgroundColor": "#FFFFFF",
+        "resizeMode": "cover",
+        "dark": {
+          "image": "./assets/images/splash-black.png",
+          "backgroundColor": "#000000",
+          "resizeMode": "cover"
+        }
+      }
+      
     },
-    "packagerOpts": {
-      "config": "metro.config.js",
-      "sourceExts": [
-        "js",
-        "jsx",
-        "svg",
-        "ts",
-        "tsx"
-      ]
-    },
+    // "packagerOpts": {
+    //   "config": "metro.config.js",
+    //   "sourceExts": [
+    //     "js",
+    //     "jsx",
+    //     "svg",
+    //     "ts",
+    //     "tsx"
+    //   ]
+    // },
     "description": "",
     "extra": {
       "eas": {

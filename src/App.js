@@ -14,28 +14,18 @@ import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 
 import { Provider } from 'jotai'
 import 'utils/ignore'
-import Constants from 'expo-constants'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import * as SystemUI from 'expo-system-ui'
-import * as SplashScreen from 'expo-splash-screen'
 
 import { UserDataContextProvider } from './context/user-data-context'
 import PreferencesContext from './context/preferences-context'
 // import { PreferencesContextProvider } from './context/preferences-context'
 import Icon from './components/core/icon'
-import AnimatedAppLoader from './components/splash/animated-app-loader'
 import Route from './route'
 import { hexThemeFromColor, prepareThemes } from './theme/custom'
 import { ASYNC_STORAGE_KEY, DISPLAY } from './utils/constants'
-
-// const isHermes = () => !!global.HermesInternal
-
-// Instruct SplashScreen not to hide yet, we want to do this manually
-SplashScreen.preventAutoHideAsync().catch(() => {
-  /* reloading the app might trigger some race conditions, ignore them */
-})
 
 const App = () => {
   const systemTheme = useColorScheme()
@@ -163,22 +153,18 @@ const App = () => {
   const paperSettings = {
     icon: (props) => <Icon {...props} />,
   }
-  const resizeMode = Constants.expoConfig.splash.resizeMode || 'contain'
-  const bgColor = paperTheme.colors.background
   return (
-    <AnimatedAppLoader isDark={isDark} resizeMode={resizeMode} bgColor={bgColor}>
-      <Provider>
-        <PreferencesContext.Provider value={preferences}>
-          <UserDataContextProvider>
-            <ActionSheetProvider>
-              <PaperProvider settings={paperSettings} theme={paperTheme}>
-                <Route />
-              </PaperProvider>
-            </ActionSheetProvider>
-          </UserDataContextProvider>
-        </PreferencesContext.Provider>
-      </Provider>
-    </AnimatedAppLoader>
+    <Provider>
+      <PreferencesContext.Provider value={preferences}>
+        <UserDataContextProvider>
+          <ActionSheetProvider>
+            <PaperProvider settings={paperSettings} theme={paperTheme}>
+              <Route />
+            </PaperProvider>
+          </ActionSheetProvider>
+        </UserDataContextProvider>
+      </PreferencesContext.Provider>
+    </Provider>
   )
 }
 
