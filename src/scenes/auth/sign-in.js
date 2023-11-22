@@ -71,7 +71,7 @@ export default function Login() {
   const tempTestUser = 'k@k.com'
   const temptTestPass = 'kkkkkk'
 
-  const [userAuthenticated, setUserAuthenticated] = useAtom(userAuthenticatedAtom)
+  const [setUserAuthenticated] = useAtom(userAuthenticatedAtom)
   const navigation = useNavigation()
   const { colors, fonts } = useTheme()
   const [email, setEmail] = useState(auth.currentUser ? '' : tempTestUser)
@@ -127,7 +127,7 @@ export default function Login() {
         return
       }
       setUserAuthenticated(() => true) // this should trigger useEffect in route to initiate login
-      console.log('we got our user, is authentiated atom  true - ', userAuthenticated)
+      // console.log('we got our user, is authentiated atom  true - ', userAuthenticated)
       setSpinner(false)
     } catch (error) {
       console.log(error.message)

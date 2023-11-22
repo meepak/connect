@@ -41,7 +41,7 @@ const ImageSelectAndUpload = async ({
       const uploadTask = uploadBytesResumable(storageRef, localBlob)
       uploadTask.on(
         'state_changed',
-        (snapshot) => {
+        (/* snapshot */) => {
           // const progressVar = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           // setProgress(`${parseInt(progressVar, 10)}%`)
         },

@@ -9,8 +9,8 @@ import {
   View,
   Platform,
 } from 'react-native'
-import { useActionSheet } from '@expo/react-native-action-sheet'
-import Clipboard from '@react-native-clipboard/clipboard'
+// import { useActionSheet } from '@expo/react-native-action-sheet'
+// import Clipboard from '@react-native-clipboard/clipboard'
 import {
   MessageText, MessageImage, Time, utils,
 } from 'react-native-gifted-chat'
@@ -18,7 +18,7 @@ import {
 const { isSameUser, isSameDay } = utils
 
 const Bubble = (props) => {
-  const { showActionSheetWithOptions } = useActionSheet()
+  // const { showActionSheetWithOptions } = useActionSheet()
 
   const styles = StyleSheet.create({
     standardFont: {
@@ -79,23 +79,23 @@ const Bubble = (props) => {
     if (props.onLongPress) {
       props.onLongPress(props.currentMessage)
     } else if (props.currentMessage.text) {
-      const options = ['Copy Text', 'Cancel']
-      const cancelButtonIndex = options.length - 1
-      showActionSheetWithOptions(
-        {
-          options,
-          cancelButtonIndex,
-        },
-        (buttonIndex) => {
-          switch (buttonIndex) {
-            case 0:
-              Clipboard.setString(props.currentMessage.text)
-              break
-            default:
-              break
-          }
-        },
-      )
+      // const options = ['Copy Text', 'Cancel']
+      // const cancelButtonIndex = options.length - 1
+      // showActionSheetWithOptions(
+      //   {
+      //     options,
+      //     cancelButtonIndex,
+      //   },
+      //   (buttonIndex) => {
+      //     switch (buttonIndex) {
+      //       case 0:
+      //         Clipboard.setString(props.currentMessage.text)
+      //         break
+      //       default:
+      //         break
+      //     }
+      //   },
+      // )
     }
   }
 
