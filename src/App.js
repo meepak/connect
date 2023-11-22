@@ -15,8 +15,6 @@ import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 import { Provider } from 'jotai'
 import 'utils/ignore'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
-import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import * as SystemUI from 'expo-system-ui'
 
 import { UserDataContextProvider } from './context/user-data-context'
@@ -82,7 +80,7 @@ const App = () => {
   }, [themePreference, themeCustomColor])
 
   // Preferences context parameter
-  // would have ben need if I was able to define
+  // would have been neat if I was able to define
   // it within allocated provider file,
   // but it seems I can't
   const preferences = React.useMemo(
@@ -156,13 +154,11 @@ const App = () => {
   return (
     <Provider>
       <PreferencesContext.Provider value={preferences}>
-        <UserDataContextProvider>
-          <ActionSheetProvider>
-            <PaperProvider settings={paperSettings} theme={paperTheme}>
-              <Route />
-            </PaperProvider>
-          </ActionSheetProvider>
-        </UserDataContextProvider>
+        <PaperProvider settings={paperSettings} theme={paperTheme}>
+          <UserDataContextProvider>
+            <Route />
+          </UserDataContextProvider>
+        </PaperProvider>
       </PreferencesContext.Provider>
     </Provider>
   )

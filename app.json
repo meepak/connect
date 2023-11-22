@@ -4,6 +4,7 @@
     "slug": "connect",
     "owner": "dpkmht",
     "privacy": "public",
+    "jsEngine": "hermes",
     "platforms": [
       "ios",
       "android"

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 const UserDataContext = createContext()
 
 const UserDataContextProvider = (props) => {
-  const [userData, setUserData] = useState('')
+  const [userData, setUserData] = useState({})
   const { children } = props
 
   return (

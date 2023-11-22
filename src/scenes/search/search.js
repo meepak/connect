@@ -1,4 +1,6 @@
-import React, { useRef, useState } from 'react'
+import React, {
+  useDeferredValue, useEffect, useId, useRef, useState,
+} from 'react'
 import { View } from 'react-native'
 import { ModalTemplate } from '../../components/templates'
 import Header from './components/header'
@@ -10,6 +12,17 @@ const Settings = () => {
   const paddingVertical = 20
   const [searchQuery, setSearchQuery] = useState('')
   const ref = useRef(null)
+
+  /*
+  * Hook to defer the rendering of the search results
+  * until after the user stops typing in the search bar.
+  */
+  const deferredSearchQuery = useDeferredValue(searchQuery)
+
+  useEffect(() => {
+    // Fetch search results using deferredSearchQuery
+    // Update setSearchResults with the new results
+  }, [deferredSearchQuery])
 
   const setSearchQueryValue = (value) => {
     setSearchQuery(value)
@@ -27,13 +40,13 @@ const Settings = () => {
         <>
           <Recent onSelected={(value) => setSearchQueryValue(value)} />
           <View style={{ paddingVertical }} />
-          <Temp id={1} />
+          <Temp id={useId()} />
           <View style={{ paddingVertical }} />
-          <Temp id={2} />
+          <Temp id={useId()} />
           <View style={{ paddingVertical }} />
-          <Temp id={3} />
+          <Temp id={useId()} />
           <View style={{ paddingVertical }} />
-          <Temp id={4} />
+          <Temp id={useId()} />
           <View style={{ paddingVertical }} />
           <Temp id={5} />
           <View style={{ paddingVertical }} />

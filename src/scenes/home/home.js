@@ -1,5 +1,5 @@
 import React, {
-  useState, useCallback, useEffect, useContext,
+  useState, useCallback, useEffect, useContext, useMemo,
 } from 'react'
 import {
   ActivityIndicator, View, FlatList,
@@ -74,10 +74,10 @@ export default function Home() {
     }
   }
 
-  const openProfile = (item) => {
+  const openProfile = useCallback((item) => {
     setViewUser(item)
     setShowProfileSheet(true)
-  }
+  }, [])
 
   const renderItem = useCallback(({ item }) => {
     if (item.key === 'Header') {
@@ -112,7 +112,7 @@ export default function Home() {
     // setSpinner(false)
   }, [])
 
-  const handleNotificationIconPress = (value) => {
+  const handleNotificationIconPress = useCallback((value) => {
     setCurrentCount((count) => count + 10)
     let screen
     switch (value) {
@@ -128,19 +128,19 @@ export default function Home() {
       default:
         return
     }
-    console.log(value, screen)
+    // console.log(value, screen)
 
     navigation.navigate('ManageStack', {
       screen,
     })
-  }
+  }, [])
 
-  const renderHeader = () => (
+  const renderHeader = useMemo(() => (
     <Header
       handleNotificationIconPress={(value) => handleNotificationIconPress(value)}
       handleProfilePress={(item) => openProfile(item)}
     />
-  )
+  ), [])
 
   return (
     <ScreenTemplate>
