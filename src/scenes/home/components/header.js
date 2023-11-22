@@ -6,9 +6,10 @@ import {
   useTheme, Text,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
-import { UserDataContext } from '../../../context/user-data-context'
+import { UserDataContext } from '../../../context'
 import Button from '../../../components/core/button'
 import NotificationSummaries from './notification-summary'
+import RenderCounter from '../../../components/render-counter'
 
 const Styles = () => StyleSheet.create({
   headerContainer: {
@@ -67,6 +68,7 @@ const Header = ({ handleNotificationIconPress, handleProfilePress }) => {
         handleIconPress={(value) => handleNotificationIconPress(value)}
         handleProfilePress={(item) => handleProfilePress(item)}
       />
+      <RenderCounter />
     </View>
   )
 }

@@ -9,7 +9,7 @@ import Spinner from 'react-native-loading-spinner-overlay'
 import { ScreenTemplate } from '../../components/templates'
 // import Button from '../../components/core/button'
 import { firestore } from '../../firebase'
-import { UserDataContext } from '../../context/user-data-context'
+import { UserDataContext } from '../../context'
 
 import Header from './__header'
 import WhoAmI from './_who-am-i'

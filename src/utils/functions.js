@@ -45,6 +45,22 @@ export const mergeJsonObjects = (oldObject, newObject) => {
   return result
 }
 
+// Deep compare two json objects,
+// comparing directly results in first due to prototype stuff
+// JSON.stringify will be more efficient so use this only if that won't work
+export const isEqualJsonObjects = (arg1, arg2) => {
+  if (Object.prototype.toString.call(arg1) === Object.prototype.toString.call(arg2)) {
+    if (Object.prototype.toString.call(arg1) === '[object Object]' || Object.prototype.toString.call(arg1) === '[object Array]') {
+      if (Object.keys(arg1).length !== Object.keys(arg2).length) {
+        return false
+      }
+      return (Object.keys(arg1).every((key) => isEqualJsonObjects(arg1[key], arg2[key])))
+    }
+    return (arg1 === arg2)
+  }
+  return false
+}
+
 // This function can be a risk for untested input
 export const convertHexToRGBA = (hexCode, opacity = 1) => {
   if (hexCode == null) return null

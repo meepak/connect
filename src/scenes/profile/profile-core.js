@@ -25,7 +25,7 @@ import Summary from './components/summary'
 import AddSectionMenu from './components/sheets/add-section-menu'
 
 // Temporary measure to get user id of logged in user to test banner upload
-import { UserDataContext } from '../../context/user-data-context'
+import { UserDataContext } from '../../context'
 import Experience from './components/experience'
 import Volunteer from './components/volunteer'
 import Education from './components/education'

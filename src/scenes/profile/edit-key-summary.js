@@ -11,7 +11,7 @@ import Spinner from 'react-native-loading-spinner-overlay'
 import { useNavigation } from '@react-navigation/native'
 import { ScreenTemplate } from '../../components/templates'
 import { firestore } from '../../firebase'
-import { UserDataContext } from '../../context/user-data-context'
+import { UserDataContext } from '../../context'
 import { HeaderProfile } from '../../components/header'
 
 import WhoAmI from '../onboarding/_who-am-i'

@@ -6,7 +6,7 @@ import {
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { Alert, View } from 'react-native'
 import { firestore } from '../../../firebase'
-import { UserDataContext } from '../../../context/user-data-context'
+import { UserDataContext } from '../../../context'
 
 // eslint-disable-next-line react/prop-types
 const Reset = () => {

@@ -14,7 +14,7 @@ import { useNavigation } from '@react-navigation/native'
 import { ScreenTemplate } from '../../components/templates'
 // import storage from '../../utils/Storage'
 // TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE
-import { UserDataContext } from '../../context/user-data-context'
+import { UserDataContext } from '../../context'
 // import { isValidName, isValidLength } from '../../utils/validation'
 import { HeaderProfile } from '../../components/header'
 import IconLink from '../../components/core/icon-link'

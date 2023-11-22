@@ -17,10 +17,10 @@ import { ScreenTemplate } from '../../components/templates'
 import TextInputBox from '../../components/core/text-input-box'
 // import Logo from '../../components/core/Logo'
 import { isValidEmail } from '../../utils/validation'
-// import { UserDataContext } from '../../context/user-data-context'
+// import { UserDataContext } from '../../context'
 import SocialButtons from './social'
 import TextAndLink from '../../components/text-and-link'
-import { loggedInAtom } from '../../utils/atom'
+import userAuthenticatedAtom from '../../utils/atom'
 
 const Styles = (colors, fonts) => StyleSheet.create({
   main: {
@@ -68,10 +68,10 @@ LogBox.ignoreLogs(['Setting a timer'])
 
 // TODO -- THERE IS A BUG IN LOGIN WHERE AFTER REGISTRATION, IT DOESN'T LET USER LOGIN TILL APP IS RESTARTED
 export default function Login() {
-  const tempTestUser = '' // 'k@k.com'
-  const temptTestPass = '' // 'kkkkkk'
+  const tempTestUser = 'k@k.com'
+  const temptTestPass = 'kkkkkk'
 
-  const [, setLoggedIn] = useAtom(loggedInAtom)
+  const [userAuthenticated, setUserAuthenticated] = useAtom(userAuthenticatedAtom)
   const navigation = useNavigation()
   const { colors, fonts } = useTheme()
   const [email, setEmail] = useState(auth.currentUser ? '' : tempTestUser)
@@ -122,17 +122,17 @@ export default function Login() {
       const { user } = response
       const usersRef = doc(firestore, 'users', user.uid)
       const firestoreDocument = await getDoc(usersRef)
-      setLoggedIn(true)
-      setSpinner(false)
       if (!firestoreDocument.exists) {
         setEmailError('Error', 'User does not exist anymore.')
         return
       }
+      setUserAuthenticated(() => true) // this should trigger useEffect in route to initiate login
+      console.log('we got our user, is authentiated atom  true - ', userAuthenticated)
+      setSpinner(false)
     } catch (error) {
-      // console.log(error.message)
+      console.log(error.message)
       setSpinner(false)
       // Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests).
-
       if (error.message.includes('too-many-requests')) {
         setEmailError('Too man authentication failure') // error.message
         setPasswordError('Please try again later or reset your password.')

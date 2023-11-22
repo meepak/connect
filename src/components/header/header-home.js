@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native'
 // import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import AvatarOfAuthUser from '../avatar-of-auth-user'
-import { UserDataContext } from '../../context/user-data-context'
+import { UserDataContext } from '../../context'
 
 import { convertHexToRGBA } from '../../utils/functions'
 

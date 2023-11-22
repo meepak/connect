@@ -4,9 +4,10 @@ import { useTheme } from 'react-native-paper'
 import { NavigationContainer } from '@react-navigation/native'
 import Toast from 'react-native-toast-message'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
-import { UserDataContext } from '../context/user-data-context'
+import { useAtom } from 'jotai'
+import { UserDataContext } from '../context'
+import userAuthenticatedAtom from '../utils/atom'
 import { toastConfig } from '../utils/show-toast'
-import { auth } from '../firebase'
 import IntroStack from './stacks/intro-stack'
 import OnboardingStack from './stacks/onboarding-stack'
 import RootStack from './stacks/root-stack'
@@ -23,6 +24,7 @@ export default function Navigation() {
   // const [isReady, setIsReady] = React.useState(false)
   // const [initialState, setInitialState] = React.useState()
   const { userData } = useContext(UserDataContext)
+  const [userAuthenticated] = useAtom(userAuthenticatedAtom)
   const theme = useTheme()
 
   // React.useEffect(() => {
@@ -51,7 +53,7 @@ export default function Navigation() {
   // }
 
   const getMainComponent = () => {
-    if (auth.currentUser && auth.currentUser.emailVerified && userData) {
+    if (userAuthenticated && Object.keys(userData).length > 0) {
       // console.log('NAVIGATION userData is on boarded??', userData.isOnboarded)
       return userData.isOnboarded ? <RootStack /> : <OnboardingStack />
     }

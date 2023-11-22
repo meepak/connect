@@ -11,10 +11,10 @@ import {
   collection, query, where, getDocs,
 } from 'firebase/firestore'
 import { firestore } from '../../../firebase'
-import { UserDataContext } from '../../../context/user-data-context'
+import { UserDataContext } from '../../../context'
 
 import { ScreenTemplate } from '../../../components/templates'
-// import { UserDataContext } from '../../context/user-data-context'
+// import { UserDataContext } from '../../context'
 import ListItemChat from '../../../components/list-item-chat'
 
 const styles = StyleSheet.create({

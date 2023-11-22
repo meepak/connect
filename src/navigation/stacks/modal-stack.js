@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { useTheme } from 'react-native-paper'
-import HomeTitleContext from '../../context/home-title-context'
+import { HomeTitleContext } from '../../context'
 
 import { HeaderStyle } from '../../components/header'
 import Post from '../../scenes/post'

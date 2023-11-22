@@ -8,7 +8,7 @@ import { Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 
 import { ScreenTemplate } from '../../../components/templates'
-// import { UserDataContext } from '../../context/user-data-context'
+// import { UserDataContext } from '../../context'
 import ListItemChat from '../../../components/list-item-chat'
 
 const styles = StyleSheet.create({

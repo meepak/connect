@@ -17,9 +17,7 @@ import 'utils/ignore'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as SystemUI from 'expo-system-ui'
 
-import { UserDataContextProvider } from './context/user-data-context'
-import PreferencesContext from './context/preferences-context'
-// import { PreferencesContextProvider } from './context/preferences-context'
+import { PreferencesContext } from './context'
 import Icon from './components/core/icon'
 import Route from './route'
 import { hexThemeFromColor, prepareThemes } from './theme/custom'
@@ -155,9 +153,7 @@ const App = () => {
     <Provider>
       <PreferencesContext.Provider value={preferences}>
         <PaperProvider settings={paperSettings} theme={paperTheme}>
-          <UserDataContextProvider>
-            <Route />
-          </UserDataContextProvider>
+          <Route />
         </PaperProvider>
       </PreferencesContext.Provider>
     </Provider>

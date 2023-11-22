@@ -21,7 +21,7 @@ const Temp = ({ id }) => (
         {/* {userData.email} */}
       </Text>
       <Text variant="bodySmall">
-        {/* Member since {userData.createdAtLocale} */}
+        {/* Member since {userData.createdAt?.toDate()?.toLocaleDateString()} */}
       </Text>
     </Card.Content>
   </Card>

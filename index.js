@@ -7,7 +7,6 @@ import 'utils/ignore'
 
 import * as SplashScreen from 'expo-splash-screen'
 
-// import { PreferencesContextProvider } from './context/preferences-context'
 import AnimatedAppLoader from './src/components/splash/animated-app-loader'
 import Connect411 from './src/index'
 

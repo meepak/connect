@@ -7,24 +7,24 @@ import { useNavigation } from '@react-navigation/native'
 import { signOut } from 'firebase/auth'
 import { useAtom } from 'jotai'
 import { auth } from '../../../firebase'
-import { UserDataContext } from '../../../context/user-data-context'
+import { UserDataContext } from '../../../context'
 import AvatarOfAuthUser from '../../../components/avatar-of-auth-user'
-import { loggedInAtom } from '../../../utils/atom'
+import userAuthenticatedAtom from '../../../utils/atom'
 
 // Will provide button for Edit Profile, Sign Out, Delete Account (scroll to the bottom)
 const Account = () => {
   const navigation = useNavigation()
   const [menuVisible, setMenuVisible] = useState(false)
   const { userData, setUserData } = useContext(UserDataContext)
-  const [, setLoggedIn] = useAtom(loggedInAtom)
+  const [, setUserAuthenticated] = useAtom(userAuthenticatedAtom)
 
   // will need more work regarding unsubscribing from snapshot
   const onSignOutPress = () => {
     signOut(auth)
       .then(() => {
         // console.log('onSignOutPress')
-        setUserData('')
-        setLoggedIn(false)
+        setUserData({})
+        setUserAuthenticated(null)
         // Restart() // do not restart, just go back to pre login page
       })
       .catch((error) => {
@@ -103,7 +103,7 @@ const Account = () => {
           {userData.email}
         </Text>
         <Text variant="bodySmall">
-          Member since {userData.createdAtLocale}
+          Member since {userData.createdAt?.toDate()?.toLocaleDateString()}
         </Text>
       </Card.Content>
     </Card>

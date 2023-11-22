@@ -16,7 +16,7 @@ import { Divider, useTheme } from 'react-native-paper'
 import {
   renderInputToolbar, renderActions, renderComposer, renderSend,
 } from './input-toolbar'
-import { UserDataContext } from '../../context/user-data-context'
+import { UserDataContext } from '../../context'
 import { firestore } from '../../firebase'
 import { ScreenTemplate } from '../../components/templates'
 

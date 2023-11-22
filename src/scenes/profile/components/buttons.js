@@ -10,7 +10,7 @@ import {
 } from 'firebase/firestore'
 import { firestore } from '../../../firebase'
 import Styles from './_styles'
-import { UserDataContext } from '../../../context/user-data-context'
+import { UserDataContext } from '../../../context'
 
 const Buttons = (
   {

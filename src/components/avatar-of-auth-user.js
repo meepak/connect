@@ -8,7 +8,7 @@ import {
 import PropTypes from 'prop-types'
 import { Avatar as SystemAvatar } from '@rneui/themed'
 import Avatar from './core/avatar'
-import { UserDataContext } from '../context/user-data-context'
+import { UserDataContext } from '../context'
 import ImageSelectAndUpload from '../utils/image-select-and-upload'
 
 // const styles = StyleSheet.create({

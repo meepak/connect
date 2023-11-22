@@ -1,25 +1,25 @@
-import React, { createContext, useState } from 'react'
-import PropTypes from 'prop-types'
+// import React, { createContext, useState } from 'react'
+// import PropTypes from 'prop-types'
 
-const UserDataContext = createContext()
+// const UserDataContext = createContext()
 
-const UserDataContextProvider = (props) => {
-  const [userData, setUserData] = useState({})
-  const { children } = props
+// const UserDataContextProvider = (props) => {
+//   const [userData, setUserData] = useState({})
+//   const { children } = props
 
-  return (
-    <UserDataContext.Provider
-      value={{
-        userData, setUserData,
-      }}
-    >
-      {children}
-    </UserDataContext.Provider>
-  )
-}
+//   return (
+//     <UserDataContext.Provider
+//       value={{
+//         userData, setUserData,
+//       }}
+//     >
+//       {children}
+//     </UserDataContext.Provider>
+//   )
+// }
 
-UserDataContextProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-}
+// UserDataContextProvider.propTypes = {
+//   children: PropTypes.node.isRequired,
+// }
 
-export { UserDataContext, UserDataContextProvider }
+// export { UserDataContext, UserDataContextProvider }

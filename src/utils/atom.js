@@ -1,5 +1,12 @@
-// TODO: review useAtom vs useState later https://jotai.org/docs/core/use-atom
 import { atom } from 'jotai'
 
-export const userDataLoadedAtom = atom(false)
-export const loggedInAtom = atom(false)
+// This can be accomplished by just using another context but
+// this allows lot les code to do the same thing
+// could be useful for future usecases,
+// where we require quick global state variable
+
+// null value indicates we haven't checked the user status
+// after checking it should be boolean value
+const userAuthenticatedAtom = atom(null)
+
+export default userAuthenticatedAtom

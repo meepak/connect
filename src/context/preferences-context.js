@@ -1,25 +1,25 @@
-import { createContext } from 'react'
+// import { createContext } from 'react'
 
-const PreferencesContext = createContext()
+// const PreferencesContext = createContext()
 
-// const PreferencesContextProvider = (props, value) => {
-//   const [themePreference, setThemePreference] = useState()
-//   const { children } = props
+// // const PreferencesContextProvider = (props, value) => {
+// //   const [themePreference, setThemePreference] = useState()
+// //   const { children } = props
 
-//   return (
-//     <PreferencesContext.Provider
-//       value={{
-//         themePreference, setThemePreference,
-//       }}
-//     >
-//       {children}
-//     </PreferencesContext.Provider>
-//   )
-// }
+// //   return (
+// //     <PreferencesContext.Provider
+// //       value={{
+// //         themePreference, setThemePreference,
+// //       }}
+// //     >
+// //       {children}
+// //     </PreferencesContext.Provider>
+// //   )
+// // }
 
-// PreferencesContextProvider.propTypes = {
-//   children: PropTypes.node.isRequired,
-// }
+// // PreferencesContextProvider.propTypes = {
+// //   children: PropTypes.node.isRequired,
+// // }
 
-// export { PreferencesContext, PreferencesContextProvider }
-export default PreferencesContext
+// // export { PreferencesContext, PreferencesContextProvider }
+// export default PreferencesContext

@@ -5,7 +5,7 @@ import {
 } from 'react-native-paper'
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { DISPLAY } from '../../../utils/constants'
-import PreferencesContext from '../../../context/preferences-context'
+import { PreferencesContext } from '../../../context'
 
 const Display = () => {
   const CUSTOM_COLOR_PALETTE = DISPLAY.Palette

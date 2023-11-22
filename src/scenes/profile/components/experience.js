@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
 import Icon from '../../../components/core/icon'
 import PencilIconButton from '../../../components/pencil-icon-button'
-import { UserDataContext } from '../../../context/user-data-context'
+import { UserDataContext } from '../../../context'
 import Styles from './_styles'
 import IconLink from '../../../components/core/icon-link'
 

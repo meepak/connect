@@ -14,7 +14,7 @@ import { ScreenTemplate } from '../../components/templates'
 import TextInputBox from '../../components/core/text-input-box'
 // import storage from '../../utils/Storage'
 // TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE
-import { UserDataContext } from '../../context/user-data-context'
+import { UserDataContext } from '../../context'
 import { isValidName, isValidLength } from '../../utils/validation'
 import { HeaderProfile } from '../../components/header'
 import SheetModal from '../../components/core/sheet-modal'
