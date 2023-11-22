@@ -34,9 +34,9 @@ const ChatStack = () => {
             headerShown: true,
             headerTintColor: colors.onBackground,
             headerBackTitleVisible: false,
-            headerBackTitleStyle: {
-              color: colors.onBackground,
-            },
+            headerLeftLabelVisible: false,
+            headerLeft: null,
+            headerRight: null,
             headerTitle: () => (
               <HeaderChat />
             ),

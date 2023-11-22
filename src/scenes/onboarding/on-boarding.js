@@ -182,7 +182,6 @@ export default function OnBoarding() {
       const data = {
         id: userData.id,
         fullName,
-        avatar: avatar ?? null,
         phone,
         email: userData.email,
         isOnboarded: true,
@@ -200,6 +199,10 @@ export default function OnBoarding() {
         requireBackgroundCheck,
         agreesBackgroundCheck,
         updatedAt: serverTimestamp(),
+      }
+      // only update avatar if it was updated
+      if (avatar !== userData.avatar) {
+        data.avatar = avatar
       }
       const usersRef = doc(firestore, 'users', userData.id)
       await updateDoc(usersRef, data)

@@ -7,7 +7,7 @@ const PotentialMatchesHeader = ({ currentCount, totalCount }) => {
   const { colors } = useTheme()
   return (
     <View style={{
-      paddingTop: 25, paddingHorizontal: 15, backgroundColor: colors.background,
+      paddingTop: 11, paddingHorizontal: 15, backgroundColor: colors.background,
     }}
     >
       <Text variant="titleLarge">Potential Matches</Text>

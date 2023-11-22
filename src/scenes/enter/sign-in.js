@@ -10,6 +10,7 @@ import { doc, getDoc } from 'firebase/firestore'
 import Spinner from 'react-native-loading-spinner-overlay'
 import { useNavigation } from '@react-navigation/native'
 import { signOut, signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
+import { useAtom } from 'jotai'
 import { firestore, auth } from '../../firebase'
 import { ScreenTemplate } from '../../components/templates'
 // import Button from '../../components/core/button'
@@ -19,6 +20,7 @@ import { isValidEmail } from '../../utils/validation'
 // import { UserDataContext } from '../../context/user-data-context'
 import SocialButtons from './social'
 import TextAndLink from '../../components/text-and-link'
+import { loggedInAtom } from '../../utils/atom'
 
 const Styles = (colors, fonts) => StyleSheet.create({
   main: {
@@ -69,6 +71,7 @@ export default function Login() {
   const tempTestUser = '' // 'k@k.com'
   const temptTestPass = '' // 'kkkkkk'
 
+  const [, setLoggedIn] = useAtom(loggedInAtom)
   const navigation = useNavigation()
   const { colors, fonts } = useTheme()
   const [email, setEmail] = useState(auth.currentUser ? '' : tempTestUser)
@@ -119,14 +122,7 @@ export default function Login() {
       const { user } = response
       const usersRef = doc(firestore, 'users', user.uid)
       const firestoreDocument = await getDoc(usersRef)
-      // console.log(firestoreDocument)
-      /*
-      {"_converter": null, "_document": null, "_firestore": {"app": [FirebaseAppImpl], "databaseId": [Dt], "settings": [lc]},
-      "_firestoreImpl": {"app": [FirebaseAppImpl], "databaseId": [Dt], "settings": [lc]},
-      "_key": {"path": {"len": 2, "offset": 0, "segments": [Array]}}, "_userDataWriter": {"firestore": [Object]},
-      "metadata": {"fromCache": false, "hasPendingWrites": false}}
-
-      */
+      setLoggedIn(true)
       setSpinner(false)
       if (!firestoreDocument.exists) {
         setEmailError('Error', 'User does not exist anymore.')

@@ -5,15 +5,18 @@ import {
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { signOut } from 'firebase/auth'
+import { useAtom } from 'jotai'
 import { auth } from '../../../firebase'
 import { UserDataContext } from '../../../context/user-data-context'
 import AvatarOfAuthUser from '../../../components/avatar-of-auth-user'
+import { loggedInAtom } from '../../../utils/atom'
 
 // Will provide button for Edit Profile, Sign Out, Delete Account (scroll to the bottom)
 const Account = () => {
   const navigation = useNavigation()
   const [menuVisible, setMenuVisible] = useState(false)
   const { userData, setUserData } = useContext(UserDataContext)
+  const [, setLoggedIn] = useAtom(loggedInAtom)
 
   // will need more work regarding unsubscribing from snapshot
   const onSignOutPress = () => {
@@ -21,6 +24,7 @@ const Account = () => {
       .then(() => {
         // console.log('onSignOutPress')
         setUserData('')
+        setLoggedIn(false)
         // Restart() // do not restart, just go back to pre login page
       })
       .catch((error) => {
@@ -48,7 +52,7 @@ const Account = () => {
       <Card.Title
         title="Account"
         titleVariant="headlineSmall"
-        left={() => <AvatarOfAuthUser size={50} rounded />}
+        left={() => <AvatarOfAuthUser size={42} rounded />}
         right={() => (
           <Menu
             visible={menuVisible}

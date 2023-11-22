@@ -22,7 +22,7 @@ const Styles = () => StyleSheet.create({
     marginTop: 10,
   },
   hi: {
-    marginTop: 22,
+    marginTop: 11,
     marginHorizontal: 15,
     fontWeight: 700,
   },
@@ -59,7 +59,7 @@ const Header = ({ handleNotificationIconPress, handleProfilePress }) => {
         // marginHorizontal={10}
           marginVertical={5}
           paddingHorizontal={30}
-          elevation={2}
+          elevation={10}
         />
       </View>
 

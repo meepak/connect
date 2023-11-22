@@ -28,23 +28,29 @@ const HeaderHome = () => {
     container: {
       top: Platform.OS === 'android' ? insets.top : 30,
       width: '100%',
-      paddingBottom: 5,
+      paddingBottom: 25,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
       height: 55,
     },
     rightIcons: {
+      top: 6,
       flexDirection: 'row',
       flexWrap: 'nowrap',
       alignItems: 'center',
       alignSelf: 'flex-end',
     },
     rightIcon: {
-      marginTop: 0,
       marginRight: -5,
       marginLeft: 18,
       backgroundColor: convertHexToRGBA(colors.onBackground, 0.1),
+    },
+    leftIcon: {
+      borderWidth: 1,
+      borderColor: colors.outline,
+      borderRadius: 25,
+      elevation: 5,
     },
 
   })
@@ -83,7 +89,7 @@ const HeaderHome = () => {
     <View style={styles.container}>
       <View style={styles.leftIcon}>
         <AvatarOfAuthUser
-          size={42}
+          size={46}
           onPress={() => openProfile()}
         />
       </View>

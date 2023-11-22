@@ -24,7 +24,7 @@ const Display = () => {
         left={() => (
           <MatIcon
             name="monitor-edit"
-            size={40}
+            size={32}
             color={colors.onBackground}
           />
         )}
@@ -123,7 +123,7 @@ const Display = () => {
                         setMenuVisible(false)
                         preferences.setThemeCustomColor(color)
                       }}
-                      title={color}
+                      // title={color}
                     />
                   ))}
                 </Menu>

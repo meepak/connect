@@ -40,12 +40,15 @@ function extractInitials(fullName) {
 const Avatar = ({
   rounded, size, width, height, style, fullName, url, onPress, children,
 }) => {
+  const { backgroundColor, textColor } = mapNameToColor(fullName)
   if (url && typeof url === 'string') {
     return (
       <SystemAvatar
         source={{ uri: url }}
         // avatarStyle={style}
-        containerStyle={style}
+        containerStyle={{
+          ...style, backgroundColor, elevation: 5, top: -1,
+        }}
         rounded={rounded ?? true}
         size={size ?? width}
         width={width}
@@ -56,12 +59,11 @@ const Avatar = ({
       </SystemAvatar>
     )
   } if (fullName) {
-    const { backgroundColor, textColor } = mapNameToColor(fullName)
     const initials = extractInitials(fullName)
     return (
       <SystemAvatar
         title={initials}
-        containerStyle={[style ?? [], { backgroundColor }]}
+        containerStyle={{ ...style, backgroundColor, elevation: 5 }}
         rounded={rounded ?? true}
         size={size ?? width}
         width={width}
@@ -104,7 +106,7 @@ Avatar.defaultProps = {
   size: null,
   width: null,
   height: null,
-  style: null,
+  style: {},
 }
 
 export default Avatar

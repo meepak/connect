@@ -24,7 +24,7 @@ const HomeStack = () => {
           headerBackTitleStyle: {
             color: colors.background,
           },
-          headerStyle: { height: 42 },
+          headerStyle: { height: 55 },
           headerTitle: () => (
             <HeaderHome />
           ),

@@ -1,67 +1,58 @@
 import React from 'react'
 import {
-  StyleSheet, View,
+  StyleSheet, View, // Platform,
 } from 'react-native'
 import {
   IconButton, Text, useTheme,
 } from 'react-native-paper'
-import { useRoute } from '@react-navigation/native'
+import { useRoute, useNavigation } from '@react-navigation/native'
+// import { useSafeAreaInsets } from 'react-native-safe-area-context'
 // import AvatarOfAuthUser from './avatar-of-auth-user'
 
 export default function HeaderChat() {
-  const { colors, fonts } = useTheme()
+  // const insets = useSafeAreaInsets()
+  const navigation = useNavigation()
+  const { colors } = useTheme()
   const route = useRoute()
   const {
     userFullName,
   } = route.params
 
   const styles = StyleSheet.create({
-    header: {
-      flex: 1,
+    headerContent: {
+      top: 15, // Platform.OS === 'android' ? insets.top : 30,
+      width: '100%',
+      paddingBottom: 25,
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'flex-end', // Change this to 'flex-end' to align the IconButton component to the right
-      width: '100%',
-      color: colors.onBackground,
-      marginEnd: 20,
-    },
-    button: {
-      borderRadius: 6,
-      width: '75%',
-      height: 36,
-      alignItems: 'flex-start',
-      marginLeft: 10,
-      marginRight: 15,
-    },
-    iconButton: {
-      alignSelf: 'flex-end',
-    },
-    userNameLabel: {
-      color: colors.onBackground,
-      fontSize: fonts.titleLarge.fontSize,
-      textTransform: 'capitalize',
-      fontWeight: 'bold',
+      justifyContent: 'space-between',
+      height: 45,
     },
   })
 
-  const openManageChat = () => {
-    // console.log('Lets go to chat')
+  const openSearch = () => {
+    // console.log(`Lets go to notification window -- ${tempNotificationSimulation}`)
+    navigation.navigate('SearchStack', {
+      screen: 'Search',
+    })
   }
 
-  // console.log(`current user id is -- use this to fetch more user info or save to db?? ${userId}`)
-
   return (
-    <View style={styles.header}>
-
+    <View style={styles.headerContent}>
+      <IconButton
+        icon="chevron-left"
+        color={colors.onBackground}
+        size={24}
+        onPress={() => navigation.goBack()}
+      />
       <Text style={styles.userNameLabel}>
         {userFullName}
       </Text>
-
       <IconButton
         icon="zap"
         color={colors.onBackground}
-        size={18}
-        onPress={() => openManageChat()}
+        size={20}
+        onPress={openSearch}
       />
     </View>
   )

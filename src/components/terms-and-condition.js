@@ -1,8 +1,7 @@
 import React, {
   useEffect, useRef, useCallback,
 } from 'react'
-import { View } from 'react-native'
-import { useTheme, Text, IconButton } from 'react-native-paper'
+import { useTheme } from 'react-native-paper'
 import PropTypes from 'prop-types'
 
 // import IconLink from '../../../../components/core/IconLink'
@@ -37,7 +36,7 @@ const TermsAndCondition = ({ show, onClose }) => {
     onClose()
   }, [])
 
-  const { colors, fonts } = useTheme()
+  const { colors } = useTheme()
 
   const html = `<html><head>
                 <style>
@@ -45,35 +44,17 @@ const TermsAndCondition = ({ show, onClose }) => {
                     font-size: -webkit-xxx-large; 
                     background-color: ${colors.surfaceContainerHigh};
                     color: ${colors.onBackground}
+                  }
                 </style></head>
                 <body>${tnc}</body>
                 </html`
 
   return (
-    <SheetModal ref={tncSheetRef} snapsAt={['50%', '75%', '100%']} onDismiss={handleDismiss}>
-      <View style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginHorizontal: 20,
-      }}
-      >
-        <Text style={{
-          fontWeight: 'bold',
-          fontSize: fonts.titleMedium.fontSize,
-        }}
-        >
-          Find Associate - Terms and Conditions
-        </Text>
-        <IconButton
-          icon="x"
-          onPress={handleDismiss}
-        />
-      </View>
+    <SheetModal ref={tncSheetRef} snapsAt={['50%', '75%', '100%']} onDismiss={handleDismiss} title="Terms and Conditions">
       <WebView
         style={{
-          marginHorizontal: 30,
-          marginBottom: 10,
+          marginHorizontal: 15,
+          marginVertical: 10,
           backgroundColor: colors.transparent,
         }}
         nestedScrollEnabled

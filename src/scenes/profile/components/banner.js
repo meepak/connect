@@ -29,11 +29,11 @@ const Banner = ({
 
   const styles = StyleSheet.create({
     banner: {
-      height: 185,
+      height: 204,
     },
     bannerImageContainer: {
       resizeMode: 'cover',
-      height: 140,
+      height: 141,
       // backgroundColor: (sheetMode && finalBannerImage) ? colors.transparent : colors.background,
       backgroundColor: colors.background,
     },
@@ -43,12 +43,13 @@ const Banner = ({
     },
     avatarContainer: {
       position: 'absolute',
-      top: 60,
+      top: 75,
       right: 10,
       zIndex: 3,
       borderColor: colors.background,
       borderWidth: 4, // match this with
       borderRadius: 100,
+      elevation: 5,
     },
     backButton: {
       position: 'absolute',
@@ -81,10 +82,10 @@ const Banner = ({
     },
   })
 
-  const setUploadProgress = (/* progress */) => {
-    // setBannerSpinner(true)
-    // console.log(progress)
-  }
+  // const setUploadProgress = (/* progress */) => {
+  //   // setBannerSpinner(true)
+  //   // console.log(progress)
+  // }
 
   return (
     <View style={styles.banner}>

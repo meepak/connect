@@ -12,7 +12,7 @@ import LoadingScreen from './components/loading-screen'
 
 let unsubscribe = null
 const Route = () => {
-  const [, setLoggedIn] = useAtom(loggedInAtom)
+  const [loggedIn, setLoggedIn] = useAtom(loggedInAtom)
   const [userDataLoaded, setUserDataLoaded] = useAtom(userDataLoadedAtom)
   const { userData, setUserData } = useContext(UserDataContext)
 
@@ -68,6 +68,9 @@ const Route = () => {
   }
 
   const handleAuthStateChanged = (user) => {
+    if (!loggedIn) {
+      cleanupUnsubscribe()
+    }
     if (user) {
       const usersRef = doc(firestore, 'users', user.uid)
       unsubscribe = onSnapshot(usersRef, handleSnapshot)
@@ -82,9 +85,12 @@ const Route = () => {
   }
 
   useEffect(() => {
+    if (!loggedIn && unsubscribe) {
+      cleanupUnsubscribe()
+    }
     unsubscribe = onAuthStateChanged(auth, handleAuthStateChanged)
     return () => cleanupUnsubscribe()
-  }, [])
+  }, [loggedIn])
 
   // rendering
   if (!userDataLoaded) {

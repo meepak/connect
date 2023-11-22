@@ -7,7 +7,6 @@ import {
 import PropTypes from 'prop-types'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { View } from 'react-native'
-import { convertHexToRGBA } from '../../utils/functions'
 
 const SheetModal = React.forwardRef(({
   children, snapsAt, onDismiss, allowSwipeToClose, title,
@@ -61,28 +60,36 @@ const SheetModal = React.forwardRef(({
       handleComponent={() => (
         <View style={{
           flex: 1,
+          flexWrap: 'nowrap',
           flexDirection: 'row',
           justifyContent: 'space-between',
-          height: 42,
+          height: 52,
           backgroundColor: colors.elevation.level5,
           elevation: 5,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
-          paddingHorizontal: 15,
+          paddingHorizontal: 20,
         }}
         >
-          <Text variant="titleLarge" style={{ top: 7, fontWeight: 500 }}>{title}</Text>
+          <Text
+            variant="titleLarge"
+            numberOfLines={1}
+            style={{
+              top: 14, flex: 1, textAlign: 'left', fontWeight: 500,
+            }}
+          >{title}
+          </Text>
           <IconButton
             style={{
-              top: 2,
-              right: -7,
+              right: -15,
               alignSelf: 'flex-end',
-              backgroundColor: convertHexToRGBA(colors.onBackground, 0.1),
+              // backgroundColor: convertHexToRGBA(colors.onBackground, 0.1),
             }}
             icon="x"
-            size={18}
+            size={24}
             iconColor={colors.onBackground}
             onPress={() => onDismiss()}
+            // mode="outlined"
           />
         </View>
       )}
