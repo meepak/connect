@@ -71,7 +71,7 @@ export default function Login() {
   const tempTestUser = 'k@k.com'
   const temptTestPass = 'kkkkkk'
 
-  const [setUserAuthenticated] = useAtom(userAuthenticatedAtom)
+  const [, setUserAuthenticated] = useAtom(userAuthenticatedAtom)
   const navigation = useNavigation()
   const { colors, fonts } = useTheme()
   const [email, setEmail] = useState(auth.currentUser ? '' : tempTestUser)

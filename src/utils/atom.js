@@ -6,7 +6,8 @@ import { atom } from 'jotai'
 // where we require quick global state variable
 
 // null value indicates we haven't checked the user status
-// after checking it should be boolean value
+// after checking it should be boolean value,
+// probably can be done better with other option
 const userAuthenticatedAtom = atom(null)
 
 export default userAuthenticatedAtom

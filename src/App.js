@@ -78,9 +78,6 @@ const App = () => {
   }, [themePreference, themeCustomColor])
 
   // Preferences context parameter
-  // would have been neat if I was able to define
-  // it within allocated provider file,
-  // but it seems I can't
   const preferences = React.useMemo(
     () => ({
       setThemePreference: (themePref) => {
@@ -103,6 +100,7 @@ const App = () => {
     [themePreference, themeCustomColor, useCustomColor],
   )
 
+  // prepare the theme
   const { adaptedTheme } = adaptNavigationTheme(isDark
     ? { reactNavigationLight: NavigationDefaultTheme }
     : { reactNavigationDark: NavigationDarkTheme })
@@ -144,7 +142,6 @@ const App = () => {
   // solution to white flash for android while keyboard appears
   SystemUI.setBackgroundColorAsync(paperTheme.colors.background)
 
-  // if (!didLoad) return <LoadingScreen />
   // console.log('App.js loaded')
   const paperSettings = {
     icon: (props) => <Icon {...props} />,
