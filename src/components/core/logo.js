@@ -1,45 +1,57 @@
 import React from 'react'
 import {
-  Image, StyleSheet, useColorScheme,
+  StyleSheet, View,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import imageAssets from '../../theme/images'
+import { Text, useTheme } from 'react-native-paper'
 
-const styles = StyleSheet.create({
-  logo: {
-    flex: 1,
-    alignSelf: 'flex-start',
-    marginLeft: 30,
-    marginTop: 10,
-    marginBottom: 20,
-  },
-})
+export default function Logo({ bgColor, textColor }) {
+  const { colors } = useTheme()
 
-export default function Logo({ style }) {
-  const scheme = useColorScheme()
-  const newStyle = style ?? styles.logo
+  const styles = StyleSheet.create({
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    firstText: {
+      color: textColor ?? colors.onBackground,
+      fontWeight: 'bold',
+    },
+    secondText: {
+      color: bgColor ?? colors.background,
+      fontWeight: 'bold',
+    },
+    second: {
+      backgroundColor: textColor ?? colors.onBackground,
+      paddingHorizontal: 7,
+      marginLeft: 3,
+    },
+    logo: {
+      flex: 1,
+      alignSelf: 'flex-start',
+      marginLeft: 30,
+      marginTop: 10,
+      marginBottom: 20,
+    },
+  })
+
   return (
-    <Image
-      style={newStyle} // Merge default styles with the provided style prop
-      source={
-        scheme === 'dark'
-          ? imageAssets.logo_white
-          : imageAssets.logo_black
-      }
-    />
+    <View style={styles.row}>
+      <Text style={styles.firstText} variant="titleMedium">FIND</Text>
+      <View style={styles.second}>
+        <Text style={styles.secondText} variant="titleMedium">ASSOCIATE</Text>
+      </View>
+    </View>
   )
 }
 
 Logo.propTypes = {
-  style: PropTypes.shape({
-    flex: PropTypes.number,
-    alignSelf: PropTypes.string,
-    marginLeft: PropTypes.number,
-    marginTop: PropTypes.number,
-    marginBottom: PropTypes.number,
-  }),
+  bgColor: PropTypes.string,
+  textColor: PropTypes.string,
 }
 
 Logo.defaultProps = {
-  style: null,
+  bgColor: null,
+  textColor: null,
 }

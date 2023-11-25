@@ -6,12 +6,13 @@ import {
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { Alert, View } from 'react-native'
 import { firestore } from '../../../firebase'
-import { UserDataContext } from '../../../context'
+import { UserDataContext, PreferencesContext } from '../../../context'
 
 // eslint-disable-next-line react/prop-types
-const Reset = () => {
+const Developer = () => {
   const { colors } = useTheme()
   const { userData } = useContext(UserDataContext)
+  const { showRenderCounter, setShowRenderCounter } = useContext(PreferencesContext)
   const [spinner, setSpinner] = useState(false)
 
   const profileUpdate = async () => {
@@ -19,7 +20,7 @@ const Reset = () => {
       setSpinner(true)
       const data = {
         id: userData.id,
-        isOnboarded: false,
+        isOnboard: false,
         updatedAt: serverTimestamp(),
       }
       const usersRef = doc(firestore, 'users', userData.id)
@@ -38,7 +39,7 @@ const Reset = () => {
       >
         {/* <Card.Cover source={userData.avatar} /> */}
         <Card.Title
-          title="Reset"
+          title="Developer"
           titleVariant="headlineSmall"
           //   left={() => {}}
           right={() => { }}
@@ -55,13 +56,35 @@ const Reset = () => {
           }}
           >
             <Text variant="bodyMedium">
-              Reset Onboarded Flag (for dev testing)
+              Reset Onboard Flag
             </Text>
             <Switch
-              value
+              value={false}
               onValueChange={() => {
                 profileUpdate()
               }}
+              color={colors.tertiary}
+            />
+          </View>
+        </Card.Content>
+
+        <Card.Content>
+          <View style={{
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+            flexWrap: 'nowrap',
+            justifyContent: 'space-between',
+            marginBottom: 5,
+            marginTop: 10,
+          }}
+          >
+            <Text variant="bodyMedium">
+              Display Render Counter
+            </Text>
+            <Switch
+              value={showRenderCounter}
+              onValueChange={setShowRenderCounter}
               color={colors.tertiary}
             />
           </View>
@@ -76,4 +99,4 @@ const Reset = () => {
   )
 }
 
-export default Reset
+export default Developer

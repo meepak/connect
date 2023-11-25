@@ -37,16 +37,16 @@ const ProfileSheet = ({ show, onClose, user }) => {
   return (
     <SheetModal
       ref={addSectionSheetRef}
-      snapsAt={['50%', '75%', '100%']}
+      snapsAt={['50%', '75%', '110%']}
       onDismiss={handleDismiss}
       // allowSwipeToClose={false}
-      title={user.name}
+      title={user?.name ?? ''}
     >
       <ProfileCore
-        userId={user?.key}
-        userFullName={user?.name}
+        userId={user?.key ?? ''}
+        userFullName={user?.name ?? ''}
         userAvatar={user?.image}
-        userBannerImage={user?.banner}
+        userBannerImage={user?.banner ?? ''}
         sheetMode
       />
     </SheetModal>

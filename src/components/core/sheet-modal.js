@@ -5,14 +5,12 @@ import {
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet'
 import PropTypes from 'prop-types'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { View } from 'react-native'
 
 const SheetModal = React.forwardRef(({
   children, snapsAt, onDismiss, allowSwipeToClose, title,
 }, ref) => {
   const { colors } = useTheme()
-  const insets = useSafeAreaInsets()
   // refs
   //   const bottomSheetRef = useRef(null)
   // variables, TODO pass this as props
@@ -43,7 +41,7 @@ const SheetModal = React.forwardRef(({
     <BottomSheetModal
       ref={ref}
       snapPoints={snapPoints}
-      topInset={+insets.top} // since this only works in android, do not rely on it, use inset provided by safe area view
+      // topInset={+insets.top} // since this only works in android, do not rely on it, use inset provided by safe area view
       enablePanDownToClose={allowSwipeToClose}
       enableDismissOnClose
       onDismiss={onDismiss}
@@ -62,8 +60,9 @@ const SheetModal = React.forwardRef(({
           flex: 1,
           flexWrap: 'nowrap',
           flexDirection: 'row',
+          alignItems: 'flex-end',
           justifyContent: 'space-between',
-          height: 52,
+          height: 65,
           backgroundColor: colors.elevation.level5,
           elevation: 5,
           borderTopLeftRadius: 20,
@@ -75,7 +74,7 @@ const SheetModal = React.forwardRef(({
             variant="titleLarge"
             numberOfLines={1}
             style={{
-              top: 14, flex: 1, textAlign: 'left', fontWeight: 500,
+              marginBottom: 10, fontWeight: 500,
             }}
           >{title}
           </Text>

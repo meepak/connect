@@ -14,8 +14,8 @@ import RootStack from './stacks/root-stack'
 // import LoadingScreen from '../components/loading-screen'
 
 // I wonder how this works, quite not convince I need this but let's see
-// Commenting out the navigation sate persistene part for now
-// can't seem to get the benifit of it for now, could be useful
+// Commenting out the navigation sate persistent part for now
+// can't seem to get the benefit of it for now, could be useful
 // later for offline application, will enable it,
 // if found proper use case else will remove it
 // const PERSISTENCE_KEY = 'CONNECT411_NAVIGATION_STATE'
@@ -54,8 +54,8 @@ export default function Navigation() {
 
   const getMainComponent = () => {
     if (userAuthenticated && Object.keys(userData).length > 0) {
-      // console.log('NAVIGATION userData is on boarded??', userData.isOnboarded)
-      return userData.isOnboarded ? <RootStack /> : <OnboardingStack />
+      // console.log('NAVIGATION userData is on boarded??', userData.isOnboard)
+      return userData.isOnboard ? <RootStack /> : <OnboardingStack />
     }
     return <IntroStack />
   }
@@ -72,7 +72,7 @@ export default function Navigation() {
         //     AsyncStorage.setItem(PERSISTENCE_KEY, data)
         //   } catch (e) {
         //     // ignore error
-        //     console.log('error savePrefs', e)
+        //     console.log('error savePref', e)
         //   }
         // }}
       >

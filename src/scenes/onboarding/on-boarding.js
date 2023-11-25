@@ -184,7 +184,7 @@ export default function OnBoarding() {
         fullName,
         phone,
         email: userData.email,
-        isOnboarded: true,
+        isOnboard: true,
         whoAmI,
         industries,
         businessStage,

@@ -4,6 +4,7 @@ import { doc, onSnapshot } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
 import { Asset } from 'expo-asset'
 import { Alert } from 'react-native'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 import userAuthenticatedAtom from './utils/atom'
 import Navigation from './navigation'
 import { UserDataContext } from './context'
@@ -109,7 +110,7 @@ const Route = () => {
       userData,
     }),
     [userData], // probably define each attribute of user, that would be too much??
-    // only depenency so far are the avatar and banner.. what else change in user will require rendering of anything??
+    // only dependency so far are the avatar and banner.. what else change in user will require rendering of anything??
   )
 
   // if userAuthenticated is not yet true or false
@@ -121,7 +122,9 @@ const Route = () => {
   // console.log('we passing through?? because userAuthenticated is not null --', userAuthenticated !== null)
   return (
     <UserDataContext.Provider value={user}>
-      <Navigation />
+      <SafeAreaProvider>
+        <Navigation />
+      </SafeAreaProvider>
     </UserDataContext.Provider>
   )
 }

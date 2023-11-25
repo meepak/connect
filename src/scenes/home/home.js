@@ -2,14 +2,17 @@ import React, {
   useState, useCallback, useEffect, useContext, useMemo,
 } from 'react'
 import {
-  ActivityIndicator, View, FlatList,
+  View, FlatList,
 } from 'react-native'
 import {
+  ActivityIndicator,
   Divider,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 
 // import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
+import { FlashList } from '@shopify/flash-list'
+import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import { ScreenTemplate } from '../../components/templates'
 import ListItemUser from '../../components/list-item-user'
 import { UserDataContext } from '../../context'
@@ -18,13 +21,15 @@ import Header from './components/header'
 import PotentialMatchesHeader from './components/potential-matches-header'
 import ProfileSheet from '../profile/profile-sheet'
 import { fetchPotentialMatches } from './util/db'
+import RenderCounter from '../../components/render-counter'
 
 export default function Home() {
   const navigation = useNavigation()
-  const [loadingMoreData, setLoadingMoreData] = useState(false)
+  // const [loadingMoreData, setLoadingMoreData] = useState(false)
   const [dataItems, setDataItems] = useState([])
   const { userData } = useContext(UserDataContext)
-  const [currentCount, setCurrentCount] = useState(40)
+  const itemBatch = 10
+  // const [currentCount, setCurrentCount] = useState(itemBatch)
   // const [spinner, setSpinner] = useState(false)
   // const [lastFetchedData, setLastFetchedData] = useState(null)
   const [viewUser, setViewUser] = useState({
@@ -33,44 +38,45 @@ export default function Home() {
   const [showProfileSheet, setShowProfileSheet] = useState(false)
 
   const fetchData = async () => {
-    const newDataItems = await fetchPotentialMatches(userData.id, 10)
-    if (dataItems.length > 0) { // case when we are adding more data to the existing list via refresh control
-      setDataItems((prevDataItems) => [...prevDataItems, ...newDataItems])
-    } else {
-      // append with dummy data
-      const mockItems = generateMockData(1, 10)
-      setDataItems(() => [{ key: 'Header' }, ...newDataItems, ...mockItems])
-    }
-    // setSpinner(false)
+    const newDataItems = await fetchPotentialMatches(userData.id, itemBatch)
+
+    // additional mock data
+    const mockItems = generateMockData(1, itemBatch, 'fetchData')
+    // setCurrentCount(() => itemBatch + 1)
+    const finalDataItems = [{ key: 'Header' }, ...newDataItems, ...mockItems]
+    console.log(finalDataItems)
+    setDataItems(finalDataItems)
   }
 
-  // called on onLoadingMoreData
-  // const onLoadingMoreData = useCallback(() => {
-  //   setLoadingMoreData(true)
-  // }, [])
-
-  useEffect(() => {
-    if (!loadingMoreData) {
-      return
+  const fetchMoreData = async () => {
+    const count = dataItems.length
+    if (count === 0) {
+      return // there is no initial data to load more data
     }
-    setLoadingMoreData(false)
-    fetchData()
-  }, [loadingMoreData])
+    console.log('current count', count)
+    // additional mock data
+    const mockItems = generateMockData(count + 1, itemBatch, 'fetchMoreData')
+    // setCurrentCount(() => (currentCount + itemBatch))
+    const finalDataItems = [...dataItems, ...mockItems]
+    setDataItems(finalDataItems)
+  }
+
   // Render Footer
   const renderSpinner = () => {
     try {
       // Check If Loading
-      if (loadingMoreData) {
-        return (
-          <View style={{ flex: 1 }}>
-            <ActivityIndicator size="large" />
-          </View>
-        )
-      }
+      // if (loadingMoreData) {
+      //   return (
+      //     <View style={{ flex: 1 }}>
+      //       <ActivityIndicator size="large" />
+      //     </View>
+      //   )
+      // }
       return <></>
+    // eslint-disable-next-line no-unreachable
     } catch (error) {
       // console.log(error)
-      return <></>
+      // return <></>
     }
   }
 
@@ -81,11 +87,12 @@ export default function Home() {
 
   const renderItem = useCallback(({ item }) => {
     if (item.key === 'Header') {
-      return <PotentialMatchesHeader currentCount={currentCount} totalCount={200} />
+      return <PotentialMatchesHeader currentCount={dataItems.length} totalCount={200} />
     }
 
     return (
       <>
+        <RenderCounter title="listItem" />
         <ListItemUser // List is better than card here
           name={item.name}
           image={item.image}
@@ -99,21 +106,20 @@ export default function Home() {
         />
       </>
     )
-  },
-  [])
+  }, [1])
 
   // like constructor to load data
   useEffect(() => {
     // setSpinner(true)
     if (dataItems.length === 0) {
       fetchData()
-      setLoadingMoreData(false)
+      // setLoadingMoreData(false)
     }
     // setSpinner(false)
   }, [])
 
   const handleNotificationIconPress = useCallback((value) => {
-    setCurrentCount((count) => count + 10)
+    // setCurrentCount((count) => count + 10)
     let screen
     switch (value) {
       case 'connect':
@@ -142,10 +148,16 @@ export default function Home() {
     />
   ), [])
 
+  const onEndReached = useCallback(() => {
+    // You can add additional logic here before fetching more data
+    fetchMoreData()
+  }, [fetchMoreData])
+
   return (
     <ScreenTemplate>
-      <View style={{ flex: 1, marginTop: 7 }}>
-        <FlatList
+      <RenderCounter title="home" />
+      <View style={{ flex: 1 }}>
+        <KeyboardAwareFlatList
           data={dataItems}
           renderItem={renderItem}
           ListHeaderComponent={renderHeader}
@@ -156,10 +168,14 @@ export default function Home() {
           // ListEmptyComponent={}
           keyExtractor={(item) => item.key}
               // onEndReached={onLoadingMoreData}
-          onEndReachedThreshold={0}
-          refreshing={loadingMoreData}
+          // refreshing={loadingMoreData}
           stickyHeaderIndices={dataItems.length > 1 ? [1] : [0]}
           // StickyHeaderComponent={PotentialMatchesHeader}
+          // refreshing
+          // onRefresh={() => {}}
+          onEndReached={onEndReached}
+          onEndReachedThreshold={0.5}
+          estimatedItemSize={100}
         />
       </View>
       <ProfileSheet show={showProfileSheet} onClose={() => { setShowProfileSheet(false) }} user={viewUser} />

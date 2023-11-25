@@ -18,7 +18,7 @@ const Banner = ({
   userId,
   userAvatar,
   userFullName,
-  onBanerEdited,
+  onBannerEdited,
   onAvatarEdited,
   sheetMode,
 
@@ -110,7 +110,7 @@ const Banner = ({
               bgAlpha={0.5}
               onPress={() => {
                 ImageSelectAndUpload({
-                  userId, onFinished: onBanerEdited, resizeWidth: 800, imageCompression: 1,
+                  userId, onFinished: onBannerEdited, resizeWidth: 800, imageCompression: 1,
                 })
               }}
             />
@@ -135,7 +135,7 @@ Banner.propTypes = {
   userId: PropTypes.string.isRequired,
   userAvatar: PropTypes.string,
   userFullName: PropTypes.string.isRequired,
-  onBanerEdited: PropTypes.func.isRequired,
+  onBannerEdited: PropTypes.func.isRequired,
   onAvatarEdited: PropTypes.func.isRequired,
   sheetMode: PropTypes.bool,
 }

@@ -30,6 +30,7 @@ const App = () => {
 
   const [isDark, setIsDark] = React.useState(systemTheme === 'dark')
   const [useCustomColor, setUseCustomColor] = React.useState(false)
+  const [showRenderCounter, setShowRenderCounter] = React.useState(process.env.EXPO_PUBLIC_DEVELOPMENT_MODE === 'true')
 
   const PREFERENCES_KEY = ASYNC_STORAGE_KEY.Preferences
   const CUSTOM_COLOR_PALETTE = DISPLAY.Palette
@@ -42,7 +43,7 @@ const App = () => {
   }
 
   React.useEffect(() => {
-    const restorePrefs = async () => {
+    const restorePref = async () => {
       try {
         const prefString = await AsyncStorage.getItem(PREFERENCES_KEY)
         const preferences = JSON.parse(prefString || '')
@@ -52,14 +53,14 @@ const App = () => {
         }
       } catch (e) {
         // ignore error
-        console.log('error restorePrefs', e)
+        console.log('error restorePref', e)
       }
     }
-    restorePrefs()
+    restorePref()
   }, [])
 
   React.useEffect(() => {
-    const savePrefs = async () => {
+    const savePref = async () => {
       try {
         // console.log('saving preferences', themePreference, themeCustomColor)
         await AsyncStorage.setItem(
@@ -70,11 +71,11 @@ const App = () => {
         )
       } catch (e) {
         // ignore error
-        console.log('error savePrefs', e)
+        console.log('error savePref', e)
       }
     }
 
-    savePrefs()
+    savePref()
   }, [themePreference, themeCustomColor])
 
   // Preferences context parameter
@@ -96,8 +97,10 @@ const App = () => {
       themePreference,
       themeCustomColor,
       isDark,
+      showRenderCounter,
+      setShowRenderCounter,
     }),
-    [themePreference, themeCustomColor, useCustomColor],
+    [themePreference, themeCustomColor, useCustomColor, showRenderCounter],
   )
 
   // prepare the theme

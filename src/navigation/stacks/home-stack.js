@@ -7,7 +7,7 @@ import { HeaderHome } from '../../components/header'
 const Stack = createStackNavigator()
 
 const HomeStack = () => {
-  const { colors } = useTheme()
+  useTheme()
   return (
     <Stack.Navigator
       screenOptions={{
@@ -19,12 +19,7 @@ const HomeStack = () => {
         name="Home"
         component={Home}
         options={() => ({
-          headerTintColor: colors.background,
-          headerBackTitleVisible: false,
-          headerBackTitleStyle: {
-            color: colors.background,
-          },
-          headerStyle: { height: 55 },
+          headerStyle: { height: 95 },
           headerTitle: () => (
             <HeaderHome />
           ),

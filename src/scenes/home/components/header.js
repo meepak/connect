@@ -13,7 +13,8 @@ import RenderCounter from '../../../components/render-counter'
 
 const Styles = () => StyleSheet.create({
   headerContainer: {
-    paddingBottom: 25,
+    paddingTop: 10,
+    marginBottom: 11,
   },
   searchButton: {
     width: '100%',
@@ -23,14 +24,13 @@ const Styles = () => StyleSheet.create({
     marginTop: 10,
   },
   hi: {
-    marginTop: 11,
     marginHorizontal: 15,
     fontWeight: 700,
   },
 })
 
 // eslint-disable-next-line react/prop-types
-const Header = ({ handleNotificationIconPress, handleProfilePress }) => {
+const Header = React.memo(({ handleNotificationIconPress, handleProfilePress }) => {
   const { colors, fonts } = useTheme()
   const styles = Styles()
   const navigation = useNavigation()
@@ -68,9 +68,9 @@ const Header = ({ handleNotificationIconPress, handleProfilePress }) => {
         handleIconPress={(value) => handleNotificationIconPress(value)}
         handleProfilePress={(item) => handleProfilePress(item)}
       />
-      <RenderCounter />
+      <RenderCounter title="header" />
     </View>
   )
-}
+})
 
 export default Header

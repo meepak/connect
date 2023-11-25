@@ -15,11 +15,12 @@ function generateRandomName() {
 }
 
 // Define the data generation function
-const generateMockData = (startIndex, itemCount) => {
+const generateMockData = (startIndex, itemCount, from) => {
+  console.log(`called generateMockData from ${from ?? 'unknown'}`)
   const mockData = []
 
   for (let index = startIndex; index < startIndex + itemCount; index += 1) {
-    const name = `${generateRandomName()}`
+    const name = `${generateRandomName()}-${index}`
     const image = index % 2 === 0 ? mockImages[Math.floor(index / 2)] : null
     const banner = mockBannerImages[Math.floor(Math.random() * mockBannerImages.length)]
 
@@ -30,7 +31,7 @@ const generateMockData = (startIndex, itemCount) => {
       image: image ? Asset.fromModule(image).localUri : null,
       banner: banner ? Asset.fromModule(banner).localUri : null,
       occupation: 'Full Stack Engineer - Frontend Focus',
-      industry: 'Jeeve Solutions Australia',
+      industry: 'Jeeves Solutions Australia',
       location: 'Australia (Remote)',
       rate: 'A$100/hr-A$110/hr',
       isPromoted: true,

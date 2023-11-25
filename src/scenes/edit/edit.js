@@ -31,7 +31,7 @@ export default function Edit() {
 
   const [fullName, setFullName] = useState(userData.fullName)
   const [phone, setFhone] = useState(userData.phone ?? '')
-  const [isOnboarded, setisOnboarded] = useState(userData.isOnboarded)
+  const [isOnboard, setisOnboard] = useState(userData.isOnboard)
   const [avatar, setAvatar] = useState(userData.avatar)
   const [currentPassword, setCurrentPassword] = useState('')
   const [password, setPassword] = useState('')
@@ -73,7 +73,7 @@ export default function Edit() {
         email: userData.email,
         fullName,
         phone,
-        isOnboarded,
+        isOnboard,
         avatar: avatar ?? null,
         updatedAt: serverTimestamp(),
       }
@@ -82,7 +82,7 @@ export default function Edit() {
       // const updatedUserData = mergeJsonObjects(userData, data)
       // setUserData(updatedUserData)
       setSpinner(false)
-      if (isOnboarded) {
+      if (isOnboard) {
         // we don't want goBack to trigger at onboarding screen
         navigation.goBack()
       }
@@ -161,10 +161,10 @@ export default function Edit() {
           icon="device-mobile"
         />
         <Checkbox
-          label="Has user been onboarded?"
-          checked={isOnboarded}
+          label="Has user been Onboard?"
+          checked={isOnboard}
           onChecked={(checked) => {
-            setisOnboarded(checked)
+            setisOnboard(checked)
           }}
         />
         <Button

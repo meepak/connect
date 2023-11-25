@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import {
   View, StyleSheet,
 } from 'react-native'
-import { Text, useTheme, Button } from 'react-native-paper'
+import {
+  Text, useTheme, Button, IconButton,
+} from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -16,6 +18,7 @@ import { firestore, auth } from '../../firebase'
 import { isValidEmail, isValidName, isPasswordComplex } from '../../utils/validation'
 import SocialButtons from './social'
 import TextAndLink from '../../components/text-and-link'
+import RenderCounter from '../../components/render-counter'
 
 const Styles = (colors, fonts) => StyleSheet.create({
   main: {
@@ -23,11 +26,15 @@ const Styles = (colors, fonts) => StyleSheet.create({
     width: '100%',
     backgroundColor: colors.background,
   },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    marginTop: 65,
+    marginBottom: 20,
+  },
   title: {
     fontSize: fonts.displaySmall.fontSize,
-    marginLeft: 20,
-    marginTop: 40,
-    marginBottom: 20,
   },
   error: {
     color: colors.error,
@@ -59,10 +66,6 @@ const SignUp = () => {
   const navigation = useNavigation()
   const { colors, fonts } = useTheme()
   const styles = Styles(colors, fonts)
-
-  const gotoSignin = () => {
-    navigation.navigate('Sign in')
-  }
 
   const validate = () => {
     if (!fullName) {
@@ -133,8 +136,19 @@ const SignUp = () => {
         keyboardShouldPersistTaps="never"
       // enableOnAndroid
       >
-        <Text style={styles.title}>Sign up</Text>
-        <Text style={styles.error}>{error}</Text>
+        <View style={styles.titleContainer}>
+          <IconButton
+            icon="chevron-left"
+            color={colors.onBackground}
+            size={32}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.title}>Sign up</Text>
+          <RenderCounter />
+        </View>
+        {error
+          ? <Text style={styles.error}>{error}</Text>
+          : null}
         <TextInputBox
           label="Full name"
           value={fullName}
@@ -143,9 +157,9 @@ const SignUp = () => {
           errorMessage={fullNameError}
           onChangeText={(name) => {
             setFullName(name)
-            const msg = !isValidName(name)
-              ? 'Invalid name, only letters and spaces are alllowed.'
-              : ''
+            const msg = isValidName(name)
+              ? ''
+              : 'Invalid name, only letters and spaces are allowed.'
             setFullNameError(msg)
           }}
           onClear={() => {
@@ -209,7 +223,7 @@ const SignUp = () => {
         <TextAndLink
           texts={['Already signed up?']}
           link="Sign in"
-          onPress={() => gotoSignin()}
+          onPress={() => navigation.navigate('Sign in')}
           marginTop={25}
           marginBottom={25}
         />

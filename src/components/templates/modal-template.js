@@ -5,12 +5,14 @@ import {
 import { useTheme } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import PropTypes from 'prop-types'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import ScreenTemplate from './screen-template'
 
-const Styles = (colors) => StyleSheet.create({
+const Styles = (colors, insets) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+    top: insets.top,
   },
   footer: {
     paddingBottom: 30,
@@ -48,8 +50,9 @@ const ModalTemplate = (props) => {
   const {
     header, subHeader, content, noScrollView,
   } = props
+  const insets = useSafeAreaInsets()
   const { colors } = useTheme()
-  const styles = Styles(colors)
+  const styles = Styles(colors, insets)
 
   const ContainerView = noScrollView ? View : KeyboardAwareScrollView
   const ContainerStyle = noScrollView ? { ...styles.scrollView, flex: 1 } : styles.scrollView

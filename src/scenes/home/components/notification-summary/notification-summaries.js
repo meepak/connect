@@ -6,7 +6,7 @@
  * ***************************************************
  * NOTIFICATION SECTION (View & perform relevant action)
  * View new notifications.
- * View past notificatons..
+ * View past notifications..
  * Open, mark as read, delete or remind later action kn each notification
  * Type of notifications --
  * - Connect Requests received/accepted **go to connection mgt page --- ACTION
@@ -21,7 +21,7 @@
  * ****************************************************
  *
  */
-import React from 'react'
+import React, { useMemo, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import {
   Divider, IconButton, Text, useTheme,
@@ -42,7 +42,7 @@ const Styles = (colors) => StyleSheet.create({
     paddingHorizontal: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center', // lolmake it baseline and it will crash in iOS without a hint
+    alignItems: 'center', // lol make it baseline and it will crash in iOS without a hint
   },
   content: {
     marginTop: 10,
@@ -55,58 +55,59 @@ const Styles = (colors) => StyleSheet.create({
   },
 })
 
-const getConnectionRequestUpdates = () => {
-  const mockItems = generateMockData(1, 7)
-  const content = mockItems.map((item) => ({
-    key: item.key,
-    name: item.name,
-    image: item.image,
-    userId: item.id,
-    navigateTo: 'profile',
-  }))
-  return {
-    icon: 'bell',
-    title: 'Connection requests (7)',
-    dataItems: { content },
-  }
-}
-
-const getNdaUpdates = () => {
-  const mockItems = generateMockData(1, 1)
-  const content = mockItems.map((item) => ({
-    key: item.key,
-    name: item.name,
-    image: item.image,
-    userId: item.id,
-    navigateTo: 'nda',
-  }))
-  return {
-    icon: 'bell',
-    title: 'Nda requests (1)',
-    dataItems: { content },
-  }
-}
-const getBgCheckUpdates = () => {
-  const mockItems = generateMockData(1, 3)
-  const content = mockItems.map((item) => ({
-    key: item.key,
-    name: item.name,
-    image: item.image,
-    userId: item.id,
-    navigateTo: 'bgCheck',
-  }))
-  return {
-    icon: 'bell',
-    title: 'Background Check requests (3)',
-    dataItems: { content },
-  }
-}
-
 // eslint-disable-next-line react/prop-types
 const NotificationSummaries = ({ handleIconPress, handleProfilePress }) => {
   const navigation = useNavigation()
   const { colors } = useTheme()
   const styles = Styles(colors)
+  const [refresh] = useState(false)
+
+  const getConnectionRequestUpdates = useMemo(() => {
+    const mockItems = generateMockData(1, 7, 'connection')
+    const content = mockItems.map((item) => ({
+      key: item.key,
+      name: item.name,
+      image: item.image,
+      userId: item.id,
+      navigateTo: 'profile',
+    }))
+    return {
+      icon: 'bell',
+      title: 'Connection requests (7)',
+      dataItems: { content },
+    }
+  }, [refresh])
+
+  const getNdaUpdates = useMemo(() => {
+    const mockItems = generateMockData(1, 1, 'nda')
+    const content = mockItems.map((item) => ({
+      key: item.key,
+      name: item.name,
+      image: item.image,
+      userId: item.id,
+      navigateTo: 'nda',
+    }))
+    return {
+      icon: 'bell',
+      title: 'Nda requests (1)',
+      dataItems: { content },
+    }
+  }, [refresh])
+  const getBgCheckUpdates = useMemo(() => {
+    const mockItems = generateMockData(1, 3, 'bgCheck')
+    const content = mockItems.map((item) => ({
+      key: item.key,
+      name: item.name,
+      image: item.image,
+      userId: item.id,
+      navigateTo: 'bgCheck',
+    }))
+    return {
+      icon: 'bell',
+      title: 'Background Check requests (3)',
+      dataItems: { content },
+    }
+  }, [refresh])
 
   // Manage everything?? How
   const openManage = () => {
@@ -133,21 +134,21 @@ const NotificationSummaries = ({ handleIconPress, handleProfilePress }) => {
           index={1}
           onIconPress={() => handleIconPress('connect')}
           onProfilePress={(item) => handleProfilePress(item)}
-          {...getConnectionRequestUpdates()}
+          {...getConnectionRequestUpdates}
         />
         <Divider />
         <NotificationSummary
           index={2}
           onIconPress={() => handleIconPress('nda')}
           onProfilePress={(item) => handleProfilePress(item)}
-          {...getNdaUpdates()}
+          {...getNdaUpdates}
         />
         <Divider />
         <NotificationSummary
           index={3}
           onIconPress={() => handleIconPress('bgCheck')}
           onProfilePress={(item) => handleProfilePress(item)}
-          {...getBgCheckUpdates()}
+          {...getBgCheckUpdates}
         />
         <Divider />
       </View>

@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import {
   StyleSheet,
   View,
-  Platform,
 } from 'react-native'
 import {
   IconButton,
@@ -11,7 +10,6 @@ import {
 
 import { useNavigation } from '@react-navigation/native'
 // import { TouchableOpacity } from 'react-native-gesture-handler'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import AvatarOfAuthUser from '../avatar-of-auth-user'
 import { UserDataContext } from '../../context'
 
@@ -22,20 +20,15 @@ const HeaderHome = () => {
   const { colors } = useTheme()
   const onBgColor = colors.onBackground
   const { userData } = useContext(UserDataContext)
-  const insets = useSafeAreaInsets()
 
   const styles = StyleSheet.create({
     container: {
-      top: Platform.OS === 'android' ? insets.top : 30,
       width: '100%',
-      paddingBottom: 25,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      height: 55,
     },
     rightIcons: {
-      top: 6,
       flexDirection: 'row',
       flexWrap: 'nowrap',
       alignItems: 'center',
@@ -48,9 +41,9 @@ const HeaderHome = () => {
     },
     leftIcon: {
       borderWidth: 1,
-      borderColor: colors.outline,
+      borderColor: colors.onBackground,
       borderRadius: 25,
-      elevation: 5,
+      backgroundColor: colors.onBackground,
     },
 
   })
@@ -89,7 +82,7 @@ const HeaderHome = () => {
     <View style={styles.container}>
       <View style={styles.leftIcon}>
         <AvatarOfAuthUser
-          size={46}
+          size={48}
           onPress={() => openProfile()}
         />
       </View>

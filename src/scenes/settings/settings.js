@@ -6,7 +6,7 @@ import Header from './components/header'
 import Account from './components/account'
 import Display from './components/display'
 import Temp from './components/template'
-import Reset from './components/reset'
+import Developer from './components/developer'
 import Privacy from './components/privacy'
 
 const Settings = () => {
@@ -21,7 +21,7 @@ const Settings = () => {
           <View style={{ marginVertical }} />
           <Display />
           <View style={{ marginVertical }} />
-          <Reset />
+          <Developer />
           <View style={{ marginVertical }} />
           <Privacy />
           <View style={{ marginVertical }} />

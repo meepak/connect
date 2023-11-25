@@ -79,7 +79,7 @@ export default function EditKeySummary() {
         avatar: avatar ?? null,
         phone,
         email: userData.email,
-        isOnboarded: true,
+        isOnboard: true,
         whoAmI,
         industries,
         businessStage,

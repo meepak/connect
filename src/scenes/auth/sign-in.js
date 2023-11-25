@@ -2,9 +2,11 @@ import React, {
   useState, // useRef,
 } from 'react'
 import {
-  View, StyleSheet, LogBox,
+  View, StyleSheet,
 } from 'react-native'
-import { Text, useTheme, Button } from 'react-native-paper'
+import {
+  Text, useTheme, Button, IconButton,
+} from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { doc, getDoc } from 'firebase/firestore'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -13,14 +15,13 @@ import { signOut, signInWithEmailAndPassword, sendEmailVerification } from 'fire
 import { useAtom } from 'jotai'
 import { firestore, auth } from '../../firebase'
 import { ScreenTemplate } from '../../components/templates'
-// import Button from '../../components/core/button'
 import TextInputBox from '../../components/core/text-input-box'
 // import Logo from '../../components/core/Logo'
 import { isValidEmail } from '../../utils/validation'
-// import { UserDataContext } from '../../context'
 import SocialButtons from './social'
 import TextAndLink from '../../components/text-and-link'
 import userAuthenticatedAtom from '../../utils/atom'
+import RenderCounter from '../../components/render-counter'
 
 const Styles = (colors, fonts) => StyleSheet.create({
   main: {
@@ -28,11 +29,15 @@ const Styles = (colors, fonts) => StyleSheet.create({
     width: '100%',
     backgroundColor: colors.background,
   },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    marginTop: 65,
+    marginBottom: 20,
+  },
   title: {
     fontSize: fonts.displaySmall.fontSize,
-    marginLeft: 20,
-    marginTop: 40,
-    marginBottom: 20,
   },
   submitButton: {
     backgroundColor: colors.primaryContainer,
@@ -57,16 +62,11 @@ const Styles = (colors, fonts) => StyleSheet.create({
   footer: {
     marginBottom: 15,
   },
-  verificatonView: {
+  verificationView: {
     marginHorizontal: 20,
   },
 })
 
-// To ignore a useless warning in terminal.
-// https://stackoverflow.com/questions/44603362/setting-a-timer-for-a-long-period-of-time-i-e-multiple-minutes
-LogBox.ignoreLogs(['Setting a timer'])
-
-// TODO -- THERE IS A BUG IN LOGIN WHERE AFTER REGISTRATION, IT DOESN'T LET USER LOGIN TILL APP IS RESTARTED
 export default function Login() {
   const tempTestUser = 'k@k.com'
   const temptTestPass = 'kkkkkk'
@@ -80,10 +80,6 @@ export default function Login() {
   const [passwordError, setPasswordError] = useState('')
   const [spinner, setSpinner] = useState(false)
   const styles = Styles(colors, fonts)
-
-  const gotoSignup = () => {
-    navigation.navigate('Sign up')
-  }
 
   const onSendVerificationLinkPress = async () => {
     await sendEmailVerification(auth.currentUser)
@@ -113,7 +109,7 @@ export default function Login() {
         return
       }
       setPasswordError('')
-      // valiation ends
+      // validation ends
 
       setSpinner(true)
       // sign out and sign in again
@@ -127,7 +123,7 @@ export default function Login() {
         return
       }
       setUserAuthenticated(() => true) // this should trigger useEffect in route to initiate login
-      // console.log('we got our user, is authentiated atom  true - ', userAuthenticated)
+      // console.log('we got our user, is authenticated atom  true - ', userAuthenticated)
       setSpinner(false)
     } catch (error) {
       console.log(error.message)
@@ -150,12 +146,21 @@ export default function Login() {
         keyboardShouldPersistTaps="never"
         // enableOnAndroid
       >
-        <Text style={styles.title}>Sign in</Text>
+        <View style={styles.titleContainer}>
+          <IconButton
+            icon="chevron-left"
+            color={colors.onBackground}
+            size={32}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.title}>Sign in</Text>
+          <RenderCounter />
+        </View>
 
         {auth.currentUser && !auth.currentUser.emailVerified
           ? (
             <>
-              <View style={styles.verificatonView}>
+              <View style={styles.verificationView}>
                 <TextAndLink
                   texts={[
                     'Thanks for signing up!',
@@ -210,7 +215,7 @@ export default function Login() {
         <TextAndLink
           texts={['Forgot password?']}
           link="Reset"
-          onPress={() => gotoSignup()}
+          onPress={() => {}}
           marginTop={0}
           marginBottom={20}
         />
@@ -228,7 +233,7 @@ export default function Login() {
         <TextAndLink
           texts={['Don\'t have an account?']}
           link="Sign up"
-          onPress={() => gotoSignup()}
+          onPress={() => navigation.navigate('Sign up')}
           marginTop={20}
           marginBottom={30}
         />

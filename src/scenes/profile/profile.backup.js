@@ -62,7 +62,7 @@ const Profile = () => {
       //   fullName,
       //   avatar: avatar ?? null,
       //   phone,
-      //   isOnboarded,
+      //   isOnboard,
       // }
       // console.log('profile update with', data)
       const usersRef = doc(firestore, 'users', userData.id)
@@ -91,7 +91,7 @@ const Profile = () => {
       })
   }
 
-  const onBanerEdited = (image) => {
+  const onBannerEdited = (image) => {
     onImageUpated(image, 'bannerImage')
   }
 
@@ -146,7 +146,7 @@ const Profile = () => {
                 userId={userId}
                 userAvatar={userAvatar}
                 userFullName={userFullName}
-                onBanerEdited={onBanerEdited}
+                onBannerEdited={onBannerEdited}
                 onAvatarEdited={onAvatarEdited}
               />
 

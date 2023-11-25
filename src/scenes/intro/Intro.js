@@ -1,254 +1,190 @@
-import React, { useState, useEffect } from 'react'
+/* eslint-disable no-plusplus */
+import React, { useEffect, useRef } from 'react'
 import {
   StyleSheet,
   View,
   Image,
   TouchableOpacity,
+  Dimensions,
+  FlatList,
 } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
 // import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
-import AppIntroSlider from 'react-native-app-intro-slider'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { ScreenTemplate } from '../../components/templates'
 import Logo from '../../components/core/logo'
 import imageAssets from '../../theme/images'
+import RenderCounter from '../../components/render-counter'
 
+const screenWidth = Dimensions.get('screen').width
 // TODO get colors from theme
-const Styles = (colors, fonts) => StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 10,
-    justifyContent: 'center',
-  },
-  introImageStyle: {
-    width: 300,
+const Styles = (colors) => StyleSheet.create({
+  image: {
+    width: screenWidth,
     height: 300,
+    // height: 252,
   },
-  introTextStyle: {
-    fontSize: fonts.bodyLarge.fontSize,
-    textAlign: 'center',
-    marginBottom: 25,
-    padding: 30,
-  },
-  introTitleStyle: {
-    fontSize: fonts.titleLarge.fontSize,
-    textAlign: 'center',
-    marginTop: 60,
-    fontWeight: 'bold',
-  },
-  dotStyle: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    marginRight: 10,
-    backgroundColor: 'rgba(196, 2, 240, 0.5)',
-    marginBottom: 220,
-  },
-
-  activeDotStyle: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    borderWidth: 5,
-    marginRight: 10,
-    backgroundColor: 'rgba(2, 232, 240, 0.5)',
-    borderColor: 'rgba(151, 173, 173, 0.8)',
-    marginBottom: 220,
-  },
-
-  buttonContainer: {
-    position: 'absolute',
-    bottom: 30, // Adjust the position as needed
-    left: 0,
-    right: 0,
+  imageView: {
+    justifyContent: 'center',
     alignItems: 'center',
+    width: screenWidth,
   },
-  buttonSignUpTouchable: {
-    backgroundColor: '#00aeef',
-    color: '#fff',
-    width: 220,
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 20,
+  text: {
+    textAlign: 'center',
+    color: colors.onBackground,
+  },
+  textView: {
+    width: screenWidth,
+    alignItems: 'center',
+    // bottom: 30,
+  },
+  buttonView: {
+    bottom: 69,
+    alignItems: 'center',
+    zIndex: 4,
+  },
+  buttonEnterTouchable: {
     height: 48,
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonSignUp: {
-    color: colors.white,
-    fontSize: fonts.bodyLarge.fontSize,
-  },
-  buttonSignInTouchable: {
-    flexDirection: 'row',
-    opacity: 1,
-    color: '#fff',
+    backgroundColor: colors.primaryContainer,
+    color: colors.onPrimaryContainer,
     width: 220,
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 20,
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  buttonSignIn: {
-    color: colors.primary,
-    fontSize: fonts.bodyLarge.fontSize,
-  },
-  buttonLogin: {
-    color: colors.primary,
-    fontSize: fonts.bodyLarge.fontSize,
-    fontWeight: 'bold',
-  },
-
-  logoContainer: {
-    position: 'absolute',
-    top: 30, // Adjust the position as needed
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-    zIndex: 9999,
-  },
-
-  logo: {
-    flex: 1,
-    alignSelf: 'center',
-    padding: 10,
-    top: 20,
   },
 })
 
 const slides = [
   {
     key: 's1',
-    title: 'DISCOVER',
-    text: 'Discovery is the first step to innovation and success. Embrace the journey of finding new opportunities.',
+    text: 'PARTNERSHIPS',
+    word1: 'DISCOVER',
+    // word2: 'PARTNERSHIPS',
     image: imageAssets.intro1,
   },
   {
     key: 's2',
-    title: 'CONNECT',
-    text: 'In the world of business, finding the right associate can be the key to unlocking your full potential.',
+    word1: 'CONNECT',
+    // word2: 'CONNECTION',
     image: imageAssets.intro2,
   },
   {
     key: 's3',
-    title: 'THRIVE',
-    text: 'Discover, Connect, and watch your business thrive with the perfect partner by your side.',
+    word1: 'THRIVE',
+    // word2: 'TOGETHER',
     image: imageAssets.intro3,
-    // image: {
-    //   uri:
-    //         'https://raw.githubusercontent.com/AboutReact/sampleresource/master/intro_discount.png',
-    // },
   },
 ]
 
 const Intro = () => {
   const navigation = useNavigation()
-  const { colors, fonts } = useTheme()
-  const [isBeingTouhed, setIsBeingTouched] = useState(false)
-  const styles = Styles(colors, fonts)
+  const { colors } = useTheme()
+  const styles = Styles(colors)
+  const slider = useRef()
 
-  let slider = null
+  const { width, height } = Dimensions.get('window')
+  const insets = useSafeAreaInsets()
 
-  let i = 0
-  let timeout
-  const tick = () => {
-    if (slider) {
-      slider.goToSlide(i)
-      i += 1
-      if (i === slides.length) {
-        i = 0
+  const delay = 3000
+
+  let currentSlide = 0
+  let timerId = null
+  let pause = false
+
+  const goToNextPage = () => {
+    if (slider && !pause) {
+      slider.current.scrollToIndex({
+        index: currentSlide,
+        animated: true,
+      })
+    }
+    currentSlide = (currentSlide < slides.length - 1 ? currentSlide + 1 : 0)
+  }
+
+  useEffect(() => {
+    timerId = setInterval(goToNextPage, delay)
+
+    return () => {
+      if (timerId) {
+        clearInterval(timerId)
+        timerId = null
       }
     }
-  }
+  }, [])
 
-  useEffect(() => { // componentDidMount
-    if (!isBeingTouhed) {
-      timeout = setInterval(() => {
-        tick()
-      }, 3000)
-    }
-  }, [isBeingTouhed])
-
-  useEffect(() => () => { // componentWillUnmount
-    clearInterval(timeout)
-  },
-  [])
-
-  const onDone = () => {
-    navigation.navigate('EnterStack', {
-      screen: 'Sign up',
-    })
-  }
-
-  const onSkip = () => {
-    navigation.navigate('EnterStack', {
-      screen: 'Sign in',
-    })
-  }
-
-  const renderItem = (item) => (
+  const renderItem = (slide) => (
     <View
       style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        paddingBottom: 100,
+        width,
+        height: height + insets.top,
+        backgroundColor: colors.transparent,
+        marginTop: 100,
       }}
     >
-      <Text style={[styles.introTitleStyle]}>{item.title}</Text>
-      <Image style={styles.introImageStyle} source={item.image} />
-      <Text style={[styles.introTextStyle]}>{item.text}</Text>
+      <View style={styles.imageView}>
+        <Image style={styles.image} source={slide.item.image} resizeMode="contain" />
+      </View>
+      <View style={styles.textView}>
+        <Text style={[styles.text]} variant="headlineSmall">{slide.item.word1}</Text>
+        {/* <Text style={[styles.text]} variant="headlineSmall">{slide.item.word2}</Text> */}
+      </View>
+    </View>
+  )
+
+  const Header = () => (
+    <View style={{
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 3,
+      marginTop: 60,
+      width: '100%',
+      height: 42,
+      // backgroundColor: colors.onTertiaryContainer,
+    }}
+    >
+
+      <RenderCounter />
+      <Logo bgColor={colors.background} textColor={colors.onBackground} />
+    </View>
+  )
+
+  const Footer = () => (
+    <View style={styles.buttonView}>
+      <TouchableOpacity style={styles.buttonEnterTouchable} onPress={() => navigation.navigate('Sign in')}>
+        <Text variant="titleLarge">Enter</Text>
+      </TouchableOpacity>
     </View>
   )
 
   return (
     <ScreenTemplate
       onTouchStart={() => {
-        // console.log('Touch Started')
-        setIsBeingTouched(true)
+        pause = true
       }}
       onTouchEnd={() => {
-        // console.log('Touch Ended')
-        setIsBeingTouched(false)
+        pause = false
       }}
     >
+      <Header />
 
-      <View style={styles.logoContainer}>
-        <Logo style={styles.logo} />
+      <View style={{ flex: 1 }}>
+        <FlatList
+          ref={slider}
+          data={slides}
+          renderItem={renderItem}
+          contentContainerStyle={{
+            zIndex: 2,
+          }}
+          keyExtractor={(item) => item.key}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          pagingEnabled
+          // debug
+        />
       </View>
-
-      <AppIntroSlider
-        data={slides}
-        renderItem={(param) => {
-          const { item } = param
-          return renderItem(item)
-        }}
-        showSkipButton={false}
-        showNextButton={false}
-        showDoneButton={false}
-        onDone={onDone}
-        onSkip={onSkip}
-        skipLabel="Already signed up? Login"
-        doneLabel="Sign Up"
-        bottomButton
-        dotStyle={styles.dotStyle}
-        activeDotStyle={styles.activeDotStyle}
-        dotClickEnabled
-        ref={(ref) => { slider = ref }}
-      />
-
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.buttonSignUpTouchable} onPress={onDone}>
-          <Text style={styles.buttonSignUp}>Sign Up</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonSignInTouchable} onPress={onSkip}>
-          <Text style={styles.buttonSignIn}>Already signed up?</Text><Text style={styles.buttonLogin}> Login</Text>
-        </TouchableOpacity>
-      </View>
-
+      <Footer />
     </ScreenTemplate>
   )
 }

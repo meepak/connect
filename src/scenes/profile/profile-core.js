@@ -63,7 +63,7 @@ const ProfileCore = ({
       //   fullName,
       //   avatar: avatar ?? null,
       //   phone,
-      //   isOnboarded,
+      //   isOnboard,
       // }
       // console.log('profile update with', data)
       const usersRef = doc(firestore, 'users', userData.id)
@@ -78,26 +78,26 @@ const ProfileCore = ({
     }
   }
 
-  const onImageUpated = (image, name) => {
+  const onImageUpdated = (image, name) => {
     if (image === null || image === undefined) {
       return
     }
     profileUpdate({ [name]: image })
       .then(() => {
         // console.log('profile updated')
-        // console.log('triggering setupdate automatically through subscriptionn??')
+        // console.log('triggering set update automatically through subscription??')
       })
       .catch((error) => {
         Alert.alert(`Error during ${name} update`, error)
       })
   }
 
-  const onBanerEdited = (image) => {
-    onImageUpated(image, 'bannerImage')
+  const onBannerEdited = (image) => {
+    onImageUpdated(image, 'bannerImage')
   }
 
   const onAvatarEdited = (image) => {
-    onImageUpated(image, 'avatar')
+    onImageUpdated(image, 'avatar')
   }
 
   const styles = StyleSheet.create({
@@ -141,7 +141,7 @@ const ProfileCore = ({
           userId={userId}
           userAvatar={userAvatar}
           userFullName={userFullName}
-          onBanerEdited={onBanerEdited}
+          onBannerEdited={onBannerEdited}
           onAvatarEdited={onAvatarEdited}
           sheetMode={sheetMode}
         />
