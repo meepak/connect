@@ -60,7 +60,7 @@ export async function preloadImages() {
  *  ** Asset.fromModule(images.key)
  *
  * As explained above so the following export is
- * just to make life ittle easier by allowing to do equivalent
+ * just to make life little easier by allowing to do equivalent
  * using
  *
  * ** imageAssets.key for image source

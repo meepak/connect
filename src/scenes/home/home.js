@@ -1,5 +1,5 @@
 import React, {
-  useState, useCallback, useEffect, useContext, useMemo,
+  useState, useCallback, useEffect, useContext, useMemo, useRef,
 } from 'react'
 import {
   View,
@@ -23,17 +23,14 @@ import RenderCounter from '../../components/render-counter'
 
 export default function Home() {
   const navigation = useNavigation()
-  // const [loadingMoreData, setLoadingMoreData] = useState(false)
   const [dataItems, setDataItems] = useState([])
   const { userData } = useContext(UserDataContext)
   const itemBatch = 10
-  // const [currentCount, setCurrentCount] = useState(itemBatch)
-  // const [spinner, setSpinner] = useState(false)
-  // const [lastFetchedData, setLastFetchedData] = useState(null)
   const [viewUser, setViewUser] = useState({
     key: '', name: '', image: '', banner: '',
   })
   const [showProfileSheet, setShowProfileSheet] = useState(false)
+  const potentialMatchesRef = useRef(null)
 
   const fetchData = async () => {
     const newDataItems = await fetchPotentialMatches(userData.id, itemBatch)
@@ -42,7 +39,6 @@ export default function Home() {
     const mockItems = generateMockData(1, itemBatch, 'fetchData')
     // setCurrentCount(() => itemBatch + 1)
     const finalDataItems = [{ key: 'Header' }, ...newDataItems, ...mockItems]
-    console.log(finalDataItems)
     setDataItems(finalDataItems)
   }
 
@@ -58,6 +54,19 @@ export default function Home() {
     const finalDataItems = [...dataItems, ...mockItems]
     setDataItems(finalDataItems)
   }
+
+  const updateCountsInPotentialMatchesHeader = useCallback((newCount, newTotalCount) => {
+    if (potentialMatchesRef?.current) {
+      potentialMatchesRef.current.updateCounts(newCount, newTotalCount)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (potentialMatchesRef?.current) {
+      console.log('calling update counts')
+      potentialMatchesRef.current.updateCounts(dataItems.length, dataItems.length)
+    }
+  }, [dataItems, updateCountsInPotentialMatchesHeader])
 
   // Render Footer
   const renderSpinner = () => {
@@ -85,7 +94,7 @@ export default function Home() {
 
   const renderItem = useCallback(({ item }) => {
     if (item.key === 'Header') {
-      return <PotentialMatchesHeader currentCount={dataItems.length} totalCount={200} />
+      return <PotentialMatchesHeader ref={potentialMatchesRef} />
     }
 
     return (

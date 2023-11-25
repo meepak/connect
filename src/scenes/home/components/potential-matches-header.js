@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { forwardRef, useImperativeHandle, useState } from 'react'
 import { View } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
-import PropTypes from 'prop-types'
 import RenderCounter from '../../../components/render-counter'
 
-const PotentialMatchesHeader = React.memo(({ currentCount, totalCount }) => {
+const PotentialMatchesHeader = forwardRef((props, ref) => {
   const { colors } = useTheme()
+  const [currentCount, setCurrentCount] = useState(0)
+  const [totalCount, setTotalCount] = useState(0)
+
+  useImperativeHandle(ref, () => ({
+    updateCounts: (newCount, newTotalCount) => {
+      setCurrentCount(newCount)
+      setTotalCount(newTotalCount)
+    },
+  }))
+
   return (
     <View style={{
       paddingTop: 11, paddingHorizontal: 15, backgroundColor: colors.background, elevation: 5,
@@ -17,15 +26,10 @@ const PotentialMatchesHeader = React.memo(({ currentCount, totalCount }) => {
         paddingVertical: 10,
       }}
       >
-        <Text variant="bodyLarge">Showing {currentCount} out of {totalCount} users.</Text>
+        <Text variant="bodyLarge">Showing {currentCount ?? 0} out of {totalCount ?? 0} users.</Text>
       </View>
     </View>
   )
 })
-
-PotentialMatchesHeader.propTypes = {
-  currentCount: PropTypes.number.isRequired,
-  totalCount: PropTypes.number.isRequired,
-}
 
 export default PotentialMatchesHeader

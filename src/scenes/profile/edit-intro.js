@@ -136,7 +136,7 @@ export default function EditIntro() {
               let error = ''
               setFullName(name)
               error = !isValidName(name)
-              error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
+              error = error ? 'Invalid name, only letters and spaces are allowed.' : ''
               setFullNameError(error)
             }}
           />
@@ -154,7 +154,7 @@ export default function EditIntro() {
               let error = ''
               setNickName(name)
               error = !isValidName(name)
-              error = error ? 'Invalid name, only letters and spaces are alllowed.' : ''
+              error = error ? 'Invalid name, only letters and spaces are allowed.' : ''
               setNickNameError(error)
             }}
           />

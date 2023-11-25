@@ -52,8 +52,9 @@ const HeaderProfile = ({
       alignItems: 'center', // Center items vertically in the row
       justifyContent: 'space-between', // Space out items horizontally
       alignSelf: 'stretch',
-      height: 65,
-      paddingBottom: 10,
+      height: 85,
+      paddingBottom: insets.top,
+      zIndex: 99,
     },
     cancelButton: {
       // alignSelf: 'flex-start',

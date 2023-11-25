@@ -55,25 +55,26 @@ const Styles = (colors) => StyleSheet.create({
   },
 })
 
+console.log(imageAssets)
 const slides = [
   {
     key: 's1',
     text: 'PARTNERSHIPS',
     word1: 'DISCOVER',
     // word2: 'PARTNERSHIPS',
-    image: { uri: imageAssets.intro1.localUri },
+    image: { uri: imageAssets.intro1.localUri || imageAssets.intro1.uri },
   },
   {
     key: 's2',
     word1: 'CONNECT',
     // word2: 'CONNECTION',
-    image: { uri: imageAssets.intro2.localUri },
+    image: { uri: imageAssets.intro2.localUri || imageAssets.intro2.uri },
   },
   {
     key: 's3',
     word1: 'THRIVE',
     // word2: 'TOGETHER',
-    image: { uri: imageAssets.intro3.localUri },
+    image: { uri: imageAssets.intro3.localUri || imageAssets.intro3.uri },
   },
 ]
 
@@ -88,7 +89,7 @@ const Intro = () => {
 
   const delay = 3000
 
-  console.log(imageAssets)
+  // console.log(imageAssets)
   let currentSlide = 0
   let timerId = null
   let pause = false

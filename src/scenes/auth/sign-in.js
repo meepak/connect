@@ -68,7 +68,6 @@ const Styles = (colors, fonts) => StyleSheet.create({
 })
 
 export default function Login() {
-
   const [, setUserAuthenticated] = useAtom(userAuthenticatedAtom)
   const navigation = useNavigation()
   const { colors, fonts } = useTheme()

@@ -1,6 +1,8 @@
 project: connect-411
 license: UNLICENSED
 author: Deepak Mahat
+ 
+ eas build -p android --profile preview2 --local
 
 Notes -- for associate, separate primary occupation & skills
 Currently works fulltime partime, will leave job or need side hustle.
@@ -337,9 +339,9 @@ CHAT SECTION
 See recent messages
 See recent replies
 See active chat users
-Create/Manage chat grounps 
+Create/Manage chat groups 
 
-Send receive text nessages
+Send receive text messages
 Send/Receive Background check request 
 Send/Receive NDA sign request.
 Schedule meeting in zoom/team/google

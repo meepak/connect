@@ -21,6 +21,7 @@ const Route = () => {
   const [userData, setUserData] = useState({})
 
   const updateUserData = (newUserData) => {
+    if (!newUserData) return null
     // console.log('new data from snapshot to update', newUserData)
     const updatedData = newUserData
     const updateField = (fieldName, newValue, setFunction) => {
@@ -35,14 +36,14 @@ const Route = () => {
       }
     }
 
-    if (updatedData.avatar) {
+    if (updatedData?.avatar) {
       updateField('avatar', updatedData.avatar, (item) => { updatedData.avatar = item })
     }
-    if (updatedData.bannerImage) {
+    if (updatedData?.bannerImage) {
       updateField('bannerImage', updatedData.bannerImage, (item) => { updatedData.bannerImage = item })
     }
 
-    if (Object.keys(updatedData).length > 0) {
+    if (updatedData && Object.keys(updatedData).length > 0) {
       return updatedData
     }
     return null
