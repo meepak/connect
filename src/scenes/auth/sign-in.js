@@ -68,15 +68,13 @@ const Styles = (colors, fonts) => StyleSheet.create({
 })
 
 export default function Login() {
-  const tempTestUser = 'k@k.com'
-  const temptTestPass = 'kkkkkk'
 
   const [, setUserAuthenticated] = useAtom(userAuthenticatedAtom)
   const navigation = useNavigation()
   const { colors, fonts } = useTheme()
-  const [email, setEmail] = useState(auth.currentUser ? '' : tempTestUser)
+  const [email, setEmail] = useState(process.env.EXPO_PUBLIC_DEVELOPMENT_MODE === 'true' ? 'k@k.com' : '')
   const [emailError, setEmailError] = useState('')
-  const [password, setPassword] = useState(auth.currentUser ? '' : temptTestPass)
+  const [password, setPassword] = useState(process.env.EXPO_PUBLIC_DEVELOPMENT_MODE === 'true' ? 'kkkkkk' : '')
   const [passwordError, setPasswordError] = useState('')
   const [spinner, setSpinner] = useState(false)
   const styles = Styles(colors, fonts)

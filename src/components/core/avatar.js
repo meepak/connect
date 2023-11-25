@@ -47,7 +47,7 @@ const Avatar = ({
         source={{ uri: url }}
         // avatarStyle={style}
         containerStyle={{
-          ...style, backgroundColor, elevation: 5, top: -1,
+          ...style, backgroundColor, elevation: 5, top: 0,
         }}
         rounded={rounded ?? true}
         size={size ?? width}

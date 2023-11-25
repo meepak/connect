@@ -61,19 +61,19 @@ const slides = [
     text: 'PARTNERSHIPS',
     word1: 'DISCOVER',
     // word2: 'PARTNERSHIPS',
-    image: imageAssets.intro1,
+    image: { uri: imageAssets.intro1.localUri },
   },
   {
     key: 's2',
     word1: 'CONNECT',
     // word2: 'CONNECTION',
-    image: imageAssets.intro2,
+    image: { uri: imageAssets.intro2.localUri },
   },
   {
     key: 's3',
     word1: 'THRIVE',
     // word2: 'TOGETHER',
-    image: imageAssets.intro3,
+    image: { uri: imageAssets.intro3.localUri },
   },
 ]
 
@@ -88,6 +88,7 @@ const Intro = () => {
 
   const delay = 3000
 
+  console.log(imageAssets)
   let currentSlide = 0
   let timerId = null
   let pause = false
