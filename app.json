@@ -12,23 +12,14 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/neural.png",
-    // "updates": {
-    //   "enabled": true,
-    //   "fallbackToCacheTimeout": 10000,
-    //   "url": "https://u.expo.dev/f6ffa3f4-8805-43ca-a88e-a2297fbac759"
-    // },
+    "updates": {
+      "enabled": true,
+      "fallbackToCacheTimeout": 10000,
+      "url": "https://u.expo.dev/f6ffa3f4-8805-43ca-a88e-a2297fbac759"
+    },
     "assetBundlePatterns": [
       "assets/images/*"
     ],
-    // "plugins": [
-    //   [
-    //     "@react-native-voice/voice",
-    //     {
-    //       "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
-    //       "speechRecogntionPermission": "Allow $(PRODUCT_NAME) to securely recognize user speech"
-    //     }
-    //   ]
-    // ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "connect.firebase",
