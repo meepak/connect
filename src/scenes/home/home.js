@@ -2,16 +2,14 @@ import React, {
   useState, useCallback, useEffect, useContext, useMemo,
 } from 'react'
 import {
-  View, FlatList,
+  View,
 } from 'react-native'
 import {
-  ActivityIndicator,
   Divider,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 
 // import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
-import { FlashList } from '@shopify/flash-list'
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import { ScreenTemplate } from '../../components/templates'
 import ListItemUser from '../../components/list-item-user'
