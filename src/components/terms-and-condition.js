@@ -50,7 +50,7 @@ const TermsAndCondition = ({ show, onClose }) => {
                 </html`
 
   return (
-    <SheetModal ref={tncSheetRef} snapsAt={['50%', '75%', '100%']} onDismiss={handleDismiss} title="Terms and Conditions">
+    <SheetModal ref={tncSheetRef} snapsAt={['75%']} onDismiss={handleDismiss} title="Terms and Conditions">
       <WebView
         style={{
           marginHorizontal: 15,

@@ -40,7 +40,7 @@ function AnimatedSplashScreen({
     }
   }, [])
 
-  // TODO: Make this splsh screen animation bit fancy??
+  // TODO: Make this splash screen animation bit fancy??
   return (
     <View style={{ flex: 1 }}>
       {isAppReady && children}

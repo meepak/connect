@@ -5,7 +5,7 @@ import {
   View, StyleSheet,
 } from 'react-native'
 import {
-  Text, useTheme, Button, IconButton,
+  Text, useTheme, Button,
 } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { doc, getDoc } from 'firebase/firestore'
@@ -18,10 +18,11 @@ import { ScreenTemplate } from '../../components/templates'
 import TextInputBox from '../../components/core/text-input-box'
 // import Logo from '../../components/core/Logo'
 import { isValidEmail } from '../../utils/validation'
-import SocialButtons from './social'
 import TextAndLink from '../../components/text-and-link'
 import userAuthenticatedAtom from '../../utils/atom'
-import RenderCounter from '../../components/render-counter'
+import SocialIcons from './social_icons'
+import Header from './components/header'
+import OrLine from '../../components/or-line'
 
 const Styles = (colors, fonts) => StyleSheet.create({
   main: {
@@ -33,31 +34,26 @@ const Styles = (colors, fonts) => StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    marginTop: 65,
-    marginBottom: 20,
+    marginTop: 35,
+    marginBottom: 30,
   },
   title: {
     fontSize: fonts.displaySmall.fontSize,
   },
   submitButton: {
     backgroundColor: colors.primaryContainer,
-    color: colors.onPrimaryContainer,
-    marginHorizontal: 40,
+    marginHorizontal: 50,
+    marginTop: 20,
   },
   submitButtonText: {
     color: colors.onPrimaryContainer,
   },
-  text: {
-    fontSize: fonts.bodyLarge.fontSize,
-  },
-  socialButton: {
-    // backgroundColor: colors.primaryContainer,
-    color: colors.onPrimaryContainer,
+  signupButton: {
+    backgroundColor: colors.tertiaryContainer,
     marginHorizontal: 40,
-    marginBottom: 20,
   },
-  socialButtonText: {
-    color: colors.onPrimaryContainer,
+  signupButtonText: {
+    color: colors.onTertiaryContainer,
   },
   footer: {
     marginBottom: 15,
@@ -140,20 +136,12 @@ export default function Login() {
     <ScreenTemplate>
       <KeyboardAwareScrollView
         style={styles.main}
-        keyboardShouldPersistTaps="never"
-        // enableOnAndroid
+        keyboardShouldPersistTaps="handled"
+      // enableOnAndroid
       >
-        <View style={styles.titleContainer}>
-          <IconButton
-            icon="chevron-left"
-            color={colors.onBackground}
-            size={32}
-            onPress={() => navigation.goBack()}
-          />
-          <Text style={styles.title}>Sign in</Text>
-          <RenderCounter />
-        </View>
+        <Header label="Welcome!" marginTop={70} />
 
+        {/* No verification will be required, user can enter secondary email for communication ??? */}
         {auth.currentUser && !auth.currentUser.emailVerified
           ? (
             <>
@@ -176,73 +164,85 @@ export default function Login() {
               </View>
             </>
           ) : <></>}
-        <TextInputBox
-          icon="mail"
-          autoFocus
-          label="Email"
-          onChangeText={(text) => setEmail(text)}
-          autoCapitalize="none"
-          value={email}
-          keyboardType="email-address"
-          errorMessage={emailError}
-          onEndEditing={() => {
-            let error = ''
-            if (email !== '') {
-              error = isValidEmail(email) ? '' : 'Invalid E-mail'
-            }
-            setEmailError(error)
-          }}
-          onClear={() => setEmail()}
-        />
-        <TextInputBox
-          icon="lock"
-          secureTextEntry
-          label="Password"
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          autoCapitalize="none"
-          errorMessage={passwordError}
-          onEndEditing={() => {
-            if (password !== '') {
-              setPasswordError('')
-            }
-          }}
-        />
 
-        <TextAndLink
-          texts={['Forgot password?']}
-          link="Reset"
-          onPress={() => {}}
-          marginTop={0}
-          marginBottom={20}
-        />
+        <View style={{ marginHorizontal: 30 }}>
+          <TextInputBox
+            icon="mail"
+            autoFocus
+            label="Email"
+            onChangeText={(text) => setEmail(text)}
+            autoCapitalize="none"
+            value={email}
+            keyboardType="email-address"
+            errorMessage={emailError}
+            onEndEditing={() => {
+              let error = ''
+              if (email !== '') {
+                error = isValidEmail(email) ? '' : 'Invalid Email'
+              }
+              setEmailError(error)
+            }}
+            onClear={() => setEmail()}
+          />
+          <TextInputBox
+            icon="lock"
+            secureTextEntry
+            label="Password"
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            autoCapitalize="none"
+            errorMessage={passwordError}
+            onEndEditing={() => {
+              if (password !== '') {
+                setPasswordError('')
+              }
+            }}
+          />
 
-        <Button
-          onPress={() => onLoginPress()}
-          mode="contained"
-          style={styles.submitButton}
-          icon="sign-in"
-          textColor={colors.onPrimaryContainer}
-        >
-          <Text style={styles.submitButtonText}>Sign in</Text>
-        </Button>
+          <Button
+            onPress={() => onLoginPress()}
+            mode="contained"
+            style={styles.submitButton}
+            icon="sign-in"
+            textColor={colors.onPrimaryContainer}
+          >
+            <Text style={styles.submitButtonText}>Sign in</Text>
+          </Button>
+
+          <TextAndLink
+            link="Reset password"
+            onPress={() => {}}
+            marginTop={20}
+            marginBottom={20}
+          />
+
+        </View>
 
         <TextAndLink
           texts={['Don\'t have an account?']}
           link="Sign up"
           onPress={() => navigation.navigate('Sign up')}
-          marginTop={20}
+          marginTop={10}
           marginBottom={30}
+          variant="bodyLarge"
         />
 
-        <SocialButtons label="Sign in" />
+        {/* <Divider /> */}
+        <OrLine color={colors.outline} />
 
+        <TextAndLink
+          texts={['Log in using']}
+          marginTop={30}
+          marginBottom={20}
+        />
+        <SocialIcons />
+
+        <Spinner
+          visible={spinner}
+          textStyle={{ color: colors.white }}
+          overlayColor="rgba(0,0,0,0.5)"
+        />
       </KeyboardAwareScrollView>
-      <Spinner
-        visible={spinner}
-        textStyle={{ color: colors.onBackground }}
-        overlayColor="rgba(0,0,0,0.5)"
-      />
     </ScreenTemplate>
   )
 }

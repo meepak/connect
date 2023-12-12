@@ -16,7 +16,7 @@ export const getSystemLocale = () => {
   }
 
   if (typeof locale === 'undefined') {
-    console.log('Couldnt get locale')
+    console.log('Could not get locale')
     return 'en'
   }
 

@@ -16,6 +16,10 @@ import { ScreenTemplate } from '../../components/templates'
 import Logo from '../../components/core/logo'
 import imageAssets from '../../theme/images'
 import RenderCounter from '../../components/render-counter'
+import Animation from './animate/play'
+import { samples } from './animate/text'
+import HandwrittenAnimation from './animate/hand'
+import HandwrittenAnimationV1 from './animate/hand.v1'
 
 const screenWidth = Dimensions.get('screen').width
 // TODO get colors from theme
@@ -42,7 +46,7 @@ const Styles = (colors) => StyleSheet.create({
   buttonView: {
     bottom: 69,
     alignItems: 'center',
-    zIndex: 4,
+    zIndex: 999,
   },
   buttonEnterTouchable: {
     height: 48,
@@ -55,7 +59,7 @@ const Styles = (colors) => StyleSheet.create({
   },
 })
 
-console.log(imageAssets)
+// console.log(imageAssets)
 const slides = [
   {
     key: 's1',
@@ -77,6 +81,49 @@ const slides = [
     image: { uri: imageAssets.intro3.localUri || imageAssets.intro3.uri },
   },
 ]
+
+const PlayGround = () => (
+  <>
+    <View
+      pointerEvents="none"
+      style={{
+        position: 'absolute', top: 300, left: 50, zIndex: 9999, width: '100%', height: '100%',
+      }}
+    >
+      <HandwrittenAnimation />
+    </View>
+    <View
+      pointerEvents="none"
+      style={{
+        position: 'absolute', top: -50, left: 50, zIndex: 9999, width: '100%', height: '100%',
+      }}
+    >
+      <HandwrittenAnimationV1 />
+    </View>
+    <View
+      pointerEvents="none"
+      style={{
+        position: 'absolute', top: 10, left: 100, zIndex: 9999, width: '100%', height: '100%',
+      }}
+    >
+      {samples.map((Sample, i) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <View key={`sample-${i}`}>
+          <Text>{Sample.title}</Text>
+          <Sample />
+        </View>
+      ))}
+    </View>
+    <View
+      pointerEvents="none"
+      style={{
+        position: 'absolute', top: 100, left: 0, zIndex: 9998, flex: 1, flexGrow: 1, width: '100%', height: '100%',
+      }}
+    >
+      <Animation />
+    </View>
+  </>
+)
 
 const Intro = () => {
   const navigation = useNavigation()
@@ -106,7 +153,6 @@ const Intro = () => {
 
   useEffect(() => {
     timerId = setInterval(goToNextPage, delay)
-
     return () => {
       if (timerId) {
         clearInterval(timerId)
@@ -145,7 +191,6 @@ const Intro = () => {
       // backgroundColor: colors.onTertiaryContainer,
     }}
     >
-
       <RenderCounter />
       <Logo bgColor={colors.background} textColor={colors.onBackground} />
     </View>
@@ -168,9 +213,9 @@ const Intro = () => {
         pause = false
       }}
     >
+      <PlayGround />
       <Header />
-
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, alignItems: 'center' }}>
         <FlatList
           ref={slider}
           data={slides}

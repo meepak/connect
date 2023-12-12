@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import { View } from 'react-native'
 
 const SheetModal = React.forwardRef(({
-  children, snapsAt, onDismiss, allowSwipeToClose, title,
+  children, snapsAt, index, onDismiss, allowSwipeToClose, title,
 }, ref) => {
   const { colors } = useTheme()
   // refs
@@ -41,7 +41,9 @@ const SheetModal = React.forwardRef(({
     <BottomSheetModal
       ref={ref}
       snapPoints={snapPoints}
-      // topInset={+insets.top} // since this only works in android, do not rely on it, use inset provided by safe area view
+      index={index}
+      // overDragResistanceFactor={3}
+      topInset={0} // since this only works in android, do not rely on it, use inset provided by safe area view
       enablePanDownToClose={allowSwipeToClose}
       enableDismissOnClose
       onDismiss={onDismiss}
@@ -49,7 +51,9 @@ const SheetModal = React.forwardRef(({
       backdropComponent={({ animatedIndex, style }) => (
         <BottomSheetBackdrop
           animatedIndex={animatedIndex}
-          style={[style, { backgroundColor: colors.background }]}
+          style={[style, {
+            backgroundColor: colors.background, position: 'absolute', top: 0, left: 0, right: 0,
+          }]}
           disappearsOnIndex={-1}
         />
       )}
@@ -101,6 +105,7 @@ const SheetModal = React.forwardRef(({
 SheetModal.propTypes = {
   children: PropTypes.node.isRequired,
   snapsAt: PropTypes.arrayOf(PropTypes.string),
+  index: PropTypes.number,
   onDismiss: PropTypes.func,
   allowSwipeToClose: PropTypes.bool,
   title: PropTypes.string,
@@ -108,6 +113,7 @@ SheetModal.propTypes = {
 
 SheetModal.defaultProps = {
   snapsAt: ['25%', '50%', '75%', '100%'],
+  index: 0,
   onDismiss: null,
   allowSwipeToClose: true,
   title: '',

@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native'
 // import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import { ScreenTemplate } from '../../components/templates'
-import ListItemUser from '../../components/list-item-user'
+import ListItemUser from './components/list-item-user'
 import { UserDataContext } from '../../context'
 import generateMockData from './util/mock-data'
 import Header from './components/header'
@@ -20,6 +20,7 @@ import PotentialMatchesHeader from './components/potential-matches-header'
 import ProfileSheet from '../profile/profile-sheet'
 import { fetchPotentialMatches } from './util/db'
 import RenderCounter from '../../components/render-counter'
+import WaveBackground from '../../components/core/wave-background'
 
 export default function Home() {
   const navigation = useNavigation()
@@ -174,7 +175,7 @@ export default function Home() {
           showsVerticalScrollIndicator={false}
           // ListEmptyComponent={}
           keyExtractor={(item) => item.key}
-              // onEndReached={onLoadingMoreData}
+          // onEndReached={onLoadingMoreData}
           // refreshing={loadingMoreData}
           stickyHeaderIndices={dataItems.length > 1 ? [1] : [0]}
           // StickyHeaderComponent={PotentialMatchesHeader}

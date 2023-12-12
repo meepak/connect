@@ -48,7 +48,7 @@ const Styles = (colors, insets) => StyleSheet.create({
 
 const ModalTemplate = (props) => {
   const {
-    header, subHeader, content, noScrollView,
+    header, subHeader, content, noScrollView, contentMarginTop,
   } = props
   const insets = useSafeAreaInsets()
   const { colors } = useTheme()
@@ -67,7 +67,7 @@ const ModalTemplate = (props) => {
         <View style={styles.pageTitle}>
           {subHeader}
         </View>
-        <View style={styles.content}>
+        <View style={{ ...styles.content, marginTop: contentMarginTop }}>
           <ContainerView {...ContainerProps}>
             {content}
           </ContainerView>
@@ -82,11 +82,13 @@ ModalTemplate.propTypes = {
   subHeader: PropTypes.node,
   content: PropTypes.node.isRequired,
   noScrollView: PropTypes.bool,
+  contentMarginTop: PropTypes.number,
 }
 
 ModalTemplate.defaultProps = {
   subHeader: null,
   noScrollView: false,
+  contentMarginTop: 0,
 }
 
 export default ModalTemplate

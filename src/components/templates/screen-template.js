@@ -4,19 +4,18 @@ import { StatusBar } from 'expo-status-bar'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import PropTypes from 'prop-types'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useTheme } from '@react-navigation/native'
 import { PreferencesContext } from '../../context'
 import LoadingScreen from '../loading-screen'
 import ErrorScreen from '../error-screen'
 
-// TODO onTouchStart, onTouchEnd, sometime throwing error when touched too fast,
-// onTouchEnd firing before onTouchStart or something like that
 const ScreenTemplate = (props) => {
   const {
-    isLoading, isError, children, onTouchStart, onTouchEnd,
+    isLoading, isError, children,
   } = props
   const navigation = useNavigation()
   const preferences = useContext(PreferencesContext)
+  const { colors } = useTheme()
 
   if (isError) {
     // console.log('Screen Template received IsError')
@@ -37,13 +36,8 @@ const ScreenTemplate = (props) => {
 
   return (
     <BottomSheetModalProvider>
-      <GestureHandlerRootView
-        style={{ flex: 1 }}
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-        onTouchCancel={onTouchEnd}
-      >
-        <StatusBar style={preferences.isDark ? 'light' : 'dark'} />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <StatusBar style={preferences.isDark ? 'light' : 'dark'} backgroundColor={colors.background} />
         { children }
       </GestureHandlerRootView>
     </BottomSheetModalProvider>
@@ -54,15 +48,11 @@ ScreenTemplate.propTypes = {
   isLoading: PropTypes.bool,
   isError: PropTypes.bool,
   children: PropTypes.node.isRequired,
-  onTouchStart: PropTypes.func,
-  onTouchEnd: PropTypes.func,
 }
 
 ScreenTemplate.defaultProps = {
   isLoading: false,
   isError: false,
-  onTouchStart: null,
-  onTouchEnd: null,
 }
 
 export default ScreenTemplate

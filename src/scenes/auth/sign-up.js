@@ -3,7 +3,7 @@ import {
   View, StyleSheet,
 } from 'react-native'
 import {
-  Text, useTheme, Button, IconButton,
+  Text, useTheme, Button,
 } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore'
@@ -16,9 +16,10 @@ import TermsAndCondition from '../../components/terms-and-condition'
 // import Logo from '../../components/core/Logo'
 import { firestore, auth } from '../../firebase'
 import { isValidEmail, isValidName, isPasswordComplex } from '../../utils/validation'
-import SocialButtons from './social'
 import TextAndLink from '../../components/text-and-link'
-import RenderCounter from '../../components/render-counter'
+import SocialIcons from './social_icons'
+import Header from './components/header'
+import OrLine from '../../components/or-line'
 
 const Styles = (colors, fonts) => StyleSheet.create({
   main: {
@@ -43,7 +44,7 @@ const Styles = (colors, fonts) => StyleSheet.create({
   submitButton: {
     backgroundColor: colors.primaryContainer,
     color: colors.onPrimaryContainer,
-    marginHorizontal: 40,
+    marginHorizontal: 50,
   },
   submitButtonText: {
     color: colors.onPrimaryContainer,
@@ -136,99 +137,101 @@ const SignUp = () => {
         keyboardShouldPersistTaps="never"
       // enableOnAndroid
       >
-        <View style={styles.titleContainer}>
-          <IconButton
-            icon="chevron-left"
-            color={colors.onBackground}
-            size={32}
-            onPress={() => navigation.goBack()}
+        <Header label="Sign up" marginTop={70} />
+
+        <View style={{ marginHorizontal: 30 }}>
+          {error
+            ? <Text style={styles.error}>{error}</Text>
+            : null}
+          <TextInputBox
+            label="Full name"
+            value={fullName}
+            autoCapitalize="none"
+            icon="person"
+            errorMessage={fullNameError}
+            onChangeText={(name) => {
+              setFullName(name)
+              const msg = isValidName(name)
+                ? ''
+                : 'Invalid name, only letters and spaces are allowed.'
+              setFullNameError(msg)
+            }}
+            onClear={() => {
+              setFullName()
+              setFullNameError()
+            }}
           />
-          <Text style={styles.title}>Sign up</Text>
-          <RenderCounter />
+          <TextInputBox
+            label="Email"
+            onChangeText={(text) => setEmail(text)}
+            value={email}
+            autoCapitalize="none"
+            keyboardType="email-address"
+            icon="mail"
+            errorMessage={emailError}
+            onEndEditing={() => {
+              const msg = email && !isValidEmail(email)
+                ? 'Invalid email'
+                : ''
+              setEmailError(msg)
+            }}
+            onClear={() => {
+              setEmail()
+              setEmailError()
+            }}
+          />
+          <TextInputBox
+            secureTextEntry
+            label="Password"
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            autoCapitalize="none"
+            icon="lock"
+            errorMessage={passwordError}
+            onEndEditing={() => {
+              const msg = password && !isPasswordComplex(password)
+                ? 'Password not complex'
+                : ''
+              setPasswordError(msg)
+            }}
+          />
+
+          <TextAndLink
+            texts={['By signing up, you agree to our']}
+            link="Terms and Conditions."
+            onPress={() => setShowTnc(true)}
+            marginTop={0}
+            marginBottom={25}
+          />
+
+          <Button
+            onPress={() => onRegisterPress()}
+            mode="contained"
+            style={styles.submitButton}
+            icon="diff-added"
+            textColor={colors.onPrimaryContainer}
+          >
+            <Text style={styles.submitButtonText}>Create account</Text>
+          </Button>
+
         </View>
-        {error
-          ? <Text style={styles.error}>{error}</Text>
-          : null}
-        <TextInputBox
-          label="Full name"
-          value={fullName}
-          autoCapitalize="none"
-          icon="person"
-          errorMessage={fullNameError}
-          onChangeText={(name) => {
-            setFullName(name)
-            const msg = isValidName(name)
-              ? ''
-              : 'Invalid name, only letters and spaces are allowed.'
-            setFullNameError(msg)
-          }}
-          onClear={() => {
-            setFullName()
-            setFullNameError()
-          }}
-        />
-        <TextInputBox
-          label="Email"
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          autoCapitalize="none"
-          keyboardType="email-address"
-          icon="mail"
-          errorMessage={emailError}
-          onEndEditing={() => {
-            const msg = email && !isValidEmail(email)
-              ? 'Invalid email'
-              : ''
-            setEmailError(msg)
-          }}
-          onClear={() => {
-            setEmail()
-            setEmailError()
-          }}
-        />
-        <TextInputBox
-          secureTextEntry
-          label="Password"
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          autoCapitalize="none"
-          icon="lock"
-          errorMessage={passwordError}
-          onEndEditing={() => {
-            const msg = password && !isPasswordComplex(password)
-              ? 'Password not complex'
-              : ''
-            setPasswordError(msg)
-          }}
-        />
-
-        <TextAndLink
-          texts={['By signing up, you agree to our']}
-          link="Terms and Conditions."
-          onPress={() => setShowTnc(true)}
-          marginTop={0}
-          marginBottom={25}
-        />
-
-        <Button
-          onPress={() => onRegisterPress()}
-          mode="contained"
-          style={styles.submitButton}
-          icon="diff-added"
-          textColor={colors.onPrimaryContainer}
-        >
-          <Text style={styles.submitButtonText}>Create account</Text>
-        </Button>
 
         <TextAndLink
           texts={['Already signed up?']}
           link="Sign in"
           onPress={() => navigation.navigate('Sign in')}
-          marginTop={25}
+          marginTop={30}
           marginBottom={25}
+          variant="bodyLarge"
         />
 
-        <SocialButtons label="Sign up" />
+        <OrLine color={colors.outline} />
+        <TextAndLink
+          texts={['Log in using']}
+          marginTop={20}
+          marginBottom={10}
+        />
+        <SocialIcons />
 
         <View style={styles.footer} />
 

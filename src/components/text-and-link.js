@@ -1,14 +1,14 @@
 import React from 'react'
 import {
-  StyleSheet, View, Text, TouchableOpacity,
+  StyleSheet, View, TouchableOpacity,
 } from 'react-native'
-import { useTheme } from 'react-native-paper'
+import { useTheme, Text } from 'react-native-paper'
 import PropTypes from 'prop-types'
 
 const TextAndLink = ({
-  texts, link, onPress, marginTop, marginBottom, marginHorizontal, alignSelf, textAlign, lineHeight,
+  texts, link, onPress, marginTop, marginBottom, marginHorizontal, alignSelf, textAlign, lineHeight, variant,
 }) => {
-  const { colors, fonts } = useTheme()
+  const { colors } = useTheme()
   const styles = StyleSheet.create({
     linkView: {
       width: '100%',
@@ -25,13 +25,11 @@ const TextAndLink = ({
     link: {
       color: colors.primary,
       fontWeight: 'bold',
-      fontSize: fonts.bodyLarge.fontSize,
       textAlign,
       lineHeight,
     },
     text: {
       color: colors.onBackground,
-      fontSize: fonts.bodyLarge.fontSize,
       textAlign,
       lineHeight,
     },
@@ -41,21 +39,22 @@ const TextAndLink = ({
     <View style={styles.linkView}>
       {texts.map((text, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <Text key={index} style={styles.text}>
+        <Text key={index} style={styles.text} variant={variant}>
           {text}&nbsp;
         </Text>
       ))}
       <TouchableOpacity onPress={onPress}>
-        <Text style={styles.link}>{link}</Text>
+        <Text style={styles.link} variant={variant}>{link}</Text>
       </TouchableOpacity>
     </View>
   )
 }
 
 TextAndLink.propTypes = {
-  texts: PropTypes.arrayOf(PropTypes.string).isRequired,
-  link: PropTypes.string.isRequired,
-  onPress: PropTypes.func.isRequired,
+  texts: PropTypes.arrayOf(PropTypes.string),
+  link: PropTypes.string,
+  variant: PropTypes.string,
+  onPress: PropTypes.func,
   marginTop: PropTypes.number,
   marginBottom: PropTypes.number,
   marginHorizontal: PropTypes.number,
@@ -65,12 +64,16 @@ TextAndLink.propTypes = {
 }
 
 TextAndLink.defaultProps = {
+  texts: [''],
   marginTop: 20,
   marginBottom: 0,
   marginHorizontal: 20,
   alignSelf: 'center',
   textAlign: 'auto',
   lineHeight: 24,
+  onPress: null,
+  link: '',
+  variant: 'bodyMedium',
 }
 
 export default TextAndLink

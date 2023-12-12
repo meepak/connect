@@ -18,6 +18,8 @@
         "pchmn",
         "renderitem",
         "rneui",
+        "RNSVG",
+        "Swipeable",
         "unhide"
     ]
 }

@@ -26,14 +26,14 @@ const IntroStack = () => (
       component={SignUp}
       options={{
         ...TransitionPresets.SlideFromRightIOS,
+        gestureDirection: 'horizontal-inverted',
       }}
     />
     <Stack.Screen
       name="Sign in"
       component={SignIn}
       options={{
-        ...TransitionPresets.SlideFromRightIOS,
-        gestureDirection: 'horizontal-inverted',
+        ...TransitionPresets.DefaultTransition,
       }}
     />
 
