@@ -6,6 +6,7 @@ import {
 } from '@gorhom/bottom-sheet'
 import PropTypes from 'prop-types'
 import { View } from 'react-native'
+import { convertHexToRGBA } from '../../utils/functions'
 
 const SheetModal = React.forwardRef(({
   children, snapsAt, index, onDismiss, allowSwipeToClose, title,
@@ -66,8 +67,8 @@ const SheetModal = React.forwardRef(({
           flexDirection: 'row',
           alignItems: 'flex-end',
           justifyContent: 'space-between',
-          height: 65,
-          backgroundColor: colors.elevation.level5,
+          height: 55,
+          backgroundColor: convertHexToRGBA(colors.primaryContainer, 0.15),
           elevation: 5,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,

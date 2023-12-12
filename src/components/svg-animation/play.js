@@ -9,6 +9,16 @@ import Animated, {
 } from 'react-native-reanimated'
 import { Svg, Circle } from 'react-native-svg'
 
+
+const styles = StyleSheet.create({
+  box: {
+    height: 100,
+    backgroundColor: '#b58df1',
+    borderRadius: 20,
+    marginVertical: 64,
+  },
+})
+
 export default function Animation() {
   const AnimatedCircle = Animated.createAnimatedComponent(Circle)
 
@@ -62,12 +72,3 @@ export default function Animation() {
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  box: {
-    height: 100,
-    backgroundColor: '#b58df1',
-    borderRadius: 20,
-    marginVertical: 64,
-  },
-})

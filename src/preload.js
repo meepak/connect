@@ -51,5 +51,5 @@ export default async function Preload() {
   await Promise.all(preloadImages())
   await storeData()
   // additional simulated delay
-  await new Promise((resolve) => setTimeout(resolve, 15000))
+  await new Promise((resolve) => setTimeout(resolve, 5000))
 }

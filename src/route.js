@@ -11,6 +11,7 @@ import { UserDataContext } from './context'
 import { firestore, auth } from './firebase'
 import LoadingScreen from './components/loading-screen'
 import { mergeJsonObjects } from './utils/functions'
+import AnimatedSplash from './components/splash/animated-splash'
 
 // [TODO] REDUCE SUBSCRIPTION TO THE DATA THAT MAY CHANGE ONLY
 // NO POINT PULLING WHO THINGS THAT DOESN'T CHANGE OFTEN
@@ -117,7 +118,7 @@ const Route = () => {
   // if userAuthenticated is not yet true or false
   // lets check once before we pass through here
   if (userAuthenticated === null) {
-    return <LoadingScreen />
+    return <AnimatedSplash />
   }
 
   // console.log('we passing through?? because userAuthenticated is not null --', userAuthenticated !== null)

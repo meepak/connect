@@ -37,8 +37,7 @@ const ProfileSheet = ({ show, onClose, user }) => {
   return (
     <SheetModal
       ref={addSectionSheetRef}
-      snapsAt={['50%', '75%', '100%']}
-      index={1}
+      snapsAt={['75%', '100%']}
       onDismiss={handleDismiss}
       // allowSwipeToClose={false}
       title={user?.name ?? ''}
