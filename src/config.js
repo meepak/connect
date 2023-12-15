@@ -1,4 +1,4 @@
-console.log(`Firebase project name ${process.env.EXPO_PUBLIC_FIREBASE_PROJECT_NAME}`)
+// console.log(`Firebase project name ${process.env.EXPO_PUBLIC_FIREBASE_PROJECT_NAME}`)
 
 const firebaseKey = {
   apiKey: process.env.EXPO_PUBLIC_GOOGLE_CLOUD_API_KEY,

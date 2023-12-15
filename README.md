@@ -1,9 +1,19 @@
 project: connect-411
 license: UNLICENSED
 author: Deepak Mahat
+ 
+ eas build -p android --profile preview2 --local
 
 Notes -- for associate, separate primary occupation & skills
 Currently works fulltime partime, will leave job or need side hustle.
+
+##KNOWN ISSUE TO BE RESOLVED AT THE END
+1. Annoying keyword pushing tab bar issue in Android
+2. Form loading slowness and framerate dropping plus some stutter
+3.[SOLVED] Scrolling issue in Android?? -- issue was in  ...TransitionPresets.SlideFromRightIOS, 
+    Android gesture handler goes crazy if two things scrolling in same direction
+
+
 
 
 TODO
@@ -253,3 +263,211 @@ You could mark the potential matches as "viewed" and move them to a separate sec
 You could allow the user to "hide" potential matches that they are not interested in. This would remove the potential matches from the user's view until they decide to unhide them.
 You could implement a "swipe to match/reject" feature. This would allow the user to quickly dismiss potential matches that they are not interested in.
 Ultimately, the best way to handle potential matches that have already been viewed is to choose a method that is consistent with the overall design and functionality of your app.
+----------------------------------------------------------------------------------
+
+Here is the features I will be implementing,please help me out.
+
+View  people with new potential matches (as assigned by algorithm with score)
+Action - Report people, Block people, View profile & all available action through profile section
+
+View people whose profile is already viewed
+
+View people to whom connection  request is sent
+ -- Action , withdraw request
+
+View rejected requests (you received requests and declined)
+-- Action delete 
+
+View declined requests (you sent requests and other party declined)
+-- Action delete
+
+View connected people (one party sent other accepted)
+-- Action - withdraw connection, initiate chat, exit from connection, 
+
+View bookmarked people (with or without connection 
+
+
+
+BACKGROUND CHECK SECTION
+View people to whom background check request was sent
+View people who sent background check requests
+Perform necessary action
+
+NDA SECTION
+View people to whom NDA sign request was sent
+View people who sent NDA design request, 
+View NDA signed people
+ Perform necessary action
+
+
+SEARCH SECTION 
+Search people , --> view profile (do available actions)
+ search chat messages, 
+notes,  
+notifications, 
+action history
+
+
+NOTIFICATION SECTION (View & perform relevant action)
+View new notifications.
+View past notificatons..
+Open, mark as read, delete or remind later action kn each notification
+Type of notifications --
+- New potential matches **see in home page
+- Connect Requests accepted/received **go to connection mgt page
+- KYC Requests / done **go to kyc page
+- NDA Requests / signed **go to NDA page
+- New message received in chat **go to chat
+- Connected User profile update **view profile
+- NDA/Background Check due date reminders **go to nda/kyc page
+- Scheduled Meeting reminder --no action
+- Note reminder set by yourself to you to take some action --no action
+
+PROFILE SECTION
+View peoples  profile & see all shared info
+Bookmark people
+Save note about people
+Send connection request
+Edit your profile with all necessary info
+Upload/Manage Documents / Media / NDA
+Access management on each section --  private, public, to specific user only or group if supports creating group
+Access to see  my connected User, by default everyone can see everyone's connection
+Initiate Chat
+
+
+CHAT SECTION
+See recent messages
+See recent replies
+See active chat users
+Create/Manage chat groups 
+
+Send receive text messages
+Send/Receive Background check request 
+Send/Receive NDA sign request.
+Schedule meeting in zoom/team/google
+Send/Receive documents/media files
+Quick view/update your notes on user to communicate better
+LLM integration for response suggestion..
+
+
+-------------------------------------------------------------
+
+HOME Section:
+
+    Dashboard: Provide a summary of important information and notifications.
+    Potential Matches: List new potential matches with scores.
+    Quick Actions: Allow users to take immediate actions on potential matches (e.g., send connection request, view profile).
+
+
+MANAGE Section:
+    Sent Requests: View and manage sent connection requests.
+    Received Requests: View and manage received connection requests.
+    Rejected & Declined Requests: Separate tabs for easier management.
+    Connected Users: List of people with accepted connection requests.
+    Bookmarked Users: Display bookmarked users.
+
+
+  BACKGROUND CHECK Section:
+      Sent Requests: View and manage background check requests sent.
+      Received Requests: View and manage received background check requests.
+      Actions: Perform necessary actions for background checks.
+
+
+  NDA Section:
+      Sent Requests: View and manage NDA sign requests sent.
+      Received Requests: View and manage received NDA sign requests.
+      Signed Users: View users who have signed the NDA.
+      Actions: Perform necessary actions for NDAs.
+
+CHAT Section:
+    Connected Users: List of users you are connected with.
+    Chat Groups: Manage and create chat groups.
+    Recent Messages: Display recent messages and replies.
+    Actions: Initiate chat, withdraw connection, schedule meetings, send/receive background check and NDA requests, manage documents/media files.
+
+NOTIFICATION Section:
+    Overview: Quick summary of new notifications.
+    Notification Types: Categorize by type (matches, connection requests, KYC requests, NDA requests, messages, etc.).
+    Notification History: View past notifications.
+    Actions: Open, mark as read, delete, or set reminders for each notification.
+
+
+PROFILE Section:
+    Profile Overview: Display key information about the user.
+    Actions: Edit profile, upload/manage documents, access management settings.
+    Notes & Bookmarks: View and manage notes and bookmarks for each user.
+    Connection Requests: Send connection requests from this section.
+
+SEARCH Section:
+    User Search: Search for people and view profiles.
+    Chat Search: Search through chat messages.
+    Note Search: Search through notes.
+    Action History: View history of actions taken.
+
+HISTORY SECTION
+    Make sure every action taken by user is logged in database history section
+    So it can be listed out easily and presented in the screen, also this can add to the search feature by adding one more thing user can search
+    Also can group by
+        Profiles viewed.
+        Connection requests sent/received.
+        Bookmarked profiles.
+        Reports made.
+        Notes added.
+
+-------------------------------------------------------------------------------------------------------
+
+HOME SECTION
+-------------------------
+
+Home Section UI Layout:
+
+Top Header:
+
+Left Icon with Profile Image: Quick access to the user's profile section.
+Right Icon with Gear Icon for Settings: Settings page for app configuration.
+Greeting Message: Personalized greeting with the user's first name.
+Search Bar: Enables users to search for specific profiles or content easily.
+******
+Summary of Important Information and Notifications:
+
+Display crucial information and notifications, 
+>>  Notification Types: Categorize by type (matches, connection requests, KYC requests, NDA requests, messages, etc.).
+
+accepted/declined connection requests, 
+>> Someone sent a connection request, invitations
+>> Some one accepted the connection request
+>> Someone declined the connection request
+
+and upcoming events or reminders.
+such as new potential matches, 
+
+Visible only when relevant information is present, to keep the interface clean.
+************
+Potential Matches Section (Endless Scroll):
+
+Virtualized List: Efficiently loads batches of 20 from the database.
+Each list item includes a profile picture, basic summary info, and quick actions like "View Profile" and "Bookmark."
+Handling Viewed Profiles:
+
+                Potential Match Item:
+
+                Profile Picture: Visual representation for the user to quickly see the match.
+                Basic Summary Info: Key information at a glance, such as name, age, location.
+                Quick Actions in List Item:
+                "View Profile": Takes users to the detailed profile.
+                "Bookmark": Allows users to bookmark a potential match for later viewing.
+                Profile Section:
+
+                Within the detailed profile section, provide a more comprehensive set of actions:
+
+                "Send Connection Request": Express interest in connecting.
+                "Report": Flag inappropriate content or behavior.
+                "Add Note": Add personal notes about the user.
+
+Gray Out or Remove:
+Gray out viewed profiles to distinguish them.
+Keep them visible but distinguished in the list to avoid accidental skips.
+Handling Future Suggestions:
+
+Skip profiles that have been viewed but not acted upon, assuming the user isn't interested.
+Prioritize showing new potential matches.

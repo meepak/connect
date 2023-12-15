@@ -1,10 +1,10 @@
 import React from 'react'
 import {
-  Surface, Text, Divider,
+  Surface, Text, Divider, useTheme,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import RadioButtonGroup from '../../components/core/RadioButtonGroup'
-import styles from './styles'
+import RadioButtonGroup from '../../components/core/radio-button-group'
+import Styles from './styles'
 
 const educationLevels = [
   'None',
@@ -18,40 +18,52 @@ const educationLevels = [
 ]
 
 const SelectEducation = ({
-  onEducationChanged, question, initialValue,
-}) => (
-  <Surface style={styles.card}>
+  onEducationChanged, question, initialValue, error, onLayout,
+}) => {
+  const { colors, fonts } = useTheme()
+  const styles = Styles(colors, fonts)
+  return (
+    <Surface style={styles.card} onLayout={onLayout}>
 
-    <Text style={styles.question}>
-      { question || 'What is the minimum education level you seek in a partner?' }
-    </Text>
+      <Text style={styles.question}>
+        { question || 'What is the minimum education level you seek in a partner?' }
+        {
+        error
+          ? <Text style={styles.error}> *Required</Text>
+          : null
+        }
+      </Text>
 
-    <Divider style={styles.divider} />
+      <Divider style={styles.divider} />
 
-    <RadioButtonGroup
-      reverse
-      items={educationLevels.map((stage, index) => ({
-        id: index + 1,
-        text: stage,
-        value: stage,
-        checked: initialValue === stage,
-      }))}
-      onChecked={(value) => {
-        onEducationChanged(value)
-      }}
-    />
-  </Surface>
-)
+      <RadioButtonGroup
+        reverse
+        items={educationLevels.map((stage, index) => ({
+          id: index + 1,
+          text: stage,
+          value: stage,
+          checked: initialValue === stage,
+        }))}
+        onChecked={(value) => {
+          onEducationChanged(value)
+        }}
+      />
+    </Surface>
+  )
+}
 
 SelectEducation.propTypes = {
   question: PropTypes.string,
   onEducationChanged: PropTypes.func.isRequired,
   initialValue: PropTypes.string,
+  error: PropTypes.bool,
+  onLayout: PropTypes.func.isRequired,
 }
 
 SelectEducation.defaultProps = {
   question: null,
   initialValue: '',
+  error: false,
 }
 
 export default SelectEducation
