@@ -1,14 +1,14 @@
 import { registerRootComponent } from 'expo'
 
 import React from 'react'
-import { useColorScheme } from 'react-native'
 
 import 'utils/ignore'
 
 import * as SplashScreen from 'expo-splash-screen'
 
-import AnimatedAppLoader from './src/components/splash/animated-app-loader'
+// import AnimatedAppLoader from './src/components/splash/animated-app-loader'
 import Connect411 from './src/index'
+import AnimatedSplashScreen from './src/components/splash/animated-splash-screen'
 
 // const isHermes = () => !!global.HermesInternal
 
@@ -18,15 +18,10 @@ SplashScreen.preventAutoHideAsync().catch(() => {
 })
 
 const App = () => {
-  const systemTheme = useColorScheme()
-
-  const isDark = systemTheme === 'dark'
-  const resizeMode = 'contain'
-  const bgColor = isDark ? '#000000' : '#FFFFFF'
   return (
-    <AnimatedAppLoader isDark={isDark} resizeMode={resizeMode} bgColor={bgColor}>
+    <AnimatedSplashScreen>
       <Connect411 />
-    </AnimatedAppLoader>
+    </AnimatedSplashScreen>
   )
 }
 

@@ -37,7 +37,7 @@ const ScreenTemplate = (props) => {
   return (
     <BottomSheetModalProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar style={preferences.isDark ? 'light' : 'dark'} backgroundColor={colors.background} />
+        <StatusBar hidden={false} animated={false}  style={preferences.isDark ? 'light' : 'dark'} backgroundColor={colors.background} />
         { children }
       </GestureHandlerRootView>
     </BottomSheetModalProvider>

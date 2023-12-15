@@ -8,7 +8,7 @@ import LottieView from 'lottie-react-native'
 export default function ErrorScreen() {
   const animation = useRef(null)
   const { fonts } = useTheme()
-  const { height, width } = Dimensions.get('window')
+  const { width, height } = Dimensions.get('window')
 
   const styles = StyleSheet.create({
     animation: {

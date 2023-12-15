@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import LottieView from 'lottie-react-native'
 
-const { height, width } = Dimensions.get('window')
+const { width, height } = Dimensions.get('window')
 const styles = StyleSheet.create({
   animation: {
     width: width * 0.25,

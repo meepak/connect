@@ -19,14 +19,6 @@ const PlayGround = () => (
     {/* <View
       pointerEvents="none"
       style={{
-        position: 'absolute', top: -50, left: 50, zIndex: 9999, width: '100%', height: '100%',
-      }}
-    >
-      <AnimatedLogo />
-    </View> */}
-    {/* <View
-      pointerEvents="none"
-      style={{
         position: 'absolute', top: 10, left: 100, zIndex: 9999, width: '100%', height: '100%',
       }}
     >

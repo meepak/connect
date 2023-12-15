@@ -69,10 +69,8 @@ const PathTrace = ({ onLoaded }) => {
 
   const Finished = (finished) => {
     if (finished) {
-      // console.log('finished: ', finished)
       currentPath.value = currentPath.value === letterPaths.length - 1 ? 0 : currentPath.value + 1
       setLetterPath(letterPaths[currentPath.value])
-      console.log('Finished ', currentPath.value)
     }
   }
 

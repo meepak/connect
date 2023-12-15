@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "connect",
+    "name": "Find Associate",
     "slug": "connect",
     "owner": "dpkmht",
     "privacy": "public",
@@ -11,7 +11,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/neural.png",
+    "icon": "./assets/images/fa_logo.png",
     "updates": {
       "enabled": true,
       "fallbackToCacheTimeout": 10000,
@@ -20,6 +20,7 @@
     "assetBundlePatterns": [
       "assets/images/*"
     ],
+    "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "connect.firebase",
@@ -50,14 +51,20 @@
         // "RECORD_AUDIO"
       ],
       "softwareKeyboardLayoutMode": "resize",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/fa_logo_adaptive.png",
+        "monochromeImage": "./assets/images/fa_logo_adaptive_monochrome.png",
+        "backgroundColor": "#512da8"
+
+      },
       "splash": {
         "image": "./assets/images/splash-white.png",
         "backgroundColor": "#FFFFFF",
-        "resizeMode": "cover",
+        "resizeMode": "contain",
         "dark": {
           "image": "./assets/images/splash-black.png",
           "backgroundColor": "#000000",
-          "resizeMode": "cover"
+          "resizeMode": "contain"
         }
       }
       

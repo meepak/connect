@@ -1,5 +1,4 @@
 import React from 'react'
-import { TouchableHighlight } from 'react-native'
 import PropTypes from 'prop-types'
 import Animated, {
   useSharedValue, withRepeat, withSequence, withTiming,
