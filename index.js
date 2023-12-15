@@ -2,7 +2,7 @@ import { registerRootComponent } from 'expo'
 
 import React from 'react'
 
-import 'utils/ignore'
+// import 'utils/ignore'
 
 import * as SplashScreen from 'expo-splash-screen'
 

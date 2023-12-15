@@ -13,7 +13,7 @@ import {
 import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 
 import { Provider } from 'jotai'
-import 'utils/ignore'
+// import 'utils/ignore'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as SystemUI from 'expo-system-ui'
 
