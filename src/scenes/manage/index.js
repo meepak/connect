@@ -1,3 +1,3 @@
-import Manage from './Manage'
+import Manage from './manage'
 
 export default Manage

@@ -1,3 +1,3 @@
-import Occupation from './Occupation'
+import Occupation from './occupation'
 
 export default Occupation

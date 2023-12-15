@@ -1,3 +1,3 @@
-import Follow from './Notification'
+import Follow from './notification'
 
 export default Follow
