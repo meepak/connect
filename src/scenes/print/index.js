@@ -1,3 +1,3 @@
-import Print from './Print'
+import Print from './print'
 
 export default Print

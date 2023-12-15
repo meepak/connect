@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useColorScheme } from 'react-native'
 import {
   MD3DarkTheme,
@@ -6,109 +6,156 @@ import {
   adaptNavigationTheme,
   PaperProvider,
 } from 'react-native-paper'
-import { Provider } from 'jotai'
-import 'utils/ignore'
-import { imageAssets } from 'theme/images'
-import { fontAssets } from 'theme/fonts'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import {
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from '@react-navigation/native'
 import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 
-import { ActionSheetProvider } from '@expo/react-native-action-sheet'
+import { Provider } from 'jotai'
+import 'utils/ignore'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as SystemUI from 'expo-system-ui'
 
-// import FontIcon from 'react-native-vector-icons/FontAwesome5'
-import Icon from 'react-native-vector-icons/Ionicons'
-
-import { UserDataContextProvider } from './context/UserDataContext'
-
-import LoadingScreen from './components/LoadingScreen'
-
-import jsonData from '../assets/data/occupations.json'
-
-// assets
-import Router from './routes'
-
-const isHermes = () => !!global.HermesInternal
+import { PreferencesContext } from './context'
+import Icon from './components/core/icon'
+import Route from './route'
+import { hexThemeFromColor, prepareThemes } from './theme/custom'
+import { ASYNC_STORAGE_KEY, DISPLAY } from './utils/constants'
 
 const App = () => {
-  // state
-  const [didLoad, setDidLoad] = useState(false)
-  console.log('isHermes', isHermes())
+  const systemTheme = useColorScheme()
+  const [themePreference, setThemePreference] = React.useState('system')
+  const [themeCustomColor, setThemeCustomColor] = React.useState('')
 
-  // load json data to async storage
-  const storeData = async () => {
-    try {
-      const key = 'occupation'
-      // Check if the data already exists in AsyncStorage
-      const existingData = await AsyncStorage.getItem(key)
+  const [isDark, setIsDark] = React.useState(systemTheme === 'dark')
+  const [useCustomColor, setUseCustomColor] = React.useState(false)
+  const [showRenderCounter, setShowRenderCounter] = React.useState(process.env.EXPO_PUBLIC_DEVELOPMENT_MODE === 'true')
 
-      if (existingData === null) { // TODO PRE-CLEAN UP THE JSON FILE TO AVOID DELAYED LOAD TIME
-      // we just want unique SOCTitles
-        // Extract unique titles from jsonData
-        const uniqueTitles = [...new Set(jsonData.SOCGroups.map((item) => item.SOCTitle))]
+  const PREFERENCES_KEY = ASYNC_STORAGE_KEY.Preferences
+  const CUSTOM_COLOR_PALETTE = DISPLAY.Palette
 
-        // Create newJsonData with unique titles
-        const newJsonData = uniqueTitles.map((title) => ({ title }))
-
-        // Sort the newJsonData array by the length of the title (shortest titles first)
-        const sortedJsonData = newJsonData.slice().sort((a, b) => a.title.length - b.title.length)
-        // Data doesn't exist, so store it
-        const jsonStr = JSON.stringify(sortedJsonData)
-        // console.log(jsonStr)
-        await AsyncStorage.setItem(key, jsonStr)
-        console.log('Occupation Data stored successfully')
-      } else {
-        console.log('Occupation Data already exists in AsyncStorage')
-      }
-    } catch (error) {
-      console.error('Error storing data:', error)
+  const isDarkMode = (themePref) => {
+    if (!themePref || !['dark', 'light'].includes(themePref)) {
+      return systemTheme === 'dark'
     }
-  }
-  // handler
-  const handleLoadAssets = async () => {
-    // assets preloading
-    await Promise.all([...imageAssets, ...fontAssets])
-    await storeData()
-    setDidLoad(true)
+    return (themePref === 'dark')
   }
 
-  // lifecycle
-  useEffect(() => {
-    handleLoadAssets()
+  React.useEffect(() => {
+    const restorePref = async () => {
+      try {
+        const prefString = await AsyncStorage.getItem(PREFERENCES_KEY)
+        const preferences = JSON.parse(prefString || '')
+        // console.log('restoring preferences', preferences)
+        if (preferences) {
+          setIsDark(() => isDarkMode(preferences.themePreference))
+        }
+      } catch (e) {
+        // ignore error
+        console.log('error restorePref', e)
+      }
+    }
+    restorePref()
   }, [])
 
-  // theming
-  const colorScheme = useColorScheme()
-  const isDark = colorScheme === 'dark'
-  const { theme } = useMaterial3Theme()
+  React.useEffect(() => {
+    const savePref = async () => {
+      try {
+        // console.log('saving preferences', themePreference, themeCustomColor)
+        await AsyncStorage.setItem(
+          PREFERENCES_KEY,
+          JSON.stringify({
+            themePreference,
+          }),
+        )
+      } catch (e) {
+        // ignore error
+        console.log('error savePref', e)
+      }
+    }
 
-  const paperTheme = isDark ? MD3DarkTheme : MD3LightTheme
+    savePref()
+  }, [themePreference, themeCustomColor])
 
-  const { adaptedTheme } = adaptNavigationTheme(isDark ? { reactNavigationLight: paperTheme } : { reactNavigationDark: paperTheme })
+  // Preferences context parameter
+  const preferences = React.useMemo(
+    () => ({
+      setThemePreference: (themePref) => {
+        // console.log('setting themePreference', themePref)
+        setIsDark(() => isDarkMode(themePref))
+        setThemePreference(() => themePref)
+      },
+      setUseCustomColor: (value) => {
+        if (value && !CUSTOM_COLOR_PALETTE.includes(themeCustomColor)) {
+          setThemeCustomColor(CUSTOM_COLOR_PALETTE[7]) // set default color
+        }
+        setUseCustomColor(() => value)
+      },
+      useCustomColor,
+      setThemeCustomColor,
+      themePreference,
+      themeCustomColor,
+      isDark,
+      showRenderCounter,
+      setShowRenderCounter,
+    }),
+    [themePreference, themeCustomColor, useCustomColor, showRenderCounter],
+  )
 
-  const finalTheme = { ...adaptedTheme, colors: isDark ? theme.dark : theme.light }
+  // prepare the theme
+  const { adaptedTheme } = adaptNavigationTheme(isDark
+    ? { reactNavigationLight: NavigationDefaultTheme }
+    : { reactNavigationDark: NavigationDarkTheme })
+
+  const md3Theme = isDark ? MD3DarkTheme : MD3LightTheme
+  const { theme: m3Theme } = useMaterial3Theme() // do i even need this???
+
+  const resultTheme = useCustomColor
+    ? (() => {
+      const customBaseTheme = hexThemeFromColor(themeCustomColor, isDark ? 'dark' : 'light')
+      const customTheme = prepareThemes(customBaseTheme)
+      const customColors = isDark ? customTheme.dark : customTheme.light
+      return {
+        ...adaptedTheme,
+        ...md3Theme,
+        colors: {
+          // ...m3,
+          ...customColors,
+        },
+      }
+    }
+    )
+    : (() => {
+      const m3 = isDark ? m3Theme.dark : m3Theme.light
+      return {
+        ...adaptedTheme,
+        ...md3Theme,
+        colors: {
+          ...m3,
+        },
+      }
+    }
+    )
+
+  const paperTheme = resultTheme()
+
+  // console.log('paper Theme', paperTheme)
 
   // solution to white flash for android while keyboard appears
-  SystemUI.setBackgroundColorAsync(finalTheme.colors.background)
+  SystemUI.setBackgroundColorAsync(paperTheme.colors.background)
 
-  // rendering
-  // if (!didLoad) return <LoadingScreen />
+  // console.log('App.js loaded')
+  const paperSettings = {
+    icon: (props) => <Icon {...props} />,
+  }
   return (
     <Provider>
-      <UserDataContextProvider>
-        <ActionSheetProvider>
-          <PaperProvider
-            settings={{
-              icon: (props) => <Icon {...props} />,
-            }}
-            theme={finalTheme}
-          >
-            {didLoad
-              ? <Router />
-              : <LoadingScreen />}
-          </PaperProvider>
-        </ActionSheetProvider>
-      </UserDataContextProvider>
+      <PreferencesContext.Provider value={preferences}>
+        <PaperProvider settings={paperSettings} theme={paperTheme}>
+          <Route />
+        </PaperProvider>
+      </PreferencesContext.Provider>
     </Provider>
   )
 }

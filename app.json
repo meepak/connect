@@ -1,44 +1,84 @@
 {
   "expo": {
-    "name": "connect",
+    "name": "Find Associate",
     "slug": "connect",
     "owner": "dpkmht",
     "privacy": "public",
-    "platforms": ["ios", "android"],
+    "jsEngine": "hermes",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo-sm.png",
-    "splash": {
-      // "image": "./assets/images/splash-new.png",
-      "image": "./assets/images/splash-new-dark.png",
-      "resizeMode": "cover"
-    },
+    "icon": "./assets/images/fa_logo.png",
     "updates": {
       "enabled": true,
       "fallbackToCacheTimeout": 10000,
       "url": "https://u.expo.dev/f6ffa3f4-8805-43ca-a88e-a2297fbac759"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "assets/images/*"
+    ],
+    "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "connect.firebase",
       "buildNumber": "1.0.0",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Use the photo library to change your avatar."
+        // "NSMicrophoneUsageDescription": "Allow microphone use to voice type"
       },
-      "userInterfaceStyle": "automatic"
+      "userInterfaceStyle": "automatic",
+      "splash": {
+        "image": "./assets/images/splash-white.png",
+        "backgroundColor": "#FFFFFF",
+        "resizeMode": "cover",
+        "dark": {
+          "image": "./assets/images/splash-black.png",
+          "backgroundColor": "#000000",
+          "resizeMode": "cover"
+        }
+      }
     },
     "android": {
       "package": "connect.firebase",
       "versionCode": 1,
       "userInterfaceStyle": "automatic",
-      "permissions": ["VIBRATE", "CAMERA"],
-      "softwareKeyboardLayoutMode": "resize"
+      "permissions": [
+        // "VIBRATE",
+        // "CAMERA",
+        // "RECORD_AUDIO"
+      ],
+      "softwareKeyboardLayoutMode": "resize",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/fa_logo_adaptive.png",
+        "monochromeImage": "./assets/images/fa_logo_adaptive_monochrome.png",
+        "backgroundColor": "#512da8"
+
+      },
+      "splash": {
+        "image": "./assets/images/splash-white.png",
+        "backgroundColor": "#FFFFFF",
+        "resizeMode": "contain",
+        "dark": {
+          "image": "./assets/images/splash-black.png",
+          "backgroundColor": "#000000",
+          "resizeMode": "contain"
+        }
+      }
+      
     },
-    "packagerOpts": {
-      "config": "metro.config.js",
-      "sourceExts": ["js", "jsx", "svg", "ts", "tsx"]
-    },
+    // "packagerOpts": {
+    //   "config": "metro.config.js",
+    //   "sourceExts": [
+    //     "js",
+    //     "jsx",
+    //     "svg",
+    //     "ts",
+    //     "tsx"
+    //   ]
+    // },
     "description": "",
     "extra": {
       "eas": {

@@ -1,3 +1,3 @@
-import SelectLocation from './Location'
+import SelectLocation from './location'
 
 export default SelectLocation
