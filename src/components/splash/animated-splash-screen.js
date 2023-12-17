@@ -2,7 +2,7 @@ import React, {
   useCallback, useEffect, useState,
 } from 'react'
 import * as SplashScreen from 'expo-splash-screen'
-import { View, useColorScheme } from 'react-native'
+import { useColorScheme } from 'react-native'
 import PropTypes from 'prop-types'
 import * as SystemUI from 'expo-system-ui'
 import Preload from '../../preload'
@@ -51,11 +51,11 @@ const AnimatedSplashScreen = ({ children }) => {
   })
 
   return (
-    <View style={{ flex: 1, backgroundColor: bgColor }}>
+    <>
       {/* <AnimatedSplash onLoaded={(p) => onAnimationReady(p)} /> */}
       {!isAppReady && <AnimatedSplash isDark={isDark} onLoaded={(p) => onSplashReady(p)} />}
       {isAppReady && children}
-    </View>
+    </>
   )
 }
 

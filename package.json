@@ -63,7 +63,8 @@
     "react-native-wheel-picker-expo": "^0.5.4"
   },
   "resolutions": {
-    "semver": "~7.5.3"
+    "semver": "~7.5.3",
+    "@expo/config-plugins":"~7.2.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
