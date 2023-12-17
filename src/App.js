@@ -17,6 +17,7 @@ import { Provider } from 'jotai'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as SystemUI from 'expo-system-ui'
 
+import { StatusBar } from 'expo-status-bar'
 import { PreferencesContext } from './context'
 import Icon from './components/core/icon'
 import Route from './route'
@@ -57,7 +58,7 @@ const App = () => {
       }
     }
     restorePref()
-  }, [])
+  }, [systemTheme])
 
   React.useEffect(() => {
     const savePref = async () => {
@@ -143,6 +144,7 @@ const App = () => {
   // console.log('paper Theme', paperTheme)
 
   // solution to white flash for android while keyboard appears
+  // doing it again here because user preference may override system setting
   SystemUI.setBackgroundColorAsync(paperTheme.colors.background)
 
   // console.log('App.js loaded')
@@ -153,6 +155,7 @@ const App = () => {
     <Provider>
       <PreferencesContext.Provider value={preferences}>
         <PaperProvider settings={paperSettings} theme={paperTheme}>
+          <StatusBar hidden={false} animated={false} style={isDark ? 'light' : 'dark'} backgroundColor={paperTheme.colors.background} />
           <Route />
         </PaperProvider>
       </PreferencesContext.Provider>

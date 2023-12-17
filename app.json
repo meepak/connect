@@ -11,7 +11,6 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/fa_logo.png",
     "updates": {
       "enabled": true,
       "fallbackToCacheTimeout": 10000,
@@ -21,64 +20,48 @@
       "assets/images/*"
     ],
     "userInterfaceStyle": "automatic",
+    "icon": "./assets/images/icon.png",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "connect.firebase",
       "buildNumber": "1.0.0",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Use the photo library to change your avatar."
-        // "NSMicrophoneUsageDescription": "Allow microphone use to voice type"
       },
-      "userInterfaceStyle": "automatic",
       "splash": {
-        "image": "./assets/images/splash-white.png",
         "backgroundColor": "#FFFFFF",
-        "resizeMode": "cover",
+        "resizeMode": "contain",
+        "image": "./assets/images/splash.png",
         "dark": {
-          "image": "./assets/images/splash-black.png",
           "backgroundColor": "#000000",
-          "resizeMode": "cover"
+          "resizeMode": "contain",
+          "image": "./assets/images/splash.png"
         }
       }
     },
     "android": {
       "package": "connect.firebase",
       "versionCode": 1,
-      "userInterfaceStyle": "automatic",
       "permissions": [
-        // "VIBRATE",
-        // "CAMERA",
-        // "RECORD_AUDIO"
       ],
+      "icon": "./assets/images/ic_launcher.png",
       "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/fa_logo_adaptive.png",
-        "monochromeImage": "./assets/images/fa_logo_adaptive_monochrome.png",
-        "backgroundColor": "#512da8"
-
+        "foregroundImage": "./assets/images/ic_foreground.png",
+        "backgroundImage": "./assets/images/ic_background.png",
+        "monochromeImage": "./assets/images/ic_monochrome.png"
       },
       "splash": {
-        "image": "./assets/images/splash-white.png",
         "backgroundColor": "#FFFFFF",
         "resizeMode": "contain",
+        "image": "./assets/images/splash.png",
         "dark": {
-          "image": "./assets/images/splash-black.png",
           "backgroundColor": "#000000",
-          "resizeMode": "contain"
+          "resizeMode": "contain",
+          "image": "./assets/images/splash.png"
         }
       }
-      
     },
-    // "packagerOpts": {
-    //   "config": "metro.config.js",
-    //   "sourceExts": [
-    //     "js",
-    //     "jsx",
-    //     "svg",
-    //     "ts",
-    //     "tsx"
-    //   ]
-    // },
     "description": "",
     "extra": {
       "eas": {

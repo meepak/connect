@@ -471,3 +471,88 @@ Handling Future Suggestions:
 
 Skip profiles that have been viewed but not acted upon, assuming the user isn't interested.
 Prioritize showing new potential matches.
+
+
+
+
+-------------------------------------INTRO-----------------------------------------
+
+Find Associate Intro Script (Professional & Trustworthy)
+Scene 1: Shuttle Animation (Fade in)
+
+Narrator (Warm & Confident): Ever dreamt of launching your own venture? Or maybe you possess the skills to take someone else's idea to the next level? But finding the right partner... that feels like a daunting task.
+
+Text Overlay (Animated): Find Associate.
+
+Narrator: Introducing Find Associate, your bridge to entrepreneurial success, no matter where you stand.
+
+Scene 2: Montage of features (Short clips & icons)
+
+Personalized Matching: We go beyond resumes, matching you based on skills, goals, and values.
+Vetted Profiles: Build trust with verified backgrounds and transparent profiles.
+Secure Collaboration Tools: Brainstorm, share documents, and manage tasks in a trusted environment.
+Built-in Communication: Seamless chat and video calls keep your collaboration smooth.
+Mentor Connect: Learn from experienced entrepreneurs and gain valuable insights.
+Narrator: Find Associate is more than just an app. It's a community of passionate individuals, all driven by the same ambition: to achieve entrepreneurial greatness.
+
+Scene 3: Success Stories (Testimonials & visuals)
+
+Entrepreneur 1: "Find Associate connected me with the perfect co-founder. Together, we're building something truly remarkable."
+Business Partner 2: "My skills found a perfect home through Find Associate. This partnership is truly fulfilling."
+Narrator: Join the Find Associate network and unlock your entrepreneurial potential.
+
+Text Overlay (Animated): Find your perfect match. Build your dream.
+
+Call to Action: Download Find Associate today and take your first step towards entrepreneurial success.
+
+Note: This script is a starting point, and you can customize it further to fit your specific needs and brand voice. Consider adding:
+
+Music: Uplifting and inspiring background music.
+Visuals: Diverse visuals representing entrepreneurs and collaborators.
+App Demo: Short clips showcasing key features in action.
+Remember, the goal is to capture users' attention, convey your value proposition, and inspire them to take action.
+
+
+----------------
+
+“Partnership is not a legal contract between two equal individuals. It’s an emotional alliance between two people who are committed to each other’s success.” – Warren Buffet, businessman, investor, and philanthropist
+“Success is best when it’s shared.” – Howard Schultz, businessman, author, and former CEO of Starbucks
+“A friendship founded on a business is better than a business is founded on friendship.” – John D. Rockefeller, businessman, investor, and philanthropist
+“All lasting business is built on friendship.” – Alfred A. Montaper,  engineer, philosopher, and author
+“It’s rare to find a business partner who’s selfless. If you’re lucky it happens once in a lifetime.” – Michael Eisner, former CEO of The Walt Disney Company
+“The best partnerships aren’t dependent on a more common goal but on a shared path of equality, desire, and no small amount of passion.” – Sarah MacLean, New York Times bestselling author
+“If your business partners aren’t working as hard as you, it’s not a partnership it’s a sinking ship.” – Julian Hall, entrepreneur
+“While it’s important to be aware of and sensitive to cultural differences when conducting business internationally, the principles of transparency, trust, and partnership are universal.” – Dan Quayle, 44th vice president of the US
+“I had a female business partner once. Didn’t work.” – Mel Gibson, actor and film director
+“Great things in business are never done by one person; they’re done by a team of people.” – Steve Jobs, entrepreneur, business magnate, and investor, media proprietor
+“If everyone is moving forward together, then success takes care of itself.” – Henry Ford, founder of the Ford Motor Company
+“Individually we’re one drop, but together we’re an ocean.” – Ryonosoke Satoro, entrepreneur
+“Collaboration is the essence of life. The wind, bees, and flowers work together, to spread the pollen.” – Amit Ray, Indian author and “spiritual master”
+“I know that the podcast is typically something I can do forever because it’s mine; it’s just me and my producer and business partner, so it’s our business.” – Marc Maron, American stand-up comedian
+“I don’t think most people want me to have a business relationship as a senator where my business partners can reap the benefit of my position and I one day get the share the profits.” -Lindsey Graham, American lawyer and politician serving
+“I’m no longer an artist, I’m a business partner.” – Pitbull, musician/rapper
+“For many, my behavior has been a major disappointment, my behavior has caused considerable  worry  to my business partners, and everyone involved in my business, but most importantly to the younger people we influence, I apologize.” – Tiger Woods, professional golfer
+“I’m very open with my business partners, just like I’m with my husband.” – Dolly Parton, singer/songwriter, actress
+“”Contract law is essentially a defensive scorched-earth battleground where the constant question is, If my business partner was possessed by a brain-eating monster from beyond spacetime tomorrow, what’s the worst thing they could do to me?” “ – Charles Stross, writer
+“Whenever you see a successful business, someone once made a courageous decision.” – Peter Drucker, management consultant, educator, and author
+“Success on any level begins when you accept responsibility for creating life what you want. You’re the only person who can truly make it happen. Not your boss, your business partner, your financial planner, or your spouse of life-partner. Just you.” – Paul Clitheroe, television and radio presenter
+“The man who’ll use his skill and constructive imagination to see how much he can give for a dollar, instead of how little he can give for a dollar, is bound to succeed.” – Henry Ford founder of the Ford Motor Company
+“To me, a spouse should be a life partner and a business partner. Just like any good partner, her strengths must make up for my weaknesses and vice versa.” – Robert Kiyosaki, entrepreneur, and author
+“It’s literally true that you can succeed best and quickest by helping others to succeed.” – Napoleon Hill, entrepreneur, and author
+“The success combination in business is: do what you do better.., and: do more of what you do …” – David Joseph Schwartz, motivational speaker, and coach
+“Just one great partnership with the right person can have an incredible impact on your business success.” – Janine Ogg and Jo Foster, entrepreneurs
+“Whenever an individual or a business decides that success has been attained, progress stops.” – Thomas J. Watson, CEO of IBM
+“Never burn bridges. Today’s junior jerk, tomorrow’s senior partner.” – Sigourney Weaver
+“The best partnerships aren’t dependent on a mere common goal but on a shared path of equality, desire, and no small amount of passion. ” – Sarah MacLean
+
+
+"Alone we can do so little; together we can do so much." — Helen Keller
+"I can do things you cannot, you can do things I cannot; together we can do great things." — Mother Teresa
+"We're all water from different rivers, that's why it's so easy to meet; we're all water in this vast, vast ocean, someday we'll evaporate together." — Yoko Ono
+"Individually we are one drop, but together we are an ocean." — Ryunosuke Satoro
+"One man can be a crucial ingredient on a team, but one man cannot make a team." — Kareem Abdul-Jabbar
+"Fight for the things that you care about, but do it in a way that will lead others to join you." — Ruth Bader Ginsburg
+"If I have seen further, it is by standing on the shoulders of giants." — Isaac Newton
+"If you want to lift yourself up, lift up someone else." — Booker T. Washington
+"You cannot shake hands with a clenched fist." — Indira Gandhi
+"Surround yourself only with people who are going to take you higher." — Oprah Winfrey

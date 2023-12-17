@@ -9,7 +9,6 @@ import Animated, {
 } from 'react-native-reanimated'
 import { Svg, Circle } from 'react-native-svg'
 
-
 const styles = StyleSheet.create({
   box: {
     height: 100,

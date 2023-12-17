@@ -3,13 +3,13 @@ import { useAtom } from 'jotai'
 import { doc, onSnapshot } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
 import { Asset } from 'expo-asset'
-import { Alert } from 'react-native'
+import { Alert, useColorScheme } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import userAuthenticatedAtom from './utils/atom'
 import Navigation from './navigation'
 import { UserDataContext } from './context'
 import { firestore, auth } from './firebase'
-import LoadingScreen from './components/loading-screen'
+// import LoadingScreen from './components/loading-screen'
 import { mergeJsonObjects } from './utils/functions'
 import AnimatedSplash from './components/splash/animated-splash'
 
@@ -18,6 +18,7 @@ import AnimatedSplash from './components/splash/animated-splash'
 // OR WON'T BE REQUIRED FOR REALTIME DISPLAY
 let unsubscribe = null
 const Route = () => {
+  const isDark = useColorScheme() === 'dark'
   const [userAuthenticated, setUserAuthenticated] = useAtom(userAuthenticatedAtom)
   const [userData, setUserData] = useState({})
 
@@ -118,7 +119,8 @@ const Route = () => {
   // if userAuthenticated is not yet true or false
   // lets check once before we pass through here
   if (userAuthenticated === null) {
-    return <AnimatedSplash />
+    return <AnimatedSplash isDark={isDark} />
+    // return <LoadingScreen />
   }
 
   // console.log('we passing through?? because userAuthenticated is not null --', userAuthenticated !== null)

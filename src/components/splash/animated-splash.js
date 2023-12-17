@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
-  withRepeat,
 } from 'react-native-reanimated'
+import * as SystemUI from 'expo-system-ui'
 import PropTypes from 'prop-types'
 import SvgLogo from '../svg-animation/svg-logo'
 import SvgFind from '../svg-animation/svg-find'
 import SvgAssociate from '../svg-animation/svg-associate'
+import { StatusBar } from 'expo-status-bar'
 
 const { width, height } = Dimensions.get('window')
 
@@ -18,20 +19,20 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    width: width,
-    height: height,
+    width,
+    height,
   },
   fixed: {
-    position: 'absolute', 
-    left: 0, 
-    top: 0,
+    position: 'absolute',
+    left: 0,
+    top: 40,
   },
   logo: {
-    width: 150, // to 150
-    height: 150, // to 150
+    width: 180,
+    height: 180,
   },
   find: {
-    width: 100,
+    width: 110,
     height: 60,
   },
   associate: {
@@ -42,17 +43,22 @@ const styles = StyleSheet.create({
 
 const initialLogoScale = 0.1
 const initialLogoOffset = 0
-const initialFindOffset = -width/2-100
-const initialAssociateOffset = width/2+132
+const initialFindOffset = -width / 2 - 110
+const initialAssociateOffset = width / 2 + 132
 
-const AnimatedSplash = ({ onLoaded }) => {
+const AnimatedSplash = ({ onLoaded, isDark }) => {
+  const color = isDark ? 'white' : 'black'
+  const bgColor = isDark ? 'black' : 'white'
+  const statusBarStyle = isDark ? 'light' : 'dark'
+
+  // const bgColor = !isDark ? 'white' : 'black'
   const scaleLogo = useSharedValue(initialLogoScale)
   const offsetLogo = useSharedValue(initialLogoOffset)
   const offsetFind = useSharedValue(initialFindOffset)
   const offsetAssociate = useSharedValue(initialAssociateOffset)
 
   const animatedLogoStyles = useAnimatedStyle(() => ({
-    transform: [{ translateY: offsetLogo.value}, { scale: scaleLogo.value}],
+    transform: [{ translateY: offsetLogo.value }, { scale: scaleLogo.value }],
   }))
   const animatedFindStyles = useAnimatedStyle(() => ({
     transform: [{ translateX: offsetFind.value }],
@@ -61,41 +67,57 @@ const AnimatedSplash = ({ onLoaded }) => {
     transform: [{ translateX: offsetAssociate.value }],
   }))
 
+  const spring = (m = 1, d = 1, s = 100, o = false, rd = 0.01, rs = 2) => ({
+    mass: m,
+    damping: d,
+    stiffness: s,
+    overshootClamping: o,
+    restDisplacementThreshold: rd,
+    restSpeedThreshold: rs,
+  })
+
   React.useEffect(() => {
     // first scale logo by 15
-    scaleLogo.value = withSpring(1)
+    scaleLogo.value = withSpring(1, spring(10, 20, 300, false, 0.001, 1))
 
-    // if(scaleLogo.value >= 1) { // only move after scaling done, probably withSequence can do this better
-    // highlight-next-line
-        offsetLogo.value = withSpring(-100)
-      if(offsetLogo.value > -90) {
-        offsetFind.value = withSpring(-110)
-        offsetAssociate.value = withSpring(62)
-      }
-    }, [])
-
-  React.useEffect(() => {
-    if (onLoaded) onLoaded(true)
+    offsetLogo.value = withSpring(-120)
+    if (offsetLogo.value > -100) {
+      offsetFind.value = withSpring(-115)
+      offsetAssociate.value = withSpring(68)
+    }
   }, [])
+
+  React.useLayoutEffect(() => {
+    // console.log('component is mounted')
+    if (onLoaded) onLoaded(true)
+  })
+
   return (
-  <><View  pointerEvents="none" style={{ ...styles.container, ...styles.fixed, zIndex: 200 }}>
-      <Animated.View  pointerEvents="none" style={[styles.logo, animatedLogoStyles,]}>
-        <SvgLogo />
-      </Animated.View>
-    </View><View style={{ ...styles.container, ...styles.fixed, zIndex: 100 }}>
-      </View><View  pointerEvents="none" style={{ ...styles.container, position: 'absolute', left: 0, top: 0 }}>
-        <Animated.View  pointerEvents="none" style={[styles.find, animatedFindStyles]}>
-          <SvgFind />
+    <>
+      <StatusBar hidden={false} animated={false} style={statusBarStyle} backgroundColor={bgColor} />
+      <View pointerEvents="none" style={{ ...styles.container, ...styles.fixed, zIndex: 200 }}>
+        <Animated.View pointerEvents="none" style={[styles.logo, animatedLogoStyles]}>
+          <SvgLogo />
         </Animated.View>
-      </View><View  pointerEvents="none" style={{ ...styles.container, ...styles.fixed, zIndex: 100 }}>
-        <Animated.View  pointerEvents="none" style={[styles.associate, animatedAssociateStyles]}>
-          <SvgAssociate />
+      </View>
+
+      <View style={{ ...styles.container, ...styles.fixed, zIndex: 100 }}>
+        <Animated.View pointerEvents="none" style={[styles.find, animatedFindStyles]}>
+          <SvgFind color={color} />
         </Animated.View>
-      </View></>
+      </View>
+
+      <View pointerEvents="none" style={{ ...styles.container, ...styles.fixed, zIndex: 100 }}>
+        <Animated.View pointerEvents="none" style={[styles.associate, animatedAssociateStyles]}>
+          <SvgAssociate color={color} />
+        </Animated.View>
+      </View>
+    </>
   )
 }
 AnimatedSplash.propTypes = {
   onLoaded: PropTypes.func,
+  isDark: PropTypes.bool.isRequired,
 }
 
 AnimatedSplash.defaultProps = {

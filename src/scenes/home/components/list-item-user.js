@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 // To be decided on the user object will pass through to here
-import React, { useState } from 'react'
+import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import {
   Text, TouchableRipple, useTheme,
@@ -20,7 +20,7 @@ const ListItemUser = ({
   const fontWeight = viewedAt == null ? 900 : 100
   const color = viewedAt == null ? colors.onBackground : colors.onSurfaceDisabled
 
-  const [opacity, setOpacity] = useState(0)
+  // const [opacity, setOpacity] = useState(0)
 
   const styles = StyleSheet.create({
     container: {

@@ -1,12 +1,10 @@
 import React from 'react'
 import { View } from 'react-native'
 import Animated, {
-  Easing,
   useAnimatedProps,
   useSharedValue,
-  withSpring,
 } from 'react-native-reanimated'
-import { Polygon, Svg } from 'react-native-svg'
+import { Svg } from 'react-native-svg'
 import PropTypes from 'prop-types'
 
 const WaveBgAnimated = ({

@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 // import { Text } from 'react-native-paper'
-import Animation from './play'
+// import Animation from './play'
 // import { samples } from './text'
 import HandwrittenAnimation from './hand-writing'
 // import AnimatedLogo from './animated-logo'
@@ -25,7 +25,6 @@ const PlayGround = () => (
       {samples.map((Sample, i) => (
         // eslint-disable-next-line react/no-array-index-key
         <View key={`sample-${i}`}>
-          <Text>{Sample.title}</Text>
           <Sample />
         </View>
       ))}

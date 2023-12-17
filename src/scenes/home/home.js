@@ -20,7 +20,7 @@ import PotentialMatchesHeader from './components/potential-matches-header'
 import ProfileSheet from '../profile/profile-sheet'
 import { fetchPotentialMatches } from './util/db'
 import RenderCounter from '../../components/render-counter'
-import WaveBackground from '../../components/core/wave-background'
+// import WaveBackground from '../../components/core/wave-background'
 
 export default function Home() {
   const navigation = useNavigation()

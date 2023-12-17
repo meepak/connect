@@ -4,8 +4,8 @@ import {
 
 export const appImages = {
   default_banner: require('../../assets/images/default-banner.png'),
-  logo_black: require('../../assets/images/fa_black.png'),
-  logo_white: require('../../assets/images/fa_white.png'),
+  // logo_black: require('../../assets/images/fa_black.png'),
+  // logo_white: require('../../assets/images/fa_white.png'),
   intro1: require('../../assets/images/discover.png'),
   intro2: require('../../assets/images/connection.png'),
   intro3: require('../../assets/images/thrive.png'),
