@@ -17,7 +17,6 @@ import { Provider } from 'jotai'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as SystemUI from 'expo-system-ui'
 
-import { StatusBar } from 'expo-status-bar'
 import { PreferencesContext } from './context'
 import Icon from './components/core/icon'
 import Route from './route'
@@ -155,7 +154,6 @@ const App = () => {
     <Provider>
       <PreferencesContext.Provider value={preferences}>
         <PaperProvider settings={paperSettings} theme={paperTheme}>
-          <StatusBar hidden={false} animated={false} style={isDark ? 'light' : 'dark'} backgroundColor={paperTheme.colors.background} />
           <Route />
         </PaperProvider>
       </PreferencesContext.Provider>

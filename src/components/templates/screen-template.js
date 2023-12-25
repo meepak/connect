@@ -1,18 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Keyboard } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
-import LoadingScreen from '../loading-screen'
+import { StatusBar } from 'expo-status-bar'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import LoadingScreen from '../loading/loading-screen'
 import ErrorScreen from '../error-screen'
+import { PreferencesContext } from '../../context'
 
 const ScreenTemplate = (props) => {
   const {
-    isLoading, isError, children,
+    isLoading, isError, children, onTouchStart, onTouchEnd,
   } = props
   const navigation = useNavigation()
-  // const preferences = useContext(PreferencesContext)
+  const preferences = useContext(PreferencesContext)
   // const { colors } = useTheme()
 
   if (isError) {
@@ -34,8 +37,11 @@ const ScreenTemplate = (props) => {
 
   return (
     <BottomSheetModalProvider>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        { children }
+      <GestureHandlerRootView onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} onTouchCancel={onTouchEnd}>
+        <StatusBar hidden={false} animated={false} style={preferences.isDark ? 'light' : 'dark'} />
+        <SafeAreaView style={{ height: '100%', width: '100%' }}>
+          { children }
+        </SafeAreaView>
       </GestureHandlerRootView>
     </BottomSheetModalProvider>
   )
@@ -45,11 +51,15 @@ ScreenTemplate.propTypes = {
   isLoading: PropTypes.bool,
   isError: PropTypes.bool,
   children: PropTypes.node.isRequired,
+  onTouchStart: PropTypes.func,
+  onTouchEnd: PropTypes.func,
 }
 
 ScreenTemplate.defaultProps = {
   isLoading: false,
   isError: false,
+  onTouchStart: null,
+  onTouchEnd: null,
 }
 
 export default ScreenTemplate

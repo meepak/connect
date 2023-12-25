@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1024mm"
+   height="1024mm"
+   viewBox="0 0 1024 1024"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="jpt.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.21011779"
+     inkscape:cx="2077.4062"
+     inkscape:cy="2032.1935"
+     inkscape:window-width="1920"
+     inkscape:window-height="1022"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g2310"
+     inkscape:snap-nodes="false"
+     inkscape:snap-global="false"
+     showguides="false" />
+  <defs
+     id="defs2">
+    <inkscape:path-effect
+       effect="fill_between_many"
+       method="originald"
+       linkedpaths="#path19793,0,1"
+       id="path-effect20685"
+       join="true"
+       close="true"
+       autoreverse="true"
+       is_visible="true"
+       lpeversion="0"
+       applied="false" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(216.72139,169.39423)">
+    <rect
+       style="fill:#512dab;fill-opacity:1;fill-rule:evenodd;stroke-width:0.411;paint-order:stroke fill markers"
+       id="rect9472"
+       width="1024"
+       height="1024"
+       x="-212.43953"
+       y="-169.39423"
+       rx="0"
+       ry="0"
+       inkscape:export-filename="/home/dpk/Documents/project/connect/assets/design/logov4.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <g
+       id="g2310"
+       inkscape:export-filename="/home/dpk/Documents/project/connect/assets/design/v4-front2.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:1.04632"
+       transform="matrix(0.95572479,-0.08127154,0,0.95572479,23.390139,18.93237)">
+      <g
+         id="g22805"
+         transform="matrix(1.6929659,0.1340451,-0.30790694,1.6842384,-13.408635,-400.09996)"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.615207"
+         inkscape:export-filename="/home/dpk/Documents/project/connect/assets/design/logov4.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <g
+         id="g19789"
+         transform="matrix(6.0561677,0.51499562,0,5.4378485,-108.48544,-108.23509)"
+         style="fill:#ffffff;stroke-width:0.182329">
+        <path
+           inkscape:original-d="M 0,0"
+           inkscape:path-effect="#path-effect20685"
+           d="M 0,0"
+           id="path20687"
+           style="fill:#ffffff;stroke-width:0.182329" />
+        <path
+           style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke-width:0.0749374;paint-order:stroke fill markers"
+           d="m 61.069955,74.732219 c -7.794552,0.99155 0.517787,47.891841 5.348138,58.159731 -0.663566,-28.25749 1.818969,-41.250504 0.09108,-55.061021 -5.959433,-3.066581 -2.303906,-1.264127 -5.4392,-3.09871 z"
+           id="path112166"
+           sodipodi:nodetypes="ccccc"
+           inkscape:export-filename="/home/dpk/Documents/project/connect/assets/design/jpt.png"
+           inkscape:export-xdpi="96"
+           inkscape:export-ydpi="96" />
+        <path
+           style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke-width:0.0749374;paint-order:stroke fill markers"
+           d="m 74.117538,73.440021 c -2.351469,-2.618856 0.681396,2.788143 -4.342389,4.270909 l 2.617614,28.46533 C 78.102,92.815113 77.295558,76.979416 74.117538,73.440021 Z"
+           id="path112164"
+           sodipodi:nodetypes="sccs"
+           inkscape:export-filename="/home/dpk/Documents/project/connect/assets/design/jpt.png"
+           inkscape:export-xdpi="96"
+           inkscape:export-ydpi="96" />
+        <path
+           style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke-width:0.0749373;paint-order:stroke fill markers"
+           d="m 64.612263,42.659213 c -0.553575,0.559695 -2.927904,0.482086 -7.612646,6.628836 -4.684745,6.14675 -7.18935,21.32627 -8.561899,29.651476 1.776579,2.514044 4.06306,-17.361013 11.079033,-22.822163 1.666449,6.969101 1.330373,11.579274 2.996823,18.548375 6.457394,1.563102 7.229083,2.371195 8.813963,-0.328458 1.637334,-2.789003 3.154242,-8.874343 3.310841,-19.274905 l 7.210042,9.415532 C 81.136146,61.048495 80.085378,52.498789 76.13604,47.955211 72.186701,43.411633 71.162919,43.382323 70.383232,42.514232 80.977555,25.031097 54.381717,25.454431 64.612263,42.659213 Z"
+           id="path1361"
+           sodipodi:nodetypes="czcccscczcc"
+           inkscape:export-filename="/home/dpk/Documents/project/connect/assets/design/jpt.png"
+           inkscape:export-xdpi="96"
+           inkscape:export-ydpi="96" />
+      </g>
+      <path
+         style="fill:#ffffff;fill-rule:evenodd;stroke-width:0.581789;paint-order:stroke fill markers"
+         sodipodi:type="inkscape:offset"
+         inkscape:radius="0"
+         inkscape:original="M 112.89844 182.4375 C -3.6566835 183.0093 -111.24988 275.57555 -128.44727 391.08594 C -156.10421 542.48332 -49.300613 703.50606 100.77344 737.55273 C 164.25867 752.91161 253.43845 734.54561 313.07617 740.38281 C 376.82694 838.77162 417.53506 914.74003 526.3125 998.21094 C 570.7802 1024.3959 586.96527 1004.7918 572.93555 952.07812 C 554.48829 834.06498 412.47527 792.38399 370.63867 700.40039 C 361.67663 676.6332 386.89752 628.16078 392.36328 603.21289 C 450.61387 480.47528 404.03637 324.35155 296.53711 244.59766 C 244.34537 204.54258 178.99995 180.86723 112.89844 182.4375 z M 126.59961 202.13672 C 271.88166 202.06212 399.06426 334.3472 399.42578 478.50977 C 403.97304 586.7409 327.73386 694.44205 220.43555 718.15625 C 99.352396 749.96448 -32.754478 677.89319 -85.378906 567.13867 C -137.59463 465.4524 -118.27682 326.4174 -25.673828 254.44531 C 17.030372 220.06841 71.896288 201.76731 126.59961 202.13672 z "
+         xlink:href="#path18489-7"
+         id="path102336"
+         d="m 112.89844,182.4375 c -116.5551235,0.5718 -224.14832,93.13805 -241.34571,208.64844 -27.65694,151.39738 79.146657,312.42012 229.22071,346.46679 63.48523,15.35888 152.66501,-3.00712 212.30273,2.83008 63.75077,98.38881 104.45889,174.35722 213.23633,257.82813 44.4677,26.18496 60.65277,6.58086 46.62305,-46.13282 C 554.48829,834.06498 412.47527,792.38399 370.63867,700.40039 361.67663,676.6332 386.89752,628.16078 392.36328,603.21289 450.61387,480.47528 404.03637,324.35155 296.53711,244.59766 244.34537,204.54258 178.99995,180.86723 112.89844,182.4375 Z m 13.70117,19.69922 C 271.88166,202.06212 399.06426,334.3472 399.42578,478.50977 403.97304,586.7409 327.73386,694.44205 220.43555,718.15625 99.352396,749.96448 -32.754478,677.89319 -85.378906,567.13867 -137.59463,465.4524 -118.27682,326.4174 -25.673828,254.44531 c 42.7042,-34.3769 97.570116,-52.678 152.273438,-52.30859 z"
+         transform="matrix(0.72367248,0,0,0.72367248,191.72263,-11.813875)"
+         inkscape:export-filename="/home/dpk/Documents/project/connect/assets/design/jpt.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+    </g>
+  </g>
+</svg>

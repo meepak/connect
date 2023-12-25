@@ -68,7 +68,7 @@ const HeaderProfile = ({
       iconColor: colors.onPrimaryContainer,
     },
     saveButtonLabel: {
-      fontSize: fonts.bodyMedium.fontSize,
+      fontSize: fonts.bodyMediSafeAreaum.fontSize,
       color: colors.onPrimaryContainer,
       lineHeight: 13,
       height: 12,

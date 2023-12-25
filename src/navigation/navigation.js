@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import Toast from 'react-native-toast-message'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useAtom } from 'jotai'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { UserDataContext } from '../context'
 import userAuthenticatedAtom from '../utils/atom'
 import { toastConfig } from '../utils/show-toast'
@@ -13,7 +14,7 @@ import OnboardingStack from './stacks/onboarding-stack'
 import RootStack from './stacks/root-stack'
 // import LoadingScreen from '../components/loading-screen'
 
-// I wonder how this works, quite not convince I need this but let's see
+// About saving navigation state -- I wonder how this works, quite not convince I need this but let's see
 // Commenting out the navigation sate persistent part for now
 // can't seem to get the benefit of it for now, could be useful
 // later for offline application, will enable it,
@@ -76,7 +77,9 @@ export default function Navigation() {
         //   }
         // }}
       >
-        {getMainComponent()}
+        <SafeAreaProvider>
+          {getMainComponent()}
+        </SafeAreaProvider>
       </NavigationContainer>
       <Toast config={toastConfig} />
     </>
