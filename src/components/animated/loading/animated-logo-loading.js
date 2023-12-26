@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const AnimatedLoadingScreen = () => {
+const AnimatedLogoLoading = () => {
   const { colors } = useTheme()
 
   const rotation = useSharedValue('0deg')
@@ -51,4 +51,4 @@ const AnimatedLoadingScreen = () => {
   )
 }
 
-export default AnimatedLoadingScreen
+export default AnimatedLogoLoading

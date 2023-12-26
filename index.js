@@ -11,7 +11,7 @@ import * as SystemUI from 'expo-system-ui'
 import { Appearance } from 'react-native'
 import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar'
 import Connect411 from './src/index'
-import AnimatedSplashScreen from './src/components/splash/animated-splash-screen'
+import AppSplash from './src/app-splash'
 import { getDefaultColors } from './src/utils/functions'
 // import Preload from './src/preload'
 // const isHermes = () => !!global.HermesInternal
@@ -29,9 +29,9 @@ setStatusBarBackgroundColor(bgColor)
 
 const App = () => (
   <>
-    <AnimatedSplashScreen>
+    <AppSplash>
       <Connect411 />
-    </AnimatedSplashScreen>
+    </AppSplash>
   </>
 )
 

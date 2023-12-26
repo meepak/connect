@@ -109,8 +109,7 @@ export const splitName = (fullName) => {
   return { firstName, lastName }
 }
 
-// Doesn't seem to work as expected
-// To be tested later
+// Sleep function for convinience
 export async function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms)

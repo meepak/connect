@@ -12,14 +12,15 @@ import {
 } from '@react-navigation/native'
 import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 
-import { Provider } from 'jotai'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+
 // import 'utils/ignore'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as SystemUI from 'expo-system-ui'
+import Navigation from './navigation'
 
 import { PreferencesContext } from './context'
 import Icon from './components/core/icon'
-import Route from './route'
 import { hexThemeFromColor, prepareThemes } from './theme/custom'
 import { ASYNC_STORAGE_KEY, DISPLAY } from './utils/constants'
 import { getDefaultColors } from './utils/functions'
@@ -155,13 +156,13 @@ const App = () => {
     icon: (props) => <Icon {...props} />,
   }
   return (
-    <Provider>
-      <PreferencesContext.Provider value={preferences}>
-        <PaperProvider settings={paperSettings} theme={paperTheme}>
-          <Route />
-        </PaperProvider>
-      </PreferencesContext.Provider>
-    </Provider>
+    <PreferencesContext.Provider value={preferences}>
+      <PaperProvider settings={paperSettings} theme={paperTheme}>
+        <SafeAreaProvider>
+          <Navigation />
+        </SafeAreaProvider>
+      </PaperProvider>
+    </PreferencesContext.Provider>
   )
 }
 
