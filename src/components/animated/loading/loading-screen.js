@@ -24,7 +24,7 @@ const LoadingScreen = () => {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LottieView
         // source={require('../../assets/lottie/loading-animation-hands.json')}
-        source={require('../../../assets/lottie/98288-loading.json')} // TODO load via prop for different use cases
+        source={require('../../../../assets/lottie/98288-loading.json')} // TODO load via prop for different use cases
         autoPlay
       />
     </View>

@@ -67,6 +67,7 @@ export default function RootStack() {
 
   return (
     <Stack.Navigator
+      initialRouteName="Homestack"
       screenOptions={{
         headerShown: false,
         cardOverlayEnabled: false,

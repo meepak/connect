@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import Toast from 'react-native-toast-message'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useAtom } from 'jotai'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { UserDataContext } from '../context'
 import userAuthenticatedAtom from '../utils/atom'
 import { toastConfig } from '../utils/show-toast'
@@ -77,9 +76,7 @@ export default function Navigation() {
         //   }
         // }}
       >
-        <SafeAreaProvider>
-          {getMainComponent()}
-        </SafeAreaProvider>
+        {getMainComponent()}
       </NavigationContainer>
       <Toast config={toastConfig} />
     </>

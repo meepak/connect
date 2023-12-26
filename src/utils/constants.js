@@ -28,3 +28,6 @@ export const DISPLAY = {
     '#000000',
   ],
 }
+
+export const COLOR_BLACK = '#1C1C1E'
+export const COLOR_WHITE = '#EFEFFF'

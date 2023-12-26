@@ -5,7 +5,7 @@ import {
 } from 'react-native-paper'
 import {
   Google, Facebook, Linkedin, Apple,
-} from '../../components/svg-buttons'
+} from '../../components/svg/social-buttons'
 
 const SocialIcons = () => {
   const { colors } = useTheme()

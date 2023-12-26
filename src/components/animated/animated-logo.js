@@ -26,13 +26,13 @@ const AnimatedLogo = ({ play }) => {
       withSequence(
         withDelay(2000,
           withTiming(totalLength, {
-            duration: 1000, // Duration for tracing
+            duration: 5000, // Duration for tracing
             easing: Easing.linear,
           })),
         // withDelay(2000), // Delay before fading out
         withDelay(2000,
           withTiming(0, {
-            duration: 1000, // Duration for fading out
+            duration: 5000, // Duration for fading out
             easing: Easing.linear,
           })),
       ),

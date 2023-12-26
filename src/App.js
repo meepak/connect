@@ -1,5 +1,5 @@
 import React from 'react'
-import { useColorScheme } from 'react-native'
+import { Appearance, useColorScheme } from 'react-native'
 import {
   MD3DarkTheme,
   MD3LightTheme,
@@ -22,6 +22,10 @@ import Icon from './components/core/icon'
 import Route from './route'
 import { hexThemeFromColor, prepareThemes } from './theme/custom'
 import { ASYNC_STORAGE_KEY, DISPLAY } from './utils/constants'
+import { getDefaultColors } from './utils/functions'
+
+const { bgColor } = getDefaultColors(Appearance.getColorScheme())
+SystemUI.setBackgroundColorAsync(bgColor)
 
 const App = () => {
   const systemTheme = useColorScheme()

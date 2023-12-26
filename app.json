@@ -29,13 +29,13 @@
         "NSPhotoLibraryUsageDescription": "Use the photo library to change your avatar."
       },
       "splash": {
-        "backgroundColor": "#FFFFFF",
+        "backgroundColor": "#EFEFFF",
         "resizeMode": "contain",
-        "image": "./assets/images/splash.png",
+        "image": "./assets/images/splash_small.png",
         "dark": {
-          "backgroundColor": "#000000",
+          "backgroundColor": "#1C1C1E",
           "resizeMode": "contain",
-          "image": "./assets/images/splash.png"
+          "image": "./assets/images/splash_small.png"
         }
       }
     },
@@ -47,18 +47,17 @@
       "icon": "./assets/images/adaptive-icon.png",
       "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/ic_foreground.png",
-        "backgroundImage": "./assets/images/ic_background.png",
-        "monochromeImage": "./assets/images/ic_foreground.png"
+        "foregroundImage": "./assets/images/adaptive-icon_transparent.png",
+        "monochromeImage": "./assets/images/adaptive-icon_transparent.png"
       },
       "splash": {
-        "backgroundColor": "#FFFFFF",
+        "backgroundColor": "#1C1C1E",
         "resizeMode": "contain",
-        "image": "./assets/images/splash.png",
+        "image": "./assets/images/splash_small.png",
         "dark": {
-          "backgroundColor": "#000000",
+          "backgroundColor": "#1C1C1E",
           "resizeMode": "contain",
-          "image": "./assets/images/splash.png"
+          "image": "./assets/images/splash_small.png"
         }
       }
     },

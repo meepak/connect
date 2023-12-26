@@ -1,4 +1,5 @@
 import { NativeModules } from 'react-native'
+import { COLOR_BLACK, COLOR_WHITE } from './constants'
 
 export const getSystemLocale = () => {
   let locale
@@ -114,4 +115,32 @@ export async function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms)
   })
+}
+
+export const getGreeting = () => {
+  const currentTime = new Date().getHours()
+
+  if (currentTime >= 5 && currentTime < 12) {
+    return 'Good Morning'
+  }
+
+  if (currentTime >= 12 && currentTime < 17) {
+    return 'Good Afternoon'
+  }
+
+  if (currentTime >= 17 && currentTime < 21) {
+    return 'Good Evening'
+  }
+  return 'Good Night'
+}
+
+// Returns default { bgColor, color, isDark, statusBarStyle } for the given scheme
+export const getDefaultColors = (scheme) => {
+  const isDark = scheme === 'dark'
+  const bgColor = isDark ? COLOR_BLACK : COLOR_WHITE
+  const color = !isDark ? COLOR_BLACK : COLOR_WHITE
+  const statusBarStyle = isDark ? 'light' : 'dark'
+  return {
+    bgColor, color, isDark, statusBarStyle,
+  }
 }

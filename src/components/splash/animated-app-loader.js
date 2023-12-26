@@ -6,24 +6,28 @@ import { Asset } from 'expo-asset'
 // import { Alert, useColorScheme } from 'react-native'
 // import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import PropTypes from 'prop-types'
 import userAuthenticatedAtom from './utils/atom'
 import Navigation from './navigation'
 import { UserDataContext } from './context'
 import { firestore, auth } from './firebase'
 import LoadingScreen from './components/animated/loading/loading-screen'
 import { mergeJsonObjects } from './utils/functions'
-// import AnimatedLoadingScreen from './components/animated/loading/animated-loading-screen'
 
-// [TODO] REDUCE SUBSCRIPTION TO THE DATA THAT MAY CHANGE ONLY
-// NO POINT PULLING WHO THINGS THAT DOESN'T CHANGE OFTEN
-// OR WON'T BE REQUIRED FOR REALTIME DISPLAY
+import AnimatedSplashScreen from './animated-splash-screen'
+
 let unsubscribe = null
-const Route = () => {
+// replacing route.js to load user authentication status ???
+const AnimatedAppLoader = ({
+  children, isDark, // isDark, resizeMode,
+}) => {
+  // STUFF FROM ROUTE.JS STARTS
+
   // const isDark = useColorScheme() === 'dark'
   const [userAuthenticated, setUserAuthenticated] = useAtom(userAuthenticatedAtom)
   const [userData, setUserData] = useState({})
 
-// TODO move this to preload like function, app.js, all this does is to create UserData context
+  // TODO move this to preload like function, app.js, all this does is to create UserData context
   const updateUserData = (newUserData) => {
     if (!newUserData) return null
     // console.log('new data from snapshot to update', newUserData)
@@ -126,13 +130,26 @@ const Route = () => {
   }
 
   // console.log('we passing through?? because userAuthenticated is not null --', userAuthenticated !== null)
+  // return (
+  //   <UserDataContext.Provider value={user}>
+  //     <SafeAreaProvider>
+  //       <Navigation />
+  //     </SafeAreaProvider>
+  //   </UserDataContext.Provider>
+  // )
+
+  // STUFF FROM ROUTE.JS ENDS
+
   return (
-    <UserDataContext.Provider value={user}>
-      <SafeAreaProvider>
-        <Navigation />
-      </SafeAreaProvider>
-    </UserDataContext.Provider>
+    <AnimatedSplashScreen isDark={isDark}>
+      {children}
+    </AnimatedSplashScreen>
   )
 }
 
-export default Route
+AnimatedAppLoader.propTypes = {
+  children: PropTypes.node.isRequired,
+  isDark: PropTypes.bool.isRequired,
+}
+
+export default AnimatedAppLoader

@@ -6,9 +6,10 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated'
 import PropTypes from 'prop-types'
-import SvgLogo from '../svg-animation/svg-logo'
-import SvgFind from '../svg-animation/svg-find'
-import SvgAssociate from '../svg-animation/svg-associate'
+import SvgLogo from '../svg/svg-logo'
+import SvgFind from '../svg/svg-find'
+import SvgAssociate from '../svg/svg-associate'
+import { getDefaultColors } from '../../utils/functions'
 
 const { width, height } = Dimensions.get('window')
 
@@ -44,10 +45,9 @@ const initialLogoOffset = 0
 const initialFindOffset = -width / 2 - 110
 const initialAssociateOffset = width / 2 + 132
 
-const AnimatedSplash = ({ onLoaded, isDark }) => {
-  const color = isDark ? 'white' : 'black'
+const AnimatedLogoName = ({ onLoaded, isDark }) => {
+  const { color } = getDefaultColors(isDark)
 
-  // const bgColor = !isDark ? 'white' : 'black'
   const scaleLogo = useSharedValue(initialLogoScale)
   const offsetLogo = useSharedValue(initialLogoOffset)
   const offsetFind = useSharedValue(initialFindOffset)
@@ -110,13 +110,13 @@ const AnimatedSplash = ({ onLoaded, isDark }) => {
     </>
   )
 }
-AnimatedSplash.propTypes = {
+AnimatedLogoName.propTypes = {
   onLoaded: PropTypes.func,
   isDark: PropTypes.bool.isRequired,
 }
 
-AnimatedSplash.defaultProps = {
+AnimatedLogoName.defaultProps = {
   onLoaded: null,
 }
 
-export default AnimatedSplash
+export default AnimatedLogoName
