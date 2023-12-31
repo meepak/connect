@@ -1,3 +1,3 @@
-import App from './App'
+import AppLoader from './app-loader'
 
-export default App
+export default AppLoader

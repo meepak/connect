@@ -2,16 +2,17 @@ import { registerRootComponent } from 'expo'
 
 import React from 'react'
 
+import { Provider } from 'jotai'
+
 // import 'utils/ignore'
 
 import * as SplashScreen from 'expo-splash-screen'
 
 // import AnimatedAppLoader from './src/components/splash/animated-app-loader'
 import * as SystemUI from 'expo-system-ui'
-import { Appearance } from 'react-native'
+import { Appearance, Platform } from 'react-native'
 import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar'
-import Connect411 from './src/index'
-import AppSplash from './src/app-splash'
+import AppLoader from './src'
 import { getDefaultColors } from './src/utils/functions'
 // import Preload from './src/preload'
 // const isHermes = () => !!global.HermesInternal
@@ -25,14 +26,14 @@ SystemUI.setBackgroundColorAsync(bgColor)
 
 // console.log(statusBarStyle)
 setStatusBarStyle(statusBarStyle)
-setStatusBarBackgroundColor(bgColor)
+// if (Platform.OS === 'android') {
+//   // setStatusBarBackgroundColor(bgColor, false)
+// }
 
 const App = () => (
-  <>
-    <AppSplash>
-      <Connect411 />
-    </AppSplash>
-  </>
+  <Provider>
+    <AppLoader />
+  </Provider>
 )
 
 registerRootComponent(App)

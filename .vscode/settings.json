@@ -20,6 +20,7 @@
         "rneui",
         "RNSVG",
         "Swipeable",
-        "unhide"
+        "unhide",
+        "userdata"
     ]
 }

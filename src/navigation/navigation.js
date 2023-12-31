@@ -53,10 +53,12 @@ export default function Navigation() {
   // }
 
   const getMainComponent = () => {
+    // console.log('In navigation userAuthenticated', userAuthenticated, 'userData', userData)
     if (userAuthenticated && userData && Object.keys(userData).length > 0) {
       // console.log('NAVIGATION userData is on boarded??', userData.isOnboard)
       return userData.isOnboard ? <RootStack /> : <OnboardingStack />
     }
+    // console.log('loading intro')
     return <IntroStack />
   }
 

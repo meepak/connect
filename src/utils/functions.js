@@ -109,11 +109,13 @@ export const splitName = (fullName) => {
   return { firstName, lastName }
 }
 
-// Sleep function for convinience
-export async function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms)
-  })
+// Asynchronous sleep function
+export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+// Synchronous sleep function, just incase needed for testing purpose
+export const sleepSync = (ms) => {
+  const end = new Date().getTime() + ms
+  while (new Date().getTime() < end) { /* do nothing */ }
 }
 
 export const getGreeting = () => {

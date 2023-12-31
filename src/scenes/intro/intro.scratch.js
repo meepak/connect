@@ -159,7 +159,7 @@ const Intro = () => {
         <Image source={imageAssets.connection} style={{ width: 50, height: 50 }} />
         <Text>Collaborate with confidence, build trust easily.</Text>
         <Image source={imageAssets.connection} style={{ width: 50, height: 50 }} />
-        <Text>Brainstorm, sSafeAreaViewhare, and manage - all in one place.</Text>
+        <Text>Brainstorm, share, and manage - all in one place.</Text>
       </Animated.View> */}
 
         {/* Scene 4: Success Stories */}
