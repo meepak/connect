@@ -4,7 +4,7 @@ import {
   Text, Surface, Button, useTheme,
 } from 'react-native-paper'
 import { useRoute, useFocusEffect, useNavigation } from '@react-navigation/native'
-import layout from 'theme'
+// import layout from 'theme'
 import { ScreenTemplate } from '../../components/templates'
 import { HomeTitleContext } from '../../context'
 // import storage from '../../utils/Storage'
@@ -15,11 +15,11 @@ const Styles = (fonts) => StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    margin: layout.marginLeft,
+    // margin: layout.marginLeft,
   },
   title: {
     fontSize: fonts.titleLarge.fontSize,
-    marginBottom: layout.margin,
+    // marginBottom: layout.margin,
     textAlign: 'center',
   },
   field: {
@@ -27,7 +27,7 @@ const Styles = (fonts) => StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    marginBottom: layout.marginBottom,
+    // marginBottom: layout.marginBottom,
     borderRadius: 15,
     width: 250,
   },

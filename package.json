@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4",
-    "@material/material-color-utilities": "^0.2.7",
     "@pchmn/expo-material3-theme": "^1.3.1",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-navigation/native": "^6.1.9",
@@ -21,12 +20,9 @@
     "@rneui/base": "^4.0.0-rc.8",
     "@rneui/themed": "^4.0.0-rc.8",
     "axios": "^1.6.0",
-    "camelcase": "^8.0.0",
     "color": "^4.2.3",
     "expo": "^49.0.21",
     "expo-asset": "~8.10.1",
-    "expo-constants": "^14.4.2",
-    "expo-font": "~11.4.0",
     "expo-haptics": "~12.4.0",
     "expo-image-manipulator": "~11.3.0",
     "expo-image-picker": "~14.3.2",
@@ -67,24 +63,17 @@
     "@expo/config-plugins": "~7.2.2"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
     "babel-plugin-module-resolver": "^5.0.0",
     "braces": ">=2.3.1",
     "eslint": "^7.32.0 || ^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-prettier": "^5.1.2",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "husky": "^8.0.3",
     "jest-expo": "^49.0.0",
     "lint-staged": "^15.2.0",
-    "prettier": "^3.1.1",
-    "pretty-quick": "^3.1.3",
-    "react-test-renderer": "^18.2.0",
-    "typescript": "^5.3.3"
+    "react-test-renderer": "^18.2.0"
   },
   "prettier": {
     "trailingComma": "all",
