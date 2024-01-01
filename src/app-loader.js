@@ -13,7 +13,7 @@ import { /* setStatusBarBackgroundColor, */ setStatusBarStyle } from 'expo-statu
 import FindAssociate from './find-associate'
 
 import Preload from './preload'
-import AnimatedLogoNameIntro from './components/animated/animated-splash'
+import AnimatedSplash from './components/animated/animated-splash'
 
 // import { Alert, useColorScheme } from 'react-native'
 // import { SafeAreaProvider } from 'react-native-safe-area-context'
@@ -190,7 +190,7 @@ const AppLoader = () => {
               <FindAssociate />
             </UserDataContext.Provider>
           )
-          : <AnimatedLogoNameIntro bgColor={bgColor} color={color} onLoaded={(p) => onSplashReady(p)} strokeWidth={isDark?7:5} />
+          : <AnimatedSplash bgColor={bgColor} color={color} onLoaded={(p) => onSplashReady(p)} strokeWidth={isDark?5:6} />
       }
     </View>
   )

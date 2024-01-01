@@ -23,7 +23,7 @@ import { PreferencesContext } from './context'
 import Icon from './components/core/icon'
 import { hexThemeFromColor, prepareThemes } from './theme/custom'
 import { ASYNC_STORAGE_KEY, DISPLAY } from './utils/constants'
-import { getDefaultColors } from './utils/functions'
+import { getDefaultColors, sleepSync } from './utils/functions'
 
 const { bgColor } = getDefaultColors(Appearance.getColorScheme())
 SystemUI.setBackgroundColorAsync(bgColor)
