@@ -117,7 +117,7 @@ const NotificationSummary = (props) => {
         rippleColor="rgba(0, 0, 0, .32)"
       >
         <View style={styles.block}>
-          <Avatar rounded={false} size={42} width={42} height={42} fullName={item.name} url={item.image} />
+          <Avatar rounded={false} size={42} fullName={item.name} url={item.image} />
           <View style={styles.content}>
             <Text variant="bodyMedium">{firstName ?? ''}</Text>
             <Text variant="bodyMedium">{lastName ?? ''}</Text>

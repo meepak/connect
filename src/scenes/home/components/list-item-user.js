@@ -130,7 +130,7 @@ const ListItemUser = ({
           rippleColor={convertHexToRGBA(colors.secondary, 0.3)}
         >
           <View style={styles.container}>
-            <Avatar fullName={name} url={image} style={styles.Image} width={55} height={55} rounded={false} />
+            <Avatar fullName={name} url={image} style={styles.Image} size={55} rounded={false} />
             <View style={styles.Info}>
               <Text style={styles.Title}>{name}</Text>
               <Text style={styles.Company}>{industry}</Text>

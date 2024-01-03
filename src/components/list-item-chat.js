@@ -72,7 +72,7 @@ const ListItemChat = ({
       rippleColor="rgba(0, 0, 0, .32)"
     >
       <View style={styles.container}>
-        <Avatar fullName={name} url={image} style={styles.Image} width={55} height={55} rounded />
+        <Avatar fullName={name} url={image} style={styles.Image} size={55} rounded />
         <View style={styles.Info}>
           <Text style={styles.Title}>{name}</Text>
           <Text style={styles.Company}>{location}</Text>

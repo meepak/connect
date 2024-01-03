@@ -26,9 +26,9 @@ SystemUI.setBackgroundColorAsync(bgColor)
 
 // console.log(statusBarStyle)
 setStatusBarStyle(statusBarStyle)
-// if (Platform.OS === 'android') {
-//   // setStatusBarBackgroundColor(bgColor, false)
-// }
+if (Platform.OS === 'android') {
+  setStatusBarBackgroundColor(bgColor, false)
+}
 
 const App = () => (
   <Provider>

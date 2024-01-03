@@ -3,10 +3,10 @@ import {
   View,
 } from 'react-native'
 import {
+  IconButton,
   useTheme,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import { Avatar as SystemAvatar } from '@rneui/themed'
 import Avatar from './core/avatar'
 import { UserDataContext } from '../context'
 import ImageSelectAndUpload from '../utils/image-select-and-upload'
@@ -41,7 +41,7 @@ const getIconSize = (size) => {
   if (typeof size === 'string') {
     return sizeMap[size] ?? 8
   }
-  return Math.round(size / 5)
+  return Math.round(size / 7)
 }
 
 // TODO implement onError, return error within onEdited
@@ -95,24 +95,18 @@ const AvatarOfAuthUser = ({
       >
         {onEdited
           ? (
-            <SystemAvatar.Accessory
-              containerStyle={{
+            // TODO: move this as an option within Avatar component
+            <IconButton
+              style={{
                 backgroundColor: colors.onPrimary,
                 borderRadius: 20,
-              }}
-              style={{
                 position: 'absolute',
-                right: 5,
-                bottom: 7,
+                right: 0,
+                bottom: 0,
               }}
               size={iconSize}
-              iconProps={{
-                name: 'add-circle', // Use the plus sign icon name
-                size: iconSize,
-                color: colors.primary,
-                // bottom: 10,
-                // right: 7,
-              }}
+              icon='plus'
+              iconColor={colors.primary}
               onPress={() => (
                 ImageSelectAndUpload({ userId: userData.id, onFinished: handleAvatarUpdated })
               )}

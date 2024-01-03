@@ -123,7 +123,7 @@ const Banner = ({
       <View style={styles.avatarContainer}>
         {editMode
           ? <AvatarOfAuthUser size={120} onEdited={(newAvatar) => onAvatarEdited(newAvatar)} />
-          : <Avatar fullName={userFullName} url={userAvatar || null} width={120} height={120} rounded />}
+          : <Avatar fullName={userFullName} url={userAvatar || null} size={120} rounded />}
       </View>
     </View>
   )

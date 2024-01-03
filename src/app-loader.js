@@ -1,3 +1,4 @@
+import * as SystemUI from 'expo-system-ui'
 import React, {
   useEffect, useCallback, useState,
 } from 'react'
@@ -6,9 +7,8 @@ import { doc, onSnapshot } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
 import { Asset } from 'expo-asset'
 import * as SplashScreen from 'expo-splash-screen'
-import { Appearance, /* Platform, */ View } from 'react-native'
-import * as SystemUI from 'expo-system-ui'
-import { /* setStatusBarBackgroundColor, */ setStatusBarStyle } from 'expo-status-bar'
+import { Appearance, Platform, View } from 'react-native'
+import { setStatusBarTranslucent, setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar'
 
 import FindAssociate from './find-associate'
 
@@ -28,9 +28,10 @@ import { mergeJsonObjects, getDefaultColors, sleep } from './utils/functions'
 const { bgColor, color, statusBarStyle, isDark } = getDefaultColors(Appearance.getColorScheme())
 SystemUI.setBackgroundColorAsync(bgColor)
 setStatusBarStyle(statusBarStyle)
-// if (Platform.OS === 'android') {
-// setStatusBarBackgroundColor(bgColor, false)
-// }
+if (Platform.OS === 'android') {
+  setStatusBarBackgroundColor('transparent', false)
+  setStatusBarTranslucent(true)
+}
 
 let unsubscribe = null
 
@@ -49,7 +50,7 @@ const AppLoader = () => {
       await Preload()
 
       // additional simulated delay,debugging
-      // await sleep(7000)
+      await sleep(2000)
       // await Promise.all([])
     } catch (e) {
       // handle errors
