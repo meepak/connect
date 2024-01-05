@@ -17,7 +17,7 @@ const ScreenTemplate = (props) => {
   } = props
   const navigation = useNavigation()
   const preferences = useContext(PreferencesContext)
-  const { colors } = useTheme()
+  // const { colors } = useTheme()
 
   if (isError) {
     // console.log('Screen Template received IsError')
@@ -40,7 +40,7 @@ const ScreenTemplate = (props) => {
     <BottomSheetModalProvider>
       <GestureHandlerRootView onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} onTouchCancel={onTouchEnd}>
         <StatusBar hidden={false} style={preferences.isDark ? 'light' : 'dark'} />
-        <SafeAreaView style={{ height: '100%', width: '100%', backgroundColor: colors.background }}>
+        <SafeAreaView style={{ height: '100%', width: '100%' }}>
           { children }
         </SafeAreaView>
       </GestureHandlerRootView>

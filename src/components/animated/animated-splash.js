@@ -88,74 +88,74 @@ const AnimatedSplash = ({
 
 
    // https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations/#custom-exiting-animation
-  const exitingLogo = (values) => {
-    "worklet"
+  // const exitingLogo = (values) => {
+  //   "worklet"
 
-    // console.log(initialScale, targetScale)
-    const animations = {
-      transform: [{ 
-                    scale: withTiming(
-                      SCREEN_HEIGHT*4/LOGO_INITIAL_DIMENSION, {
-                        duration: EXIT_DURATION , easing: Easing.linear
-                      }
-                    ) 
-                 }],
-      // width: withTiming(SCREEN_HEIGHT, {duration: EXIT_DURATION}),
-      // height: withTiming(SCREEN_HEIGHT, {duration: EXIT_DURATION}),
-      // originX: withTiming(0, {duration: EXIT_DURATION}),
-      // originY: withTiming(0, {duration: EXIT_DURATION}),
-      opacity: withTiming(0, {duration: EXIT_DURATION, easing: Easing.linear} ),
-    }
+  //   // console.log(initialScale, targetScale)
+  //   const animations = {
+  //     transform: [{ 
+  //                   scale: withTiming(
+  //                     SCREEN_HEIGHT*4/LOGO_INITIAL_DIMENSION, {
+  //                       duration: EXIT_DURATION , easing: Easing.linear
+  //                     }
+  //                   ) 
+  //                }],
+  //     // width: withTiming(SCREEN_HEIGHT, {duration: EXIT_DURATION}),
+  //     // height: withTiming(SCREEN_HEIGHT, {duration: EXIT_DURATION}),
+  //     // originX: withTiming(0, {duration: EXIT_DURATION}),
+  //     // originY: withTiming(0, {duration: EXIT_DURATION}),
+  //     opacity: withTiming(0, {duration: EXIT_DURATION, easing: Easing.linear} ),
+  //   }
 
-    const initialValues = {
-      transform: [{ scale:  1 }],
-      // width: values.currentHeight,
-      // height: values.currentHeight,
-      // originX: values.currentOriginX,
-      // originY: values.currentOriginY,
-      opacity: 1,
-    }
+  //   const initialValues = {
+  //     transform: [{ scale:  1 }],
+  //     // width: values.currentHeight,
+  //     // height: values.currentHeight,
+  //     // originX: values.currentOriginX,
+  //     // originY: values.currentOriginY,
+  //     opacity: 1,
+  //   }
 
-    // const callback = (finished) => {
-    //   // optional callback that will fire when layout animation ends
-    //   if(finished) {
-    //     console.log('animated-splash logo exited')
-    //   }
-    // };
+  //   // const callback = (finished) => {
+  //   //   // optional callback that will fire when layout animation ends
+  //   //   if(finished) {
+  //   //     console.log('animated-splash logo exited')
+  //   //   }
+  //   // };
 
-    return {
-      initialValues,
-      animations,
-      // callback
-    }
-  }
+  //   return {
+  //     initialValues,
+  //     animations,
+  //     // callback
+  //   }
+  // }
 
   // if we hide text immediately, it will create jerky motion for log
-  const exitingText = (values) => {
-    "worklet"
-    const animations = {
-      transform: [{ scale: withTiming(0.1, {duration: EXIT_DURATION } )}],
-      opacity: withTiming(0, {duration: EXIT_DURATION} ),
-    }
+  // const exitingText = (values) => {
+  //   "worklet"
+  //   const animations = {
+  //     transform: [{ scale: withTiming(0.1, {duration: EXIT_DURATION } )}],
+  //     opacity: withTiming(0, {duration: EXIT_DURATION} ),
+  //   }
 
-    const initialValues = {
-      transform: [{ scale:  1 }],
-      opacity: 1,
-    }
+  //   const initialValues = {
+  //     transform: [{ scale:  1 }],
+  //     opacity: 1,
+  //   }
 
-    // const callback = (finished) => {
-    //   // optional callback that will fire when layout animation ends
-    //   if(finished) {
-    //     console.log('animated-splash text exited')
-    //   }
-    // };
+  //   // const callback = (finished) => {
+  //   //   // optional callback that will fire when layout animation ends
+  //   //   if(finished) {
+  //   //     console.log('animated-splash text exited')
+  //   //   }
+  //   // };
 
-    return {
-      initialValues,
-      animations,
-      // callback
-    }
-  }
+  //   return {
+  //     initialValues,
+  //     animations,
+  //     // callback
+  //   }
+  // }
   
 
 
@@ -164,16 +164,16 @@ const AnimatedSplash = ({
 
       <Animated.View
         style={[ styles.logo, logoAnimationStyle ]}
-        exiting={exitingLogo}
+        // exiting={exitingLogo}
       >
         <SvgLogo style={{borderWidth: 1, borderColor: 'green'}} />
       </Animated.View>
 
       <Animated.View
         style={[ styles.text, textAnimationStyle]}
-        exiting={exitingText}
+        // exiting={exitingText}
       >
-        <SvgFindAssociate stroke={color} strokeWidth={strokeWidth} />
+        <SvgFindAssociate color={color}/>
       </Animated.View>
 
     </View>

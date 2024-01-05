@@ -53,9 +53,11 @@
       },
       "splash": {
         "resizeMode": "cover",
+        "backgroundColor": "#EFEFFF",
         "image": "./assets/images/fa/splash-light.png",
         "dark": {
           "resizeMode": "cover",
+          "backgroundColor": "#1C1C1E",
           "image": "./assets/images/fa/splash-dark.png"
         }
       }

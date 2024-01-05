@@ -1,18 +1,43 @@
-import React from 'react'
-import { Text } from 'react-native-paper'
-import Animated, { withTiming } from 'react-native-reanimated'
-import { StyleSheet } from 'react-native'
+import React, { useState } from 'react'
+import { Text, useTheme } from 'react-native-paper'
+import Animated, { useSharedValue, withTiming, StretchInY as enteringAnimation } from 'react-native-reanimated'
+import { StyleSheet, View } from 'react-native'
 import PropTypes from 'prop-types'
-import { getGreeting } from '../../../utils/functions'
-import SvgLogo from '../../../components/svg/svg-logo'
+import { convertHexToRGBA, getGreeting } from '../../../utils/functions'
+import AnimatedLottieView from 'lottie-react-native'
+import TypewriterText from '../../../components/animated/TypewriterText'
 
 const IntroSceneOne = ({width, height, enterTime}) => {
+
+  const {colors} = useTheme()
+  const [welcomeFinished, setWelcomeFinished] = useState(false)
     const styles = StyleSheet.create({
         container: {
             width: width,
             height: height,
-            flex: 1,
+            // flex: 1,
+
+            backgroundColor: convertHexToRGBA(colors.surfaceContainerHighest, 0.2), // 'rgba(155, 155, 155, 0.2)', // Adjust thce alpha for transparency
+            // borderRadius: 16, // Adjust the border radius for rounded corners
+            paddingHorizontal: 16,
+            marginHorizontal: 16,
+            // width: '80%', // Adjust the width as needed
+            // alignSelf: 'center',
+            // justifyContent: 'center',
+            // alignItems: 'center',
+            // Glassmorphic effect
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 4,
+            },
+            shadowOpacity: 0.1,
+            shadowRadius: 4,
+            elevation: 4,
         },
+        lottie: {
+          width: width,
+        }
     })
 
 
@@ -22,11 +47,11 @@ const IntroSceneOne = ({width, height, enterTime}) => {
 
     // console.log(initialScale, targetScale)
     const animations = {
-      transform: [{ rotate: withTiming('360deg', { duration: enterTime }) }],
+      transform: [{ scale: withTiming(1, { duration: enterTime }) }],
     }
 
     const initialValues = {
-      transform: [{ rotate:  '200deg' }],
+      transform: [{ scale:  0.01 }],
     }
 
     const callback = (finished) => {
@@ -42,10 +67,23 @@ const IntroSceneOne = ({width, height, enterTime}) => {
     }
   }
 
+
     return (
-    <Animated.View style={styles.container} entering={entering}>
-        <SvgLogo />
-        <Text variant='titleMedium'>{ getGreeting() + '!'}</Text>
+    <Animated.View style={styles.container}> 
+    {/* entering={enteringAnimation} */}
+        <Text style={{padding: 20, color: colors.onBackground}} variant='displayMedium'>{ getGreeting() + '!'}</Text>
+    {/* <AnimatedLottieView
+      style={styles.lottie}
+      source={require('../../../../assets/lottie/fa-welcome.json')}
+      autoPlay
+    /> */}
+    <TypewriterText text='Welcome to Find Associate.' variant='titleLarge' style={{padding: 20}} onFinished={(finished) => finished ? setWelcomeFinished(() => true) : null} />
+    {
+      welcomeFinished
+      ? <TypewriterText text='We are here to help you with your enterpreneul journey.' variant='titleLarge' style={{padding: 20}}  />
+      : <></>
+    }
+
     </Animated.View>
 )}
 
