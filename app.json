@@ -52,13 +52,13 @@
         "monochromeImage": "./assets/images/fa/monochrome.png"
       },
       "splash": {
-        "resizeMode": "cover",
+        "resizeMode": "contain",
         "backgroundColor": "#EFEFFF",
-        "image": "./assets/images/fa/splash-light.png",
+        "image": "./assets/images/fa/adaptive-icon.png",
         "dark": {
-          "resizeMode": "cover",
+          "resizeMode": "contain",
           "backgroundColor": "#1C1C1E",
-          "image": "./assets/images/fa/splash-dark.png"
+          "image": "./assets/images/fa/adaptive-icon.png"
         }
       }
     },

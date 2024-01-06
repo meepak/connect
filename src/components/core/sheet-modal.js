@@ -58,7 +58,7 @@ const SheetModal = React.forwardRef(({
           disappearsOnIndex={-1}
         />
       )}
-      backgroundStyle={{ backgroundColor: colors.elevation.level3, borderRadius: 20 }}
+      backgroundStyle={{ /* backgroundColor: colors.elevation.level3,*/ borderRadius: 20 }}
       handleIndicatorStyle={{ height: 0 }}
       handleComponent={() => (
         <View style={{
@@ -68,8 +68,8 @@ const SheetModal = React.forwardRef(({
           alignItems: 'flex-end',
           justifyContent: 'space-between',
           height: 55,
-          backgroundColor: convertHexToRGBA(colors.primaryContainer, 0.15),
-          elevation: 5,
+          // backgroundColor: convertHexToRGBA(colors.primaryContainer, 0.15),
+          // elevation: 5,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
           paddingHorizontal: 20,

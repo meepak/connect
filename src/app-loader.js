@@ -43,25 +43,6 @@ const AppLoader = () => {
   const [userAuthenticated, setUserAuthenticated] = useAtom(userAuthenticatedAtom)
   const [userData, setUserData] = useState({})
 
-  // Function to preload any data we might have necessary for app to function
-  async function preloadAppData() {
-    try {
-      // Load stuff
-      await Preload()
-
-      // additional simulated delay,debugging
-      await sleep(2000)
-      // await Promise.all([])
-    } catch (e) {
-      // handle errors
-      console.log(`APP PRELOADING ERROR - ${e}`)
-    } finally {
-      // Tell the application to render
-      // console.log('app data preloading is done')
-      setAppDataPreloaded(() => true)
-    }
-  }
-
   // once splash animation is ready to be loaded, this callback will be called
   // we must use callback and the delay hack to avoid white flash
   // basically we must have things ready to display, if we are getting rid of default splash
@@ -77,6 +58,26 @@ const AppLoader = () => {
       await SplashScreen.hideAsync()
     }
   })
+  
+  // Function to preload any data we might have necessary for app to function
+  async function preloadAppData() {
+    try {
+      // Load stuff
+      await Preload()
+
+      // additional simulated delay,debugging
+      // await sleep(2000)
+      // await Promise.all([])
+    } catch (e) {
+      // handle errors
+      console.log(`APP PRELOADING ERROR - ${e}`)
+    } finally {
+      // Tell the application to render
+      // console.log('app data preloading is done')
+      setAppDataPreloaded(() => true)
+    }
+  }
+
 
   // TODO: move this to some different helper file, this updates existing userdata with new available data
   const updateUserData = (newUserData) => {

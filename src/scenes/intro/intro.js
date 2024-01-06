@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import { ScreenTemplate } from '../../components/templates'
 import IntroSceneOne from './scenes/One'
 import SvgAnimatedLogoBg from '../../components/animated/svg-animated-logo-bg'
-import AppFeaturesIntro from './app-features-intro'
+import AppFeaturesIntro from './components/app-features-intro'
 import SvgAnimatedMuncheBg from '../../components/animated/svg-animated-munche-bg'
 
 

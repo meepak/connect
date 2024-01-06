@@ -17,7 +17,11 @@ const IntroSceneOne = ({width, height, enterTime}) => {
             height: height,
             // flex: 1,
 
-            backgroundColor: convertHexToRGBA(colors.surfaceContainerHighest, 0.2), // 'rgba(155, 155, 155, 0.2)', // Adjust thce alpha for transparency
+            backgroundColor: colors.surfaceContainerHighest,
+            // below line causes view shadow calculation warning in IOS, note for similar cases
+            backgroundColor: colors.surfaceContainerHighest,
+            // backgroundColor: convertHexToRGBA(colors.surfaceContainerHighest, 0.2), // 'rgba(155, 155, 155, 0.2)', // Adjust thce alpha for transparency
+            // opacity: 0.2, // this is just not the same as having transparent background color
             // borderRadius: 16, // Adjust the border radius for rounded corners
             paddingHorizontal: 16,
             marginHorizontal: 16,
@@ -33,7 +37,7 @@ const IntroSceneOne = ({width, height, enterTime}) => {
             },
             shadowOpacity: 0.1,
             shadowRadius: 4,
-            elevation: 4,
+            // elevation: 4,
         },
         lottie: {
           width: width,

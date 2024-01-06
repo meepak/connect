@@ -1,5 +1,5 @@
 import React, {
-    useEffect, useRef, useCallback,
+    useEffect, useRef, useCallback, useState
   } from 'react'
   import {
       Dimensions,
@@ -14,9 +14,10 @@ import React, {
   } from '@react-navigation/native'
   import PropTypes from 'prop-types'
   
-  import SheetModal from '../../components/core/sheet-modal'
+  import SheetModal from '../../../components/core/sheet-modal'
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
-import imageAssets from '../../theme/images'
+import imageAssets from '../../../theme/images'
+import DotPaginator from './dot-paginator'
 
 const screenWidth = Dimensions.get('screen').width
 
@@ -31,7 +32,6 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       width: screenWidth,
-      borderWidth: 1, borderColor: 'green'
     },
     text: {
       textAlign: 'center',
@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
       width: screenWidth,
       alignItems: 'center',
       // bottom: 30,
-      borderWidth: 1, borderColor: 'yellow'
     },
   })
   
@@ -69,14 +68,16 @@ const slides = [
 
   const AppFeaturesIntro = ({ show, onClose }) => {
     const appFeaturesSheetRef = useRef()
+    const sliderRef = useRef(null)
+    // const [currentSliderIndex, setCurrentSliderIndex] = useState(0)
   
-    const openMenu = useCallback(() => {
+    const openMe = useCallback(() => {
       if (appFeaturesSheetRef.current) {
         appFeaturesSheetRef.current.present()
       }
     }, [])
   
-    const closeMenu = useCallback(() => {
+    const closeMe = useCallback(() => {
       if (appFeaturesSheetRef.current) {
         appFeaturesSheetRef.current.close()
       }
@@ -84,9 +85,9 @@ const slides = [
   
     useEffect(() => {
       if (show) {
-        openMenu()
+        openMe()
       } else {
-        closeMenu()
+        closeMe()
       }
     }, [show])
   
@@ -95,29 +96,13 @@ const slides = [
     }, [])
   
     const { colors } = useTheme()
-    const navigation = useNavigation()
   
-    const menuClicked = (screen) => {
-      appFeaturesSheetRef.current.dismiss()
-      setTimeout(() => {
-        navigation.navigate(screen, {
-          screen,
-          //   params: {
-          //     data: userData,
-          //     from: 'My Profilie',
-          //   },
-        })
-      }, 100)
-    }
 
     const renderItem = (slide) => (
         <View
           style={{
-            width: '100%',
-            height: '100%',
-            backgroundColor: colors.elevation.level0, //transparent
+            backgroundColor: 'transparent', //transparent
             marginTop: 10,
-            borderWidth: 1, borderColor: 'blue'
           }}
         >
           <View style={styles.imageView}>
@@ -134,21 +119,47 @@ const slides = [
 
     return (
       <SheetModal ref={appFeaturesSheetRef} snapsAt={['60%']} onDismiss={handleDismiss} title="What's new?">
-        <View style={{borderWidth: 1, borderColor: 'red', flex: 1, alignItems: 'center' }}>
+        <View style={{flex: 1, alignItems: 'center' }}>
         <BottomSheetFlatList
-        //   ref={slider}
+          ref={sliderRef}
           data={slides}
           renderItem={renderItem}
-        //   contentContainerStyle={{
-        //     zIndex: 2,
-        //   }}
+          maxToRenderPerBatch={3}
+          windowSize={3}
+          contentContainerStyle={{
+            zIndex: 2,
+          }}
           keyExtractor={(item) => item.key}
-        //   showsVerticalScrollIndicator={false}
-        //   showsHorizontalScrollIndicator={false}
-        //   horizontal
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          horizontal
           pagingEnabled
-          debug
+          scrollEnabled = {false}
+          // viewabilityConfig={{
+          //   itemVisiblePercentThreshold: 90
+          // }}
+          // onViewableItemsChanged={
+          //   useCallback(
+          //     (({viewableItems}) => {
+          //         if(viewableItems.length > 0 && viewableItems[0].index) {
+          //           setCurrentSliderIndex(() => viewableItems[0].index)
+          //         }
+          //       }), [])
+          // }
+          // debug
         />
+        </View>
+        <View style={{width: '100%', height: 60, backgroundColor: colors.primaryContainer}}>
+          <DotPaginator 
+                totalPages={slides.length} 
+                // currentPageIndex={currentSliderIndex}
+                onPageChanged={(index) => {
+                          sliderRef.current.scrollToIndex({
+                            index: index,
+                            animated: true,
+                          })
+                      }} 
+                    />
         </View>
       </SheetModal>
     )

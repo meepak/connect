@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react'
-import { Image, TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
+import {Image} from 'expo-image'
 import PropTypes from 'prop-types'
 import { Text } from 'react-native-paper'
+
+// https://docs.expo.dev/versions/latest/sdk/image/#generating-a-blurhash-on-a-server
+const blurhash =
+  '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
 
 const mapNameToColor = (fullName) => {
@@ -69,7 +74,17 @@ const Avatar = ({
     {(url && typeof url === 'string')
     ? (
         // TODO handle image preloading, etc at above
-        <Image source={{uri: url}} width={size} height={size} style={{ borderRadius: (rounded ? size / 2 : 0)}} />
+        <Image 
+          source={{uri: url}}
+          width={size}
+          height={size}
+          style={{ 
+            borderRadius: (rounded ? size / 2 : 0)
+          }}
+          placeholder={blurhash}
+          contentFit="cover"
+          transition={1000}
+          />
     )
     : ( //we must have name then
     fullName 
