@@ -14,9 +14,11 @@ const Dot = ({index, size, color, activeColor, isActive}) => {
      const cy = size/2
      const rx = useSharedValue(size/2.2)
      const ry = useSharedValue(size/2.2)
+     const bgColor = useSharedValue(isActive ? activeColor : color)
      const delay = 200
      useEffect(() => {
         if(isActive) {
+            
             // this should animate second
             ry.value = withDelay(delay, withTiming(size/2.2, {duration: delay}))
             rx.value = withDelay(delay, 
@@ -42,7 +44,7 @@ const Dot = ({index, size, color, activeColor, isActive}) => {
                 cx={centerX}
                 cy={cy}
                 r={size/5}
-                fill={isActive ? activeColor : color}
+                fill={bgColor}
                 fillOpacity={1}
             />
             <AnimatedEllipse 
@@ -50,7 +52,7 @@ const Dot = ({index, size, color, activeColor, isActive}) => {
                 cy={cy}
                 rx={rx} // rx to 1.2 to 0 OR 0 to 1.2 to ry
                 ry={ry}  // 0 to ry to 0
-                stroke={isActive ? activeColor : color}
+                stroke={bgColor}
                 strokeWidth={1}
                 fillOpacity={0}
                 />
