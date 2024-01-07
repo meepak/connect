@@ -9,6 +9,7 @@ import {
 import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
+  Theme,
 } from '@react-navigation/native'
 import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
 
@@ -19,7 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as SystemUI from 'expo-system-ui'
 import Navigation from './navigation'
 
-import { PreferencesContext } from './context'
+import { Preferences, PreferencesContext } from './context'
 import Icon from './components/core/icon'
 import { hexThemeFromColor, prepareThemes } from './theme/custom'
 import { ASYNC_STORAGE_KEY, DISPLAY } from './utils/constants'
@@ -35,7 +36,9 @@ const FindAssociate = () => {
 
   const [isDark, setIsDark] = React.useState(systemTheme === 'dark')
   const [useCustomColor, setUseCustomColor] = React.useState(false)
-  const [showRenderCounter, setShowRenderCounter] = React.useState(process.env.EXPO_PUBLIC_DEVELOPMENT_MODE === 'true')
+  const [showRenderCounter, setShowRenderCounter] = React.useState(
+    process.env.EXPO_PUBLIC_DEVELOPMENT_MODE === 'true',
+  )
 
   const PREFERENCES_KEY = ASYNC_STORAGE_KEY.Preferences
   const CUSTOM_COLOR_PALETTE = DISPLAY.Palette
@@ -44,7 +47,7 @@ const FindAssociate = () => {
     if (!themePref || !['dark', 'light'].includes(themePref)) {
       return systemTheme === 'dark'
     }
-    return (themePref === 'dark')
+    return themePref === 'dark'
   }
 
   React.useEffect(() => {
@@ -84,7 +87,7 @@ const FindAssociate = () => {
   }, [themePreference, themeCustomColor])
 
   // Preferences context parameter
-  const preferences = React.useMemo(
+  const preferences: Preferences = React.useMemo(
     () => ({
       setThemePreference: (themePref) => {
         // console.log('setting themePreference', themePref)
@@ -108,42 +111,47 @@ const FindAssociate = () => {
     [themePreference, themeCustomColor, useCustomColor, showRenderCounter],
   )
 
-  // prepare the theme
-  const { adaptedTheme } = adaptNavigationTheme(isDark
-    ? { reactNavigationLight: NavigationDefaultTheme }
-    : { reactNavigationDark: NavigationDarkTheme })
+  // Define the type of the theme
+  let adaptedTheme
+  if (isDark) {
+    adaptedTheme = adaptNavigationTheme({
+      reactNavigationDark: NavigationDarkTheme,
+    })
+  } else {
+    adaptedTheme = adaptNavigationTheme({
+      reactNavigationLight: NavigationDefaultTheme,
+    })
+  }
 
   const md3Theme = isDark ? MD3DarkTheme : MD3LightTheme
-  const { theme: m3Theme } = useMaterial3Theme() // do i even need this???
+  const { theme: m3Theme } = useMaterial3Theme()
 
-  const resultTheme = useCustomColor
-    ? (() => {
-      const customBaseTheme = hexThemeFromColor(themeCustomColor, isDark ? 'dark' : 'light')
-      const customTheme = prepareThemes(customBaseTheme)
-      const customColors = isDark ? customTheme.dark : customTheme.light
-      return {
-        ...adaptedTheme,
-        ...md3Theme,
-        colors: {
-          // ...m3,
-          ...customColors,
-        },
-      }
-    }
+  let resultTheme: Theme
+  if (useCustomColor) {
+    const customBaseTheme = hexThemeFromColor(
+      themeCustomColor,
+      isDark ? 'dark' : 'light',
     )
-    : (() => {
-      const m3 = isDark ? m3Theme.dark : m3Theme.light
-      return {
-        ...adaptedTheme,
-        ...md3Theme,
-        colors: {
-          ...m3,
-        },
-      }
+    const customTheme = prepareThemes(customBaseTheme)
+    const customColors = isDark ? customTheme.dark : customTheme.light
+    resultTheme = {
+      ...adaptedTheme,
+      ...md3Theme,
+      colors: {
+        ...customColors,
+      },
     }
-    )
-
-  const paperTheme = resultTheme()
+  } else {
+    const m3 = isDark ? m3Theme.dark : m3Theme.light
+    resultTheme = {
+      ...adaptedTheme,
+      ...md3Theme,
+      colors: {
+        ...m3,
+      },
+    }
+  }
+  const paperTheme = resultTheme
 
   // console.log('paper Theme', paperTheme)
 
@@ -156,7 +164,7 @@ const FindAssociate = () => {
     icon: (props) => <Icon {...props} />,
   }
   return (
-    <PreferencesContext.Provider value={preferences}>
+    <PreferencesContext.Provider value={{ preferences }}>
       <PaperProvider settings={paperSettings} theme={paperTheme}>
         <SafeAreaProvider>
           <Navigation />

@@ -1,20 +1,31 @@
 import * as SystemUI from 'expo-system-ui'
 import React, { useState, useEffect } from 'react'
-import { Appearance, Dimensions, Platform, StyleSheet, View } from 'react-native'
+import {
+  Appearance,
+  ColorValue,
+  Dimensions,
+  Platform,
+  StyleSheet,
+  View,
+} from 'react-native'
 import Animated, {
   Easing,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated'
-import PropTypes from 'prop-types'
 import SvgLogo from '../svg/svg-logo'
 import SvgFindAssociate from '../svg/svg-find-associate'
-import { setStatusBarBackgroundColor, setStatusBarStyle, setStatusBarTranslucent } from 'expo-status-bar'
+import {
+  setStatusBarBackgroundColor,
+  setStatusBarStyle,
+  setStatusBarTranslucent,
+} from 'expo-status-bar'
 import { getDefaultColors } from '../../utils/functions'
 
-
-const { bgColor, color, statusBarStyle, isDark } = getDefaultColors(Appearance.getColorScheme())
+const { bgColor, color, statusBarStyle, isDark } = getDefaultColors(
+  Appearance.getColorScheme(),
+)
 SystemUI.setBackgroundColorAsync(bgColor)
 setStatusBarStyle(statusBarStyle)
 if (Platform.OS === 'android') {
@@ -25,7 +36,7 @@ if (Platform.OS === 'android') {
 const SCREEN_WIDTH = Dimensions.get('screen').width
 const SCREEN_HEIGHT = Dimensions.get('screen').height
 
-const ANIMATION_DURATION = 666 
+const ANIMATION_DURATION = 666
 const EXIT_DURATION = 300
 
 const LOGO_INITIAL_DIMENSION = 140
@@ -57,48 +68,63 @@ const styles = StyleSheet.create({
   },
 })
 
-// TODO do not use this as loading screen, it should be part of the intro
+interface AnimatedSplashProps {
+  onLoaded: (arg0: boolean) => void
+  color: ColorValue
+  bgColor: ColorValue
+  strokeWidth: number
+}
 
-const AnimatedSplash = ({
-  onLoaded, color, bgColor, strokeWidth
+const AnimatedSplash: React.FC<AnimatedSplashProps> = ({
+  onLoaded,
+  color,
+  bgColor,
+  strokeWidth,
 }) => {
-
   const logoDimension = useSharedValue(LOGO_INITIAL_DIMENSION)
   const textWidth = useSharedValue(TEXT_INITIAL_WIDTH)
   const logoOpacity = useSharedValue(0.2)
   const textOpacity = useSharedValue(1)
 
   useEffect(() => {
-    logoOpacity.value = withTiming(1, {duration: 200})
-    logoDimension.value = withTiming(LOGO_FINAL_DIMENSION, { duration: ANIMATION_DURATION })
-    textWidth.value = withTiming(TEXT_FINAL_WIDTH, { duration: ANIMATION_DURATION })
-  }, []
+    logoOpacity.value = withTiming(1, { duration: 200 })
+    logoDimension.value = withTiming(LOGO_FINAL_DIMENSION, {
+      duration: ANIMATION_DURATION,
+    })
+    textWidth.value = withTiming(TEXT_FINAL_WIDTH, {
+      duration: ANIMATION_DURATION,
+    })
+  }, [])
+
+  const logoAnimationStyle = useAnimatedStyle(
+    () => ({
+      width: logoDimension.value,
+      height: logoDimension.value,
+      opacity: logoOpacity.value,
+    }),
+    [logoDimension, logoOpacity],
   )
 
-  const logoAnimationStyle = useAnimatedStyle(() => ({
-   width: logoDimension.value,
-   height: logoDimension.value,
-   opacity: logoOpacity.value, 
-  }), [logoDimension, logoOpacity])
+  const textAnimationStyle = useAnimatedStyle(
+    () => ({
+      width: textWidth.value,
+      opacity: textOpacity.value,
+    }),
+    [textWidth, textOpacity],
+  )
 
-  const textAnimationStyle = useAnimatedStyle(() => ({
-    width: textWidth.value,
-    opacity: textOpacity.value, 
-   }), [textWidth, textOpacity])
-
-
-   // https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations/#custom-exiting-animation
+  // https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations/#custom-exiting-animation
   // const exitingLogo = (values) => {
   //   "worklet"
 
   //   // console.log(initialScale, targetScale)
   //   const animations = {
-  //     transform: [{ 
+  //     transform: [{
   //                   scale: withTiming(
   //                     SCREEN_HEIGHT*4/LOGO_INITIAL_DIMENSION, {
   //                       duration: EXIT_DURATION , easing: Easing.linear
   //                     }
-  //                   ) 
+  //                   )
   //                }],
   //     // width: withTiming(SCREEN_HEIGHT, {duration: EXIT_DURATION}),
   //     // height: withTiming(SCREEN_HEIGHT, {duration: EXIT_DURATION}),
@@ -156,39 +182,27 @@ const AnimatedSplash = ({
   //     // callback
   //   }
   // }
-  
-
 
   return (
-    <View style={{ ...styles.container, backgroundColor: bgColor }} onLayout={() => onLoaded && onLoaded(true)}>
-
+    <View
+      style={{ ...styles.container, backgroundColor: bgColor }}
+      onLayout={() => onLoaded && onLoaded(true)}
+    >
       <Animated.View
-        style={[ styles.logo, logoAnimationStyle ]}
+        style={[styles.logo, logoAnimationStyle]}
         // exiting={exitingLogo}
       >
-        <SvgLogo style={{borderWidth: 1, borderColor: 'green'}} />
+        <SvgLogo />
       </Animated.View>
 
       <Animated.View
-        style={[ styles.text, textAnimationStyle]}
+        style={[styles.text, textAnimationStyle]}
         // exiting={exitingText}
       >
-        <SvgFindAssociate color={color}/>
+        <SvgFindAssociate color={color} />
       </Animated.View>
-
     </View>
-
   )
-}
-AnimatedSplash.propTypes = {
-  onLoaded: PropTypes.func,
-  bgColor: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-  strokeWidth: PropTypes.number.isRequired,
-}
-
-AnimatedSplash.defaultProps = {
-  onLoaded: null,
 }
 
 export default AnimatedSplash

@@ -1,13 +1,14 @@
-import { NativeModules } from 'react-native'
+import { ColorValue, NativeModules } from 'react-native'
 import { COLOR_BLACK, COLOR_WHITE } from './constants'
+import { StatusBarStyle } from 'expo-status-bar'
 
 export const getSystemLocale = () => {
   let locale
   // iOS
   if (
-    NativeModules.SettingsManager
-    && NativeModules.SettingsManager.settings
-    && NativeModules.SettingsManager.settings.AppleLanguages
+    NativeModules.SettingsManager &&
+    NativeModules.SettingsManager.settings &&
+    NativeModules.SettingsManager.settings.AppleLanguages
   ) {
     // eslint-disable-next-line prefer-destructuring
     locale = NativeModules.SettingsManager.settings.AppleLanguages[0]
@@ -33,7 +34,10 @@ export const getSystemLocale = () => {
 // function to merge two JSON objects
 // newObject overrides oldObject's value if the key matches
 // else they gets merged
-export const mergeJsonObjects = (oldObject, newObject) => {
+export const mergeJsonObjects = (
+  oldObject: { [x: string]: any },
+  newObject: { [x: string]: any },
+) => {
   if (!newObject) return oldObject
   const result = { ...oldObject }
   Object.keys(newObject).forEach((key) => {
@@ -49,24 +53,40 @@ export const mergeJsonObjects = (oldObject, newObject) => {
 // Deep compare two json objects,
 // comparing directly results in first due to prototype stuff
 // JSON.stringify will be more efficient so use this only if that won't work
-export const isEqualJsonObjects = (arg1, arg2) => {
-  if (Object.prototype.toString.call(arg1) === Object.prototype.toString.call(arg2)) {
-    if (Object.prototype.toString.call(arg1) === '[object Object]' || Object.prototype.toString.call(arg1) === '[object Array]') {
+export const isEqualJsonObjects = (
+  arg1: { [x: string]: any },
+  arg2: { [x: string]: any },
+): boolean => {
+  if (
+    Object.prototype.toString.call(arg1) ===
+    Object.prototype.toString.call(arg2)
+  ) {
+    if (
+      Object.prototype.toString.call(arg1) === '[object Object]' ||
+      Object.prototype.toString.call(arg1) === '[object Array]'
+    ) {
       if (Object.keys(arg1).length !== Object.keys(arg2).length) {
         return false
       }
-      return (Object.keys(arg1).every((key) => isEqualJsonObjects(arg1[key], arg2[key])))
+      return Object.keys(arg1).every((key) => {
+        if (arg1[key] !== null && typeof arg1[key] === 'object') {
+          return isEqualJsonObjects(arg1[key], arg2[key])
+        } else {
+          return arg1[key] === arg2[key]
+        }
+      })
     }
-    return (arg1 === arg2)
+    return arg1 === arg2
   }
   return false
 }
 
 // This function can be a risk for untested input
-export const convertHexToRGBA = (hexCode, opacity = 1) => {
+export const convertHexToRGBA = (hexCode: string | null, opacity = 1) => {
   if (hexCode == null) return null
   if (hexCode.includes('rgba')) return hexCode
-  if (hexCode.includes('rgb')) return hexCode.replace('rgb', 'rgba').replace(')', `,${opacity})`)
+  if (hexCode.includes('rgb'))
+    return hexCode.replace('rgb', 'rgba').replace(')', `,${opacity})`)
   if (!hexCode.includes('#')) return null
 
   let hex = hexCode.replace('#', '')
@@ -88,12 +108,12 @@ export const convertHexToRGBA = (hexCode, opacity = 1) => {
 
 /**
  * Test cases
- * console.log(splitName("Joe Blogg")); // { firstName: 'Joe', lastName: 'Blogg' }
- * console.log(splitName("Joe Harshad Blog")); // { firstName: 'Joe', lastName: 'Harshad Blog' }
- * console.log(splitName("Joe Harshad Bahadur Blog")); // { firstName: 'Joe Harshad', lastName: 'Bahadur Blog' }
- * console.log(splitName("Joe Harshad Chand Bahadur Blog")); // { firstName: 'Joe Harshad', lastName: 'Chand Bahadur Blog' }
+ * console.log(splitName("Joe Blog")); // { firstName: 'Joe', lastName: 'Blog' }
+ * console.log(splitName("Joe Harry Blog")); // { firstName: 'Joe', lastName: 'Harry Blog' }
+ * console.log(splitName("Joe Harry Bahadur Blog")); // { firstName: 'Joe Harry', lastName: 'Bahadur Blog' }
+ * console.log(splitName("Joe Harry Chandler Bahadur Blog")); // { firstName: 'Joe Harry', lastName: 'Chandler Bahadur Blog' }
  */
-export const splitName = (fullName) => {
+export const splitName = (fullName: string) => {
   // Split the full name into an array of names
   const names = fullName.split(' ')
 
@@ -110,12 +130,15 @@ export const splitName = (fullName) => {
 }
 
 // Asynchronous sleep function
-export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+export const sleep = (ms: number | undefined) =>
+  new Promise((resolve) => setTimeout(resolve, ms))
 
 // Synchronous sleep function, just incase needed for testing purpose
-export const sleepSync = (ms) => {
+export const sleepSync = (ms: number) => {
   const end = new Date().getTime() + ms
-  while (new Date().getTime() < end) { /* do nothing */ }
+  while (new Date().getTime() < end) {
+    /* do nothing */
+  }
 }
 
 export const getGreeting = () => {
@@ -136,12 +159,24 @@ export const getGreeting = () => {
 }
 
 // Returns default { bgColor, color, isDark, statusBarStyle } for the given scheme
-export const getDefaultColors = (scheme) => {
+interface DefaultColors {
+  bgColor: ColorValue
+  color: ColorValue
+  isDark: boolean
+  statusBarStyle: StatusBarStyle
+}
+
+export const getDefaultColors = (
+  scheme: string | null | undefined,
+): DefaultColors => {
   const isDark = scheme === 'dark'
   const bgColor = isDark ? COLOR_BLACK : COLOR_WHITE
   const color = !isDark ? COLOR_BLACK : COLOR_WHITE
   const statusBarStyle = isDark ? 'light' : 'dark'
   return {
-    bgColor, color, isDark, statusBarStyle,
+    bgColor,
+    color,
+    isDark,
+    statusBarStyle,
   }
 }

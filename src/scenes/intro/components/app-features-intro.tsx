@@ -13,9 +13,9 @@ import React, {
     useNavigation,
   } from '@react-navigation/native'
   import PropTypes from 'prop-types'
-  
+
   import SheetModal from '../../../components/core/sheet-modal'
-import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
+import { BottomSheetFlatList, BottomSheetFlatListMethods, BottomSheetModal } from '@gorhom/bottom-sheet'
 import imageAssets from '../../../theme/images'
 import DotPaginator from './dot-paginator'
 
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
       // bottom: 30,
     },
   })
-  
+
 const slides = [
     {
       key: 's1',
@@ -67,22 +67,22 @@ const slides = [
   ]
 
   const AppFeaturesIntro = ({ show, onClose }) => {
-    const appFeaturesSheetRef = useRef()
-    const sliderRef = useRef(null)
+    const appFeaturesSheetRef = useRef<BottomSheetModal>(null)
+    const sliderRef = useRef<BottomSheetFlatListMethods>(null)
     // const [currentSliderIndex, setCurrentSliderIndex] = useState(0)
-  
+
     const openMe = useCallback(() => {
       if (appFeaturesSheetRef.current) {
-        appFeaturesSheetRef.current.present()
+        appFeaturesSheetRef.current?.present()
       }
     }, [])
-  
+
     const closeMe = useCallback(() => {
       if (appFeaturesSheetRef.current) {
-        appFeaturesSheetRef.current.close()
+        appFeaturesSheetRef.current?.close()
       }
     }, [])
-  
+
     useEffect(() => {
       if (show) {
         openMe()
@@ -90,13 +90,13 @@ const slides = [
         closeMe()
       }
     }, [show])
-  
+
     const handleDismiss = useCallback(() => {
       onClose()
     }, [])
-  
+
     const { colors } = useTheme()
-  
+
 
     const renderItem = (slide) => (
         <View
@@ -115,7 +115,7 @@ const slides = [
         </View>
       )
 
-      
+
 
     return (
       <SheetModal ref={appFeaturesSheetRef} snapsAt={['60%']} onDismiss={handleDismiss} title="What's new?">
@@ -150,25 +150,24 @@ const slides = [
         />
         </View>
         <View style={{width: '100%', height: 60, backgroundColor: colors.primaryContainer}}>
-          <DotPaginator 
-                totalPages={slides.length} 
+          <DotPaginator
+                totalPages={slides.length}
                 // currentPageIndex={currentSliderIndex}
                 onPageChanged={(index) => {
-                          sliderRef.current.scrollToIndex({
+                          sliderRef.current?.scrollToIndex({
                             index: index,
                             animated: true,
                           })
-                      }} 
+                      }}
                     />
         </View>
       </SheetModal>
     )
   }
-  
+
   AppFeaturesIntro.propTypes = {
     show: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
   }
-  
+
   export default AppFeaturesIntro
-  

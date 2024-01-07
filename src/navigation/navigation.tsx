@@ -1,12 +1,12 @@
 import 'react-native-gesture-handler'
 import React, { useContext } from 'react'
 import { useTheme } from 'react-native-paper'
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, Theme } from '@react-navigation/native'
 import Toast from 'react-native-toast-message'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useAtom } from 'jotai'
 import { UserDataContext } from '../context'
-import userAuthenticatedAtom from '../utils/atom'
+import { authenticationCheckedAtom, userAuthenticatedAtom } from '../utils/atom'
 import { toastConfig } from '../utils/show-toast'
 import IntroStack from './stacks/intro-stack'
 import OnboardingStack from './stacks/onboarding-stack'
@@ -24,8 +24,9 @@ export default function Navigation() {
   // const [isReady, setIsReady] = React.useState(false)
   // const [initialState, setInitialState] = React.useState()
   const { userData } = useContext(UserDataContext)
+  // const { authenticationChecked } = useAtom(authenticationCheckedAtom)
   const [userAuthenticated] = useAtom(userAuthenticatedAtom)
-  const theme = useTheme()
+  const theme = useTheme<Theme>()
 
   // React.useEffect(() => {
   //   const restoreState = async () => {
@@ -54,10 +55,12 @@ export default function Navigation() {
 
   const getMainComponent = () => {
     // console.log('In navigation userAuthenticated', userAuthenticated, 'userData', userData)
-    if (userAuthenticated && userData && Object.keys(userData).length > 0) {
-      // console.log('NAVIGATION userData is on boarded??', userData.isOnboard)
-      return userData.isOnboard ? <RootStack /> : <OnboardingStack />
-    }
+    // if (authenticationChecked) {
+      if (userAuthenticated && userData && Object.keys(userData).length > 0) {
+        // console.log('NAVIGATION userData is on boarded??', userData.isOnboard)
+        return userData.isOnboard ? <RootStack /> : <OnboardingStack />
+      }
+    // }
     // console.log('loading intro')
     return <IntroStack />
   }
@@ -80,7 +83,7 @@ export default function Navigation() {
       >
         {getMainComponent()}
       </NavigationContainer>
-      <Toast config={toastConfig} />
+      {/* <Toast config={toastConfig} /> */}
     </>
   )
 }

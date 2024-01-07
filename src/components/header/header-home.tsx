@@ -1,12 +1,6 @@
 import React, { useContext } from 'react'
-import {
-  StyleSheet,
-  View,
-} from 'react-native'
-import {
-  IconButton,
-  useTheme,
-} from 'react-native-paper'
+import { StyleSheet, View } from 'react-native'
+import { IconButton, useTheme } from 'react-native-paper'
 
 import { useNavigation } from '@react-navigation/native'
 // import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -45,13 +39,13 @@ const HeaderHome = () => {
       borderRadius: 25,
       backgroundColor: colors.onBackground,
     },
-
   })
 
   const openProfile = () => {
     navigation.navigate('ProfileStack', {
       screen: 'Profile',
-      params: { // userId, userFullName, userAvatar, userBannerImage,
+      params: {
+        // userId, userFullName, userAvatar, userBannerImage,
         userId: userData.id,
         userFullName: userData.fullName,
         userAvatar: userData.avatar,
@@ -63,7 +57,8 @@ const HeaderHome = () => {
   const openChat = () => {
     navigation.navigate('ChatStack', {
       screen: 'ChatTabs',
-      params: { // userId, userFullName, userAvatar, userBannerImage,
+      params: {
+        // userId, userFullName, userAvatar, userBannerImage,
         userId: userData.id,
         userFullName: userData.fullName,
         userAvatar: userData.avatar,
@@ -81,10 +76,7 @@ const HeaderHome = () => {
   return (
     <View style={styles.container}>
       <View style={styles.leftIcon}>
-        <AvatarOfAuthUser
-          size={48}
-          onPress={() => openProfile()}
-        />
+        <AvatarOfAuthUser size={48} onPress={() => openProfile()} />
       </View>
       <View style={styles.rightIcons}>
         <IconButton
@@ -103,7 +95,6 @@ const HeaderHome = () => {
         />
       </View>
     </View>
-
   )
 }
 

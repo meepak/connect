@@ -5,9 +5,12 @@ import { atom } from 'jotai'
 // could be useful for future use cases,
 // where we require quick global state variable
 
+//UPDATE -- WITH TS UPGRADE, WE CAN'T DO NULL & BOOLEAN FOR SAME VAR
+// SO SETTING SEPARATE ATOM TO TRACK IF WE CHECKED EVERYTHING
 // null value indicates we haven't checked the user status
 // after checking it should be boolean value,
 // probably can be done better with other option
-const userAuthenticatedAtom = atom(null)
+const authenticationCheckedAtom = atom(false)
+const userAuthenticatedAtom = atom(false)
 
-export default userAuthenticatedAtom
+export {authenticationCheckedAtom, userAuthenticatedAtom}

@@ -1,14 +1,15 @@
 import React from 'react'
 import Svg, { G, Path } from 'react-native-svg'
-import PropTypes from 'prop-types'
+import { ColorValue } from 'react-native'
 
-const SvgFindAssociate = ({ color }) => (
+interface SvgFindAssociateProps {
+  color?: ColorValue
+}
 
-  <Svg
-    width="100%"
-    height="100%"
-    viewBox="0 0 261.441 25.4"
-  >
+const SvgFindAssociate: React.FC<SvgFindAssociateProps> = ({
+  color = '#000000',
+}) => (
+  <Svg width="100%" height="100%" viewBox="0 0 261.441 25.4">
     <G
       style={{
         opacity: 1,
@@ -21,12 +22,5 @@ const SvgFindAssociate = ({ color }) => (
   </Svg>
 )
 
-SvgFindAssociate.propTypes = {
-  color: PropTypes.string,
-}
-
-SvgFindAssociate.defaultProps = {
-  color: '#000',
-}
 
 export default SvgFindAssociate

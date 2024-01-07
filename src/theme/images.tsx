@@ -2,6 +2,14 @@ import {
   Asset,
 } from 'expo-asset'
 
+interface AppImages {
+  default_banner: Asset
+  intro1: Asset
+  intro2: Asset
+  intro3: Asset
+  [key: string]: Asset
+}
+
 export const appImages = {
   default_banner: require('../../assets/images/default-banner.png'),
   // logo_black: require('../../assets/images/fa_black.png'),
@@ -66,9 +74,9 @@ export async function preloadImages() {
  * ** imageAssets.key for image source
  * ** imageAssets.key.localUri for actual uri
  */
-const imageAssets = Object.entries(appImages).reduce((acc, [key, value]) => {
-  acc[key] = Asset.fromModule(value)
+const imageAssets: AppImages = Object.entries(appImages).reduce((acc: AppImages, [key, value]) => {
+  acc[key as keyof AppImages] = Asset.fromModule(value)
   return acc
-}, {})
+}, {} as AppImages)
 
 export default imageAssets

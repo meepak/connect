@@ -4,23 +4,23 @@ import React, {
 } from 'react'
 import { useAtom } from 'jotai'
 import { doc, onSnapshot } from 'firebase/firestore'
-import { onAuthStateChanged } from 'firebase/auth'
+import { User, onAuthStateChanged } from 'firebase/auth'
 import { Asset } from 'expo-asset'
 import * as SplashScreen from 'expo-splash-screen'
 import { Appearance, Platform, View } from 'react-native'
 import { setStatusBarTranslucent, setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar'
 
-import FindAssociate from './find-associate'
+import FindAssociate from '@/find-associate'
 
-import Preload from './preload'
-import AnimatedSplash from './components/animated/animated-splash'
+import Preload from '@/preload'
+import AnimatedSplash from '@/components/animated/animated-splash'
 
 // import { Alert, useColorScheme } from 'react-native'
 // import { SafeAreaProvider } from 'react-native-safe-area-context'
-import userAuthenticatedAtom from './utils/atom'
-import { UserDataContext } from './context'
-import { firestore, auth } from './firebase'
-import { mergeJsonObjects, getDefaultColors, sleep } from './utils/functions'
+import { authenticationCheckedAtom, userAuthenticatedAtom } from '@/utils/atom'
+import { UserDataContext } from '@/context'
+import { firestore, auth } from '@/firebase'
+import { mergeJsonObjects, getDefaultColors, sleep } from '@/utils/functions'
 // import LoadingScreen from '../../components/animated/loading/loading-screen'
 
 // SplashScreen.preventAutoHideAsync()
@@ -40,13 +40,14 @@ const AppLoader = () => {
   const [appDataPreloaded, setAppDataPreloaded] = useState(false)
   // userAuthenticated must be true or false, if it's null,
   // it means we haven't finished determining authentication status yet
+  const [authenticationChecked, setAuthenticationChecked] = useAtom(authenticationCheckedAtom)
   const [userAuthenticated, setUserAuthenticated] = useAtom(userAuthenticatedAtom)
   const [userData, setUserData] = useState({})
 
   // once splash animation is ready to be loaded, this callback will be called
   // we must use callback and the delay hack to avoid white flash
   // basically we must have things ready to display, if we are getting rid of default splash
-  const onSplashReady = useCallback(async (ready) => {
+  const onSplashReady = useCallback(async (ready: boolean) => {
     if (ready) {
       // console.log('closing builtin splash to display animated one, and you should see white flash right now.')
       // if splash screen is loaded but app is not yet ready,
@@ -57,8 +58,8 @@ const AppLoader = () => {
       // await sleep(300)
       await SplashScreen.hideAsync()
     }
-  })
-  
+  },[])
+
   // Function to preload any data we might have necessary for app to function
   async function preloadAppData() {
     try {
@@ -80,11 +81,11 @@ const AppLoader = () => {
 
 
   // TODO: move this to some different helper file, this updates existing userdata with new available data
-  const updateUserData = (newUserData) => {
+  const updateUserData = (newUserData: any) => {
     if (!newUserData) return null
     // console.log('new data from snapshot to update', newUserData)
     const updatedData = newUserData
-    const updateField = (fieldName, newValue, setFunction) => {
+    const updateField = (fieldName: string, newValue: string | number, setFunction: { (item: any): void; (item: any): void; (arg0: string | null): void }) => {
       const asset = Asset.fromModule(newValue)
 
       if (asset.localUri !== null) {
@@ -97,10 +98,10 @@ const AppLoader = () => {
     }
 
     if (updatedData?.avatar) {
-      updateField('avatar', updatedData.avatar, (item) => { updatedData.avatar = item })
+      updateField('avatar', updatedData.avatar, (item: any) => { updatedData.avatar = item })
     }
     if (updatedData?.bannerImage) {
-      updateField('bannerImage', updatedData.bannerImage, (item) => { updatedData.bannerImage = item })
+      updateField('bannerImage', updatedData.bannerImage, (item: any) => { updatedData.bannerImage = item })
     }
 
     if (updatedData && Object.keys(updatedData).length > 0) {
@@ -121,19 +122,19 @@ const AppLoader = () => {
     }
 
     // we checked, set userAuthenticated to true or false
-    setUserAuthenticated(() => (!!auth?.currentUser))
+    setAuthenticationChecked(() => true)
+    setUserAuthenticated(() => (auth?.currentUser !== null))
   }
 
   const cleanupSubscription = () => {
     // Clear any existing unsubscribe function
     if (unsubscribe !== null) {
       // console.log('unsubscribing -- ', unsubscribe, ' because userAuthenticated = ', userAuthenticated)
-      unsubscribe()
       unsubscribe = null
     }
   }
 
-  const handleAuthStateChanged = (user) => {
+  const handleAuthStateChanged = (user: User | null) => {
     // console.log('Auth state changed, received user authentication data')
     if (userAuthenticated === null) { // if we want to terminate the authentication we should be able to just set this back to null
       // console.log('calling unsubscribe')
@@ -171,7 +172,7 @@ const AppLoader = () => {
 
   useEffect(() => {
     if (unsubscribe === null) {
-      unsubscribe = onAuthStateChanged(auth, handleAuthStateChanged)
+      onAuthStateChanged(auth, (user: User | null) => handleAuthStateChanged(user));
       return () => cleanupSubscription()
     }
     return () => null
