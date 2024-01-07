@@ -1,13 +1,13 @@
 import 'react-native-gesture-handler'
-import React, { useContext } from 'react'
+import React from 'react'
 import { useTheme } from 'react-native-paper'
 import { NavigationContainer, Theme } from '@react-navigation/native'
-import Toast from 'react-native-toast-message'
+// import Toast from 'react-native-toast-message'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useAtom } from 'jotai'
-import { UserDataContext } from '../context'
-import { authenticationCheckedAtom, userAuthenticatedAtom } from '../utils/atom'
-import { toastConfig } from '../utils/show-toast'
+// import { useAtom } from 'jotai'
+import { AuthStatus, useAuthUser } from '../context'
+// import { authenticationCheckedAtom, userAuthenticatedAtom } from '../utils/atom'
+// import { toastConfig } from '../utils/show-toast'
 import IntroStack from './stacks/intro-stack'
 import OnboardingStack from './stacks/onboarding-stack'
 import RootStack from './stacks/root-stack'
@@ -23,9 +23,9 @@ import RootStack from './stacks/root-stack'
 export default function Navigation() {
   // const [isReady, setIsReady] = React.useState(false)
   // const [initialState, setInitialState] = React.useState()
-  const { userData } = useContext(UserDataContext)
+  const { authUser } = useAuthUser();
   // const { authenticationChecked } = useAtom(authenticationCheckedAtom)
-  const [userAuthenticated] = useAtom(userAuthenticatedAtom)
+  // const [userAuthenticated] = useAtom(userAuthenticatedAtom)
   const theme = useTheme<Theme>()
 
   // React.useEffect(() => {
@@ -56,9 +56,9 @@ export default function Navigation() {
   const getMainComponent = () => {
     // console.log('In navigation userAuthenticated', userAuthenticated, 'userData', userData)
     // if (authenticationChecked) {
-      if (userAuthenticated && userData && Object.keys(userData).length > 0) {
+      if (authUser.status !== AuthStatus.Checking && authUser.data && Object.keys(authUser.data).length > 0) {
         // console.log('NAVIGATION userData is on boarded??', userData.isOnboard)
-        return userData.isOnboard ? <RootStack /> : <OnboardingStack />
+        return authUser.data.isOnboard ? <RootStack /> : <OnboardingStack />
       }
     // }
     // console.log('loading intro')

@@ -17,10 +17,10 @@ import AnimatedSplash from '@/components/animated/animated-splash'
 
 // import { Alert, useColorScheme } from 'react-native'
 // import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { authenticationCheckedAtom, userAuthenticatedAtom } from '@/utils/atom'
-import { UserDataContext } from '@/context'
+// import { authenticationCheckedAtom, userAuthenticatedAtom } from '@/utils/atom'
+import { AuthStatus, AuthUserActionType, useAuthUser } from '@/context'
 import { firestore, auth } from '@/firebase'
-import { mergeJsonObjects, getDefaultColors, sleep } from '@/utils/functions'
+import { getDefaultColors, /* mergeJsonObjects, sleep */} from '@/utils/functions'
 // import LoadingScreen from '../../components/animated/loading/loading-screen'
 
 // SplashScreen.preventAutoHideAsync()
@@ -40,9 +40,10 @@ const AppLoader = () => {
   const [appDataPreloaded, setAppDataPreloaded] = useState(false)
   // userAuthenticated must be true or false, if it's null,
   // it means we haven't finished determining authentication status yet
-  const [authenticationChecked, setAuthenticationChecked] = useAtom(authenticationCheckedAtom)
-  const [userAuthenticated, setUserAuthenticated] = useAtom(userAuthenticatedAtom)
-  const [userData, setUserData] = useState({})
+  // const [authenticationChecked, setAuthenticationChecked] = useAtom(authenticationCheckedAtom)
+  // const [userAuthenticated, setUserAuthenticated] = useAtom(userAuthenticatedAtom)
+  // const [userData, setUserData] = useState({})
+  const {authUser, dispatch} = useAuthUser();
 
   // once splash animation is ready to be loaded, this callback will be called
   // we must use callback and the delay hack to avoid white flash
@@ -116,14 +117,16 @@ const AppLoader = () => {
 
     const newUserData = querySnapshot.data()
     const updatedData = updateUserData(newUserData)
-    const requireUpdate = JSON.stringify(updatedData) !== JSON.stringify(userData)
+    const requireUpdate = JSON.stringify(updatedData) !== JSON.stringify(authUser.data)
     if (requireUpdate) {
-      setUserData(() => updatedData)
+      // setUserData(() => updatedData)
+    dispatch({type: AuthUserActionType.SET_USER_DATA, payload: updatedData})
     }
 
     // we checked, set userAuthenticated to true or false
-    setAuthenticationChecked(() => true)
-    setUserAuthenticated(() => (auth?.currentUser !== null))
+    // setAuthenticationChecked(() => true)
+    // setUserAuthenticated(() => (auth?.currentUser !== null))
+    dispatch({type: AuthUserActionType.SET_AUTH_STATUS, payload: AuthStatus.Authenticated})
   }
 
   const cleanupSubscription = () => {
@@ -136,7 +139,7 @@ const AppLoader = () => {
 
   const handleAuthStateChanged = (user: User | null) => {
     // console.log('Auth state changed, received user authentication data')
-    if (userAuthenticated === null) { // if we want to terminate the authentication we should be able to just set this back to null
+    if (authUser.status === AuthStatus.NotAuthenticated) { // if we want to terminate the authentication we should be able to just set this back to null
       // console.log('calling unsubscribe')
       cleanupSubscription()
     }
@@ -146,21 +149,20 @@ const AppLoader = () => {
       return onSnapshot(usersRef, handleSnapshot)
     }
 
-    setUserAuthenticated(false)
+     dispatch({type: AuthUserActionType.SET_AUTH_STATUS, payload: AuthStatus.NotAuthenticated})
     // console.log('we checked, user needs to sign in, let them pass through')
-    return null
   }
 
-  const user = React.useMemo(
-    () => ({
-      setUserData: (value) => {
-        setUserData((oldValue) => mergeJsonObjects(oldValue, value))
-      },
-      userData,
-    }),
-    [userData], // probably define each attribute of user, that would be too much??
-    // only dependency so far are the avatar and banner.. what else change in user will require rendering of anything??
-  )
+  // const user = React.useMemo(
+  //   () => ({
+  //     setUserData: (value) => {
+  //       setUserData((oldValue) => mergeJsonObjects(oldValue, value))
+  //     },
+  //     userData,
+  //   }),
+  //   [userData], // probably define each attribute of user, that would be too much??
+  //   // only dependency so far are the avatar and banner.. what else change in user will require rendering of anything??
+  // )
 
   // let's keep loading the app
   // no point waiting for the splash screen to get ready
@@ -176,7 +178,7 @@ const AppLoader = () => {
       return () => cleanupSubscription()
     }
     return () => null
-  }, [unsubscribe, userAuthenticated])
+  }, [unsubscribe, authUser.status])
 
   return (
     <View style={{ flex: 1, backgroundColor: bgColor }}>
@@ -187,13 +189,9 @@ const AppLoader = () => {
                 for home screen and hook it up here, for now it's not necessary.
       */}
       {
-        appDataPreloaded && userAuthenticated !== null
-          ? (
-            <UserDataContext.Provider value={user}>
-              <FindAssociate />
-            </UserDataContext.Provider>
-          )
-          : <AnimatedSplash bgColor={bgColor} color={color} onLoaded={(p) => onSplashReady(p)} strokeWidth={isDark?5:6} />
+        appDataPreloaded && authUser.status !== AuthStatus.Checking
+        ? <FindAssociate />
+        : <AnimatedSplash bgColor={bgColor} color={color} onLoaded={(p) => onSplashReady(p)} strokeWidth={isDark?5:6} />
       }
     </View>
   )

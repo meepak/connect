@@ -1,5 +1,5 @@
 import React from 'react'
-import { Provider } from 'jotai'
+import { AuthUserProvider } from '@/context'
 // import 'utils/ignore'
 import * as SplashScreen from 'expo-splash-screen'
 // import AnimatedAppLoader from './src/components/splash/animated-app-loader'
@@ -26,9 +26,9 @@ if (Platform.OS === 'android') {
   setStatusBarBackgroundColor(bgColor as string, false)
 }
 const App = () => (
-  <Provider>
+  <AuthUserProvider>
     <AppLoader />
-  </Provider>
+  </AuthUserProvider>
 )
 
 registerRootComponent(App)

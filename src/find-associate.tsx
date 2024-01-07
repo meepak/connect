@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Appearance, useColorScheme } from 'react-native'
 import {
   MD3DarkTheme,
@@ -20,23 +20,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as SystemUI from 'expo-system-ui'
 import Navigation from './navigation'
 
-import { Preferences, PreferencesContext } from './context'
+// import { Preferences, PreferencesContext } from './context'
 import Icon from './components/core/icon'
 import { hexThemeFromColor, prepareThemes } from './theme/custom'
 import { ASYNC_STORAGE_KEY, DISPLAY } from './utils/constants'
 import { getDefaultColors, sleepSync } from './utils/functions'
+import { AuthUserActionType, useAuthUser } from './context'
 
 const { bgColor } = getDefaultColors(Appearance.getColorScheme())
 SystemUI.setBackgroundColorAsync(bgColor)
 
 const FindAssociate = () => {
+  const {authUser, dispatch} = useAuthUser();
   const systemTheme = useColorScheme()
   const [themePreference, setThemePreference] = React.useState('system')
   const [themeCustomColor, setThemeCustomColor] = React.useState('')
 
   const [isDark, setIsDark] = React.useState(systemTheme === 'dark')
   const [useCustomColor, setUseCustomColor] = React.useState(false)
-  const [showRenderCounter, setShowRenderCounter] = React.useState(
+  const [debug, setDebug] = React.useState(
     process.env.EXPO_PUBLIC_DEVELOPMENT_MODE === 'true',
   )
 
@@ -87,8 +89,31 @@ const FindAssociate = () => {
   }, [themePreference, themeCustomColor])
 
   // Preferences context parameter
-  const preferences: Preferences = React.useMemo(
-    () => ({
+  // const preferences: Preferences = React.useMemo(
+  //   () => ({
+  //     setThemePreference: (themePref) => {
+  //       // console.log('setting themePreference', themePref)
+  //       setIsDark(() => isDarkMode(themePref))
+  //       setThemePreference(() => themePref)
+  //     },
+  //     setUseCustomColor: (value) => {
+  //       if (value && !CUSTOM_COLOR_PALETTE.includes(themeCustomColor)) {
+  //         setThemeCustomColor(CUSTOM_COLOR_PALETTE[7]) // set default color
+  //       }
+  //       setUseCustomColor(() => value)
+  //     },
+  //     useCustomColor,
+  //     setThemeCustomColor,
+  //     themePreference,
+  //     themeCustomColor,
+  //     isDark,
+  //     showRenderCounter,
+  //     setShowRenderCounter,
+  //   }),
+  //   [themePreference, themeCustomColor, useCustomColor, showRenderCounter],
+  // )
+  useEffect(() => {
+    const preferences = {
       setThemePreference: (themePref) => {
         // console.log('setting themePreference', themePref)
         setIsDark(() => isDarkMode(themePref))
@@ -105,11 +130,11 @@ const FindAssociate = () => {
       themePreference,
       themeCustomColor,
       isDark,
-      showRenderCounter,
-      setShowRenderCounter,
-    }),
-    [themePreference, themeCustomColor, useCustomColor, showRenderCounter],
-  )
+      debug,
+      setDebug,
+      }
+      dispatch({type: AuthUserActionType.SET_PREFERENCES, payload: preferences})   
+  }, [themePreference, themeCustomColor, useCustomColor, setDebug],)
 
   // Define the type of the theme
   let adaptedTheme
@@ -164,13 +189,11 @@ const FindAssociate = () => {
     icon: (props) => <Icon {...props} />,
   }
   return (
-    <PreferencesContext.Provider value={{ preferences }}>
       <PaperProvider settings={paperSettings} theme={paperTheme}>
         <SafeAreaProvider>
           <Navigation />
         </SafeAreaProvider>
       </PaperProvider>
-    </PreferencesContext.Provider>
   )
 }
 

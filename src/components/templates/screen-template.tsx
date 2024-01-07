@@ -7,16 +7,17 @@ import { useNavigation } from '@react-navigation/native'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from 'react-native-paper'
-import LoadingScreen from '../animated/loading/loading-screen'
-import ErrorScreen from '../error-screen'
-import { PreferencesContext } from '../../context'
+import LoadingScreen from '@/components/animated/loading/loading-screen'
+import ErrorScreen from '@/components/error-screen'
+import { useAuthUser } from '@/context'
 
 const ScreenTemplate = (props) => {
   const {
     isLoading, isError, children, onTouchStart, onTouchEnd,
   } = props
   const navigation = useNavigation()
-  const preferences = useContext(PreferencesContext)
+  const { authUser } = useAuthUser()
+  // const preferences = useContext(PreferencesContext)
   // const { colors } = useTheme()
 
   if (isError) {
@@ -39,7 +40,7 @@ const ScreenTemplate = (props) => {
   return (
     <BottomSheetModalProvider>
       <GestureHandlerRootView onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} onTouchCancel={onTouchEnd}>
-        <StatusBar hidden={false} style={preferences.isDark ? 'light' : 'dark'} />
+        <StatusBar hidden={false} style={authUser?.preferences?.isDark ? 'light' : 'dark'} />
         <SafeAreaView style={{ height: '100%', width: '100%' }}>
           { children }
         </SafeAreaView>
