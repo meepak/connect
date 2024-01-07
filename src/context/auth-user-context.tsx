@@ -73,17 +73,17 @@ const initialAuthUser = {
 
 type AuthUserState = {
   authUser: AuthUser;
-  dispatch: React.Dispatch<Action>;
+  dispatchAuthUser: React.Dispatch<Action>;
 };
 
 export const AuthUserContext = createContext<AuthUserState | undefined>(undefined)
 
 
 export const AuthUserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [authUser, dispatch] = useReducer(authUserReducer, initialAuthUser);
+  const [authUser, dispatchAuthUser] = useReducer(authUserReducer, initialAuthUser);
 
   return (
-    <AuthUserContext.Provider value={{ authUser, dispatch }}>
+    <AuthUserContext.Provider value={{ authUser, dispatchAuthUser: dispatchAuthUser }}>
       {children}
     </AuthUserContext.Provider>
   );

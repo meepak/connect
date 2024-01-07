@@ -13,16 +13,16 @@ import Spinner from 'react-native-loading-spinner-overlay'
 import { useNavigation } from '@react-navigation/native'
 import { signOut, signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
 import { useAtom } from 'jotai'
-import { firestore, auth } from '../../firebase'
-import { ScreenTemplate } from '../../components/templates'
-import TextInputBox from '../../components/core/text-input-box'
+import { firestore, auth } from '@/firebase'
+import { ScreenTemplate } from '@/components/templates'
+import TextInputBox from '@/components/core/text-input-box'
 // import Logo from '../../components/core/Logo'
-import { isValidEmail } from '../../utils/validation'
-import TextAndLink from '../../components/text-and-link'
-import userAuthenticatedAtom from '../../utils/atom'
-import SocialIcons from './social_icons'
-import Header from './components/header'
-import OrLine from '../../components/or-line'
+import { isValidEmail } from '@/utils/validation'
+import TextAndLink from '@/components/text-and-link'
+import SocialIcons from '@/scenes/auth/social_icons'
+import Header from '@/scenes/auth/components/header'
+import OrLine from '@/components/or-line'
+import { AuthStatus, AuthUserActionType, useAuthUser } from '@/context'
 
 const Styles = (colors, fonts) => StyleSheet.create({
   main: {
@@ -64,7 +64,8 @@ const Styles = (colors, fonts) => StyleSheet.create({
 })
 
 export default function Login() {
-  const [, setUserAuthenticated] = useAtom(userAuthenticatedAtom)
+  const { authUser, dispatchAuthUser } = useAuthUser()
+
   const navigation = useNavigation()
   const { colors, fonts } = useTheme()
   const [email, setEmail] = useState(process.env.EXPO_PUBLIC_DEVELOPMENT_MODE === 'true' ? 'k@k.com' : '')
@@ -75,7 +76,7 @@ export default function Login() {
   const styles = Styles(colors, fonts)
 
   const onSendVerificationLinkPress = async () => {
-    await sendEmailVerification(auth.currentUser)
+    await sendEmailVerification(authUser.data)
   }
 
   const onLoginPress = async () => {
@@ -112,17 +113,19 @@ export default function Login() {
       const usersRef = doc(firestore, 'users', user.uid)
       const firestoreDocument = await getDoc(usersRef)
       if (!firestoreDocument.exists) {
-        setEmailError('Error', 'User does not exist anymore.')
+        setEmailError('User does not exist anymore.')
         return
       }
-      setUserAuthenticated(() => true) // this should trigger useEffect in route to initiate login
+      // setUserAuthenticated(() => true) // this should trigger useEffect in route to initiate login
+      dispatchAuthUser({type: AuthUserActionType.SET_AUTH_STATUS, payload: AuthStatus.Authenticated});
+      
       // console.log('we got our user, is authenticated atom  true - ', userAuthenticated)
       setSpinner(false)
     } catch (error) {
-      console.log(error.message)
+      console.log((error as Error).message)
       setSpinner(false)
       // Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests).
-      if (error.message.includes('too-many-requests')) {
+      if ((error as Error).message.includes('too-many-requests')) {
         setEmailError('Too man authentication failure') // error.message
         setPasswordError('Please try again later or reset your password.')
       } else {

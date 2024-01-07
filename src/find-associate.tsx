@@ -31,7 +31,7 @@ const { bgColor } = getDefaultColors(Appearance.getColorScheme())
 SystemUI.setBackgroundColorAsync(bgColor)
 
 const FindAssociate = () => {
-  const {authUser, dispatch} = useAuthUser();
+  const {authUser, dispatchAuthUser: dispatch} = useAuthUser();
   const systemTheme = useColorScheme()
   const [themePreference, setThemePreference] = React.useState('system')
   const [themeCustomColor, setThemeCustomColor] = React.useState('')

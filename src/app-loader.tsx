@@ -2,12 +2,15 @@ import * as SystemUI from 'expo-system-ui'
 import React, {
   useEffect, useCallback, useState,
 } from 'react'
-import { useAtom } from 'jotai'
 import { doc, onSnapshot } from 'firebase/firestore'
+import { firestore, auth } from './firebase'; // Import your Firebase instance
+
 import { User, onAuthStateChanged } from 'firebase/auth'
 import { Asset } from 'expo-asset'
 import * as SplashScreen from 'expo-splash-screen'
 import { Appearance, Platform, View } from 'react-native'
+
+
 import { setStatusBarTranslucent, setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar'
 
 import FindAssociate from '@/find-associate'
@@ -19,7 +22,6 @@ import AnimatedSplash from '@/components/animated/animated-splash'
 // import { SafeAreaProvider } from 'react-native-safe-area-context'
 // import { authenticationCheckedAtom, userAuthenticatedAtom } from '@/utils/atom'
 import { AuthStatus, AuthUserActionType, useAuthUser } from '@/context'
-import { firestore, auth } from '@/firebase'
 import { getDefaultColors, /* mergeJsonObjects, sleep */} from '@/utils/functions'
 // import LoadingScreen from '../../components/animated/loading/loading-screen'
 
@@ -33,17 +35,11 @@ if (Platform.OS === 'android') {
   setStatusBarTranslucent(true)
 }
 
-let unsubscribe = null
-
 const AppLoader = () => {
-  // console.log('In AnimatedSplashScreen')
+    const { authUser, dispatchAuthUser: dispatch } = useAuthUser();
+    const [unsubscribe, setUnsubscribe] = useState<(() => void) | null>(null);
   const [appDataPreloaded, setAppDataPreloaded] = useState(false)
-  // userAuthenticated must be true or false, if it's null,
-  // it means we haven't finished determining authentication status yet
-  // const [authenticationChecked, setAuthenticationChecked] = useAtom(authenticationCheckedAtom)
-  // const [userAuthenticated, setUserAuthenticated] = useAtom(userAuthenticatedAtom)
-  // const [userData, setUserData] = useState({})
-  const {authUser, dispatch} = useAuthUser();
+
 
   // once splash animation is ready to be loaded, this callback will be called
   // we must use callback and the delay hack to avoid white flash
@@ -111,83 +107,46 @@ const AppLoader = () => {
     return null
   }
 
-  const handleSnapshot = (querySnapshot) => {
-    // console.log('received new user data from snapshot')
-    // console.log('User data update through snapshot, replacing old user data', userData)!!auth?.currentUser
-
-    const newUserData = querySnapshot.data()
-    const updatedData = updateUserData(newUserData)
-    const requireUpdate = JSON.stringify(updatedData) !== JSON.stringify(authUser.data)
-    if (requireUpdate) {
-      // setUserData(() => updatedData)
-    dispatch({type: AuthUserActionType.SET_USER_DATA, payload: updatedData})
+   const handleAuthStateChanged = (user: User | null) => {
+    if (user) {
+      dispatch({type: AuthUserActionType.SET_AUTH_STATUS, payload: AuthStatus.Authenticated});
+      const usersRef = doc(firestore, 'users', user.uid);
+      return onSnapshot(usersRef, handleSnapshot);
+    } else {
+      dispatch({type: AuthUserActionType.SET_AUTH_STATUS, payload: AuthStatus.NotAuthenticated});
     }
+  };
 
-    // we checked, set userAuthenticated to true or false
-    // setAuthenticationChecked(() => true)
-    // setUserAuthenticated(() => (auth?.currentUser !== null))
-    dispatch({type: AuthUserActionType.SET_AUTH_STATUS, payload: AuthStatus.Authenticated})
-  }
+  const handleSnapshot = (querySnapshot) => {
+    const newUserData = querySnapshot.data();
+    const updatedData = updateUserData(newUserData);
+    const requireUpdate = JSON.stringify(updatedData) !== JSON.stringify(authUser.data);
+    if (requireUpdate) {
+      dispatch({type: AuthUserActionType.SET_USER_DATA, payload: updatedData});
+    }
+  };
 
   const cleanupSubscription = () => {
-    // Clear any existing unsubscribe function
     if (unsubscribe !== null) {
-      // console.log('unsubscribing -- ', unsubscribe, ' because userAuthenticated = ', userAuthenticated)
-      unsubscribe = null
+      unsubscribe();
+      setUnsubscribe(null);
     }
-  }
+  };
 
-  const handleAuthStateChanged = (user: User | null) => {
-    // console.log('Auth state changed, received user authentication data')
-    if (authUser.status === AuthStatus.NotAuthenticated) { // if we want to terminate the authentication we should be able to just set this back to null
-      // console.log('calling unsubscribe')
-      cleanupSubscription()
-    }
-    if (user) {
-      // console.log('returning new subscription to fetch detailed user data')
-      const usersRef = doc(firestore, 'users', user.uid)
-      return onSnapshot(usersRef, handleSnapshot)
-    }
+  useEffect(() => {
+    onAuthStateChanged(auth, handleAuthStateChanged);
+    return cleanupSubscription;
+  }, [unsubscribe, authUser.status]);
 
-     dispatch({type: AuthUserActionType.SET_AUTH_STATUS, payload: AuthStatus.NotAuthenticated})
-    // console.log('we checked, user needs to sign in, let them pass through')
-  }
-
-  // const user = React.useMemo(
-  //   () => ({
-  //     setUserData: (value) => {
-  //       setUserData((oldValue) => mergeJsonObjects(oldValue, value))
-  //     },
-  //     userData,
-  //   }),
-  //   [userData], // probably define each attribute of user, that would be too much??
-  //   // only dependency so far are the avatar and banner.. what else change in user will require rendering of anything??
-  // )
-
-  // let's keep loading the app
-  // no point waiting for the splash screen to get ready
   useEffect(() => {
     if (!appDataPreloaded) {
-      preloadAppData()
+      preloadAppData();
     }
-  }, [])
+  }, []);
 
-  useEffect(() => {
-    if (unsubscribe === null) {
-      onAuthStateChanged(auth, (user: User | null) => handleAuthStateChanged(user));
-      return () => cleanupSubscription()
-    }
-    return () => null
-  }, [unsubscribe, authUser.status])
 
   return (
     <View style={{ flex: 1, backgroundColor: bgColor }}>
-      {/*
-          TODO: TO CHECK TO DISPLAY  HOME SCREEN LOADING SPLASH OR INTRO SPLASH & display accordingly
-                Issue is, The delay at the moment is while resolving userAuthenticated value
-                so may be later if there is significant delay in loading home screen, create new splash
-                for home screen and hook it up here, for now it's not necessary.
-      */}
       {
         appDataPreloaded && authUser.status !== AuthStatus.Checking
         ? <FindAssociate />

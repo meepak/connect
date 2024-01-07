@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useRef } from 'react'
 import { Text } from 'react-native-paper'
-import { PreferencesContext } from '../context'
+import { useAuthUser } from '@/context'
 
 const RenderCounter = ({ title = '' }) => {
   const renderCounter = useRef(0)
-  const { showRenderCounter } = useContext(PreferencesContext)
+  const { authUser } = useAuthUser()
   renderCounter.current += 1
-  return (showRenderCounter
+  return (authUser?.preferences?.debug
     ? <Text variant="bodySmall" style={{ color: '#FFFF00' }}>[ R: {renderCounter.current} {title}]</Text>
     : <></>)
 }

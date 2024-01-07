@@ -5,6 +5,7 @@
     "owner": "dpkmht",
     "privacy": "public",
     "jsEngine": "hermes",
+    "scheme": "fa",
     "platforms": [
       "ios",
       "android"
@@ -42,8 +43,7 @@
     "android": {
       "package": "connect.firebase",
       "versionCode": 1,
-      "permissions": [
-      ],
+      "permissions": [],
       "icon": "./assets/images/fa/adaptive-icon.png",
       "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
@@ -71,9 +71,11 @@
     "runtimeVersion": {
       "policy": "appVersion"
     },
-     "experiments": {
+    "experiments": {
       "tsconfigPaths": true
-
-   }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
