@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Text, useTheme } from 'react-native-paper'
 import Animated, { useSharedValue, withTiming, StretchInY as enteringAnimation } from 'react-native-reanimated'
-import { StyleSheet, View } from 'react-native'
+import { ColorValue, StyleSheet, View } from 'react-native'
 import PropTypes from 'prop-types'
-import { convertHexToRGBA, getGreeting } from '../../../utils/functions'
+import { convertHexToRGBA, getGreeting } from '@/utils/functions'
 import AnimatedLottieView from 'lottie-react-native'
-import TypewriterText from '../../../components/animated/TypewriterText'
+import TypewriterText from '@/components/animated/TypewriterText'
 
 const IntroSceneOne = ({width, height, enterTime}) => {
 
@@ -17,26 +17,26 @@ const IntroSceneOne = ({width, height, enterTime}) => {
             height: height,
             // flex: 1,
 
-            backgroundColor: colors.surfaceContainerHighest,
+            // backgroundColor: colors.surfaceContainerHighest,
             // below line causes view shadow calculation warning in IOS, note for similar cases
-            backgroundColor: colors.surfaceContainerHighest,
-            // backgroundColor: convertHexToRGBA(colors.surfaceContainerHighest, 0.2), // 'rgba(155, 155, 155, 0.2)', // Adjust thce alpha for transparency
+            // backgroundColor: colors.surfaceContainerHighest,
+            // backgroundColor: convertHexToRGBA(colors.background, 0.2) as ColorValue, // 'rgba(155, 155, 155, 0.2)', // Adjust thce alpha for transparency
             // opacity: 0.2, // this is just not the same as having transparent background color
             // borderRadius: 16, // Adjust the border radius for rounded corners
-            paddingHorizontal: 16,
-            marginHorizontal: 16,
+            // paddingHorizontal: 16,
+            // marginHorizontal: 16,
             // width: '80%', // Adjust the width as needed
-            // alignSelf: 'center',
-            // justifyContent: 'center',
-            // alignItems: 'center',
+            alignSelf: 'center',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
             // Glassmorphic effect
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 4,
-            },
-            shadowOpacity: 0.1,
-            shadowRadius: 4,
+            // shadowColor: '#000',
+            // shadowOffset: {
+            //   width: 0,surfaceContainerHighest
+            //   height: 4,
+            // },
+            // shadowOpacity: 0.1,
+            // shadowRadius: 4,
             // elevation: 4,
         },
         lottie: {

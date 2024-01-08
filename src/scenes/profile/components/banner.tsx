@@ -5,12 +5,12 @@ import {
 import { Text, IconButton, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
-import Avatar from '../../../components/core/avatar'
-import AvatarOfAuthUser from '../../../components/avatar-of-auth-user'
-import PencilIconButton from '../../../components/pencil-icon-button'
-import ImageSelectAndUpload from '../../../utils/image-select-and-upload'
-import { convertHexToRGBA } from '../../../utils/functions'
-import imageAssets from '../../../theme/images'
+import Avatar from '@/components/core/avatar'
+import AvatarOfAuthUser from '@/components/avatar-of-auth-user'
+import PencilIconButton from '@/components/pencil-icon-button'
+import ImageSelectAndUpload from '@/utils/image-select-and-upload'
+import { convertHexToRGBA } from '@/utils/functions'
+import imageAssets from '@/theme/images'
 
 const Banner = ({
   editMode,

@@ -5,7 +5,7 @@ import {
 import { useTheme, Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
-import PencilIconButton from '../../../components/pencil-icon-button'
+import PencilIconButton from '@/components/pencil-icon-button'
 import Styles from './_styles'
 
 const UserIntro = (

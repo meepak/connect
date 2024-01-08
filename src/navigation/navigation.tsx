@@ -6,12 +6,12 @@ import { NavigationContainer, Theme } from '@react-navigation/native'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 // import { useAtom } from 'jotai'
 import { AuthStatus, useAuthUser } from '../context'
-// import { authenticationCheckedAtom, userAuthenticatedAtom } from '../utils/atom'
-// import { toastConfig } from '../utils/show-toast'
+// import { authenticationCheckedAtom, userAuthenticatedAtom } from '@/utils/atom'
+// import { toastConfig } from '@/utils/show-toast'
 import IntroStack from './stacks/intro-stack'
 import OnboardingStack from './stacks/onboarding-stack'
 import RootStack from './stacks/root-stack'
-// import LoadingScreen from '../components/loading-screen'
+// import LoadingScreen from '@/components/loading-screen'
 
 // About saving navigation state -- I wonder how this works, quite not convince I need this but let's see
 // Commenting out the navigation sate persistent part for now
@@ -58,7 +58,9 @@ export default function Navigation() {
     // if (authenticationChecked) {
       if (authUser.status !== AuthStatus.Checking && authUser.data && Object.keys(authUser.data).length > 0) {
         // console.log('NAVIGATION userData is on boarded??', userData.isOnboard)
-        return authUser.data.isOnboard ? <RootStack /> : <OnboardingStack />
+        // return authUser.data.isOnboard ? <RootStack /> : <OnboardingStack />
+        // temporary changes to fix first part of app
+        return <OnboardingStack />
       }
     // }
     // console.log('loading intro')

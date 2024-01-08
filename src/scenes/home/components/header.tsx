@@ -7,9 +7,9 @@ import {
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { UserDataContext } from '../../../context'
-import Button from '../../../components/core/button'
+import Button from '@/components/core/button'
 import NotificationSummaries from './notification-summary'
-import RenderCounter from '../../../components/render-counter'
+import RenderCounter from '@/components/render-counter'
 
 const Styles = () => StyleSheet.create({
   headerContainer: {

@@ -1,7 +1,7 @@
 import {
   collection, query, orderBy, where, getDocs, limit, serverTimestamp, doc, updateDoc,
 } from 'firebase/firestore'
-import { firestore } from '../../../firebase'
+import { firestore } from '@/firebase'
 
 // Define the data generation function
 export const fetchPotentialMatches = async (userId, itemCount = 15) => {

@@ -6,10 +6,10 @@ import {
 import { useNavigation } from '@react-navigation/native'
 import { signOut } from 'firebase/auth'
 import { useAtom } from 'jotai'
-import { auth } from '../../../firebase'
+import { auth } from '@/firebase'
 import { UserDataContext } from '../../../context'
-import AvatarOfAuthUser from '../../../components/avatar-of-auth-user'
-import userAuthenticatedAtom from '../../../utils/atom'
+import AvatarOfAuthUser from '@/components/avatar-of-auth-user'
+import userAuthenticatedAtom from '@/utils/atom'
 
 // Will provide button for Edit Profile, Sign Out, Delete Account (scroll to the bottom)
 const Account = () => {

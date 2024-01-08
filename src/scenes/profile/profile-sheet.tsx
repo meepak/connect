@@ -3,7 +3,7 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 
-import SheetModal from '../../components/core/sheet-modal'
+import SheetModal from '@/components/core/sheet-modal'
 import ProfileCore from './profile-core'
 
 const ProfileSheet = ({ show, onClose, user }) => {

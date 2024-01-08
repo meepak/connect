@@ -13,7 +13,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import {
   doc, updateDoc,
 } from 'firebase/firestore'
-import { firestore } from '../../firebase'
+import { firestore } from '@/firebase'
 
 import Styles from './components/_styles'
 import Banner from './components/banner'
@@ -24,7 +24,7 @@ import AddSectionMenu from './components/sheets/add-section-menu'
 
 // Temporary measure to get user id of logged in user to test banner upload
 import { UserDataContext } from '../../context'
-import { ScreenTemplate } from '../../components/templates'
+import { ScreenTemplate } from '@/components/template'
 import Experience from './components/experience'
 import Volunteer from './components/volunteer'
 import Education from './components/education'

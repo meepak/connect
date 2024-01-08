@@ -5,7 +5,7 @@ import {
 } from 'react-native-paper'
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { Alert, View } from 'react-native'
-import { firestore } from '../../../firebase'
+import { firestore } from '@/firebase'
 import { UserDataContext, PreferencesContext } from '../../../context'
 
 // eslint-disable-next-line react/prop-types

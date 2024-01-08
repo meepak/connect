@@ -10,8 +10,8 @@ import { Text, useTheme } from 'react-native-paper'
 import { useNavigation, useRoute, CommonActions } from '@react-navigation/native'
 import Autocomplete from 'react-native-autocomplete-input'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { ASYNC_STORAGE_KEY } from '../../utils/constants'
-import layout from '../../theme'
+import { ASYNC_STORAGE_KEY } from '@/utils/constants'
+import layout from '@/theme'
 
 const loadOccupations = async () => {
   const occupationsKey = ASYNC_STORAGE_KEY.Occupations

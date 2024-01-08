@@ -8,7 +8,7 @@ import Spinner from 'react-native-loading-spinner-overlay'
 import {
   doc, serverTimestamp, getDoc, setDoc,
 } from 'firebase/firestore'
-import { firestore } from '../../../firebase'
+import { firestore } from '@/firebase'
 import Styles from './_styles'
 import { UserDataContext } from '../../../context'
 

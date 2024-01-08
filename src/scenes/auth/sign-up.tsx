@@ -10,16 +10,16 @@ import { setDoc, doc, serverTimestamp } from 'firebase/firestore'
 import Spinner from 'react-native-loading-spinner-overlay'
 import { useNavigation } from '@react-navigation/native'
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
-import { ScreenTemplate } from '../../components/templates'
-import TextInputBox from '../../components/core/text-input-box'
-import TermsAndCondition from '../../components/terms-and-condition'
-// import Logo from '../../components/core/Logo'
-import { firestore, auth } from '../../firebase'
-import { isValidEmail, isValidName, isPasswordComplex } from '../../utils/validation'
-import TextAndLink from '../../components/text-and-link'
+import { ScreenTemplate } from '@/components/template'
+import TextInputBox from '@/components/core/text-input-box'
+import TermsAndCondition from '@/components/terms-and-condition'
+// import Logo from '@/components/core/Logo'
+import { firestore, auth } from '@/firebase'
+import { isValidEmail, isValidName, isPasswordComplex } from '@/utils/validation'
+import TextAndLink from '@/components/text-and-link'
 import SocialIcons from './social_icons'
 import Header from './components/header'
-import OrLine from '../../components/or-line'
+import OrLine from '@/components/or-line'
 
 const Styles = (colors, fonts) => StyleSheet.create({
   main: {
@@ -116,13 +116,13 @@ const SignUp = () => {
       return
     }
     // signed up, clear the form
-    setFullName()
-    setFullNameError(null)
-    setEmail()
-    setEmailError()
-    setPassword()
-    setPasswordError()
-    setError()
+    setFullName('')
+    setFullNameError('')
+    setEmail('')
+    setEmailError('')
+    setPassword('')
+    setPasswordError('')
+    setError('')
     setSpinner(false)
     // Let's redirect to login page
     // & sign in automatically & it will be stuck
@@ -157,8 +157,8 @@ const SignUp = () => {
               setFullNameError(msg)
             }}
             onClear={() => {
-              setFullName()
-              setFullNameError()
+              setFullName('')
+              setFullNameError('')
             }}
           />
           <TextInputBox
@@ -176,8 +176,8 @@ const SignUp = () => {
               setEmailError(msg)
             }}
             onClear={() => {
-              setEmail()
-              setEmailError()
+              setEmail('')
+              setEmailError('')
             }}
           />
           <TextInputBox

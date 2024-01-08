@@ -7,7 +7,7 @@ import Animated, {
   runOnJS,
   withDelay,
 } from 'react-native-reanimated';
-import { sleep } from '../../utils/functions';
+import { sleep } from '@/utils/functions';
 
 const AnimatedName = () => {
   const namePaths = [

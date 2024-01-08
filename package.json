@@ -8,8 +8,7 @@
     "ios": "npx expo start --ios",
     "eject": "expo eject",
     "expopublish": "npx expo publish",
-    "lint": "node_modules/.bin/eslint src/ --fix src/ --fix",
-    "test": "node_modules/.bin/jest --passWithNoTests"
+    "lint": "node_modules/.bin/eslint src/ --fix src/ --fix"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4",
@@ -66,11 +65,6 @@
     "semver": "~7.5.3",
     "@expo/config-plugins": "~7.2.2"
   },
-  "overrides": {
-    "@rneui/themed": {
-      "@rneui/base": "4.0.0-rc.8"
-    }
-  },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0-0",
@@ -79,6 +73,7 @@
     "@babel/plugin-transform-shorthand-properties": "^7.0.0-0",
     "@babel/plugin-transform-template-literals": "^7.0.0-0",
     "@babel/preset-env": "^7.1.6",
+    "@types/node": "^20.10.6",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.17.0",
     "babel-plugin-module-resolver": "^5.0.0",
@@ -94,12 +89,9 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "jest": "^29.7.0",
-    "jest-expo": "^49.0.0",
     "lint-staged": "^15.2.0",
     "metro-minify-esbuild": "^0.2.0",
-    "prettier": "^3.1.1",
-    "react-test-renderer": "^18.2.0"
+    "prettier": "^3.1.1"
   },
   "prettier": {
     "trailingComma": "all",
@@ -111,8 +103,13 @@
   "lint-staged": {
     "*.{js,jsx}": [
       "pretty-quick --staged",
-      "yarn lint",
-      "yarn test"
+      "yarn lint"
+    ]
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
     ]
   }
 }

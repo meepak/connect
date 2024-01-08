@@ -3,8 +3,8 @@ import {
   Surface, Text, Divider, useTheme,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import RadioButtonGroup from '../../components/core/radio-button-group'
-import CheckboxGroup from '../../components/core/checkbox-group'
+import RadioButtonGroup from '@/components/core/radio-button-group'
+import CheckboxGroup from '@/components/core/checkbox-group'
 
 import Styles from './styles'
 

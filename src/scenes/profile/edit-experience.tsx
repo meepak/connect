@@ -9,13 +9,13 @@ import {
 } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { ScreenTemplate } from '../../components/templates'
-import TextInputBox from '../../components/core/text-input-box'
+import { ScreenTemplate } from '@/components/template'
+import TextInputBox from '@/components/core/text-input-box'
 import { UserDataContext } from '../../context'
-// import { isValidName, isValidLength } from '../../utils/validation'
-import { HeaderProfile } from '../../components/header'
-import MonthYearPicker from '../../components/month-year-picker'
-import Checkbox from '../../components/core/checkbox'
+// import { isValidName, isValidLength } from '@/utils/validation'
+import { HeaderProfile } from '@/components/header'
+import MonthYearPicker from '@/components/month-year-picker'
+import Checkbox from '@/components/core/checkbox'
 
 export default function EditExperience() {
   // const route = useRoute()

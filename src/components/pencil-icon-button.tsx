@@ -1,7 +1,7 @@
 import React from 'react'
 import { IconButton, useTheme } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import { convertHexToRGBA } from '../utils/functions'
+import { convertHexToRGBA } from '@/utils/functions'
 
 const PencilIconButton = ({
   onPress, top, right, bgColor, bgAlpha,

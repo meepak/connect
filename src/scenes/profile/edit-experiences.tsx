@@ -11,13 +11,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useNavigation } from '@react-navigation/native'
 
 // import { TouchableOpacity } from 'react-native-gesture-handler'
-import { ScreenTemplate } from '../../components/templates'
-// import storage from '../../utils/Storage'
+import { ScreenTemplate } from '@/components/template'
+// import storage from '@/utils/Storage'
 // TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE
 import { UserDataContext } from '../../context'
-// import { isValidName, isValidLength } from '../../utils/validation'
-import { HeaderProfile } from '../../components/header'
-import IconLink from '../../components/core/icon-link'
+// import { isValidName, isValidLength } from '@/utils/validation'
+import { HeaderProfile } from '@/components/header'
+import IconLink from '@/components/core/icon-link'
 
 export default function EditExperiences() {
   // const route = useRoute()

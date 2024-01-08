@@ -12,9 +12,9 @@ import Animated, {
 // import LottieView from 'lottie-react-native'
 import { useNavigation } from '@react-navigation/native'
 // import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
-import ScreenTemplate from '../../components/templates/screen-template'
-import SvgLogo from '../../components/svg/svg-logo'
-// import imageAssets from '../../theme/images'
+import ScreenTemplate from '@/components/template/screen-template'
+import SvgLogo from '@/components/svg/svg-logo'
+// import imageAssets from '@/theme/images'
 
 const Intro = () => {
   const navigation = useNavigation()

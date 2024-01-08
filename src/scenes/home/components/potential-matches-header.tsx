@@ -1,7 +1,7 @@
 import React, { forwardRef, useImperativeHandle, useState } from 'react'
 import { View } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
-import RenderCounter from '../../../components/render-counter'
+import RenderCounter from '@/components/render-counter'
 
 const PotentialMatchesHeader = forwardRef((props, ref) => {
   const { colors } = useTheme()

@@ -7,10 +7,10 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated'
 import PropTypes from 'prop-types'
-import SvgLogo from '../svg/svg-logo'
-import SvgName from '../svg/svg-name'
+import SvgLogo from '@/components/svg/svg-logo'
+import SvgName from '@/components/svg/svg-name'
 
-const { width } = Dimensions.get('screen')
+const { width } = Dimensions.get('window')
 
 const DURATION = 500
 

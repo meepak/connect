@@ -4,7 +4,7 @@ import {
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import * as ImagePicker from 'expo-image-picker'
 import * as ImageManipulator from 'expo-image-manipulator'
-import { storage } from '../firebase'
+import { storage } from '@/firebase'
 
 const ImageSelectAndUpload = async ({
   userId, /* setProgress, */ onFinished, resizeWidth, imageCompression,

@@ -1,8 +1,8 @@
 import React from 'react'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 
-import { SignIn, SignUp } from '../../scenes/auth'
-import Intro from '../../scenes/intro'
+import { SignIn, SignUp } from '@/scenes/auth'
+import Intro from '@/scenes/intro'
 
 const Stack = createStackNavigator()
 

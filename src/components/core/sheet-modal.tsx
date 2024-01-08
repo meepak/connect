@@ -6,7 +6,7 @@ import {
 } from '@gorhom/bottom-sheet'
 import PropTypes from 'prop-types'
 import { View } from 'react-native'
-import { convertHexToRGBA } from '../../utils/functions'
+import { convertHexToRGBA } from '@/utils/functions'
 
 interface SheetModalProps {
   children: React.ReactNode

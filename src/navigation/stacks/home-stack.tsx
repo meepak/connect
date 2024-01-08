@@ -1,8 +1,8 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { useTheme } from 'react-native-paper'
-import Home from '../../scenes/home'
-import { HeaderHome } from '../../components/header'
+import Home from '@/scenes/home'
+import { HeaderHome } from '@/components/header'
 
 const Stack = createStackNavigator()
 

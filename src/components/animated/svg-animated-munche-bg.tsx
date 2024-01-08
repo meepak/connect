@@ -1,6 +1,5 @@
 import * as React from 'react'
 import Svg, { Path } from 'react-native-svg'
-import PropTypes from 'prop-types'
 import Animated, { useDerivedValue, useSharedValue, withRepeat, withSequence, withSpring, withTiming } from 'react-native-reanimated'
 
 
@@ -44,14 +43,12 @@ const SvgAnimatedMuncheBg = () => {
       fill="#1d909b"
       d="M0 0h32.766v49.345H0z"
       opacity={0.981}
-      paintOrder="markers fill stroke"
     />
     <Path
       fill="#fce604"
       fillOpacity={0.984}
       d="M25.316 27.306c-1.398.441-3.314 1.067-3.808 2.345-1.547 4.003 3.583 9.301 3.146 9.624-.437.322-7.939-5.576-8.48-5.576 0 0-7.995 5.902-8.431 5.58-.437-.323 4.693-5.62 3.145-9.623-.48-1.244-2.312-1.872-3.7-2.311-2.65 1.192-5.07 2.89-7.16 4.996v17.165h32.766V32.58a24.494 24.494 0 0 0-4.282-3.556 23.23 23.23 0 0 0-3.196-1.718Z"
       opacity={0.981}
-      paintOrder="markers fill stroke"
     />
     <Path
       fill="#fc8204"

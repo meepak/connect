@@ -5,7 +5,7 @@ import { Text } from 'react-native-paper'
 import PropTypes from 'prop-types'
 
 const TypewriterText = ({
-  text, variant, style, onFinished, replay,
+  text, variant, style, onFinished,
 }) => {
   const [displayText, setDisplayText] = useState('')
   const [cursorblinkCounter, setCursorBlinkCounter] = useState(0)
@@ -16,6 +16,7 @@ const TypewriterText = ({
 
   useEffect(() => {
     const startTypingAnimation = () => {
+      intervalIdRef.current = null;
       intervalIdRef.current = setInterval(() => {
           if (charIndexRef.current === text.length) {
             //display cursor blink for 5 times before decoaring all typed'

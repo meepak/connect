@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 
-import SvgLogo from '../svg/svg-logo'
+import SvgLogo from '@/components/svg/svg-logo'
 import { Dimensions, View } from 'react-native'
 import Animated, 
 { 
@@ -14,7 +14,7 @@ import Animated,
 // TODO -- use reduce motion to disable background animation on slower devices
 // reduceMotion: ReduceMotion.System
 const SvgAnimatedLogoBg = () => {
-    const {width, height} = Dimensions.get('screen')
+    const {width, height} = Dimensions.get('window')
     const logoWidth = useSharedValue(width * 3)
 
     useEffect(() => {

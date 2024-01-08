@@ -14,14 +14,14 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated'
-import SvgLogo from '../svg/svg-logo'
-import SvgFindAssociate from '../svg/svg-find-associate'
+import SvgLogo from '@/components/svg/svg-logo'
+import SvgFindAssociate from '@/components/svg/svg-find-associate'
 import {
   setStatusBarBackgroundColor,
   setStatusBarStyle,
   setStatusBarTranslucent,
 } from 'expo-status-bar'
-import { getDefaultColors } from '../../utils/functions'
+import { getDefaultColors } from '@/utils/functions'
 
 const { bgColor, color, statusBarStyle, isDark } = getDefaultColors(
   Appearance.getColorScheme(),
@@ -33,8 +33,8 @@ if (Platform.OS === 'android') {
   setStatusBarTranslucent(true)
 }
 
-const SCREEN_WIDTH = Dimensions.get('screen').width
-const SCREEN_HEIGHT = Dimensions.get('screen').height
+const SCREEN_WIDTH = Dimensions.get('window').width
+const SCREEN_HEIGHT = Dimensions.get('window').height
 
 const ANIMATION_DURATION = 666
 const EXIT_DURATION = 300

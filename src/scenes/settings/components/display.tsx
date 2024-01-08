@@ -4,7 +4,7 @@ import {
   Text, Card, useTheme, SegmentedButtons, Switch, Button, Menu,
 } from 'react-native-paper'
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { DISPLAY } from '../../../utils/constants'
+import { DISPLAY } from '@/utils/constants'
 import { PreferencesContext } from '../../../context'
 
 const Display = () => {

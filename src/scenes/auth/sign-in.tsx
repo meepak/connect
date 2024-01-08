@@ -12,11 +12,10 @@ import { doc, getDoc } from 'firebase/firestore'
 import Spinner from 'react-native-loading-spinner-overlay'
 import { useNavigation } from '@react-navigation/native'
 import { signOut, signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
-import { useAtom } from 'jotai'
 import { firestore, auth } from '@/firebase'
-import { ScreenTemplate } from '@/components/templates'
+import { ScreenTemplate } from '@/components/template'
 import TextInputBox from '@/components/core/text-input-box'
-// import Logo from '../../components/core/Logo'
+// import Logo from '@/components/core/Logo'
 import { isValidEmail } from '@/utils/validation'
 import TextAndLink from '@/components/text-and-link'
 import SocialIcons from '@/scenes/auth/social_icons'
@@ -28,7 +27,7 @@ const Styles = (colors, fonts) => StyleSheet.create({
   main: {
     flex: 1,
     width: '100%',
-    backgroundColor: colors.background,
+    // backgroundColor: colors.background,
   },
   titleContainer: {
     flexDirection: 'row',

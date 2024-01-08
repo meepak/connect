@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import Search from '../../scenes/search'
+import Search from '@/scenes/search'
 
 const Stack = createStackNavigator()
 

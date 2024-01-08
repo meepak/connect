@@ -4,7 +4,7 @@ import {
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import { useNavigation, useRoute } from '@react-navigation/native'
-// import Button from '../../components/core/button'
+// import Button from '@/components/core/button'
 
 import Styles from './styles'
 

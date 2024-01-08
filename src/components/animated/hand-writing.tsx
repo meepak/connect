@@ -10,7 +10,7 @@ import Animated, {
   withTiming,
   runOnJS,
 } from 'react-native-reanimated'
-import { DISPLAY } from '../../utils/constants'
+import { DISPLAY } from '@/utils/constants'
 
 const AnimatedPath = Animated.createAnimatedComponent(Path)
 

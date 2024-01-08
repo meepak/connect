@@ -1,9 +1,9 @@
 import React from 'react'
 import { useTheme } from 'react-native-paper'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
-import Chat from '../../scenes/chat'
-import ChatTabs from '../../scenes/chat-main/chat-tabs'
-import { HeaderChat } from '../../components/header'
+import Chat from '@/scenes/chat'
+import ChatTabs from '@/scenes/chat-main/chat-tabs'
+import { HeaderChat } from '@/components/header'
 
 const Stack = createStackNavigator()
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
-import Manage from '../../scenes/manage'
-import { ManageBackgroundCheck, ManageInvitations, ManageNda } from '../../scenes/manage/section'
+import Manage from '@/scenes/manage'
+import { ManageBackgroundCheck, ManageInvitations, ManageNda } from '@/scenes/manage/section'
 
 const Stack = createStackNavigator()
 

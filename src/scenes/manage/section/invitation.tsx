@@ -1,8 +1,8 @@
 import React from 'react'
 import { Text } from 'react-native-paper'
-import { ModalTemplate } from '../../../components/templates'
-import Temp from '../components/template'
-import Header from '../components/header'
+import { ModalTemplate } from '@/components/template'
+import Temp from '@/scenes/manage/components/template'
+import Header from '@/scenes/manage/components/header'
 
 const ManageInvitations = () => (
   <ModalTemplate

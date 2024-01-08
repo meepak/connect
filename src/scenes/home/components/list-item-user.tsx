@@ -8,9 +8,9 @@ import {
 } from 'react-native-paper'
 // import { Swipeable } from 'react-native-gesture-handler'
 import Animated from 'react-native-reanimated'
-import Avatar from '../../../components/core/avatar'
-import { convertHexToRGBA } from '../../../utils/functions'
-import Swipeable from '../../../components/core/swipeable'
+import Avatar from '@/components/core/avatar'
+import { convertHexToRGBA } from '@/utils/functions'
+import Swipeable from '@/components/core/swipeable'
 
 const ListItemUser = ({
   name, industry, location, occupation, isPromoted, image, onPress, viewedAt,

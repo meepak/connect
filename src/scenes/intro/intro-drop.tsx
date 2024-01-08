@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Button, Text, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
-import { ScreenTemplate } from '../../components/templates'
-import TypewriterText from '../../components/animated/TypewriterText'
+import { ScreenTemplate } from '@/components/template'
+import TypewriterText from '@/components/animated/TypewriterText'
 import IntroSceneOne from './scenes/one'
-import { getGreeting, sleep } from '../../utils/functions'
+import { getGreeting, sleep } from '@/utils/functions'
 
 const styles = StyleSheet.create({
   container: {

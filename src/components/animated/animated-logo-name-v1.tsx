@@ -6,10 +6,10 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated'
 import PropTypes from 'prop-types'
-import SvgLogo from '../svg/svg-logo'
-import SvgFind from '../svg/svg-find'
-import SvgAssociate from '../svg/svg-associate'
-import { getDefaultColors } from '../../utils/functions'
+import SvgLogo from '@/components/svg/svg-logo'
+import SvgFind from '@/components/svg/svg-find'
+import SvgAssociate from '@/components/svg/svg-associate'
+import { getDefaultColors } from '@/utils/functions'
 
 const { width, height } = Dimensions.get('window')
 

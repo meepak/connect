@@ -1,6 +1,6 @@
 import React from 'react'
 import { SegmentedButtons, useTheme } from 'react-native-paper'
-import { convertHexToRGBA } from '../../../utils/functions'
+import { convertHexToRGBA } from '@/utils/functions'
 
 const SearchOptions = () => {
   const { colors } = useTheme()

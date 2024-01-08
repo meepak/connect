@@ -6,7 +6,7 @@ import {
 import { Text, useTheme } from 'react-native-paper'
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { ScrollView } from 'react-native-gesture-handler'
-import { convertHexToRGBA } from '../utils/functions'
+import { convertHexToRGBA } from '@/utils/functions'
 
 const Styles = (colors, fonts) => {
   const onBgColor = convertHexToRGBA(colors.onBackground, 0.9)

@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import AvatarOfAuthUser from '../avatar-of-auth-user'
 import { UserDataContext } from '../../context'
 
-import { convertHexToRGBA } from '../../utils/functions'
+import { convertHexToRGBA } from '@/utils/functions'
 
 const HeaderHome = () => {
   const navigation = useNavigation()

@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { Dimensions, StyleSheet, View, useColorScheme } from 'react-native'
 import { Button, Text, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
-import { ScreenTemplate } from '../../components/templates'
-import IntroSceneOne from './scenes/One'
-import SvgAnimatedLogoBg from '../../components/animated/svg-animated-logo-bg'
+import { ScreenTemplate } from '@/components/template'
+import IntroSceneOne from './scenes/one'
+import SvgAnimatedLogoBg from '@/components/animated/svg-animated-logo-bg'
 import AppFeaturesIntro from './components/app-features-intro'
-import SvgAnimatedMuncheBg from '../../components/animated/svg-animated-munche-bg'
+import SvgAnimatedMuncheBg from '@/components/animated/svg-animated-munche-bg'
 
 const Intro = () => {
   const navigation = useNavigation()
   const [showAppFeatures, setShowAppFeatures] = useState(true)
 
   const ENTER_DURATION = 500
-  const SCREEN_WIDTH = Dimensions.get('screen').width
-  const SCREEN_HEIGHT = Dimensions.get('screen').height
+  const SCREEN_WIDTH = Dimensions.get('window').width
+  const SCREEN_HEIGHT = Dimensions.get('window').height
   const VIEW_WIDTH = SCREEN_WIDTH
   const VIEW_HEIGHT = SCREEN_HEIGHT * 0.8
 
@@ -27,8 +27,6 @@ const Intro = () => {
   })
 
   return (
-    <>
-      <SvgAnimatedMuncheBg />
       <ScreenTemplate>
         <IntroSceneOne
           width={VIEW_WIDTH}
@@ -51,7 +49,6 @@ const Intro = () => {
           }}
         />
       </ScreenTemplate>
-    </>
   )
 }
 

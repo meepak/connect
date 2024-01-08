@@ -29,7 +29,7 @@ import {
 import { useNavigation } from '@react-navigation/native'
 import generateMockData from '../../util/mock-data'
 import NotificationSummary from './notification-summary'
-import { convertHexToRGBA } from '../../../../utils/functions'
+import { convertHexToRGBA } from '@/utils/functions'
 
 const Styles = (colors) => StyleSheet.create({
   container: {

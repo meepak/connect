@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native'
 import { IconButton, Text, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
-import RenderCounter from '../../../components/render-counter'
+import RenderCounter from '@/components/render-counter'
 
 const Header = ({ label, marginTop, marginBottom }) => {
   const { colors } = useTheme()

@@ -1,5 +1,5 @@
 import { Asset } from 'expo-asset'
-import { mockImages, mockBannerImages } from '../../../theme/images'
+import { mockImages, mockBannerImages } from '@/theme/images'
 
 function generateRandomName() {
   // Create a list of first names and last names.

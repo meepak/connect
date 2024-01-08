@@ -14,11 +14,11 @@ import Animated, {
   useAnimatedProps,
 } from 'react-native-reanimated'
 import PropTypes from 'prop-types'
-import SvgLogo from '../svg/svg-logo'
-import SvgFindAssociate from '../svg/svg-find-associate'
+import SvgLogo from '@/components/svg/svg-logo'
+import SvgFindAssociate from '@/components/svg/svg-find-associate'
 // import AnimatedLogoNameClosure from './animated-splash-closure'
 
-const { width, height } = Dimensions.get('screen')
+const { width, height } = Dimensions.get('window')
 
 const DURATION = 666
 // const DELAY = 2000

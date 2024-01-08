@@ -3,7 +3,7 @@ import React, {
   useEffect, useCallback, useState,
 } from 'react'
 import { doc, onSnapshot } from 'firebase/firestore'
-import { firestore, auth } from './firebase'; // Import your Firebase instance
+import { firestore, auth } from '@/firebase'; // Import your Firebase instance
 
 import { User, onAuthStateChanged } from 'firebase/auth'
 import { Asset } from 'expo-asset'
@@ -23,7 +23,8 @@ import AnimatedSplash from '@/components/animated/animated-splash'
 // import { authenticationCheckedAtom, userAuthenticatedAtom } from '@/utils/atom'
 import { AuthStatus, AuthUserActionType, useAuthUser } from '@/context'
 import { getDefaultColors, /* mergeJsonObjects, sleep */} from '@/utils/functions'
-// import LoadingScreen from '../../components/animated/loading/loading-screen'
+import imageAssets from './theme/images';
+// import LoadingScreen from '@/components/animated/loading/loading-screen'
 
 // SplashScreen.preventAutoHideAsync()
 
@@ -71,6 +72,7 @@ const AppLoader = () => {
       console.log(`APP PRELOADING ERROR - ${e}`)
     } finally {
       // Tell the application to render
+      // console.log('Data preloaded - ', imageAssets)
       // console.log('app data preloading is done')
       setAppDataPreloaded(() => true)
     }
@@ -148,9 +150,9 @@ const AppLoader = () => {
   return (
     <View style={{ flex: 1, backgroundColor: bgColor }}>
       {
-        appDataPreloaded && authUser.status !== AuthStatus.Checking
-        ? <FindAssociate />
-        : <AnimatedSplash bgColor={bgColor} color={color} onLoaded={(p) => onSplashReady(p)} strokeWidth={isDark?5:6} />
+        !appDataPreloaded && authUser.status === AuthStatus.Checking
+        ? <AnimatedSplash bgColor={bgColor} color={color} onLoaded={(p) => onSplashReady(p)} strokeWidth={isDark?5:6} />
+        : <FindAssociate />
       }
     </View>
   )

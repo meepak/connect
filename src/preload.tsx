@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { preloadImages } from './theme/images'
+import { preloadImages } from '@/theme/images'
 import jsonData from '../assets/data/occupations.json'
-import { ASYNC_STORAGE_KEY } from './utils/constants'
+import { ASYNC_STORAGE_KEY } from '@/utils/constants'
 
 /*
 * Things that needs pre-loading for app operation

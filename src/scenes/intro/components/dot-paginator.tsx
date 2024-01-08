@@ -39,11 +39,11 @@ const Dot = (props: {
   const ry = useSharedValue(size / 2.2)
 
   const bgColor = useSharedValue(isActive ? activeColor : color)
-  const delay = 200
+  const delay = 100
   useEffect(() => {
     if (isActive) {
       // this should animate second
-      cr.value = withDelay(delay, withSpring(size / 3, { damping: 3 }))
+      cr.value = withDelay(delay, withTiming(size / 3, { duration: delay }))
 
     } else {
       cr.value = withTiming(size / 7, { duration: delay })

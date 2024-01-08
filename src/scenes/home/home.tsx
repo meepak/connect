@@ -11,20 +11,21 @@ import { useNavigation } from '@react-navigation/native'
 
 // import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
-import { ScreenTemplate } from '@/components/templates'
+import { ScreenTemplate } from '@/components/template'
 import ListItemUser from '@/scenes/home/components/list-item-user'
 import generateMockData from '@/scenes/home/util/mock-data'
 import Header from '@/scenes/home/components/header'
 import PotentialMatchesHeader from '@/scenes/home/components/potential-matches-header'
 import ProfileSheet from '@/scenes/profile/profile-sheet'
 import { fetchPotentialMatches } from './util/db'
-import RenderCounter from '../../components/render-counter'
-// import WaveBackground from '../../components/core/wave-background'
+import RenderCounter from '@/components/render-counter'
+import { useAuthUser } from '@/context'
+// import WaveBackground from '@/components/core/wave-background'
 
 export default function Home() {
   const navigation = useNavigation()
   const [dataItems, setDataItems] = useState([])
-  const { userData } = useContext(UserDataContext)
+  const { authUser } = useAuthUser();
   const itemBatch = 10
   const [viewUser, setViewUser] = useState({
     key: '', name: '', image: '', banner: '',
@@ -33,13 +34,13 @@ export default function Home() {
   const potentialMatchesRef = useRef(null)
 
   const fetchData = async () => {
-    const newDataItems = await fetchPotentialMatches(userData.id, itemBatch)
+    const newDataItems = await fetchPotentialMatches(authUser?.data?.id, itemBatch)
 
     // additional mock data
     const mockItems = generateMockData(1, itemBatch, 'fetchData')
     // setCurrentCount(() => itemBatch + 1)
     const finalDataItems = [{ key: 'Header' }, ...newDataItems, ...mockItems]
-    setDataItems(finalDataItems)
+    setDataItems(() => finalDataItems)
   }
 
   const fetchMoreData = async () => {

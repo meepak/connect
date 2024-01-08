@@ -5,13 +5,14 @@ import {
   MD3LightTheme,
   adaptNavigationTheme,
   PaperProvider,
+  MD3Theme,
 } from 'react-native-paper'
 import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
   Theme,
 } from '@react-navigation/native'
-import { useMaterial3Theme } from '@pchmn/expo-material3-theme'
+import { Material3Scheme, useMaterial3Theme } from '@pchmn/expo-material3-theme'
 
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
@@ -20,12 +21,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as SystemUI from 'expo-system-ui'
 import Navigation from './navigation'
 
-// import { Preferences, PreferencesContext } from './context'
+// import { Preferences, PreferencesContext } from '@/context'
 import Icon from './components/core/icon'
-import { hexThemeFromColor, prepareThemes } from './theme/custom'
-import { ASYNC_STORAGE_KEY, DISPLAY } from './utils/constants'
-import { getDefaultColors, sleepSync } from './utils/functions'
-import { AuthUserActionType, useAuthUser } from './context'
+import { hexThemeFromColor, prepareThemes } from '@/theme/custom'
+import { ASYNC_STORAGE_KEY, DISPLAY } from '@/utils/constants'
+import { getDefaultColors, sleepSync } from '@/utils/functions'
+import { AuthUserActionType, useAuthUser } from '@/context'
+import { NavigationTheme } from 'react-native-paper/lib/typescript/types'
 
 const { bgColor } = getDefaultColors(Appearance.getColorScheme())
 SystemUI.setBackgroundColorAsync(bgColor)
@@ -136,49 +138,37 @@ const FindAssociate = () => {
       dispatch({type: AuthUserActionType.SET_PREFERENCES, payload: preferences})   
   }, [themePreference, themeCustomColor, useCustomColor, setDebug],)
 
+  // simplified approach to theme building, test if it will work else copy back old implementation
   // Define the type of the theme
-  let adaptedTheme
+  let adaptedTheme: { DarkTheme?: NavigationTheme; LightTheme?: NavigationTheme; dark?: boolean; colors?: { primary: string; background: string; card: string; text: string; border: string; notification: string } }
+  let md3Theme: MD3Theme
+  let m3: Material3Scheme
+  
+  const { theme: m3Theme, updateTheme: updateTheme } = useCustomColor
+                                                        ?  useMaterial3Theme({sourceColor: themeCustomColor})
+                                                        : useMaterial3Theme()
+
   if (isDark) {
     adaptedTheme = adaptNavigationTheme({
       reactNavigationDark: NavigationDarkTheme,
-    })
+    });
+    md3Theme = MD3DarkTheme;
+    m3 = m3Theme.dark
   } else {
     adaptedTheme = adaptNavigationTheme({
       reactNavigationLight: NavigationDefaultTheme,
-    })
+    });
+    md3Theme = MD3LightTheme;
+    m3 = m3Theme.light;
   }
 
-  const md3Theme = isDark ? MD3DarkTheme : MD3LightTheme
-  const { theme: m3Theme } = useMaterial3Theme()
-
-  let resultTheme: Theme
-  if (useCustomColor) {
-    const customBaseTheme = hexThemeFromColor(
-      themeCustomColor,
-      isDark ? 'dark' : 'light',
-    )
-    const customTheme = prepareThemes(customBaseTheme)
-    const customColors = isDark ? customTheme.dark : customTheme.light
-    resultTheme = {
+    const paperTheme  = {
       ...adaptedTheme,
       ...md3Theme,
       colors: {
-        ...customColors,
-      },
-    }
-  } else {
-    const m3 = isDark ? m3Theme.dark : m3Theme.light
-    resultTheme = {
-      ...adaptedTheme,
-      ...md3Theme,
-      colors: {
-        ...m3,
-      },
-    }
-  }
-  const paperTheme = resultTheme
-
-  // console.log('paper Theme', paperTheme)
+        ...m3
+      }
+    };  
 
   // solution to white flash for android while keyboard appears
   // doing it again here because user preference may override system setting
@@ -186,7 +176,7 @@ const FindAssociate = () => {
 
   // console.log('App.js loaded')
   const paperSettings = {
-    icon: (props) => <Icon {...props} />,
+    icon: (props: any) => <Icon {...props} />,
   }
   return (
       <PaperProvider settings={paperSettings} theme={paperTheme}>

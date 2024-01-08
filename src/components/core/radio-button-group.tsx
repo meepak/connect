@@ -6,7 +6,7 @@ import {
 } from 'react-native-paper'
 
 import PropTypes from 'prop-types'
-import layout from '../../theme'
+import layout from '@/theme'
 
 const styles = StyleSheet.create({
   container: {

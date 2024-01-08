@@ -1,9 +1,9 @@
 import React from 'react'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
-import OnBoarding from '../../scenes/onboarding'
-import Logo from '../../components/core/logo'
-import SelectLocation from '../../scenes/location'
-import Occupation from '../../scenes/occupation'
+import OnBoarding from '@/scenes/onboarding'
+import Logo from '@/components/core/logo'
+import SelectLocation from '@/scenes/location'
+import Occupation from '@/scenes/occupation'
 
 const Stack = createStackNavigator()
 

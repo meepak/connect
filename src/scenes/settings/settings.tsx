@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native-paper'
-import { ModalTemplate } from '../../components/templates'
+import { ModalTemplate } from '@/components/template'
 import Header from './components/header'
 import Account from './components/account'
 import Display from './components/display'

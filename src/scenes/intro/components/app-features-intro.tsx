@@ -4,38 +4,37 @@ import React, {
   import {
       Dimensions,
       FlatList,
-    Image,
+    ImageSourcePropType,
     StyleSheet,
     View,
+    // Image
   } from 'react-native'
+  import {Image} from 'expo-image'
   import { Text, useTheme } from 'react-native-paper'
-  import {
-    useNavigation,
-  } from '@react-navigation/native'
-  import PropTypes from 'prop-types'
-
-  import SheetModal from '../../../components/core/sheet-modal'
-import { BottomSheetFlatList, BottomSheetFlatListMethods, BottomSheetModal } from '@gorhom/bottom-sheet'
-import imageAssets from '../../../theme/images'
+  import SheetModal from '@/components/core/sheet-modal'
+import {  BottomSheetModal } from '@gorhom/bottom-sheet'
+import imageAssets from '@/theme/images'
 import DotPaginator from './dot-paginator'
+import Animated, { FlipInYLeft as slideLeft, FlipInYRight as slideRight} from 'react-native-reanimated'
 
-const screenWidth = Dimensions.get('screen').width
+const screenWidth = Dimensions.get('window').width
 
 const styles = StyleSheet.create({
     image: {
       width: screenWidth,
-    //   height: 300,
-      height: 152,
+      height: 300,
+      // height: 152,
 
     },
     imageView: {
       justifyContent: 'center',
       alignItems: 'center',
-      width: screenWidth,
+      borderWidth: 1,
+      borderColor: 'red',
     },
     text: {
       textAlign: 'center',
-    //   color: colors.onBackground,
+      // color: colors.onBackground,
     },
     textView: {
       width: screenWidth,
@@ -50,26 +49,36 @@ const slides = [
     //   text: 'PARTNERSHIPS',
       word1: 'DISCOVER',
       // word2: 'PARTNERSHIPS',
-      image: { uri: imageAssets.intro1.localUri || imageAssets.intro1.uri },
+      image: imageAssets.intro1,
     },
     {
       key: 's2',
       word1: 'CONNECT',
       // word2: 'CONNECTION',
-      image: { uri: imageAssets.intro2.localUri || imageAssets.intro2.uri },
+      image: imageAssets.intro2,
     },
     {
       key: 's3',
       word1: 'THRIVE',
       // word2: 'TOGETHER',
-      image: { uri: imageAssets.intro3.localUri || imageAssets.intro3.uri },
+      image: imageAssets.intro3,
     },
   ]
 
-  const AppFeaturesIntro = ({ show, onClose }) => {
+  interface AppFeaturesIntroProps {
+    show: boolean
+    onClose?: () => void
+  }
+
+  const AppFeaturesIntro = (
+    {
+       show = false,
+       onClose = () => {} 
+    }
+    ) => {
     const appFeaturesSheetRef = useRef<BottomSheetModal>(null)
-    const sliderRef = useRef<BottomSheetFlatListMethods>(null)
-    // const [currentSliderIndex, setCurrentSliderIndex] = useState(0)
+    const [currentSliderIndex, setCurrentSliderIndex] = useState(0)
+    const [lastSliderIndex, setLastSliderIndex] = useState(0)
 
     const openMe = useCallback(() => {
       if (appFeaturesSheetRef.current) {
@@ -97,77 +106,47 @@ const slides = [
 
     const { colors } = useTheme()
 
-
-    const renderItem = (slide) => (
-        <View
+    const RenderSlide = ({slide}) => (
+       <Animated.View
           style={{
             backgroundColor: 'transparent', //transparent
             marginTop: 10,
+            flex: 1,
           }}
+          entering={(lastSliderIndex - currentSliderIndex) < 0 ? slideLeft : slideRight}
         >
           <View style={styles.imageView}>
-            <Image style={styles.image} source={slide.item.image} resizeMode="contain" />
+           <Image style={styles.image} source={slide.image as ImageSourcePropType} contentFit={'contain'} contentPosition={'center'}/>
           </View>
-          <View style={styles.textView}>
-            <Text style={[styles.text]} variant="headlineSmall">{slide.item.word1}</Text>
-            {/* <Text style={[styles.text]} variant="headlineSmall">{slide.item.word2}</Text> */}
+          <View style={{...styles.textView }}>
+            <Text variant="headlineSmall"  >{slide.word1}</Text>
           </View>
-        </View>
-      )
-
-
+        </Animated.View>
+    )
 
     return (
       <SheetModal ref={appFeaturesSheetRef} snapsAt={['60%']} onDismiss={handleDismiss} title="What's new?">
         <View style={{flex: 1, alignItems: 'center' }}>
-        <BottomSheetFlatList
-          ref={sliderRef}
-          data={slides}
-          renderItem={renderItem}
-          maxToRenderPerBatch={3}
-          windowSize={3}
-          contentContainerStyle={{
-            zIndex: 2,
-          }}
-          keyExtractor={(item) => item.key}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          pagingEnabled
-          scrollEnabled = {false}
-          // viewabilityConfig={{
-          //   itemVisiblePercentThreshold: 90
-          // }}
-          // onViewableItemsChanged={
-          //   useCallback(
-          //     (({viewableItems}) => {
-          //         if(viewableItems.length > 0 && viewableItems[0].index) {
-          //           setCurrentSliderIndex(() => viewableItems[0].index)
-          //         }
-          //       }), [])
-          // }
-          // debug
-        />
+        
+         
+       <RenderSlide slide={slides[currentSliderIndex ?? 0]} />
+        
         </View>
         <View style={{width: '100%', height: 60, backgroundColor: colors.primaryContainer}}>
           <DotPaginator
                 totalPages={slides.length}
-                // currentPageIndex={currentSliderIndex}
-                onPageChanged={(index) => {
-                          sliderRef.current?.scrollToIndex({
-                            index: index,
-                            animated: true,
-                          })
-                      }}
-                    />
+                onPageChanged={(index) => { 
+                  setCurrentSliderIndex(
+                    (lastIndex) => {
+                      setLastSliderIndex(() => lastSliderIndex)
+                      return index;
+                    }
+                  ) 
+                }}
+                />
         </View>
       </SheetModal>
     )
-  }
-
-  AppFeaturesIntro.propTypes = {
-    show: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
   }
 
   export default AppFeaturesIntro

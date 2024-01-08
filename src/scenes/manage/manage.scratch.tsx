@@ -12,15 +12,15 @@ import {
   doc, deleteDoc, onSnapshot, collection, query, where, getDocs, serverTimestamp, updateDoc,
 } from 'firebase/firestore'
 import { signOut, deleteUser } from 'firebase/auth'
-import { ScreenTemplate } from '../../components/templates'
-import Button from '../../components/core/button'
-// import Restart from '../../utils/Restart'
-import { firestore, auth } from '../../firebase'
+import { ScreenTemplate } from '@/components/template'
+import Button from '@/components/core/button'
+// import Restart from '@/utils/Restart'
+import { firestore, auth } from '@/firebase'
 import { UserDataContext } from '../../context'
-import AvatarOfAuthUser from '../../components/avatar-of-auth-user'
-import sendNotification from '../../utils/send-notification'
-import TestFontsize from '../../components/test-font-size'
-import ListItemConnection from '../../components/list-item-connection'
+import AvatarOfAuthUser from '@/components/avatar-of-auth-user'
+import sendNotification from '@/utils/send-notification'
+import TestFontsize from '@/components/test-font-size'
+import ListItemConnection from '@/components/list-item-connection'
 
 const Styles = (colors, fonts) => StyleSheet.create({
   main: {

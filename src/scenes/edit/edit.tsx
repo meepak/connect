@@ -14,15 +14,15 @@ import {
   reauthenticateWithCredential,
 } from 'firebase/auth'
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
-import { firestore, auth } from '../../firebase'
-import { ScreenTemplate } from '../../components/templates'
-import Button from '../../components/core/button'
-import TextInputBox from '../../components/core/text-input-box'
-import Checkbox from '../../components/core/checkbox'
+import { firestore, auth } from '@/firebase'
+import { ScreenTemplate } from '@/components/template'
+import Button from '@/components/core/button'
+import TextInputBox from '@/components/core/text-input-box'
+import Checkbox from '@/components/core/checkbox'
 import { UserDataContext } from '../../context'
-import { showToast } from '../../utils/show-toast'
-import AvatarOfAuthUser from '../../components/avatar-of-auth-user'
-// import mergeJsonObjects from '../../utils/functions'
+import { showToast } from '@/utils/show-toast'
+import AvatarOfAuthUser from '@/components/avatar-of-auth-user'
+// import mergeJsonObjects from '@/utils/functions'
 
 export default function Edit() {
   const { colors, fonts } = useTheme()

@@ -1,13 +1,13 @@
 import React from 'react'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 
-import Profile from '../../scenes/profile'
-import EditIntro from '../../scenes/profile/edit-intro'
-import EditKeySummary from '../../scenes/profile/edit-key-summary'
-import EditExperiences from '../../scenes/profile/edit-experiences'
-import EditExperience from '../../scenes/profile/edit-experience'
-import SelectLocation from '../../scenes/location'
-import Occupation from '../../scenes/occupation'
+import Profile from '@/scenes/profile'
+import EditIntro from '@/scenes/profile/edit-intro'
+import EditKeySummary from '@/scenes/profile/edit-key-summary'
+import EditExperiences from '@/scenes/profile/edit-experiences'
+import EditExperience from '@/scenes/profile/edit-experience'
+import SelectLocation from '@/scenes/location'
+import Occupation from '@/scenes/occupation'
 
 const Stack = createStackNavigator()
 

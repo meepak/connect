@@ -5,9 +5,9 @@ import {
 } from 'react-native-paper'
 import { useRoute, useFocusEffect, useNavigation } from '@react-navigation/native'
 // import layout from 'theme'
-import { ScreenTemplate } from '../../components/templates'
+import { ScreenTemplate } from '@/components/template'
 import { HomeTitleContext } from '../../context'
-// import storage from '../../utils/Storage'
+// import storage from '@/utils/Storage'
 // TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE
 
 const Styles = (fonts) => StyleSheet.create({

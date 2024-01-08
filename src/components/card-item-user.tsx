@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native'
 import {
   Text, useTheme, Card,
 } from 'react-native-paper'
-import imageAssets from '../theme/images'
+import imageAssets from '@/theme/images'
 
 const CardItemUser = ({
   name, industry, location, occupation, image, onPress, viewedAt,

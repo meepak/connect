@@ -6,77 +6,78 @@ import { useTheme, Button, Text } from 'react-native-paper'
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 // import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Spinner from 'react-native-loading-spinner-overlay'
-import { ScreenTemplate } from '../../components/templates'
-// import Button from '../../components/core/button'
-import { firestore } from '../../firebase'
-import { UserDataContext } from '../../context'
+import { ScreenTemplate } from '@/components/template'
+// import Button from '@/components/core/button'
+import { auth, firestore } from '@/firebase'
 
-import Header from './__header'
-import WhoAmI from './_who-am-i'
-import SelectIndustries from './_industries'
-import SelectBusinessStage from './_business-stage'
-import SelectOperationMode from './_operation-mode'
-import SelectLocation from './_location'
-import SelectWorkArrangementPreference from './_work-arrangement'
-import SelectCommunicationPreference from './_communication'
-import SelectPartnerTypes from './_partner-types'
-import SelectEducation from './_education'
-import SelectOccupations from './_occupation'
-import SelectYesNo from './_yes-no'
+import Header from '@/scenes/onboarding/__header'
+import WhoAmI from '@/scenes/onboarding/_who-am-i'
+import SelectIndustries from '@/scenes/onboarding/_industries'
+import SelectBusinessStage from '@/scenes/onboarding/_business-stage'
+import SelectOperationMode from '@/scenes/onboarding/_operation-mode'
+import SelectLocation from '@/scenes/onboarding/_location'
+import SelectWorkArrangementPreference from '@/scenes/onboarding/_work-arrangement'
+import SelectCommunicationPreference from '@/scenes/onboarding/_communication'
+import SelectPartnerTypes from '@/scenes/onboarding/_partner-types'
+import SelectEducation from '@/scenes/onboarding/_education'
+import SelectOccupations from '@/scenes/onboarding/_occupation'
+import SelectYesNo from '@/scenes/onboarding/_yes-no'
 
-import Styles from './styles'
+import Styles from '@/scenes/onboarding/styles'
+import { useAuthUser } from '@/context'
+import { signOut } from 'firebase/auth'
 
-// import mergeJsonObjects from '../../utils/functions'
+// import mergeJsonObjects from '@/utils/functions'
 
 export default function OnBoarding() {
   const ref = useRef(null)
-  const { userData } = useContext(UserDataContext)
+  const { authUser } = useAuthUser();
   const { colors, fonts } = useTheme()
   const styles = Styles(colors, fonts)
 
-  const [avatar, setAvatar] = useState(userData.avatar)
-  const [fullName] = useState(userData.fullName)
-  const [phone] = useState(userData.phone ?? '')
+  const [avatar, setAvatar] = useState(authUser?.data?.avatar)
+  const [fullName] = useState(authUser?.data?.fullName)
+  const [phone] = useState(authUser?.data?.phone ?? '')
   const [spinner, setSpinner] = useState(false)
 
   // OnBoarding data
-  const [whoAmI, setWhoAmI] = useState(userData.whoAmI ?? '')
+  const [whoAmI, setWhoAmI] = useState(authUser?.data?.whoAmI ?? '')
   const [whoAmIError, setWhoAmIError] = useState(false)
 
-  const [industries, setIndustries] = useState(userData.industries ?? [])
+  const [industries, setIndustries] = useState(authUser?.data?.industries ?? [])
   const [industriesError, setIndustriesError] = useState(false)
 
-  const [businessStage, setBusinessStage] = useState(userData.businessStage ?? '')
+  const [businessStage, setBusinessStage] = useState(authUser?.data?.businessStage ?? '')
   const [businessStageError, setBusinessStageError] = useState(false)
 
-  const [operationMode, setOperationMode] = useState(userData.operationMode ?? '')
+  const [operationMode, setOperationMode] = useState(authUser?.data?.operationMode ?? '')
   const [operationModeError, setOperationModeError] = useState(false)
 
-  const [location, setLocation] = useState(userData.location ?? '')
+  const [location, setLocation] = useState(authUser?.data?.location ?? '')
   const [locationError, setLocationError] = useState(false)
 
-  const [workArrangementPreference, setWorkArrangementPreference] = useState(userData.workArrangementPreference ?? '')
+  const [workArrangementPreference, setWorkArrangementPreference] = useState(authUser?.data?.workArrangementPreference ?? '')
   const [workArrangementPreferenceError, setWorkArrangementPreferenceError] = useState(false)
 
-  const [communicationPreference, setCommunicationPreference] = useState(userData.communicationPreference ?? [])
+  const [communicationPreference, setCommunicationPreference] = useState(authUser?.data?.communicationPreference ?? [])
   const [communicationPreferenceError, setCommunicationPreferenceError] = useState(false)
 
-  const [partnerTypes, setPartnerTypes] = useState(userData.partnerTypes ?? [])
+  const [partnerTypes, setPartnerTypes] = useState(authUser?.data?.partnerTypes ?? [])
   const [partnerTypesError, setPartnerTypesError] = useState(false)
 
-  const [education, setEducation] = useState(userData.education ?? '')
+  const [education, setEducation] = useState(authUser?.data?.education ?? '')
   const [educationError, setEducationError] = useState(false)
 
-  const [occupations, setOccupations] = useState(userData.occupations ?? [])
+  const [occupations, setOccupations] = useState(authUser?.data?.occupations ?? [])
   const [occupationError, setOccupationError] = useState(false)
 
-  const [ndaSign, setNdaSign] = useState(userData.ndaSign ?? '')
+  const [ndaSign, setNdaSign] = useState(authUser?.data?.ndaSign ?? '')
   const [ndaSignError, setNdaSignError] = useState(false)
 
-  const [requireBackgroundCheck, setRequireBackgroundCheck] = useState(userData.requireBackgroundCheck ?? '')
+  const [requireBackgroundCheck, setRequireBackgroundCheck] = useState(authUser?.data?.requireBackgroundCheck ?? '')
   const [requireBackgroundCheckError, setRequireBackgroundCheckError] = useState(false)
 
-  const [agreesBackgroundCheck, setAgreesBackgroundCheck] = useState(userData.agreesBackgroundCheck ?? '')
+  const [agreesBackgroundCheck, setAgreesBackgroundCheck] = useState(authUser?.data?.agreesBackgroundCheck ?? '')
   const [agreeBackgroundCheckError, setAgreesBackgroundCheckError] = useState(false)
 
   const [coordinates, setCoordinates] = useState([])
@@ -180,10 +181,10 @@ export default function OnBoarding() {
     }
     try {
       const data = {
-        id: userData.id,
+        id: authUser?.data?.id,
         fullName,
         phone,
-        email: userData.email,
+        email: authUser?.data?.email,
         isOnboard: true,
         whoAmI,
         industries,
@@ -201,15 +202,19 @@ export default function OnBoarding() {
         updatedAt: serverTimestamp(),
       }
       // only update avatar if it was updated
-      if (avatar !== userData.avatar) {
+      if (avatar !== authUser?.data?.avatar) {
         data.avatar = avatar
       }
-      const usersRef = doc(firestore, 'users', userData.id)
+      const usersRef = doc(firestore, 'users', authUser?.data?.id)
       await updateDoc(usersRef, data)
-      // const updatedUserData = mergeJsonObjects(userData, data)
+      // const updatedUserData = mergeJsonObjects(authUser?.data, data)
       // setUserData(updatedUserData)
       // console.log('Updated User Data')
       // console.log(updatedUserData)
+
+      //temporary change, lets sign out for now..
+      signOut(auth)
+
     } catch (e) {
       // TODO: navigate to error screen, log errors for later debugging
       Alert.alert('Error', e.message)
@@ -227,7 +232,7 @@ export default function OnBoarding() {
       >
 
         <Header
-          fullName={userData.fullName}
+          fullName={authUser?.data?.fullName}
           onAvatarChanged={(item) => setAvatar(item)}
         />
 

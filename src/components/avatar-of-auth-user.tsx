@@ -7,9 +7,9 @@ import {
   useTheme,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import Avatar from './core/avatar'
-import { UserDataContext } from '../context'
-import ImageSelectAndUpload from '../utils/image-select-and-upload'
+import Avatar from '@/components/core/avatar'
+import { useAuthUser } from '@/context'
+import ImageSelectAndUpload from '@/utils/image-select-and-upload'
 
 // const styles = StyleSheet.create({
 //   progressView: {
@@ -50,13 +50,13 @@ const AvatarOfAuthUser = ({
 }) => {
   const { colors } = useTheme()
   const iconSize = getIconSize(size)
-  const { userData } = useContext(UserDataContext)
+  const { authUser } = useAuthUser();
   // const [setProgress] = useState('')
-  const [avatar, setAvatar] = useState(userData.avatar ?? null)
+  const [avatar, setAvatar] = useState(authUser?.data?.avatar ?? null)
 
   useEffect(() => {
-    setAvatar(userData.avatar)
-  }, [userData.avatar])
+    setAvatar(authUser?.data?.avatar)
+  }, [authUser?.data?.avatar])
 
   const handleAvatarUpdated = (updatedAvatar) => {
     if (updatedAvatar) {
@@ -79,11 +79,11 @@ const AvatarOfAuthUser = ({
       <Avatar
         size={size}
         rounded={rounded}
-        fullName={userData.fullName ?? null}
+        fullName={authUser?.data?.fullName ?? null}
         url={avatar ?? null}
         onPress={() => {
           if (onEdited) {
-            ImageSelectAndUpload({ userId: userData.id, onFinished: handleAvatarUpdated })
+            ImageSelectAndUpload({ userId: authUser?.data?.id, onFinished: handleAvatarUpdated })
           } else if (onPress) {
             onPress()
           }
@@ -108,7 +108,7 @@ const AvatarOfAuthUser = ({
               icon='plus'
               iconColor={colors.primary}
               onPress={() => (
-                ImageSelectAndUpload({ userId: userData.id, onFinished: handleAvatarUpdated })
+                ImageSelectAndUpload({ userId: authUser?.data?.id, onFinished: handleAvatarUpdated })
               )}
             />
           )

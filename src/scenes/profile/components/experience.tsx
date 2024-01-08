@@ -5,11 +5,11 @@ import {
 import { Text, Surface, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
-import Icon from '../../../components/core/icon'
-import PencilIconButton from '../../../components/pencil-icon-button'
+import Icon from '@/components/core/icon'
+import PencilIconButton from '@/components/pencil-icon-button'
 import { UserDataContext } from '../../../context'
 import Styles from './_styles'
-import IconLink from '../../../components/core/icon-link'
+import IconLink from '@/components/core/icon-link'
 
 const Experience = (
   {

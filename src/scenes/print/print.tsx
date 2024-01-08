@@ -3,9 +3,9 @@ import {
   StyleSheet, ScrollView,
 } from 'react-native'
 import axios from 'axios'
-import { ScreenTemplate } from '../../components/templates'
+import { ScreenTemplate } from '@/components/template'
 import RenderItem from './render-item'
-import layout from '../../theme'
+import layout from '@/theme'
 
 const styles = StyleSheet.create({
   container: {

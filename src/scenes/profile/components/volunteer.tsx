@@ -5,8 +5,8 @@ import {
 import { Text, Surface, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
-import Icon from '../../../components/core/icon'
-import PencilIconButton from '../../../components/pencil-icon-button'
+import Icon from '@/components/core/icon'
+import PencilIconButton from '@/components/pencil-icon-button'
 import Styles from './_styles'
 
 const Volunteer = (

@@ -3,7 +3,7 @@ import { useWindowDimensions } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
 import { ChatRecent, ChatConnections } from '.'
-import { ModalTemplate } from '../../components/templates'
+import { ModalTemplate } from '@/components/template'
 import Header from './components/header'
 
 const renderScene = SceneMap({

@@ -4,7 +4,7 @@ import {
 } from 'react-native'
 import { Icon, Text, TouchableRipple } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import { convertHexToRGBA } from '../../utils/functions'
+import { convertHexToRGBA } from '@/utils/functions'
 
 const Button = (props) => {
   const {

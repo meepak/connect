@@ -12,13 +12,13 @@ import { Text, useTheme } from 'react-native-paper'
 // import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { ScreenTemplate } from '../../components/templates'
-import Logo from '../../components/core/logo'
-import imageAssets from '../../theme/images'
-import RenderCounter from '../../components/render-counter'
-import PlayGround from '../../components/svg-animation/play-ground'
+import { ScreenTemplate } from '@/components/template'
+import Logo from '@/components/core/logo'
+import imageAssets from '@/theme/images'
+import RenderCounter from '@/components/render-counter'
+import PlayGround from '@/components/svg-animation/play-ground'
 
-const screenWidth = Dimensions.get('screen').width
+const screenWidth = Dimensions.get('window').width
 // TODO get colors from theme
 const Styles = (colors) => StyleSheet.create({
   image: {

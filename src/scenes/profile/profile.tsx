@@ -2,7 +2,7 @@ import React from 'react'
 import { useRoute } from '@react-navigation/native'
 import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { ScreenTemplate } from '../../components/templates'
+import { ScreenTemplate } from '@/components/template'
 
 // Temporary measure to get user id of logged in user to test banner upload
 import ProfileCore from './profile-core'

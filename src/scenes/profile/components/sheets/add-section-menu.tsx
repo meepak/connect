@@ -10,8 +10,8 @@ import {
 } from '@react-navigation/native'
 import PropTypes from 'prop-types'
 
-import IconLink from '../../../../components/core/icon-link'
-import SheetModal from '../../../../components/core/sheet-modal'
+import IconLink from '@/components/core/icon-link'
+import SheetModal from '@/components/core/sheet-modal'
 
 const AddSectionMenu = ({ show, onClose }) => {
   const addSectionSheetRef = useRef()

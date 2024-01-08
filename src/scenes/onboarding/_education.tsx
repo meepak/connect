@@ -3,7 +3,7 @@ import {
   Surface, Text, Divider, useTheme,
 } from 'react-native-paper'
 import PropTypes from 'prop-types'
-import RadioButtonGroup from '../../components/core/radio-button-group'
+import RadioButtonGroup from '@/components/core/radio-button-group'
 import Styles from './styles'
 
 const educationLevels = [

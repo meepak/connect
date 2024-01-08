@@ -17,8 +17,8 @@ import {
   renderInputToolbar, renderActions, renderComposer, renderSend,
 } from './input-toolbar'
 import { UserDataContext } from '../../context'
-import { firestore } from '../../firebase'
-import { ScreenTemplate } from '../../components/templates'
+import { firestore } from '@/firebase'
+import { ScreenTemplate } from '@/components/template'
 
 // import SlackMessage from './SlackMessage'
 

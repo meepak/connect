@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import Settings from '../../scenes/settings'
+import Settings from '@/scenes/settings'
 
 const Stack = createStackNavigator()
 

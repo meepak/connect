@@ -12,9 +12,9 @@ import {
   useTheme,
 } from 'react-native-paper'
 // import PropTypes from 'prop-types'
-import { convertHexToRGBA, splitName } from '../../../../utils/functions'
-import Avatar from '../../../../components/core/avatar'
-import RenderCounter from '../../../../components/render-counter'
+import { convertHexToRGBA, splitName } from '@/utils/functions'
+import Avatar from '@/components/core/avatar'
+import RenderCounter from '@/components/render-counter'
 
 const styles = StyleSheet.create({
   container: {

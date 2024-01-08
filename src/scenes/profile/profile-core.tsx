@@ -15,7 +15,7 @@ import {
   doc, updateDoc,
 } from 'firebase/firestore'
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet'
-import { firestore } from '../../firebase'
+import { firestore } from '@/firebase'
 
 import Styles from './components/_styles'
 import Banner from './components/banner'

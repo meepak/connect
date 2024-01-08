@@ -4,7 +4,7 @@ import React, {
 import { useTheme } from 'react-native-paper'
 import PropTypes from 'prop-types'
 
-// import IconLink from '../../../../components/core/IconLink'
+// import IconLink from '@/components/core/IconLink'
 import WebView from 'react-native-webview'
 import SheetModal from './core/sheet-modal'
 import tnc from '../../assets/tnc'

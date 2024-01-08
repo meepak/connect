@@ -2,7 +2,7 @@ import React, {
   useDeferredValue, useEffect, useId, useRef, useState,
 } from 'react'
 import { View } from 'react-native'
-import { ModalTemplate } from '../../components/templates'
+import { ModalTemplate } from '@/components/template'
 import Header from './components/header'
 import Recent from './components/recent'
 import Temp from './components/template'
