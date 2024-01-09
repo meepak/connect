@@ -22,7 +22,7 @@ const Intro = () => {
         height={VIEW_HEIGHT}
         enterTime={ENTER_DURATION}
       />
-      <Button onPress={() => navigation.navigate('Sign in')} mode="outlined">
+      <Button onPress={() => navigation.navigate('Sign in' as never)} mode="outlined">
         <Text variant="bodyLarge">Enter</Text>
       </Button>
       <Button onPress={() => setShowAppFeatures(true)} mode="outlined">

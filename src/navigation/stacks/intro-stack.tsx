@@ -1,5 +1,8 @@
 import React from 'react'
-import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from '@react-navigation/stack'
 
 import { SignIn, SignUp } from '@/scenes/auth'
 import Intro from '@/scenes/intro'
@@ -16,28 +19,28 @@ const IntroStack = () => (
       headerTitle: '',
     })}
   >
-    <Stack.Screen
-      name="Intro"
-      component={Intro}
-    />
+    <Stack.Screen name="Intro" component={Intro} />
 
     <Stack.Screen
       name="Sign up"
       component={SignUp}
-      options={{
-        // ...TransitionPresets.DefaultTransition,
-        // ...TransitionPresets.SlideFromRightIOS,
-        // gestureDirection: 'horizontal-inverted',
-      }}
+      options={
+        {
+          // ...TransitionPresets.DefaultTransition,
+          // ...TransitionPresets.SlideFromRightIOS,
+          // gestureDirection: 'horizontal-inverted',
+        }
+      }
     />
     <Stack.Screen
       name="Sign in"
       component={SignIn}
-      options={{
-        // ...TransitionPresets.DefaultTransition,
-      }}
+      options={
+        {
+          // ...TransitionPresets.DefaultTransition,
+        }
+      }
     />
-
   </Stack.Navigator>
 )
 

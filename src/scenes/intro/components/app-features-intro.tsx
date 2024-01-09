@@ -92,6 +92,8 @@ const AppFeaturesIntro = ({ show = false, onClose = () => {} }) => {
   const [currentSliderIndex, setCurrentSliderIndex] = useState(0)
   const [lastSliderIndex, setLastSliderIndex] = useState(0)
 
+  const { colors } = useTheme()
+  
   const openMe = useCallback(() => {
     if (appFeaturesSheetRef.current) {
       appFeaturesSheetRef.current?.present()
@@ -118,7 +120,6 @@ const AppFeaturesIntro = ({ show = false, onClose = () => {} }) => {
     onClose()
   }, [])
 
-  const { colors } = useTheme()
 
   const RenderSlide = ({ slide }: { slide: SlideType }) => (
     <Animated.View
@@ -157,6 +158,7 @@ const AppFeaturesIntro = ({ show = false, onClose = () => {} }) => {
       snapsAt={['60%']}
       onDismiss={handleDismiss}
       title="Welcome to Find Associate!"
+      backgroundColor={colors.primaryContainer}
     >
       <View style={{ flex: 1, alignItems: 'center' }}>
         <RenderSlide slide={slides[currentSliderIndex ?? 0]} />

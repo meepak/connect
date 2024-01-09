@@ -7,8 +7,9 @@ import LoadingScreen from '@/components/animated/loading/loading-screen'
 import ErrorScreen from '@/components/error-screen'
 import { useAuthUser } from '@/context'
 import SvgAnimatedMuncheBg from '@/components/animated/svg-animated-munche-bg'
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 
-const { width, height } =  Dimensions.get('screen')
+const { width, height } = Dimensions.get('screen')
 interface ScreenTemplateProps {
   children: React.ReactNode
   isLoading?: boolean
@@ -48,7 +49,7 @@ const ScreenTemplate = ({
   )
 
   return (
-    <>
+    <BottomSheetModalProvider>
       <StatusBar
         hidden={false}
         style={authUser?.preferences?.isDark ? 'light' : 'dark'}
@@ -63,7 +64,7 @@ const ScreenTemplate = ({
       >
         {children}
       </SafeAreaView>
-    </>
+    </BottomSheetModalProvider>
   )
 }
 

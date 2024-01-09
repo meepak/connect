@@ -73,7 +73,6 @@ const SheetModal = forwardRef(
         index={index}
         $modal={true}
         overDragResistanceFactor={2.5}
-        enableDynamicSizing={true}
         topInset={insets.top}
         enablePanDownToClose={allowSwipeToClose}
         enableDismissOnClose

@@ -8,9 +8,7 @@ import IntroStack from './stacks/intro-stack'
 import OnboardingStack from './stacks/onboarding-stack'
 import RootStack from './stacks/root-stack'
 import { ScreenTemplate } from '@/components/template'
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 // import LoadingScreen from '@/components/loading-screen'
-
 
 export default function Navigation() {
   const { authUser } = useAuthUser()
@@ -27,15 +25,13 @@ export default function Navigation() {
       // temporary return to fix first part of app
       // return <OnboardingStack />
     }
-    
+
     return <IntroStack />
   }
 
   return (
-        <NavigationContainer theme={ theme }>
-          <BottomSheetModalProvider>
-          <ScreenTemplate>{getMainComponent()}</ScreenTemplate>
-          </BottomSheetModalProvider>
-        </NavigationContainer>
+    <NavigationContainer theme={theme}>
+      <ScreenTemplate>{getMainComponent()}</ScreenTemplate>
+    </NavigationContainer>
   )
 }
