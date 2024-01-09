@@ -1,5 +1,5 @@
 import React, {
-  useState, useContext, useCallback, useRef,
+  useState, useCallback, useRef,
 } from 'react'
 import {
   View, StyleSheet, Keyboard,
@@ -10,11 +10,10 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation } from '@react-navigation/native'
 
-import { ScreenTemplate } from '@/components/template'
 import TextInputBox from '@/components/core/text-input-box'
 // import storage from '@/utils/Storage'
 // TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE
-import { UserDataContext } from '../../context'
+import { useAuthUser } from '@/context'
 import { isValidName, isValidLength } from '@/utils/validation'
 import { HeaderProfile } from '@/components/header'
 import SheetModal from '@/components/core/sheet-modal'
@@ -23,7 +22,8 @@ export default function EditIntro() {
   const navigation = useNavigation()
   const { colors } = useTheme()
 
-  const { userData } = useContext(UserDataContext)
+   const { authUser } = useAuthUser()
+  const userData = authUser.data
   const [fullName, setFullName] = useState(userData.fullName)
   const [fullNameError, setFullNameError] = useState('')
   const [nickName, setNickName] = useState('')
@@ -98,7 +98,6 @@ export default function EditIntro() {
   })
 
   return (
-    <ScreenTemplate>
       <View style={styles.container}>
         <HeaderProfile
           title="Edit Intro"
@@ -301,6 +300,5 @@ export default function EditIntro() {
           </View>
         </SheetModal>
       </View>
-    </ScreenTemplate>
   )
 }

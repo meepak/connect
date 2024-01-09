@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, {
-  useContext, useEffect, useState,
+  useEffect, useState,
 } from 'react'
 import {
   Alert, View, StyleSheet,
@@ -17,27 +17,28 @@ import {
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { firestore } from '@/firebase'
 
-import Styles from './components/_styles'
-import Banner from './components/banner'
-import UserIntro from './components/user-intro'
-import Buttons from './components/buttons'
-import Summary from './components/summary'
-import AddSectionMenu from './components/sheets/add-section-menu'
+import Styles from '@/scenes/profile/components/_styles'
+import Banner from '@/scenes/profile/components/banner'
+import UserIntro from '@/scenes/profile/components/user-intro'
+import Buttons from '@/scenes/profile/components/buttons'
+import Summary from '@/scenes/profile/components/summary'
+import AddSectionMenu from '@/scenes/profile/components/sheets/add-section-menu'
 
+import Experience from '@/scenes/profile/components/experience'
+import Volunteer from '@/scenes/profile/components/volunteer'
+import Education from '@/scenes/profile/components/education'
+import Licenses from '@/scenes/profile/components/licenses'
+import Languages from '@/scenes/profile/components/languages'
 // Temporary measure to get user id of logged in user to test banner upload
-import { UserDataContext } from '../../context'
-import Experience from './components/experience'
-import Volunteer from './components/volunteer'
-import Education from './components/education'
-import Licenses from './components/licenses'
-import Languages from './components/languages'
+import { useAuthUser } from '@/context'
 
 // eslint-disable-next-line react/prop-types
 const ProfileCore = ({
   userId, userFullName, userAvatar, userBannerImage, sheetMode,
 }) => {
   const { colors, fonts } = useTheme()
-  const { userData } = useContext(UserDataContext)
+   const { authUser } = useAuthUser()
+  const userData = authUser.data
   const [bannerImage, setBannerImage] = useState(userBannerImage)
 
   const [spinner] = useState(false)

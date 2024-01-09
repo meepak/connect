@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 import React, {
-  useState, useContext, useLayoutEffect, useCallback,
+  useState, useLayoutEffect, useCallback,
 } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 import { View, Platform } from 'react-native'
@@ -16,7 +16,7 @@ import { Divider, useTheme } from 'react-native-paper'
 import {
   renderInputToolbar, renderActions, renderComposer, renderSend,
 } from './input-toolbar'
-import { UserDataContext } from '../../context'
+import { useAuthUser } from '@/context'
 import { firestore } from '@/firebase'
 import { ScreenTemplate } from '@/components/template'
 
@@ -27,7 +27,8 @@ const Chat = () => {
   const [messages, setMessages] = useState([])
   const navigation = useNavigation()
   const { colors, fonts } = useTheme() // Get colors and fonts from useTheme
-  const { userData } = useContext(UserDataContext)
+  const { authUser } = useAuthUser()
+  const userData = authUser.data
   const route = useRoute()
   const { userId, userFullName, userAvatar } = route.params
   const [currentChatGroupId, setCurrentChatGroupId] = useState(null)

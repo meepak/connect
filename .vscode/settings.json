@@ -24,15 +24,5 @@
     "unhide",
     "userdata",
     "viewability"
-  ],
-  "eslint.options": {},
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  },
-  "eslint.run": "onSave",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "[javascript]": {
-    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
-  }
+  ]
 }

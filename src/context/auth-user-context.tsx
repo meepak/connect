@@ -38,8 +38,8 @@ export enum AuthUserActionType {
 
 type Action =
   | { type: AuthUserActionType.SET_AUTH_STATUS; payload: AuthStatus }
-  | { type: AuthUserActionType.SET_USER_DATA; payload: UserData }
-  | { type: AuthUserActionType.SET_PREFERENCES; payload: Preferences };
+  | { type: AuthUserActionType.SET_USER_DATA; payload: UserData| null }
+  | { type: AuthUserActionType.SET_PREFERENCES; payload: Preferences | null };
 
 const authUserReducer = (authUser: AuthUser, action: Action): AuthUser => {
   switch (action.type) {
@@ -105,12 +105,12 @@ export const useAuthUser = () => {
  * import { AuthUserActionType, useAuthUser } from '@/context';
  * 
  * const SomeComponent = () => {
- *  const {authUser, dispatch} = useAuthUser();
+ *  const {authUser, dispatchAuthUser} = useAuthUser();
  *  useEffect(() => {
  *    // Fetch user data and update the state
  *    const fetchUserData = async () => {
  *    const userData = await someAsyncFunctionToFetchUserData();
- *    dispatch({ type:  AuthUserActionType.SET_USER_DATA, payload: userData });
+ *    dispatchAuthUser({ type:  AuthUserActionType.SET_USER_DATA, payload: userData });
  * };
  * 
  *  fetchUserData();

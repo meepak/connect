@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import {
   StyleSheet, View,
 } from 'react-native'
@@ -6,14 +6,14 @@ import {
   useTheme, Text,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
-import { UserDataContext } from '../../../context'
 import Button from '@/components/core/button'
 import NotificationSummaries from './notification-summary'
 import RenderCounter from '@/components/render-counter'
+import { useAuthUser } from '@/context'
 
 const Styles = () => StyleSheet.create({
   headerContainer: {
-    paddingTop: 10,
+    paddingTop: 30,
     marginBottom: 11,
   },
   searchButton: {
@@ -34,7 +34,9 @@ const Header = React.memo(({ handleNotificationIconPress, handleProfilePress }) 
   const { colors, fonts } = useTheme()
   const styles = Styles()
   const navigation = useNavigation()
-  const { userData } = useContext(UserDataContext)
+
+  const { authUser } = useAuthUser();
+  const userData = authUser.data
 
   const openSearch = () => {
     navigation.navigate('SearchStack', {

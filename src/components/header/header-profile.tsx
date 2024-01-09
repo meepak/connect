@@ -5,14 +5,12 @@ import {
 import { useTheme, IconButton, Button } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const HeaderProfile = ({
   icon, title, pendingChanges, onSave,
 }) => {
   const { colors, fonts } = useTheme()
   const navigation = useNavigation()
-  const insets = useSafeAreaInsets()
 
   useEffect(() => navigation.addListener('beforeRemove', (e) => {
     // if (Keyboard.isVisible()) { // covered in ScreenTemplate ??
@@ -47,13 +45,11 @@ const HeaderProfile = ({
 
   const styles = StyleSheet.create({
     header: {
-      top: insets.top,
       flexDirection: 'row',
       alignItems: 'center', // Center items vertically in the row
       justifyContent: 'space-between', // Space out items horizontally
       alignSelf: 'stretch',
       height: 85,
-      paddingBottom: insets.top,
       zIndex: 99,
     },
     cancelButton: {

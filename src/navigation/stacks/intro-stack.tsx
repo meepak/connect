@@ -9,10 +9,10 @@ const Stack = createStackNavigator()
 const IntroStack = () => (
   <Stack.Navigator
     screenOptions={() => ({
-      presentation: 'modal',
+      presentation: 'card',
       headerShown: false,
       gestureEnabled: true,
-      cardOverlayEnabled: true,
+      cardOverlayEnabled: false,
       headerTitle: '',
     })}
   >
@@ -25,15 +25,16 @@ const IntroStack = () => (
       name="Sign up"
       component={SignUp}
       options={{
-        ...TransitionPresets.SlideFromRightIOS,
-        gestureDirection: 'horizontal-inverted',
+        // ...TransitionPresets.DefaultTransition,
+        // ...TransitionPresets.SlideFromRightIOS,
+        // gestureDirection: 'horizontal-inverted',
       }}
     />
     <Stack.Screen
       name="Sign in"
       component={SignIn}
       options={{
-        ...TransitionPresets.DefaultTransition,
+        // ...TransitionPresets.DefaultTransition,
       }}
     />
 

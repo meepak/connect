@@ -35,9 +35,11 @@
     "expo-updates": "~0.18.18",
     "firebase": "^9.6.10",
     "ignore-warnings": "^0.2.1",
+    "jest-expo": "^49.0.0",
     "jotai": "^2.6.1",
     "lottie-ios": "^3.4.0",
     "lottie-react-native": "5.1.6",
+    "metro": "~0.76.7",
     "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-native": "0.72.6",
@@ -60,10 +62,6 @@
     "react-native-webview": "13.2.2",
     "react-native-wheel-picker-expo": "^0.5.4",
     "typescript": "*"
-  },
-  "resolutions": {
-    "semver": "~7.5.3",
-    "@expo/config-plugins": "~7.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
@@ -106,7 +104,7 @@
       "yarn lint"
     ]
   },
-  "jest": {
+    "jest": {
     "preset": "jest-expo",
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"

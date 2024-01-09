@@ -6,7 +6,9 @@ import {
 } from '@gorhom/bottom-sheet'
 import PropTypes from 'prop-types'
 import { View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { convertHexToRGBA } from '@/utils/functions'
+import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
 
 interface SheetModalProps {
   children: React.ReactNode
@@ -15,21 +17,29 @@ interface SheetModalProps {
   onDismiss?: () => void
   allowSwipeToClose?: boolean
   title?: string
+  marginHorizontal?: number
+  backgroundColor?: string
+  opacity?: number
 }
 
 const SheetModal = forwardRef(
       (
         {
           children = <></>,
-          snapsAt = ['25%', '50%', '75%', '100%'],
+          snapsAt = ['25%', '50%', '75%', '100%'], // TODO -- confine 100% within safe area
           index = 0,
           onDismiss = () => {},
           allowSwipeToClose = true,
           title = '',
+          marginHorizontal = 15,
+          backgroundColor = '',
+          opacity = 0.65,
+
         }: SheetModalProps,
         ref: Ref<any>
       ) => {
     const { colors } = useTheme()
+    const insets = useSafeAreaInsets()
     // refs
     //   const bottomSheetRef = useRef(null)
     // variables, TODO pass this as props
@@ -61,31 +71,49 @@ const SheetModal = forwardRef(
         ref={ref}
         snapPoints={snapPoints}
         index={index}
-        // overDragResistanceFactor={3}
-        topInset={0} // since this only works in android, do not rely on it, use inset provided by safe area view
+        $modal={true}
+        overDragResistanceFactor={2.5}
+        enableDynamicSizing={true}
+        topInset={insets.top}
         enablePanDownToClose={allowSwipeToClose}
         enableDismissOnClose
         onDismiss={onDismiss}
         onChange={handleChange}
-        backdropComponent={({ animatedIndex, style }) => (
-          <BottomSheetBackdrop
-            animatedIndex={animatedIndex}
-            style={[
-              style,
-              {
-                backgroundColor: colors.background,
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-              },
-            ]}
-            disappearsOnIndex={-1} animatedPosition={{
-              value: 0
-            }}          />
-        )}
+        // backdropComponent={({ animatedIndex, style }) => (
+        //   <BottomSheetBackdrop
+        //     animatedIndex={animatedIndex}
+        //     style={[
+        //       style,
+        //       {
+        //         backgroundColor: colors.background,
+        //         position: 'absolute',
+        //         top: 0,
+        //         left: 0,
+        //         right: 0,
+        //       },
+        //     ]}
+        //     disappearsOnIndex={-1} animatedPosition={{
+        //       value: 0
+        //     }}          />
+        // )}
         backgroundStyle={{
           /* backgroundColor: colors.elevation.level3,*/ borderRadius: 20,
+          // backgroundColor: 'transparent',
+          backgroundColor:
+            backgroundColor === '' ? colors.primaryContainer : backgroundColor,
+          opacity: opacity,
+          marginHorizontal: marginHorizontal,
+          // borderWidth: 1,
+          // borderColor: colors.onBackground,
+          // paddingHorizontal: 20,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 2,
+            height: 4,
+          },
+          shadowOpacity: 0.4,
+          shadowRadius: 5,
+          elevation: 4,
         }}
         handleIndicatorStyle={{ height: 0 }}
         handleComponent={() => (
@@ -109,7 +137,7 @@ const SheetModal = forwardRef(
               numberOfLines={1}
               style={{
                 marginBottom: 10,
-                fontWeight: "500",
+                fontWeight: '500',
               }}
             >
               {title}

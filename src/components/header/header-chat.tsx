@@ -20,7 +20,7 @@ export default function HeaderChat() {
 
   const styles = StyleSheet.create({
     headerContent: {
-      top: 15, // Platform.OS === 'android' ? insets.top : 30,
+      // top: 15, // Platform.OS === 'android' ? insets.top : 30,
       width: '100%',
       paddingBottom: 25,
       flexDirection: 'row',

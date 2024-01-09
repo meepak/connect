@@ -81,6 +81,7 @@ const AnimatedSplash: React.FC<AnimatedSplashProps> = ({
   bgColor,
   strokeWidth,
 }) => {
+  // console.log('In animated splash')
   const logoDimension = useSharedValue(LOGO_INITIAL_DIMENSION)
   const textWidth = useSharedValue(TEXT_INITIAL_WIDTH)
   const logoOpacity = useSharedValue(0.2)

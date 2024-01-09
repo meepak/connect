@@ -1,30 +1,32 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { Alert } from 'react-native'
 import {
   IconButton, Text, Card, Menu,
 } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { signOut } from 'firebase/auth'
-import { useAtom } from 'jotai'
 import { auth } from '@/firebase'
-import { UserDataContext } from '../../../context'
+import { AuthStatus, AuthUserActionType, useAuthUser } from '@/context'
 import AvatarOfAuthUser from '@/components/avatar-of-auth-user'
-import userAuthenticatedAtom from '@/utils/atom'
 
 // Will provide button for Edit Profile, Sign Out, Delete Account (scroll to the bottom)
 const Account = () => {
   const navigation = useNavigation()
   const [menuVisible, setMenuVisible] = useState(false)
-  const { userData, setUserData } = useContext(UserDataContext)
-  const [, setUserAuthenticated] = useAtom(userAuthenticatedAtom)
+  const { authUser, dispatchAuthUser } = useAuthUser()
+  const userData = authUser.data
+  
 
   // will need more work regarding unsubscribing from snapshot
   const onSignOutPress = () => {
     signOut(auth)
       .then(() => {
         // console.log('onSignOutPress')
-        setUserData({})
-        setUserAuthenticated(null)
+        dispatchAuthUser({ type:  AuthUserActionType.SET_USER_DATA, payload: null });
+        dispatchAuthUser({
+          type: AuthUserActionType.SET_AUTH_STATUS,
+          payload: AuthStatus.NotAuthenticated,
+        })
         // Restart() // do not restart, just go back to pre login page
       })
       .catch((error) => {

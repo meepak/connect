@@ -1,8 +1,6 @@
-import React, {
-  useContext,
-} from 'react'
+import React from 'react'
 import {
-  View, StyleSheet, SafeAreaView,
+  View, StyleSheet,
 } from 'react-native'
 import {
   useTheme,
@@ -11,10 +9,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useNavigation } from '@react-navigation/native'
 
 // import { TouchableOpacity } from 'react-native-gesture-handler'
-import { ScreenTemplate } from '@/components/template'
 // import storage from '@/utils/Storage'
 // TODO FIGURE THIS OUT WITH ASYNC-STORAGE & UPDATE UTILS/STORAGE
-import { UserDataContext } from '../../context'
+import { useAuthUser } from '@/context'
 // import { isValidName, isValidLength } from '@/utils/validation'
 import { HeaderProfile } from '@/components/header'
 import IconLink from '@/components/core/icon-link'
@@ -25,7 +22,8 @@ export default function EditExperiences() {
   const navigation = useNavigation()
   const { colors } = useTheme()
 
-  const { userData } = useContext(UserDataContext)
+   const { authUser } = useAuthUser()
+  const userData = authUser.data
   // const [fullName, setFulName] = useState(userData.fullName)
   // const [fullNameError, setFullNameError] = useState('')
 
@@ -67,8 +65,7 @@ export default function EditExperiences() {
   */
 
   return (
-    <ScreenTemplate>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <HeaderProfile
           icon="chevron-left"
           title="Edit Experiences"
@@ -96,7 +93,6 @@ export default function EditExperiences() {
           {/* Empty space at bottom of page */}
           <View style={styles.footer} />
         </KeyboardAwareScrollView>
-      </SafeAreaView>
-    </ScreenTemplate>
+      </View>
   )
 }

@@ -1,19 +1,20 @@
-import React, { useContext } from 'react'
-import { StyleSheet, View } from 'react-native'
+import React from 'react'
+import { ColorValue, StyleSheet, View } from 'react-native'
 import { IconButton, useTheme } from 'react-native-paper'
 
 import { useNavigation } from '@react-navigation/native'
 // import { TouchableOpacity } from 'react-native-gesture-handler'
 import AvatarOfAuthUser from '../avatar-of-auth-user'
-import { UserDataContext } from '../../context'
 
 import { convertHexToRGBA } from '@/utils/functions'
+import { useAuthUser } from '@/context'
 
 const HeaderHome = () => {
   const navigation = useNavigation()
   const { colors } = useTheme()
   const onBgColor = colors.onBackground
-  const { userData } = useContext(UserDataContext)
+  const { authUser } = useAuthUser()
+  const userData = authUser.data
 
   const styles = StyleSheet.create({
     container: {
@@ -31,7 +32,7 @@ const HeaderHome = () => {
     rightIcon: {
       marginRight: -5,
       marginLeft: 18,
-      backgroundColor: convertHexToRGBA(colors.onBackground, 0.1),
+      backgroundColor: convertHexToRGBA(colors.onBackground, 0.1) as ColorValue,
     },
     leftIcon: {
       borderWidth: 1,

@@ -15,7 +15,7 @@ const IntroSceneOne = ({width, height, enterTime}) => {
         container: {
             width: width,
             height: height,
-            // flex: 1,
+            flex: 1,
 
             // backgroundColor: colors.surfaceContainerHighest,
             // below line causes view shadow calculation warning in IOS, note for similar cases
@@ -39,9 +39,9 @@ const IntroSceneOne = ({width, height, enterTime}) => {
             // shadowRadius: 4,
             // elevation: 4,
         },
-        lottie: {
-          width: width,
-        }
+        // lottie: {
+        //   width: width,
+        // }
     })
 
 

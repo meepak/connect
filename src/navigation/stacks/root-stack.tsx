@@ -20,7 +20,8 @@ Notifications.setNotificationHandler({
 })
 
 export default function RootStack() {
-  // const { userData } = useContext(UserDataContext)
+  //  const { authUser } = useAuthUser()
+  // const userData = authUser.data
   // const isIos = Platform.OS === 'ios'
 
   // TODO -- TAKE CARE OF NOTIFICATION WHEN IT COMES TO THAT

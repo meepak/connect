@@ -4,10 +4,12 @@ import React, {
 import PropTypes from 'prop-types'
 
 import SheetModal from '@/components/core/sheet-modal'
-import ProfileCore from './profile-core'
+import ProfileCore from '@/scenes/profile/profile-core'
+import { useTheme } from 'react-native-paper'
 
 const ProfileSheet = ({ show, onClose, user }) => {
   const addSectionSheetRef = useRef()
+  const { colors } = useTheme()
 
   const openMenu = useCallback(() => {
     if (addSectionSheetRef.current) {
@@ -37,10 +39,13 @@ const ProfileSheet = ({ show, onClose, user }) => {
   return (
     <SheetModal
       ref={addSectionSheetRef}
-      snapsAt={['75%', '100%']}
+      snapsAt={['50%', '60%', '70%', '80%', '90%', '100%']}
       onDismiss={handleDismiss}
       // allowSwipeToClose={false}
       title={user?.name ?? ''}
+      opacity={0.9}
+      marginHorizontal={0}
+      backgroundColor={colors.backgroundOriginal}
     >
       <ProfileCore
         userId={user?.key ?? ''}

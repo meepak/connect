@@ -1,5 +1,5 @@
 import React, {
-  useState, useContext, useRef,
+  useState, useRef,
 } from 'react'
 import { Alert, ScrollView } from 'react-native'
 import { useTheme, Button, Text } from 'react-native-paper'

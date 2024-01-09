@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useRef } from 'react'
+import React, { useRef } from 'react'
 import { Text } from 'react-native-paper'
 import { useAuthUser } from '@/context'
 

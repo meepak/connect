@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Appearance, useColorScheme } from 'react-native'
+import { Appearance, ColorValue, useColorScheme } from 'react-native'
 import {
   MD3DarkTheme,
   MD3LightTheme,
@@ -27,13 +27,19 @@ import { hexThemeFromColor, prepareThemes } from '@/theme/custom'
 import { ASYNC_STORAGE_KEY, DISPLAY } from '@/utils/constants'
 import { getDefaultColors, sleepSync } from '@/utils/functions'
 import { AuthUserActionType, useAuthUser } from '@/context'
-import { NavigationTheme } from 'react-native-paper/lib/typescript/types'
+import {
+  NavigationTheme,
+  ThemeProp,
+} from 'react-native-paper/lib/typescript/types'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
-const { bgColor } = getDefaultColors(Appearance.getColorScheme())
-SystemUI.setBackgroundColorAsync(bgColor)
+// const { bgColor } = getDefaultColors(Appearance.getColorScheme())
+// SystemUI.setBackgroundColorAsync(bgColor)
 
+// TODO: Make this part of the app_loader as it's quick already it's better to get the theme prior if we can !
+// may be doesn't matter, will reevalute later
 const FindAssociate = () => {
-  const {authUser, dispatchAuthUser: dispatch} = useAuthUser();
+  const { authUser, dispatchAuthUser: dispatch } = useAuthUser()
   const systemTheme = useColorScheme()
   const [themePreference, setThemePreference] = React.useState('system')
   const [themeCustomColor, setThemeCustomColor] = React.useState('')
@@ -134,56 +140,81 @@ const FindAssociate = () => {
       isDark,
       debug,
       setDebug,
-      }
-      dispatch({type: AuthUserActionType.SET_PREFERENCES, payload: preferences})   
-  }, [themePreference, themeCustomColor, useCustomColor, setDebug],)
+    }
+    dispatch({ type: AuthUserActionType.SET_PREFERENCES, payload: preferences })
+  }, [themePreference, themeCustomColor, useCustomColor, setDebug])
 
   // simplified approach to theme building, test if it will work else copy back old implementation
   // Define the type of the theme
-  let adaptedTheme: { DarkTheme?: NavigationTheme; LightTheme?: NavigationTheme; dark?: boolean; colors?: { primary: string; background: string; card: string; text: string; border: string; notification: string } }
+  let adaptedTheme: {
+    DarkTheme?: NavigationTheme
+    LightTheme?: NavigationTheme
+    dark?: boolean
+    colors?: {
+      primary: string
+      background: string
+      card: string
+      text: string
+      border: string
+      notification: string
+    }
+  }
   let md3Theme: MD3Theme
   let m3: Material3Scheme
-  
+
   const { theme: m3Theme, updateTheme: updateTheme } = useCustomColor
-                                                        ?  useMaterial3Theme({sourceColor: themeCustomColor})
-                                                        : useMaterial3Theme()
+    ? useMaterial3Theme({ sourceColor: themeCustomColor })
+    : useMaterial3Theme()
 
   if (isDark) {
     adaptedTheme = adaptNavigationTheme({
       reactNavigationDark: NavigationDarkTheme,
-    });
-    md3Theme = MD3DarkTheme;
+    })
+    md3Theme = MD3DarkTheme
     m3 = m3Theme.dark
   } else {
     adaptedTheme = adaptNavigationTheme({
       reactNavigationLight: NavigationDefaultTheme,
-    });
-    md3Theme = MD3LightTheme;
-    m3 = m3Theme.light;
+    })
+    md3Theme = MD3LightTheme
+    m3 = m3Theme.light
   }
 
-    const paperTheme  = {
-      ...adaptedTheme,
-      ...md3Theme,
-      colors: {
-        ...m3
-      }
-    };  
+  // create extended paperTheme type to support backgroundOriginal property
+  type ExtendedThemeProp = ThemeProp & {
+    colors: {
+      backgroundOriginal?: string
+    }
+  }
+
+  const paperTheme: ExtendedThemeProp = {
+    ...adaptedTheme,
+    ...md3Theme,
+    colors: {
+      ...m3,
+    },
+  }
+
+  // replace background value in colors with transparent while saving original value in backgroundOriginal
+  paperTheme.colors.backgroundOriginal = paperTheme.colors.background
+  paperTheme.colors.background = 'transparent'
 
   // solution to white flash for android while keyboard appears
   // doing it again here because user preference may override system setting
-  SystemUI.setBackgroundColorAsync(paperTheme.colors.background)
+  // SystemUI.setBackgroundColorAsync(paperTheme.colors.background as ColorValue)
 
   // console.log('App.js loaded')
   const paperSettings = {
     icon: (props: any) => <Icon {...props} />,
   }
   return (
-      <PaperProvider settings={paperSettings} theme={paperTheme}>
-        <SafeAreaProvider>
-          <Navigation />
-        </SafeAreaProvider>
-      </PaperProvider>
+    <PaperProvider settings={paperSettings} theme={paperTheme}>
+      <SafeAreaProvider>
+        <GestureHandlerRootView>
+            <Navigation />
+        </GestureHandlerRootView>
+      </SafeAreaProvider>
+    </PaperProvider>
   )
 }
 

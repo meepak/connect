@@ -1,5 +1,5 @@
 import React, {
-  useState, useCallback, useContext, useLayoutEffect,
+  useState, useCallback, useLayoutEffect,
 } from 'react'
 import {
   ScrollView, StyleSheet, RefreshControl,
@@ -11,11 +11,10 @@ import {
   collection, query, where, getDocs,
 } from 'firebase/firestore'
 import { firestore } from '@/firebase'
-import { UserDataContext } from '../../../context'
 
-import { ScreenTemplate } from '@/components/template'
-// import { UserDataContext } from '../../context'
+// import { useAuthUser } from '@/context'
 import ListItemChat from '@/components/list-item-chat'
+import { useAuthUser } from '@/context'
 
 const styles = StyleSheet.create({
   main: {
@@ -38,7 +37,8 @@ const styles = StyleSheet.create({
 export default function ChatConnections() {
   const navigation = useNavigation()
   // const [token, setToken] = useState('')
-  const { userData } = useContext(UserDataContext)
+   const { authUser } = useAuthUser()
+  const userData = authUser.data
   const [refreshing, setRefreshing] = useState(false)
   const [spinner, setSpinner] = useState(false)
   const [connectionRequestAccepted, setConnectionRequestAccepted] = useState([])
@@ -140,7 +140,7 @@ export default function ChatConnections() {
   }, [refreshing])
 
   return (
-    <ScreenTemplate>
+    <>
       <Spinner
         visible={spinner}
         textStyle={{ color: '#FFF' }}
@@ -156,6 +156,6 @@ export default function ChatConnections() {
       >
         <ChatItems />
       </ScrollView>
-    </ScreenTemplate>
+    </>
   )
 }

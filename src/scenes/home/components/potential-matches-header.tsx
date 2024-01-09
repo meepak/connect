@@ -15,9 +15,10 @@ const PotentialMatchesHeader = forwardRef((props, ref) => {
     },
   }))
 
+  // console.log('original bg is', colors.backgroundOriginal)
   return (
     <View style={{
-      paddingTop: 11, paddingHorizontal: 15, backgroundColor: colors.background, elevation: 5,
+      paddingTop: 11, paddingHorizontal: 15, backgroundColor: colors.backgroundOriginal, elevation: 5, zIndex:99,
     }}
     >
       <RenderCounter title="potential" />

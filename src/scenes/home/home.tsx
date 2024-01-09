@@ -1,5 +1,5 @@
 import React, {
-  useState, useCallback, useEffect, useContext, useMemo, useRef,
+  useState, useCallback, useEffect, useMemo, useRef,
 } from 'react'
 import {
   View,
@@ -11,13 +11,12 @@ import { useNavigation } from '@react-navigation/native'
 
 // import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
-import { ScreenTemplate } from '@/components/template'
 import ListItemUser from '@/scenes/home/components/list-item-user'
 import generateMockData from '@/scenes/home/util/mock-data'
 import Header from '@/scenes/home/components/header'
 import PotentialMatchesHeader from '@/scenes/home/components/potential-matches-header'
 import ProfileSheet from '@/scenes/profile/profile-sheet'
-import { fetchPotentialMatches } from './util/db'
+import { fetchPotentialMatches } from '@/scenes/home/util/db'
 import RenderCounter from '@/components/render-counter'
 import { useAuthUser } from '@/context'
 // import WaveBackground from '@/components/core/wave-background'
@@ -162,7 +161,7 @@ export default function Home() {
   }, [fetchMoreData])
 
   return (
-    <ScreenTemplate>
+    <>
       <RenderCounter title="home" />
       <View style={{ flex: 1 }}>
         <KeyboardAwareFlatList
@@ -187,6 +186,6 @@ export default function Home() {
         />
       </View>
       <ProfileSheet show={showProfileSheet} onClose={() => { setShowProfileSheet(false) }} user={viewUser} />
-    </ScreenTemplate>
+    </>
   )
 }

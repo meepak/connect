@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import {
   Alert, View, StyleSheet, Platform,
 } from 'react-native'
@@ -19,14 +19,15 @@ import { ScreenTemplate } from '@/components/template'
 import Button from '@/components/core/button'
 import TextInputBox from '@/components/core/text-input-box'
 import Checkbox from '@/components/core/checkbox'
-import { UserDataContext } from '../../context'
+import { useAuthUser } from '@/context'
 import { showToast } from '@/utils/show-toast'
 import AvatarOfAuthUser from '@/components/avatar-of-auth-user'
 // import mergeJsonObjects from '@/utils/functions'
 
 export default function Edit() {
   const { colors, fonts } = useTheme()
-  const { userData } = useContext(UserDataContext)
+   const { authUser } = useAuthUser()
+  const userData = authUser.data
   const navigation = useNavigation()
 
   const [fullName, setFullName] = useState(userData.fullName)

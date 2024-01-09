@@ -1,18 +1,18 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { View, StatusBar } from 'react-native'
 import {
   Text, Card, useTheme, SegmentedButtons, Switch, Button, Menu,
 } from 'react-native-paper'
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { DISPLAY } from '@/utils/constants'
-import { PreferencesContext } from '../../../context'
+import { useAuthUser } from '@/context'
 
 const Display = () => {
   const CUSTOM_COLOR_PALETTE = DISPLAY.Palette
   const { colors } = useTheme()
-  const preferences = useContext(PreferencesContext)
+  const { authUser } = useAuthUser();
+  const preferences = authUser.preferences;
   const [menuVisible, setMenuVisible] = useState(false)
-
   return (
     <Card
       mode="contained"
@@ -34,9 +34,9 @@ const Display = () => {
           Theme option
         </Text>
         <SegmentedButtons
-          value={preferences.themePreference}
+          value={preferences?.themePreference}
           onValueChange={(value) => {
-            preferences.setThemePreference(value)
+            preferences?.setThemePreference(value)
           }}
           buttons={[
             {
@@ -67,16 +67,16 @@ const Display = () => {
             Use custom color
           </Text>
           <Switch
-            value={preferences.useCustomColor}
+            value={preferences?.useCustomColor}
             onValueChange={(value) => {
-              preferences.setUseCustomColor(value)
+              preferences?.setUseCustomColor(value)
             }}
             color={colors.tertiary}
           />
         </View>
 
         {
-          preferences.useCustomColor
+          preferences?.useCustomColor
             ? (
               <>
                 <View style={{
@@ -99,7 +99,7 @@ const Display = () => {
                     onPress={() => setMenuVisible(true)}
                     mode="outlined"
                     style={{
-                      backgroundColor: preferences.themeCustomColor,
+                      backgroundColor: preferences?.themeCustomColor,
                     }}
                   >
                     <Text
@@ -121,7 +121,7 @@ const Display = () => {
                       style={{ backgroundColor: color }}
                       onPress={() => {
                         setMenuVisible(false)
-                        preferences.setThemeCustomColor(color)
+                        preferences?.setThemeCustomColor(color)
                       }}
                       // title={color}
                     />

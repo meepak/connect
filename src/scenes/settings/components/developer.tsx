@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import Spinner from 'react-native-loading-spinner-overlay'
 import {
   Text, Card, useTheme, Switch,
@@ -6,13 +6,14 @@ import {
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { Alert, View } from 'react-native'
 import { firestore } from '@/firebase'
-import { UserDataContext, PreferencesContext } from '../../../context'
+import { useAuthUser } from '@/context'
 
 // eslint-disable-next-line react/prop-types
 const Developer = () => {
   const { colors } = useTheme()
-  const { userData } = useContext(UserDataContext)
-  const { showRenderCounter, setShowRenderCounter } = useContext(PreferencesContext)
+   const { authUser } = useAuthUser()
+  const userData = authUser.data
+  const { debug, setDebug } = authUser.preferences
   const [spinner, setSpinner] = useState(false)
 
   const profileUpdate = async () => {
@@ -83,8 +84,8 @@ const Developer = () => {
               Display Render Counter
             </Text>
             <Switch
-              value={showRenderCounter}
-              onValueChange={setShowRenderCounter}
+              value={debug}
+              onValueChange={setDebug}
               color={colors.tertiary}
             />
           </View>

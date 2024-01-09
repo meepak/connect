@@ -8,8 +8,10 @@ import { Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 
 import { ScreenTemplate } from '@/components/template'
-// import { UserDataContext } from '../../context'
+// import { useAuthUser } from '@/context'
 import ListItemChat from '@/components/list-item-chat'
+
+import { useAuthUser } from '@/context'
 
 const styles = StyleSheet.create({
   main: {
@@ -32,7 +34,8 @@ const styles = StyleSheet.create({
 export default function ChatRecent() {
   const navigation = useNavigation()
   // const [token, setToken] = useState('')
-  // const { userData } = useContext(UserDataContext)
+   const { authUser } = useAuthUser()
+  const userData = authUser.data
   const [refreshing, setRefreshing] = useState(false)
 
   const onRefresh = useCallback(() => {

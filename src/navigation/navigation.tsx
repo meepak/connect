@@ -2,90 +2,40 @@ import 'react-native-gesture-handler'
 import React from 'react'
 import { useTheme } from 'react-native-paper'
 import { NavigationContainer, Theme } from '@react-navigation/native'
-// import Toast from 'react-native-toast-message'
-// import AsyncStorage from '@react-native-async-storage/async-storage'
-// import { useAtom } from 'jotai'
 import { AuthStatus, useAuthUser } from '../context'
-// import { authenticationCheckedAtom, userAuthenticatedAtom } from '@/utils/atom'
 // import { toastConfig } from '@/utils/show-toast'
 import IntroStack from './stacks/intro-stack'
 import OnboardingStack from './stacks/onboarding-stack'
 import RootStack from './stacks/root-stack'
+import { ScreenTemplate } from '@/components/template'
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 // import LoadingScreen from '@/components/loading-screen'
 
-// About saving navigation state -- I wonder how this works, quite not convince I need this but let's see
-// Commenting out the navigation sate persistent part for now
-// can't seem to get the benefit of it for now, could be useful
-// later for offline application, will enable it,
-// if found proper use case else will remove it
-// const PERSISTENCE_KEY = 'CONNECT411_NAVIGATION_STATE'
 
 export default function Navigation() {
-  // const [isReady, setIsReady] = React.useState(false)
-  // const [initialState, setInitialState] = React.useState()
-  const { authUser } = useAuthUser();
-  // const { authenticationChecked } = useAtom(authenticationCheckedAtom)
-  // const [userAuthenticated] = useAtom(userAuthenticatedAtom)
+  const { authUser } = useAuthUser()
   const theme = useTheme<Theme>()
 
-  // React.useEffect(() => {
-  //   const restoreState = async () => {
-  //     try {
-  //       const savedStateString = await AsyncStorage.getItem(PERSISTENCE_KEY)
-  //       const state = JSON.parse(savedStateString || '')
-  //       console.log('navigation restore state', state)
-
-  //       setInitialState(state)
-  //     } catch (e) {
-  //       // ignore error
-  //       console.log('error navigation', e)
-  //     } finally {
-  //       setIsReady(true)
-  //     }
-  //   }
-
-  //   if (!isReady) {
-  //     restoreState()
-  //   }
-  // }, [isReady])
-
-  // if (!isReady) {
-  //   return <LoadingScreen />
-  // }
-
   const getMainComponent = () => {
-    // console.log('In navigation userAuthenticated', userAuthenticated, 'userData', userData)
-    // if (authenticationChecked) {
-      if (authUser.status !== AuthStatus.Checking && authUser.data && Object.keys(authUser.data).length > 0) {
-        // console.log('NAVIGATION userData is on boarded??', userData.isOnboard)
-        // return authUser.data.isOnboard ? <RootStack /> : <OnboardingStack />
-        // temporary changes to fix first part of app
-        return <OnboardingStack />
-      }
-    // }
-    // console.log('loading intro')
+    if (
+      authUser.status !== AuthStatus.Checking &&
+      authUser.data &&
+      Object.keys(authUser.data).length > 0
+    ) {
+      // console.log('NAVIGATION userData is on boarded??', userData.isOnboard)
+      return authUser.data.isOnboard ? <RootStack /> : <OnboardingStack />
+      // temporary return to fix first part of app
+      // return <OnboardingStack />
+    }
+    
     return <IntroStack />
   }
 
   return (
-    <>
-      <NavigationContainer
-        theme={theme}
-        // initialState={initialState}
-        // onStateChange={(state) => {
-        //   const data = JSON.stringify(state)
-        //   // console.log('navigation state changed, saving ', data)
-        //   try {
-        //     AsyncStorage.setItem(PERSISTENCE_KEY, data)
-        //   } catch (e) {
-        //     // ignore error
-        //     console.log('error savePref', e)
-        //   }
-        // }}
-      >
-        {getMainComponent()}
-      </NavigationContainer>
-      {/* <Toast config={toastConfig} /> */}
-    </>
+        <NavigationContainer theme={ theme }>
+          <BottomSheetModalProvider>
+          <ScreenTemplate>{getMainComponent()}</ScreenTemplate>
+          </BottomSheetModalProvider>
+        </NavigationContainer>
   )
 }

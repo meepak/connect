@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import {
   View, StyleSheet,
 } from 'react-native'
@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
 import Icon from '@/components/core/icon'
 import PencilIconButton from '@/components/pencil-icon-button'
-import { UserDataContext } from '../../../context'
+import { useAuthUser } from '@/context'
 import Styles from './_styles'
 import IconLink from '@/components/core/icon-link'
 
@@ -18,7 +18,8 @@ const Experience = (
 ) => {
   const { colors, fonts } = useTheme()
   const navigation = useNavigation()
-  const { userData } = useContext(UserDataContext)
+   const { authUser } = useAuthUser()
+  const userData = authUser.data
 
   const styles = StyleSheet.create({
     ...Styles(colors, fonts),

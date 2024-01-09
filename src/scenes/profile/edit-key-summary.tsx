@@ -1,5 +1,5 @@
 import React, {
-  useState, useContext, // useLayoutEffect, // useRef,
+  useState, // useLayoutEffect, // useRef,
 } from 'react'
 import {
   Alert, StyleSheet, View,
@@ -9,22 +9,21 @@ import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Spinner from 'react-native-loading-spinner-overlay'
 import { useNavigation } from '@react-navigation/native'
-import { ScreenTemplate } from '@/components/template'
 import { firestore } from '@/firebase'
-import { UserDataContext } from '../../context'
+import { useAuthUser } from '@/context'
 import { HeaderProfile } from '@/components/header'
 
-import WhoAmI from '../onboarding/_who-am-i'
-import SelectIndustries from '../onboarding/_industries'
-import SelectBusinessStage from '../onboarding/_business-stage'
-import SelectOperationMode from '../onboarding/_operation-mode'
-import SelectLocation from '../onboarding/_location'
-import SelectWorkArrangementPreference from '../onboarding/_work-arrangement'
-import SelectCommunicationPreference from '../onboarding/_communication'
-import SelectPartnerTypes from '../onboarding/_partner-types'
-import SelectEducation from '../onboarding/_education'
-import SelectOccupations from '../onboarding/_occupation'
-import SelectYesNo from '../onboarding/_yes-no'
+import WhoAmI from '@/scenes/onboarding/_who-am-i'
+import SelectIndustries from '@/scenes/onboarding/_industries'
+import SelectBusinessStage from '@/scenes/onboarding/_business-stage'
+import SelectOperationMode from '@/scenes/onboarding/_operation-mode'
+import SelectLocation from '@/scenes/onboarding/_location'
+import SelectWorkArrangementPreference from '@/scenes/onboarding/_work-arrangement'
+import SelectCommunicationPreference from '@/scenes/onboarding/_communication'
+import SelectPartnerTypes from '@/scenes/onboarding/_partner-types'
+import SelectEducation from '@/scenes/onboarding/_education'
+import SelectOccupations from '@/scenes/onboarding/_occupation'
+import SelectYesNo from '@/scenes/onboarding/_yes-no'
 
 // THIS HAS BECOME A SERIOUS TIME WASTER
 // DOESN'T SCROLL PROPERLY IN ANDROID.. CAN'T FIGURE OUT YET WHY??
@@ -35,7 +34,8 @@ import SelectYesNo from '../onboarding/_yes-no'
 // NOW CUSTOMIZE THIS TO CREATE KEY SUMMARY INFO
 // SOME OF THE STUFF IS ALREADY ASKED IN INTRO SO FOCUS ON REFINING ONBOARDING QUESTION ONLY
 export default function EditKeySummary() {
-  const { userData } = useContext(UserDataContext)
+   const { authUser } = useAuthUser()
+  const userData = authUser.data
   const { colors } = useTheme()
   const navigation = useNavigation()
 
@@ -112,7 +112,6 @@ export default function EditKeySummary() {
   }
 
   return (
-    <ScreenTemplate>
       <View style={styles.container}>
         <HeaderProfile
           title="Edit Key Summary"
@@ -295,12 +294,11 @@ export default function EditKeySummary() {
 
           <View style={styles.footer} />
         </KeyboardAwareScrollView>
-      </View>
       <Spinner
         visible={spinner}
         textStyle={{ color: colors.white }}
         overlayColor="rgba(0,0,0,0.5)"
       />
-    </ScreenTemplate>
+      </View>
   )
 }

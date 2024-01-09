@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   View, StyleSheet,
 } from 'react-native'
@@ -10,7 +10,7 @@ import {
 } from 'firebase/firestore'
 import { firestore } from '@/firebase'
 import Styles from './_styles'
-import { UserDataContext } from '../../../context'
+import { useAuthUser } from '@/context'
 
 const Buttons = (
   {
@@ -20,7 +20,8 @@ const Buttons = (
 ) => {
   const { colors, fonts } = useTheme()
   const [connectionStatus, setConnectionStatus] = useState([])
-  const { userData } = useContext(UserDataContext)
+   const { authUser } = useAuthUser()
+  const userData = authUser.data
   const [spinner, setSpinner] = useState(false)
 
   async function fetchConnection() {

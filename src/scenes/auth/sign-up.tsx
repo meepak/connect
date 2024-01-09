@@ -25,7 +25,7 @@ const Styles = (colors, fonts) => StyleSheet.create({
   main: {
     flex: 1,
     width: '100%',
-    backgroundColor: colors.background,
+    backgroundColor: 'transparent',
   },
   titleContainer: {
     flexDirection: 'row',
@@ -62,7 +62,7 @@ const SignUp = () => {
   const [emailError, setEmailError] = useState('')
   const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState('')
-  const [error, setError] = useState()
+  const [error, setError] = useState('')
   const [spinner, setSpinner] = useState(false)
   const navigation = useNavigation()
   const { colors, fonts } = useTheme()
@@ -110,7 +110,7 @@ const SignUp = () => {
       }
       const usersRef = doc(firestore, 'users', user.uid)
       await setDoc(usersRef, data)
-    } catch (e) {
+    } catch (e: Error) {
       setSpinner(false)
       setError(e.message.replace('Firebase: ', ''))
       return
@@ -122,7 +122,7 @@ const SignUp = () => {
     setEmailError('')
     setPassword('')
     setPasswordError('')
-    setError('')
+    setError(() => (''))
     setSpinner(false)
     // Let's redirect to login page
     // & sign in automatically & it will be stuck
@@ -131,7 +131,7 @@ const SignUp = () => {
   }
 
   return (
-    <ScreenTemplate>
+    <>
       <KeyboardAwareScrollView
         style={styles.main}
         keyboardShouldPersistTaps="never"
@@ -238,12 +238,13 @@ const SignUp = () => {
       </KeyboardAwareScrollView>
 
       <TermsAndCondition show={showTnc} onClose={() => { setShowTnc(false) }} />
+
       <Spinner
         visible={spinner}
-        textStyle={{ color: colors.white }}
+        textStyle={{ color: colors.onBackground }}
         overlayColor="rgba(0,0,0,0.5)"
       />
-    </ScreenTemplate>
+    </>
   )
 }
 

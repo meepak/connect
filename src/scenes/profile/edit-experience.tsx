@@ -1,5 +1,5 @@
 import React, {
-  useState, useContext, useEffect, useRef,
+  useState, useEffect, useRef,
 } from 'react'
 import {
   View, StyleSheet,
@@ -9,9 +9,8 @@ import {
 } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { ScreenTemplate } from '@/components/template'
 import TextInputBox from '@/components/core/text-input-box'
-import { UserDataContext } from '../../context'
+import { useAuthUser } from '@/context'
 // import { isValidName, isValidLength } from '@/utils/validation'
 import { HeaderProfile } from '@/components/header'
 import MonthYearPicker from '@/components/month-year-picker'
@@ -23,7 +22,8 @@ export default function EditExperience() {
   const navigation = useNavigation()
   const route = useRoute()
   const { colors } = useTheme()
-  const { userData } = useContext(UserDataContext)
+   const { authUser } = useAuthUser()
+  const userData = authUser.data
   const endDateRef = useRef(null)
 
   const [position, setPosition] = useState(userData.fullName)
@@ -137,7 +137,6 @@ export default function EditExperience() {
     ],
   */
   return (
-    <ScreenTemplate>
       <View style={styles.container}>
         <HeaderProfile
           title="Add Experience"
@@ -320,6 +319,5 @@ export default function EditExperience() {
           onChange={(val) => setDate(val)}
         />
       </View>
-    </ScreenTemplate>
   )
 }

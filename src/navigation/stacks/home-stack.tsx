@@ -19,7 +19,7 @@ const HomeStack = () => {
         name="Home"
         component={Home}
         options={() => ({
-          headerStyle: { height: 95 },
+          headerStyle: { height: 50 },
           headerTitle: () => (
             <HeaderHome />
           ),

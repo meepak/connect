@@ -1,10 +1,10 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { ScreenTemplate } from '@/components/template'
 import Button from '@/components/core/button'
-import { UserDataContext } from '../../context'
+import { useAuthUser } from '@/context'
 
 const Styles = (fonts) => StyleSheet.create({
   container: {
@@ -24,7 +24,8 @@ export default function Notification() {
   const navigation = useNavigation()
   const styles = Styles(fonts)
 
-  const { userData } = useContext(UserDataContext)
+   const { authUser } = useAuthUser()
+  const userData = authUser.data
   useEffect(() => {
     // console.log('Notification screen')
   }, [])
