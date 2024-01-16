@@ -6,7 +6,7 @@ import { firestore, auth } from '@/firebase' // Import your Firebase instance
 import { User, onAuthStateChanged } from 'firebase/auth'
 import { Asset } from 'expo-asset'
 import * as SplashScreen from 'expo-splash-screen'
-import { Appearance, Platform, View } from 'react-native'
+import { Appearance, Dimensions, Platform, View } from 'react-native'
 
 import {
   setStatusBarTranslucent,
@@ -28,6 +28,9 @@ import {
   sleep,
 } from '@/utils/functions'
 import imageAssets from './theme/images'
+import SvgCopilotArt from '@/components/svg/svg-copilot/art6'
+import SvgLogo from '@/components/svg/svg-logo'
+import LottieView from 'lottie-react-native'
 // import LoadingScreen from '@/components/animated/loading/loading-screen'
 
 // SplashScreen.preventAutoHideAsync()
@@ -83,7 +86,7 @@ const AppLoader = () => {
       await Preload()
 
       // additional simulated delay,debugging
-      // await sleep(2000)
+      await sleep(10000)
       // await Promise.all([])
     } catch (e) {
       // handle errors
@@ -191,15 +194,34 @@ const AppLoader = () => {
 
   // <View style={{ flex: 1, backgroundColor: bgColor }}>
   // </View>
+
+  const{width,height} = Dimensions.get('screen')
   return (
     <>
       {!appDataPreloaded || authUser.status === AuthStatus.Checking ? (
-        <AnimatedSplash
-          bgColor={bgColor}
-          color={color}
-          onLoaded={(p) => onSplashReady(p)}
-          strokeWidth={isDark ? 5 : 6}
-        />
+        // <AnimatedSplash
+        //   bgColor={bgColor}
+        //   color={color}
+        //   onLoaded={(p) => onSplashReady(p)}
+        //   strokeWidth={isDark ? 5 : 6}
+        // />
+
+
+ <View 
+    style={{
+      width: width,
+      height: height,
+      flex: 1,alignItems: 
+      'center', 
+      justifyContent: 'center'}} >
+      <LottieView
+        source={require('../assets/lottie/fa-error-404.json')} // TODO load via prop for different use cases
+        autoPlay
+        loop
+        onLayout={() => onSplashReady(true)}
+      />
+    </View>
+
       ) : (
         <FindAssociate />
       )}

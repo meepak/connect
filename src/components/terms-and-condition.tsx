@@ -6,8 +6,8 @@ import PropTypes from 'prop-types'
 
 // import IconLink from '@/components/core/IconLink'
 import WebView from 'react-native-webview'
-import SheetModal from './core/sheet-modal'
-import tnc from '../../assets/tnc'
+import SheetModal from '@/components/core/sheet-modal'
+import tnc from '@/../assets/data/tnc'
 
 const TermsAndCondition = ({ show, onClose }) => {
   const tncSheetRef = useRef()

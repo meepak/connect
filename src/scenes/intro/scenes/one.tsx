@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import { convertHexToRGBA, getGreeting } from '@/utils/functions'
 import AnimatedLottieView from 'lottie-react-native'
 import TypewriterText from '@/components/animated/TypewriterText'
+import LottieView from 'lottie-react-native'
 
 const IntroSceneOne = ({width, height, enterTime}) => {
 
@@ -87,7 +88,7 @@ const IntroSceneOne = ({width, height, enterTime}) => {
       ? <TypewriterText text='We are here to help you with your enterpreneul journey.' variant='titleLarge' style={{padding: 20}}  />
       : <></>
     }
-
+    
     </Animated.View>
 )}
 

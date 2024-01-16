@@ -16,8 +16,11 @@ import DotPaginator from './dot-paginator'
 import Animated, {
   FlipInYLeft as slideLeft,
   FlipInYRight as slideRight,
+  useAnimatedGestureHandler,
+  useSharedValue,
 } from 'react-native-reanimated'
 import { Asset } from 'expo-asset'
+import { Gesture, GestureDetector, GestureEvent, PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler'
 
 const screenWidth = Dimensions.get('window').width
 
@@ -58,7 +61,6 @@ type SlideType = {
   text: string
 }
 
-
 // TODO: Define this properly to introduce app
 // Make it downloadible from the server, need to make this generic enough for both type of users
 const slides = [
@@ -92,8 +94,15 @@ const AppFeaturesIntro = ({ show = false, onClose = () => {} }) => {
   const [currentSliderIndex, setCurrentSliderIndex] = useState(0)
   const [lastSliderIndex, setLastSliderIndex] = useState(0)
 
+  const changeSlide = (newIndex: number) => {
+    if (newIndex !== currentSliderIndex) {
+              setLastSliderIndex(currentSliderIndex)
+              setCurrentSliderIndex(newIndex)
+            }
+  }
+
   const { colors } = useTheme()
-  
+
   const openMe = useCallback(() => {
     if (appFeaturesSheetRef.current) {
       appFeaturesSheetRef.current?.present()
@@ -120,37 +129,65 @@ const AppFeaturesIntro = ({ show = false, onClose = () => {} }) => {
     onClose()
   }, [])
 
+interface GestureContext {
+  startX: number
+  [key: string]: any
+}
+
+// should work in theory but Expo app keeps crashing
+// leaving commented code out as an example for later I can leave without this
+  // const pan = Gesture.Pan()
+  // .onFinalize((event) => {  
+  //   if(event.velocityX > 0) {
+  //     //console.log('swipe right')
+  //      let newIndex =
+  //        currentSliderIndex < slides.length - 1
+  //          ? currentSliderIndex + 1
+  //          : slides.length - 1
+  //       changeSlide(newIndex)
+  //   } else {
+  //     //console.log('swipe left')
+  //     let newIndex = currentSliderIndex > 0 ? currentSliderIndex - 1 : 0
+  //     changeSlide(newIndex)
+  //   }
+  // })
 
   const RenderSlide = ({ slide }: { slide: SlideType }) => (
-    <Animated.View
-      style={{
-        backgroundColor: 'transparent', //transparent
-        marginTop: 10,
-        flex: 1,
-      }}
-      entering={
-        lastSliderIndex - currentSliderIndex <= 0 ? slideLeft : slideRight
-      }
-    >
-      <Text
-        style={{ ...styles.textTitle, color: colors.onBackground }}
-        variant="titleMedium"
+    // <GestureDetector gesture={pan}>
+      <Animated.View
+        style={{
+          backgroundColor: 'transparent', //transparent
+          marginTop: 10,
+          flex: 1,
+        }}
+        entering={
+          lastSliderIndex - currentSliderIndex <= 0 ? slideLeft : slideRight
+        }
       >
-        {slide.title}
-      </Text>
-      <View style={{ ...styles.textView }}>
-        <Text variant="bodyMedium" style={{ color: colors.onBackground }}>{slide.text}</Text>
-      </View>
-      <View style={styles.imageView}>
-        <Image
-          style={styles.image}
-          source={slide.image as ImageSourcePropType}
-          contentFit={'contain'}
-          contentPosition={'center'}
-        />
-      </View>
-    </Animated.View>
+        <Text
+          style={{ ...styles.textTitle, color: colors.onBackground }}
+          variant="titleMedium"
+        >
+          {slide.title}
+        </Text>
+        <View style={{ ...styles.textView }}>
+          <Text variant="bodyMedium" style={{ color: colors.onBackground }}>
+            {slide.text}
+          </Text>
+        </View>
+        <View style={styles.imageView}>
+          <Image
+            style={styles.image}
+            source={slide.image as ImageSourcePropType}
+            contentFit={'contain'}
+            contentPosition={'center'}
+          />
+        </View>
+      </Animated.View>
+    // </GestureDetector>
   )
+   const progress = useSharedValue(0)
+
 
   return (
     <SheetModal
@@ -160,9 +197,9 @@ const AppFeaturesIntro = ({ show = false, onClose = () => {} }) => {
       title="Welcome to Find Associate!"
       backgroundColor={colors.primaryContainer}
     >
-      <View style={{ flex: 1, alignItems: 'center' }}>
-        <RenderSlide slide={slides[currentSliderIndex ?? 0]} />
-      </View>
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <RenderSlide slide={slides[currentSliderIndex ?? 0]} />
+        </View>
       <View
         style={{
           width: '100%',
@@ -172,12 +209,7 @@ const AppFeaturesIntro = ({ show = false, onClose = () => {} }) => {
       >
         <DotPaginator
           totalPages={slides.length}
-          onPageChanged={(index) => {
-            if (index !== currentSliderIndex) {
-              setLastSliderIndex(currentSliderIndex)
-              setCurrentSliderIndex(index)
-            }
-          }}
+          onPageChanged={changeSlide}
         />
       </View>
     </SheetModal>

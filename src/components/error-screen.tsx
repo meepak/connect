@@ -1,8 +1,8 @@
 import React, { useRef } from 'react'
 import {
-  StyleSheet, Dimensions, View, useTheme,
+  StyleSheet, Dimensions, View,
 } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 import LottieView from 'lottie-react-native'
 
 export default function ErrorScreen() {
@@ -29,7 +29,7 @@ export default function ErrorScreen() {
     <View style={styles.container}>
       <LottieView
         ref={animation}
-        source={require('../../assets/lottie/113121-error-404.json')}
+        source={require('../../assets/lottie/fa-error-404.json')}
         style={styles.animation}
         autoPlay
       />
