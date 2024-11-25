@@ -31,7 +31,7 @@
     "expo-status-bar": "~1.6.0",
     "expo-system-ui": "~2.4.0",
     "expo-updates": "~0.18.18",
-    "firebase": "^9.6.10",
+    "firebase": "^10.9.0",
     "ignore-warnings": "^0.2.1",
     "jotai": "^2.6.1",
     "lottie-ios": "^3.4.0",
